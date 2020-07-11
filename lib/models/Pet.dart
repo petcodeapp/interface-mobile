@@ -1,6 +1,6 @@
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:petcode_app/models/Medication.dart';
+import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Vaccination.dart';
 
 class Pet {
@@ -16,9 +16,9 @@ class Pet {
   bool isServiceAnimal;
   int age;
   List<Vaccination> vaccinations;
-  List medications;
-  Map contact_1;
-  Map contact_2;
+  List<Medication> medications;
+  Owner contact_1;
+  Owner contact_2;
 
   DocumentReference reference;
 
@@ -47,7 +47,7 @@ class Pet {
   }
 
   factory Pet.fromJson(Map<String, dynamic> json) {
-    List vaccinationMaps = json['vaccinations'] as List;
+    List<dynamic> vaccinationMaps = json['vaccinations'] as List;
     List<Vaccination> convertedList;
     if (vaccinationMaps == null) {
       return null;
@@ -57,6 +57,34 @@ class Pet {
         convertedList.add(Vaccination.fromJson(vaccination));
       });
     }
+
+    List<dynamic> medicationMaps = json['medications'] as List;
+    List<Medication> medicationConverted;
+    if (convertedList == null) {
+      return null;
+    } else {
+      medicationConverted = new List<Medication>();
+      medicationMaps.forEach((medication) {
+        medicationConverted.add(Medication.fromJson(medication));
+      });
+    }
+
+    Map owner1Map = json['contact_1'] as Map;
+    Owner owner1;
+    if (owner1Map == null) {
+      owner1 = null;
+    } else {
+      owner1 = Owner.fromJson(owner1Map);
+    }
+
+    Map owner2Map = json['contact_2'] as Map;
+    Owner owner2;
+    if (owner2Map == null) {
+      owner2 = null;
+    } else {
+      owner2 = Owner.fromJson(owner2Map);
+    }
+
     return Pet(
       pid: json['pid'] as String,
       name: json['name'] as String,
@@ -70,9 +98,9 @@ class Pet {
       isServiceAnimal: json['isServiceAnimal'] as bool,
       age: json['age'] as int,
       vaccinations: convertedList,
-      medications: json['medications'] as List,
-      contact_1: json['contact_1'] as Map,
-      contact_2: json['contact_2'] as Map,
+      medications: medicationConverted,
+      contact_1: owner1,
+      contact_2: owner2,
     );
   }
 
@@ -91,21 +119,40 @@ class Pet {
         'isServiceAnimal': instance.isServiceAnimal,
         'age': instance.age,
         'vaccinations': _vaccinationMaps(instance.vaccinations),
-        'medications': instance.medications,
-        'contact_1': instance.contact_1,
-        'contact_2': instance.contact_2,
+        'medications': _medicationMaps(instance.medications),
+        'contact_1': _ownerMap(instance.contact_1),
+        'contact_2': _ownerMap(instance.contact_2),
       };
 
-  List<Map<String, dynamic>> _vaccinationMaps(List<Vaccination> allVaccinations) {
+  List<Map<String, dynamic>> _vaccinationMaps(
+      List<Vaccination> allVaccinations) {
     if (allVaccinations == null) {
       return null;
-    }
-    else {
+    } else {
       List<Map<String, dynamic>> convertedMaps = List<Map<String, dynamic>>();
       allVaccinations.forEach((vaccination) {
         convertedMaps.add(vaccination.toJson());
       });
       return convertedMaps;
+    }
+  }
+
+  List<Map<String, dynamic>> _medicationMaps(List<Medication> allMedications) {
+    if (allMedications == null) {
+      return null;
+    }
+    List<Map<String, dynamic>> convertedMaps = new List<Map<String, dynamic>>();
+    allMedications.forEach((medication) {
+      convertedMaps.add(medication.toJson());
+    });
+    return convertedMaps;
+  }
+
+  Map<String, dynamic> _ownerMap(Owner owner) {
+    if (owner == null) {
+      return null;
+    } else {
+      return owner.toJson();
     }
   }
 }
