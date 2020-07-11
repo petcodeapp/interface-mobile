@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
-import 'package:petcode_app/services/pet_helper.dart';
+import 'package:petcode_app/screens/test_redis_screen.dart';
 
 void main() {
   runApp(MyApp());
