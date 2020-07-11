@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petcode_app/screens/stp_addphoto_screen.dart';
 import 'package:petcode_app/screens/stp_connecttag_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:slimy_card/slimy_card.dart';
@@ -155,6 +156,7 @@ class _StpContactScreenState extends State<StpContactScreen> {
         ),
       );
     }
+
     Widget contactWidget2(){
       return Container(
         height: 400.0,
@@ -336,7 +338,7 @@ class _StpContactScreenState extends State<StpContactScreen> {
               SizedBox(height: height * 0.02,),
               GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => StpConnectTagScreen())),
+                    MaterialPageRoute(builder: (_) => StpAddPhotoScreen())),
                 child: Container(
                   height: 55.0,
                   width: 250.0,
