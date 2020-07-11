@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/stp_connecttag_screen.dart';
+import 'package:petcode_app/screens/stp_petinfo_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class StpAddPhotoScreen extends StatefulWidget {
@@ -62,7 +63,7 @@ class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
               ),
               GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => StpConnectTagScreen())),
+                    MaterialPageRoute(builder: (_) => StpPetInfoScreen())),
                 child: Container(
                   height: 55.0,
                   width: 250.0,
