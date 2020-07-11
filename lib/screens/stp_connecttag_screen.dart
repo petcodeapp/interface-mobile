@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:petcode_app/screens/stp_contactinfo_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -96,7 +97,7 @@ class _StpConnectTagScreenState extends State<StpConnectTagScreen> {
               SizedBox(height: height * 0.05,),
               GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => StpConnectTagScreen())),
+                    MaterialPageRoute(builder: (_) => StpContactScreen())),
                 child: Container(
                   height: 55.0,
                   width: 250.0,

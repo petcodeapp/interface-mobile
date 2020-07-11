@@ -130,7 +130,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                               blurRadius: 10.0,
                                               offset: Offset(0, 2),
                                             ),
-                                          ]),
+                                          ],
+                                      ),
                                       height: 50.0,
                                       width: 250.0,
                                       child: Padding(
