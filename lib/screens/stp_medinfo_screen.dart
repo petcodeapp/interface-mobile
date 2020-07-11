@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/stp_connecttag_screen.dart';
-import 'package:petcode_app/screens/stp_medinfo_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
-class StpPetInfoScreen extends StatefulWidget {
+class StpMedicalInfoScreen extends StatefulWidget {
   @override
-  _StpPetInfoScreenState createState() => _StpPetInfoScreenState();
+  _StpMedicalInfoScreenState createState() => _StpMedicalInfoScreenState();
 }
 
-bool checkedValue = false;
-
-class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
+class _StpMedicalInfoScreenState extends State<StpMedicalInfoScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -40,7 +37,7 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                 height: height * 0.05,
               ),
               Text(
-                'Step 4: Pet Information',
+                'Step 5: Medical Information',
                 style: StyleConstants.whiteTitleText,
               ),
               SizedBox(
@@ -76,7 +73,7 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                             //controller: _emailInputController,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'Pet Name',
+                                hintText: 'Pet Allergies',
                                 hintStyle: TextStyle(fontSize: 15.0)),
                           ),
                         ),
@@ -106,7 +103,7 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                             //controller: _passwordInputController,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'Breed',
+                                hintText: 'Special Needs',
                                 hintStyle: TextStyle(fontSize: 15.0)),
                           ),
                         ),
@@ -136,7 +133,7 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                             //controller: _passwordInputController,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'Age',
+                                hintText: 'Vet Name',
                                 hintStyle: TextStyle(fontSize: 15.0)),
                           ),
                         ),
@@ -166,7 +163,7 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                             //controller: _passwordInputController,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'Temperament',
+                                hintText: 'Vet Phone Number',
                                 hintStyle: TextStyle(fontSize: 15.0)),
                           ),
                         ),
@@ -175,31 +172,17 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                     SizedBox(
                       height: height * 0.02,
                     ),
-                    Text(
-                      'Service Animal?',
-                      style: StyleConstants.whiteTitleTextSmall,
-                    ),
-                    Checkbox(
-                      //title: Text("title text"),
-                      checkColor: Colors.white,
-                      activeColor: StyleConstants.yellow,
-                      value: checkedValue,
-                      onChanged: (newValue) {
-                        setState(() {
-                          checkedValue = newValue;
-                        });
-                      },
-                      //controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
-                    )
+
+
                   ],
                 ),
               ),
               SizedBox(
-                height: height * 0.05,
+                height: height * 0.1,
               ),
               GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => StpMedicalInfoScreen())),
+                    MaterialPageRoute(builder: (_) => StpConnectTagScreen())),
                 child: Container(
                   height: 55.0,
                   width: 250.0,
