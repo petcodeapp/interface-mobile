@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:petcode_app/screens/login_screen.dart';
+import 'package:petcode_app/screens/signup_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class EntryScreen extends StatefulWidget {
@@ -19,6 +21,7 @@ class _EntryScreenState extends State<EntryScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: height * 0.075,),
             Container(
                 width: width * 0.8,
                 height: height * 0.2,
@@ -37,23 +40,33 @@ class _EntryScreenState extends State<EntryScreen> {
                     ),
                     Positioned(
                       bottom: height * 0.3,
-                      child: Container(
-                        decoration: StyleConstants.roundYellowButtonDeco,
-                        width: 220.0,
-                        height: 60.0,
-                        child: Center(
-                          child: Text('Register'),
+                      child: GestureDetector(
+                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SignupScreen())),
+                        child: Container(
+                          decoration: StyleConstants.roundYellowButtonDeco,
+                          width: 220.0,
+                          height: 60.0,
+                          child: Center(
+                            child: Text('Register',
+                              style: StyleConstants.whiteButtonText,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                     Positioned(
                       bottom: height * 0.15,
-                      child: Container(
-                        decoration: StyleConstants.roundWhiteButtonDeco,
-                        width: 220.0,
-                        height: 60.0,
-                        child: Center(
-                          child: Text('Register'),
+                      child: GestureDetector(
+                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen())),
+                        child: Container(
+                          decoration: StyleConstants.roundWhiteButtonDeco,
+                          width: 220.0,
+                          height: 60.0,
+                          child: Center(
+                            child: Text('Login',
+                              style: StyleConstants.yellowButtonText,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -63,7 +76,7 @@ class _EntryScreenState extends State<EntryScreen> {
             )
           ],
         ),
-      )
+      ),
     );
   }
 }
