@@ -47,6 +47,12 @@ class StyleConstants{
     fontFamily: 'Lilita',
   );
 
+  static TextStyle whiteTitleTextXS =  new TextStyle(
+    color: Colors.white,
+    fontSize: 20.0,
+    fontFamily: 'Lilita',
+  );
+
   static TextStyle whiteDescriptionText = new TextStyle(
     color: Colors.white,
     fontSize: 20.0,

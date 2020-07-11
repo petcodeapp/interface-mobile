@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/stp_connecttag_screen.dart';
+import 'package:petcode_app/screens/stp_vaccinehist_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class StpMedicalInfoScreen extends StatefulWidget {
@@ -182,7 +183,7 @@ class _StpMedicalInfoScreenState extends State<StpMedicalInfoScreen> {
               ),
               GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => StpConnectTagScreen())),
+                    MaterialPageRoute(builder: (_) => StpVaccineScreen())),
                 child: Container(
                   height: 55.0,
                   width: 250.0,
