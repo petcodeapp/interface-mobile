@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/stp_contactinfo_screen.dart';
+import 'package:petcode_app/services/pet_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -11,14 +12,15 @@ class StpConnectTagScreen extends StatefulWidget {
 }
 
 class _StpConnectTagScreenState extends State<StpConnectTagScreen> {
+
+  StreamController<ErrorAnimationType> errorController = StreamController<ErrorAnimationType>();
+  TextEditingController textEditingController = TextEditingController();
+  String currentText = "";
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
-    StreamController<ErrorAnimationType> errorController = StreamController<ErrorAnimationType>();
-    TextEditingController textEditingController = TextEditingController();
-    String currentText = "";
 
     return Scaffold(
       backgroundColor: StyleConstants.blue,
@@ -68,6 +70,9 @@ class _StpConnectTagScreenState extends State<StpConnectTagScreen> {
                   controller: textEditingController,
                   onCompleted: (v) {
                     print("Completed");
+                    setState(() {
+                      currentText = v;
+                    });
                   },
                   onChanged: (value) {
                     print(value);
@@ -96,8 +101,12 @@ class _StpConnectTagScreenState extends State<StpConnectTagScreen> {
               Text('Need Help?', style: StyleConstants.whiteTitleTextSmall,),
               SizedBox(height: height * 0.05,),
               GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => StpContactScreen())),
+                onTap: () {
+                  print('TAPPED: ' + currentText);
+                  PetHelper().addPetInitial(currentText);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => StpContactScreen(pid: currentText,)));
+                },
                 child: Container(
                   height: 55.0,
                   width: 250.0,
