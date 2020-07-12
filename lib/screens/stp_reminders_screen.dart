@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/stp_addphoto_screen.dart';
+import 'package:petcode_app/screens/stp_complete_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:slimy_card/slimy_card.dart';
 
@@ -250,7 +251,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
               SizedBox(height: height * 0.02,),
               GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => StpAddPhotoScreen())),
+                    MaterialPageRoute(builder: (_) => StpCompleteScreen())),
                 child: Container(
                   height: 55.0,
                   width: 250.0,
