@@ -1,115 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/stp_addphoto_screen.dart';
-import 'package:petcode_app/screens/stp_connecttag_screen.dart';
-import 'package:petcode_app/screens/stp_reminders_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:slimy_card/slimy_card.dart';
 
-class StpVaccineScreen extends StatefulWidget {
+class StpRemindersScreen extends StatefulWidget {
   @override
-  _StpVaccineScreenState createState() => _StpVaccineScreenState();
+  _StpRemindersScreenState createState() => _StpRemindersScreenState();
 }
 
-class _StpVaccineScreenState extends State<StpVaccineScreen> {
-
-
-
+class _StpRemindersScreenState extends State<StpRemindersScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    Widget vaccineWidget1(){
+    Widget medWidget1(){
       return Container(
-        height: 250.0,
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.4),
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Vaccine 1', style: StyleConstants.whiteTitleTextSmall,),
-            SizedBox(height: height * 0.02,),
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 10.0,
-                      offset: Offset(0, 2),
-                    ),
-                  ]),
-              height: 50.0,
-              width: 250.0,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 10.0),
-                child: Center(
-                  child: TextFormField(
-                    //controller: _emailInputController,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Name',
-                        hintStyle:
-                        TextStyle(fontSize: 15.0,)),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 10.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              height: 50.0,
-              width: 250.0,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 10.0),
-                child: Center(
-                  child: TextFormField(
-                    //controller: _passwordInputController,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Expiration Date',
-                        hintStyle:
-                        TextStyle(fontSize: 15.0)),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Upload a Photo', style: StyleConstants.whiteTitleTextXS,),
-                Icon(Icons.add_a_photo, color: Colors.white,),
-              ],
-            )
-        ]
-      )
-      );
-    }
-
-    Widget vaccineWidget2(){
-      return Container(
-          //height: 250.0,
+          height: 250.0,
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.4),
             borderRadius: BorderRadius.circular(12.0),
@@ -118,7 +25,7 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Vaccine 2', style: StyleConstants.whiteTitleTextSmall,),
+                Text('Medication 1', style: StyleConstants.whiteTitleTextSmall,),
                 SizedBox(height: height * 0.02,),
                 Container(
                   decoration: BoxDecoration(
@@ -173,7 +80,7 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
                         //controller: _passwordInputController,
                         decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'Expiration Date',
+                            hintText: 'Frequency',
                             hintStyle:
                             TextStyle(fontSize: 15.0)),
                       ),
@@ -186,8 +93,96 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Upload a Photo', style: StyleConstants.whiteTitleTextXS,),
-                    Icon(Icons.add_a_photo, color: Colors.white,),
+                    Text('Next Date', style: StyleConstants.whiteTitleTextXS,),
+                    Icon(Icons.calendar_today, color: Colors.white,),
+                  ],
+                )
+              ]
+          )
+      );
+    }
+
+    Widget medWidget2(){
+      return Container(
+        //height: 250.0,
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.4),
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Medication 2', style: StyleConstants.whiteTitleTextSmall,),
+                SizedBox(height: height * 0.02,),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 10.0,
+                          offset: Offset(0, 2),
+                        ),
+                      ]),
+                  height: 50.0,
+                  width: 250.0,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0),
+                    child: Center(
+                      child: TextFormField(
+                        //controller: _emailInputController,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Name',
+                            hintStyle:
+                            TextStyle(fontSize: 15.0,)),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: height * 0.02,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 10.0,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  height: 50.0,
+                  width: 250.0,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0),
+                    child: Center(
+                      child: TextFormField(
+                        //controller: _passwordInputController,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Frequency',
+                            hintStyle:
+                            TextStyle(fontSize: 15.0)),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: height * 0.02,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Next Date', style: StyleConstants.whiteTitleTextXS,),
+                    Icon(Icons.calendar_today, color: Colors.white,),
                   ],
                 )
               ]
@@ -205,8 +200,8 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
               topCardHeight: 250,
               bottomCardHeight: 250,
               borderRadius: 15,
-              topCardWidget: vaccineWidget1(),
-              bottomCardWidget: vaccineWidget2(),
+              topCardWidget: medWidget1(),
+              bottomCardWidget: medWidget2(),
               slimeEnabled: true,
             ),
           ],
@@ -232,7 +227,7 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
                 child: Image.asset('assets/images/logoyellow.png', fit: BoxFit.cover,),
               ),
               SizedBox(height: height * 0.05,),
-              Text('Step 6: Vaccine History', style: StyleConstants.whiteTitleText,),
+              Text('Step 7: Reminders', style: StyleConstants.whiteTitleText,),
               SizedBox(height: height * 0.01,),
 
               Expanded(
@@ -244,8 +239,8 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
                       topCardHeight: 300,
                       bottomCardHeight: 300,
                       borderRadius: 15,
-                      topCardWidget: vaccineWidget1(),
-                      bottomCardWidget: vaccineWidget2(),
+                      topCardWidget: medWidget1(),
+                      bottomCardWidget: medWidget2(),
                       slimeEnabled: true,
                     ),
                   ],
@@ -255,7 +250,7 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
               SizedBox(height: height * 0.02,),
               GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => StpRemindersScreen())),
+                    MaterialPageRoute(builder: (_) => StpAddPhotoScreen())),
                 child: Container(
                   height: 55.0,
                   width: 250.0,
