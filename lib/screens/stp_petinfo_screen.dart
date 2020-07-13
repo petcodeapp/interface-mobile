@@ -1,9 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/stp_connecttag_screen.dart';
 import 'package:petcode_app/screens/stp_medinfo_screen.dart';
+import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class StpPetInfoScreen extends StatefulWidget {
+  StpPetInfoScreen({Key key, this.pet, this.petImage}) : super(key: key);
+
+  final Pet pet;
+  final File petImage;
+
   @override
   _StpPetInfoScreenState createState() => _StpPetInfoScreenState();
 }
@@ -11,6 +19,22 @@ class StpPetInfoScreen extends StatefulWidget {
 bool checkedValue = false;
 
 class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
+
+  TextEditingController _petNameInputController;
+  TextEditingController _breedInputController;
+  TextEditingController _ageInputController;
+  TextEditingController _temperamentInputController;
+
+  @override
+  void initState() {
+    _petNameInputController = new TextEditingController();
+    _breedInputController = new TextEditingController();
+    _ageInputController = new TextEditingController();
+    _temperamentInputController = new TextEditingController();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -73,7 +97,7 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Center(
                           child: TextFormField(
-                            //controller: _emailInputController,
+                            controller: _petNameInputController,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: 'Pet Name',
@@ -103,7 +127,7 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Center(
                           child: TextFormField(
-                            //controller: _passwordInputController,
+                            controller: _breedInputController,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: 'Breed',
@@ -133,7 +157,7 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Center(
                           child: TextFormField(
-                            //controller: _passwordInputController,
+                            controller: _ageInputController,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: 'Age',
@@ -163,7 +187,7 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Center(
                           child: TextFormField(
-                            //controller: _passwordInputController,
+                            controller: _temperamentInputController,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: 'Temperament',
@@ -198,8 +222,18 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                 height: height * 0.05,
               ),
               GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => StpMedicalInfoScreen())),
+                onTap: () {
+                  Pet updatedPet = widget.pet;
+
+                  updatedPet.name = _petNameInputController.text;
+                  updatedPet.breed = _breedInputController.text;
+                  updatedPet.age = int.parse(_ageInputController.text);
+                  updatedPet.temperament = _temperamentInputController.text;
+                  updatedPet.isServiceAnimal = checkedValue;
+
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => StpMedicalInfoScreen(pet: updatedPet, petImage: widget.petImage,)));
+                },
                 child: Container(
                   height: 55.0,
                   width: 250.0,

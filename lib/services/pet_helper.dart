@@ -26,13 +26,7 @@ class PetHelper {
     _firestore.collection('pets').document(pet.pid).updateData(pet.toJson());
   }
 
-  addPetInitial(String pid) async {
-    Pet pet = new Pet(pid: pid);
-    print(pid);
-    _firestore.collection('pets').document(pid).setData(pet.toJson());
-  }
-
-  addPetContact(String pid, Owner contact1, Owner contact2) async {
+  updatePetContacts(String pid, Owner contact1, Owner contact2) async {
 
     Map<String, dynamic> contact1Json;
     if (contact1 != null) {
