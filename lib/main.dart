@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/screens/entry_screen.dart';
 import 'package:petcode_app/screens/stp_start_screen.dart';
+import 'package:petcode_app/services/auth.dart';
 
 void main() {
   runApp(MyApp());

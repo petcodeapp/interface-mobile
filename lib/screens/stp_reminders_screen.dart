@@ -1,216 +1,52 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:petcode_app/screens/stp_addphoto_screen.dart';
+import 'package:petcode_app/models/Medication.dart';
 import 'package:petcode_app/screens/stp_complete_screen.dart';
+import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:slimy_card/slimy_card.dart';
 
 class StpRemindersScreen extends StatefulWidget {
+  StpRemindersScreen({Key key, this.pet, this.petImage}) : super(key: key);
+
+  final Pet pet;
+  final File petImage;
+
   @override
   _StpRemindersScreenState createState() => _StpRemindersScreenState();
 }
 
 class _StpRemindersScreenState extends State<StpRemindersScreen> {
+  double width;
+  double height;
+
+  List<TextEditingController> _medicationNameInputControllers;
+  List<TextEditingController> _medicationFrequencyInputControllers;
+
+  @override
+  void initState() {
+    _medicationNameInputControllers = new List<TextEditingController>();
+    _medicationNameInputControllers.add(new TextEditingController());
+    _medicationNameInputControllers.add(new TextEditingController());
+
+    _medicationFrequencyInputControllers = new List<TextEditingController>();
+    _medicationFrequencyInputControllers.add(new TextEditingController());
+    _medicationFrequencyInputControllers.add(new TextEditingController());
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
-    Widget medWidget1(){
-      return Container(
-          height: 250.0,
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.4),
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Medication 1', style: StyleConstants.whiteTitleTextSmall,),
-                SizedBox(height: height * 0.02,),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 10.0,
-                          offset: Offset(0, 2),
-                        ),
-                      ]),
-                  height: 50.0,
-                  width: 250.0,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0),
-                    child: Center(
-                      child: TextFormField(
-                        //controller: _emailInputController,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Name',
-                            hintStyle:
-                            TextStyle(fontSize: 15.0,)),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: height * 0.02,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 10.0,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  height: 50.0,
-                  width: 250.0,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0),
-                    child: Center(
-                      child: TextFormField(
-                        //controller: _passwordInputController,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Frequency',
-                            hintStyle:
-                            TextStyle(fontSize: 15.0)),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: height * 0.02,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Next Date', style: StyleConstants.whiteTitleTextXS,),
-                    Icon(Icons.calendar_today, color: Colors.white,),
-                  ],
-                )
-              ]
-          )
-      );
-    }
-
-    Widget medWidget2(){
-      return Container(
-        //height: 250.0,
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.4),
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Medication 2', style: StyleConstants.whiteTitleTextSmall,),
-                SizedBox(height: height * 0.02,),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 10.0,
-                          offset: Offset(0, 2),
-                        ),
-                      ]),
-                  height: 50.0,
-                  width: 250.0,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0),
-                    child: Center(
-                      child: TextFormField(
-                        //controller: _emailInputController,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Name',
-                            hintStyle:
-                            TextStyle(fontSize: 15.0,)),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: height * 0.02,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 10.0,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  height: 50.0,
-                  width: 250.0,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0),
-                    child: Center(
-                      child: TextFormField(
-                        //controller: _passwordInputController,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Frequency',
-                            hintStyle:
-                            TextStyle(fontSize: 15.0)),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: height * 0.02,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Next Date', style: StyleConstants.whiteTitleTextXS,),
-                    Icon(Icons.calendar_today, color: Colors.white,),
-                  ],
-                )
-              ]
-          )
-      );
-    }
-
-    Widget vaccineWidgetTest(){
-      return Expanded(
-        child: ListView(
-          children: [
-            SlimyCard(
-              color: StyleConstants.yellow,
-              width: 300,
-              topCardHeight: 250,
-              bottomCardHeight: 250,
-              borderRadius: 15,
-              topCardWidget: medWidget1(),
-              bottomCardWidget: medWidget2(),
-              slimeEnabled: true,
-            ),
-          ],
-        ),
-      );
-    }
-
-
+    width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    height = MediaQuery
+        .of(context)
+        .size
+        .height;
 
     return Scaffold(
       backgroundColor: StyleConstants.blue,
@@ -221,16 +57,27 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: height * 0.05,),
+              SizedBox(
+                height: height * 0.05,
+              ),
               Container(
                 height: 70.0,
                 width: 200.0,
-                child: Image.asset('assets/images/logoyellow.png', fit: BoxFit.cover,),
+                child: Image.asset(
+                  'assets/images/logoyellow.png',
+                  fit: BoxFit.cover,
+                ),
               ),
-              SizedBox(height: height * 0.05,),
-              Text('Step 7: Reminders', style: StyleConstants.whiteTitleText,),
-              SizedBox(height: height * 0.01,),
-
+              SizedBox(
+                height: height * 0.05,
+              ),
+              Text(
+                'Step 7: Reminders',
+                style: StyleConstants.whiteTitleText,
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               Expanded(
                 child: ListView(
                   children: [
@@ -247,11 +94,27 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                   ],
                 ),
               ),
-
-              SizedBox(height: height * 0.02,),
+              SizedBox(
+                height: height * 0.02,
+              ),
               GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => StpCompleteScreen())),
+                onTap: () {
+                  Pet updatedPet = widget.pet;
+                  updatedPet.medications = new List<Medication>();
+                  for (int i = 0; i <
+                      _medicationNameInputControllers.length; i++) {
+                    if (_medicationNameInputControllers[i].text != null &&
+                        _medicationNameInputControllers[i].text.isNotEmpty &&
+                        _medicationFrequencyInputControllers[i].text != null &&
+                        _medicationFrequencyInputControllers[i].text
+                            .isNotEmpty) {
+                      updatedPet.medications.add(new Medication(name: _medicationNameInputControllers[i].text, frequency: int.parse(_medicationFrequencyInputControllers[i].text)));
+                    }
+                  }
+
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => StpCompleteScreen(pet: updatedPet, petImage: widget.petImage,)));
+                },
                 child: Container(
                   height: 55.0,
                   width: 250.0,
@@ -272,5 +135,191 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
         ),
       ),
     );
+  }
+
+  Widget medWidget1() {
+    return Container(
+        height: 250.0,
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.4),
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(
+            'Medication 1',
+            style: StyleConstants.whiteTitleTextSmall,
+          ),
+          SizedBox(
+            height: height * 0.02,
+          ),
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10.0,
+                    offset: Offset(0, 2),
+                  ),
+                ]),
+            height: 50.0,
+            width: 250.0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Center(
+                child: TextFormField(
+                  controller: _medicationNameInputControllers[0],
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Name',
+                      hintStyle: TextStyle(
+                        fontSize: 15.0,
+                      )),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: height * 0.02,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 10.0,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            height: 50.0,
+            width: 250.0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Center(
+                child: TextFormField(
+                  controller: _medicationFrequencyInputControllers[0],
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Frequency',
+                      hintStyle: TextStyle(fontSize: 15.0)),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: height * 0.02,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Next Date',
+                style: StyleConstants.whiteTitleTextXS,
+              ),
+              Icon(
+                Icons.calendar_today,
+                color: Colors.white,
+              ),
+            ],
+          )
+        ]));
+  }
+
+  Widget medWidget2() {
+    return Container(
+      //height: 250.0,
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.4),
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(
+            'Medication 2',
+            style: StyleConstants.whiteTitleTextSmall,
+          ),
+          SizedBox(
+            height: height * 0.02,
+          ),
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10.0,
+                    offset: Offset(0, 2),
+                  ),
+                ]),
+            height: 50.0,
+            width: 250.0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Center(
+                child: TextFormField(
+                  controller: _medicationNameInputControllers[1],
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Name',
+                      hintStyle: TextStyle(
+                        fontSize: 15.0,
+                      )),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: height * 0.02,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 10.0,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            height: 50.0,
+            width: 250.0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Center(
+                child: TextFormField(
+                  controller: _medicationFrequencyInputControllers[1],
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Frequency',
+                      hintStyle: TextStyle(fontSize: 15.0)),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: height * 0.02,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Next Date',
+                style: StyleConstants.whiteTitleTextXS,
+              ),
+              Icon(
+                Icons.calendar_today,
+                color: Colors.white,
+              ),
+            ],
+          )
+        ]));
   }
 }
