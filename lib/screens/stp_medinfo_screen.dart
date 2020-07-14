@@ -27,7 +27,7 @@ class _StpMedicalInfoScreenState extends State<StpMedicalInfoScreen> {
     _petAllergiesInputController = new TextEditingController();
     _specialNeedsInputController = new TextEditingController();
     _vetNameInputController = new TextEditingController();
-    _vetNameInputController = new TextEditingController();
+    _vetPhoneNumberInputController = new TextEditingController();
 
     super.initState();
   }

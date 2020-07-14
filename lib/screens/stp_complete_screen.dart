@@ -1,14 +1,41 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/root_screen.dart';
+import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/services/firebase_storage_helper.dart';
+import 'package:petcode_app/services/pet_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class StpCompleteScreen extends StatefulWidget {
+  StpCompleteScreen({Key key, this.pet, this.petImage}) : super(key: key);
+
+  final Pet pet;
+  final File petImage;
+
   @override
   _StpCompleteScreenState createState() => _StpCompleteScreenState();
 }
 
 class _StpCompleteScreenState extends State<StpCompleteScreen> {
-  String tagNum = "123123";
+  String tagNum;
+
+  @override
+  void initState() {
+    tagNum = widget.pet.pid;
+    addToDB();
+    super.initState();
+  }
+
+  addToDB() async {
+    String downloadUrl = await FirebaseStorageHelper().addPetImageToStorage(widget.petImage);
+
+    Pet updatedPet = widget.pet;
+    updatedPet.profileUrl = downloadUrl;
+
+    PetHelper().addPetToDb(updatedPet);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +94,8 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
               height: height * 0.05,
             ),
             GestureDetector(
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => RootScreen())),
+              onTap: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => RootScreen())),
               child: Container(
                 height: 55.0,
                 width: 250.0,

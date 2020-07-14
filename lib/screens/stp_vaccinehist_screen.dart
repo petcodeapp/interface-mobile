@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:petcode_app/models/Vaccination.dart';
 import 'package:petcode_app/screens/stp_reminders_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -17,217 +18,23 @@ class StpVaccineScreen extends StatefulWidget {
 }
 
 class _StpVaccineScreenState extends State<StpVaccineScreen> {
+  double width;
+  double height;
+
+  List<TextEditingController> _vaccineNameInputControllers;
+
+  @override
+  void initState() {
+    _vaccineNameInputControllers = new List<TextEditingController>();
+    _vaccineNameInputControllers.add(new TextEditingController());
+    _vaccineNameInputControllers.add(new TextEditingController());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
-    Widget vaccineWidget1() {
-      return Container(
-          height: 250.0,
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.4),
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              'Vaccine 1',
-              style: StyleConstants.whiteTitleTextSmall,
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 10.0,
-                      offset: Offset(0, 2),
-                    ),
-                  ]),
-              height: 50.0,
-              width: 250.0,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Center(
-                  child: TextFormField(
-                    //controller: _emailInputController,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Name',
-                        hintStyle: TextStyle(
-                          fontSize: 15.0,
-                        )),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 10.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              height: 50.0,
-              width: 250.0,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Center(
-                  child: TextFormField(
-                    //controller: _passwordInputController,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Expiration Date',
-                        hintStyle: TextStyle(fontSize: 15.0)),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Upload a Photo',
-                  style: StyleConstants.whiteTitleTextXS,
-                ),
-                Icon(
-                  Icons.add_a_photo,
-                  color: Colors.white,
-                ),
-              ],
-            )
-          ]));
-    }
-
-    Widget vaccineWidget2() {
-      return Container(
-          //height: 250.0,
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.4),
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              'Vaccine 2',
-              style: StyleConstants.whiteTitleTextSmall,
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 10.0,
-                      offset: Offset(0, 2),
-                    ),
-                  ]),
-              height: 50.0,
-              width: 250.0,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Center(
-                  child: TextFormField(
-                    //controller: _emailInputController,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Name',
-                        hintStyle: TextStyle(
-                          fontSize: 15.0,
-                        )),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 10.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              height: 50.0,
-              width: 250.0,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Center(
-                  child: TextFormField(
-                    //controller: _passwordInputController,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Expiration Date',
-                        hintStyle: TextStyle(fontSize: 15.0)),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Upload a Photo',
-                  style: StyleConstants.whiteTitleTextXS,
-                ),
-                Icon(
-                  Icons.add_a_photo,
-                  color: Colors.white,
-                ),
-              ],
-            )
-          ]));
-    }
-
-    Widget vaccineWidgetTest() {
-      return Expanded(
-        child: ListView(
-          children: [
-            SlimyCard(
-              color: StyleConstants.yellow,
-              width: 300,
-              topCardHeight: 250,
-              bottomCardHeight: 250,
-              borderRadius: 15,
-              topCardWidget: vaccineWidget1(),
-              bottomCardWidget: vaccineWidget2(),
-              slimeEnabled: true,
-            ),
-          ],
-        ),
-      );
-    }
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: StyleConstants.blue,
@@ -279,8 +86,18 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
                 height: height * 0.02,
               ),
               GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => StpRemindersScreen())),
+                onTap: () {
+                  Pet updatedPet = widget.pet;
+                  updatedPet.vaccinations = new List<Vaccination>();
+                  for (int i = 0; i < _vaccineNameInputControllers.length; i++) {
+                    if (_vaccineNameInputControllers[i].text != null && _vaccineNameInputControllers[i].text.isNotEmpty) {
+                      updatedPet.vaccinations.add(new Vaccination(name: _vaccineNameInputControllers[i].text));
+                    }
+                  }
+
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => StpRemindersScreen(pet: updatedPet, petImage: widget.petImage,)));
+                },
                 child: Container(
                   height: 55.0,
                   width: 250.0,
@@ -299,6 +116,211 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget vaccineWidget1() {
+    return Container(
+        height: 250.0,
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.4),
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(
+            'Vaccine 1',
+            style: StyleConstants.whiteTitleTextSmall,
+          ),
+          SizedBox(
+            height: height * 0.02,
+          ),
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10.0,
+                    offset: Offset(0, 2),
+                  ),
+                ]),
+            height: 50.0,
+            width: 250.0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Center(
+                child: TextFormField(
+                  controller: _vaccineNameInputControllers[0],
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Name',
+                      hintStyle: TextStyle(
+                        fontSize: 15.0,
+                      )),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: height * 0.02,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 10.0,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            height: 50.0,
+            width: 250.0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Center(
+                child: TextFormField(
+                  //controller: _passwordInputController,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Expiration Date',
+                      hintStyle: TextStyle(fontSize: 15.0)),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: height * 0.02,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Upload a Photo',
+                style: StyleConstants.whiteTitleTextXS,
+              ),
+              Icon(
+                Icons.add_a_photo,
+                color: Colors.white,
+              ),
+            ],
+          )
+        ]));
+  }
+
+  Widget vaccineWidget2() {
+    return Container(
+        //height: 250.0,
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.4),
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(
+            'Vaccine 2',
+            style: StyleConstants.whiteTitleTextSmall,
+          ),
+          SizedBox(
+            height: height * 0.02,
+          ),
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10.0,
+                    offset: Offset(0, 2),
+                  ),
+                ]),
+            height: 50.0,
+            width: 250.0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Center(
+                child: TextFormField(
+                  controller: _vaccineNameInputControllers[1],
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Name',
+                      hintStyle: TextStyle(
+                        fontSize: 15.0,
+                      )),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: height * 0.02,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 10.0,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            height: 50.0,
+            width: 250.0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Center(
+                child: TextFormField(
+                  //controller: _passwordInputController,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Expiration Date',
+                      hintStyle: TextStyle(fontSize: 15.0)),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: height * 0.02,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Upload a Photo',
+                style: StyleConstants.whiteTitleTextXS,
+              ),
+              Icon(
+                Icons.add_a_photo,
+                color: Colors.white,
+              ),
+            ],
+          )
+        ]));
+  }
+
+  Widget vaccineWidgetTest() {
+    return Expanded(
+      child: ListView(
+        children: [
+          SlimyCard(
+            color: StyleConstants.yellow,
+            width: 300,
+            topCardHeight: 250,
+            bottomCardHeight: 250,
+            borderRadius: 15,
+            topCardWidget: vaccineWidget1(),
+            bottomCardWidget: vaccineWidget2(),
+            slimeEnabled: true,
+          ),
+        ],
       ),
     );
   }
