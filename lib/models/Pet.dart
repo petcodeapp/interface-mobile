@@ -13,7 +13,9 @@ class Pet {
   String specialNeeds;
   String vetName;
   String vetPhoneNumber;
+  String uid;
   bool isServiceAnimal;
+  bool isLost;
   int age;
   List<Vaccination> vaccinations;
   List<Medication> medications;
@@ -32,7 +34,9 @@ class Pet {
       this.specialNeeds,
       this.vetName,
       this.vetPhoneNumber,
+      this.uid,
       this.isServiceAnimal,
+      this.isLost,
       this.age,
       this.vaccinations,
       this.medications,
@@ -95,7 +99,9 @@ class Pet {
       specialNeeds: json['specialNeeds'] as String,
       vetName: json['vetName'] as String,
       vetPhoneNumber: json['vetPhoneNumber'] as String,
+      uid: json['uid'] as String,
       isServiceAnimal: json['isServiceAnimal'] as bool,
+      isLost: json['isLost'] as bool,
       age: json['age'] as int,
       vaccinations: convertedList,
       medications: medicationConverted,
@@ -116,7 +122,9 @@ class Pet {
         'specialNeeds': instance.specialNeeds,
         'vetName': instance.vetName,
         'vetPhoneNumber': instance.vetPhoneNumber,
+        'uid': instance.uid,
         'isServiceAnimal': instance.isServiceAnimal,
+        'isLost': instance.isLost,
         'age': instance.age,
         'vaccinations': _vaccinationMaps(instance.vaccinations),
         'medications': _medicationMaps(instance.medications),

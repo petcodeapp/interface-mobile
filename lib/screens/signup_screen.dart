@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/services/auth.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
@@ -296,6 +297,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     _firstNameInputController.clear();
                     _lastNameInputController.clear();
                     _phoneNumberInputController.clear();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => StpStartScreen()),
+                    );
                   }
                 }
               },

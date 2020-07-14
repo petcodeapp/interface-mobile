@@ -5,21 +5,21 @@ import 'package:path/path.dart' as Path;
 
 class FirebaseStorageHelper {
 
-  FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
-  final imagePicker = ImagePicker();
+  static FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
+  static final imagePicker = ImagePicker();
 
-  Future<File> getImageFromGallery() async {
+  static Future<File> getImageFromGallery() async {
     final pickedFile = await imagePicker.getImage(source: ImageSource.gallery);
     return File(pickedFile.path);
   }
 
-  Future<File> getImageFromCamera() async {
+  static Future<File> getImageFromCamera() async {
     final pickedFile = await imagePicker.getImage(source: ImageSource.camera);
     return File(pickedFile.path);
   }
 
-  Future<dynamic> addPetImageToStorage(File image) async {
-    StorageTaskSnapshot snapshot = await _firebaseStorage.ref().child('petProfileUrls/${Path.basename(image.path)}').putFile(image).onComplete;
+  static Future<dynamic> addPetImageToStorage(File image) async {
+    StorageTaskSnapshot snapshot = await _firebaseStorage.ref().child('profilePictures/${Path.basename(image.path)}').putFile(image).onComplete;
     return snapshot.ref.getDownloadURL();
   }
 

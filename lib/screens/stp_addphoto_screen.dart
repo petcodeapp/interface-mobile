@@ -56,7 +56,7 @@ class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
               GestureDetector(
                 onTap: () async {
                   chosenImage =
-                      await FirebaseStorageHelper().getImageFromGallery();
+                      await FirebaseStorageHelper.getImageFromGallery();
                   setState(() {});
                 },
                 child: Container(

@@ -5,29 +5,19 @@ import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 
 class PetHelper {
-  Firestore _firestore = Firestore.instance;
-  StreamController controller = new StreamController();
+  static Firestore _firestore = Firestore.instance;
+  static StreamController controller = new StreamController();
 
-  PetHelper() {
-    controller.stream.listen((event) {
-      if (event is DocumentSnapshot) {
-        Pet newPet = Pet.fromSnapshot(event);
-        print(newPet.name);
-      }
-    });
-  }
-
-  Future<DocumentReference> addPetToDb(Pet pet) async {
+  static Future<DocumentReference> addPetToDb(Pet pet) async {
     await _firestore.collection('pets').document(pet.pid).setData(pet.toJson());
     return _firestore.collection('pets').document(pet.pid);
   }
 
-  void updatePet(Pet pet) {
+  static void updatePet(Pet pet) {
     _firestore.collection('pets').document(pet.pid).updateData(pet.toJson());
   }
 
-  updatePetContacts(String pid, Owner contact1, Owner contact2) async {
-
+  static updatePetContacts(String pid, Owner contact1, Owner contact2) async {
     Map<String, dynamic> contact1Json;
     if (contact1 != null) {
       contact1Json = contact1.toJson();
@@ -44,13 +34,14 @@ class PetHelper {
     });
   }
 
-  updateImageUrl(String pid, String imageUrl) {
+  static updateImageUrl(String pid, String imageUrl) {
     _firestore.collection('pets').document(pid).updateData({
       'profileUrl': imageUrl,
     });
   }
 
-  addPetInfo(String pid, String name, String breed, int age, String temperament, bool isServiceAnimal) {
+  static addPetInfo(String pid, String name, String breed, int age, String temperament,
+      bool isServiceAnimal) {
     _firestore.collection('pets').document(pid).updateData({
       'name': name,
       'breed': breed,
@@ -60,7 +51,8 @@ class PetHelper {
     });
   }
 
-  updateMedicalInfo(String pid, String allergies, String vetName, String vetPhoneNumber) {
+  static updateMedicalInfo(
+      String pid, String allergies, String vetName, String vetPhoneNumber) {
     _firestore.collection('pets').document(pid).updateData({
       'allergies': allergies,
       'vetName': vetName,
@@ -68,8 +60,15 @@ class PetHelper {
     });
   }
 
-
-  addListener(Pet pet) {
+  static addListener(Pet pet) {
     controller.addStream(pet.reference.snapshots());
+  }
+
+  static getAllPetsByUid(String uid) async {
+    _firestore.collection('pets').where('uid',isEqualTo: uid).snapshots().listen((QuerySnapshot event) {
+      for (DocumentSnapshot doc in event.documents) {
+        print(doc.data);
+      }
+    });
   }
 }

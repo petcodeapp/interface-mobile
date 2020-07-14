@@ -29,12 +29,13 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
   }
 
   addToDB() async {
-    String downloadUrl = await FirebaseStorageHelper().addPetImageToStorage(widget.petImage);
+    String downloadUrl = await FirebaseStorageHelper.addPetImageToStorage(widget.petImage);
 
     Pet updatedPet = widget.pet;
     updatedPet.profileUrl = downloadUrl;
+    updatedPet.isLost = false;
 
-    PetHelper().addPetToDb(updatedPet);
+    PetHelper.addPetToDb(updatedPet);
   }
 
   @override
