@@ -57,7 +57,7 @@ class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
               ),
               GestureDetector(
                 onTap: () async {
-                  final imagePicker = Provider.of<ImagePickerService>(context);
+                  final imagePicker = Provider.of<ImagePickerService>(context, listen: false);
                   chosenImage =
                       await imagePicker.pickImage(ImageSource.gallery);
                   setState(() {});

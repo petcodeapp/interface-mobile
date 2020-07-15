@@ -285,8 +285,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 if (_signupFormKey.currentState.validate()) {
                   try {
                     final authService =
-                        Provider.of<FirebaseAuthService>(context);
-                    final userService = Provider.of<UserService>(context);
+                        Provider.of<FirebaseAuthService>(context, listen: false);
+                    final userService = Provider.of<UserService>(context, listen: false);
 
                     UserId userId =
                         await authService.createUserWithEmailAndPassword(

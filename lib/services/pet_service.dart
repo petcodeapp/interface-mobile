@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:provider/provider.dart';
 
 class PetService {
   Firestore _firestore = Firestore.instance;
