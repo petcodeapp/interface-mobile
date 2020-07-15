@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Owner.dart';
+import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/stp_addphoto_screen.dart';
-import 'package:petcode_app/screens/stp_connecttag_screen.dart';
 import 'package:petcode_app/services/pet_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:slimy_card/slimy_card.dart';
 
 class StpContactScreen extends StatefulWidget {
-  StpContactScreen({Key key, this.pid}) : super(key: key);
+  StpContactScreen({Key key, this.pet}) : super(key: key);
 
-  final String pid;
+  final Pet pet;
 
   @override
   _StpContactScreenState createState() => _StpContactScreenState();
@@ -99,11 +99,13 @@ class _StpContactScreenState extends State<StpContactScreen> {
               ),
               GestureDetector(
                 onTap: () {
+                  Pet updatedPet = widget.pet;
                   Owner owner1 = new Owner(
                       name: _owner1Name.text,
                       phoneNumber: _owner1PhoneNumber.text,
                       email: _owner1Email.text,
                       address: _owner1Address.text);
+                  updatedPet.contact_1 = owner1;
 
                   if (_owner2Name.text != null &&
                       _owner2Name.text.isNotEmpty &&
@@ -119,13 +121,12 @@ class _StpContactScreenState extends State<StpContactScreen> {
                       email: _owner2Email.text,
                       address: _owner2Address.text,
                     );
-
-                    PetHelper().addPetContact(widget.pid, owner1, owner2);
+                    updatedPet.contact_2 = owner2;
                   } else {
-                    PetHelper().addPetContact(widget.pid, owner1, null);
+                    updatedPet.contact_2 = null;
                   }
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => StpAddPhotoScreen()));
+                      MaterialPageRoute(builder: (_) => StpAddPhotoScreen(pet: updatedPet,)));
                 },
                 child: Container(
                   height: 55.0,

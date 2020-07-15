@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/stp_contactinfo_screen.dart';
 import 'package:petcode_app/services/pet_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -103,9 +104,9 @@ class _StpConnectTagScreenState extends State<StpConnectTagScreen> {
               GestureDetector(
                 onTap: () {
                   print('TAPPED: ' + currentText);
-                  PetHelper().addPetInitial(currentText);
+                  Pet createdPet = new Pet(pid: currentText);
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => StpContactScreen(pid: currentText,)));
+                      MaterialPageRoute(builder: (_) => StpContactScreen(pet: createdPet,)));
                 },
                 child: Container(
                   height: 55.0,
