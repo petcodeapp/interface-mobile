@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/screens/entry_screen.dart';
-import 'package:petcode_app/screens/stp_start_screen.dart';
-import 'package:petcode_app/services/auth.dart';
-import 'package:petcode_app/services/pet_helper.dart';
+import 'package:petcode_app/widgets/auth_widget.dart';
+import 'package:petcode_app/widgets/auth_widget_builder.dart';
+import 'package:petcode_app/services/firebase_auth_service.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,11 +11,19 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    PetHelper.getAllPetsByUid('eMk8XO44ncYtlDaB4h37aLovj5v2');
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      home: EntryScreen(),
+    return MultiProvider(
+      providers: [
+        Provider<FirebaseAuthService>(
+          create: (_) => FirebaseAuthService(),
+        ),
+      ],
+      child: AuthWidgetBuilder(builder: (context, userIdSnapshot) {
+        return MaterialApp(
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          home: AuthWidget(userIdSnapshot: userIdSnapshot,),
+        );
+      }),
     );
   }
 }

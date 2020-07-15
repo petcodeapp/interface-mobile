@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/screens/signup_screen.dart';
 import 'package:petcode_app/services/auth.dart';
+import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -159,16 +161,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: GestureDetector(
                             onTap: () async {
                               if (_loginFormKey.currentState.validate()) {
-                                String result = await _auth.signIn(
-                                    _emailInputController.text,
-                                    _passwordInputController.text);
-                                if (result == 'complete') {
-                                  _emailInputController.clear();
-                                  _passwordInputController.clear();
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => RootScreen()));
+                                try {
+                                  final auth = Provider.of<FirebaseAuthService>(context, listen: false);
+                                  final user = auth.signInWithEmailAndPassword(_emailInputController.text, _passwordInputController.text);
+                                  if (user != null) {
+                                    _emailInputController.clear();
+                                    _passwordInputController.clear();
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => RootScreen()));
+                                  }
+                                }
+                                catch (e) {
+                                  print(e);
                                 }
                               }
                             },
