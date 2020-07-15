@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/screens/stp_start_screen.dart';
-import 'package:petcode_app/services/auth.dart';
+import 'package:petcode_app/models/User.dart';
+import 'package:petcode_app/services/firebase_auth_service.dart';
+import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/utils/validator_helper.dart';
+import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -9,8 +12,6 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  AuthService _auth = new AuthService();
-
   TextEditingController _emailInputController;
   TextEditingController _passwordInputController;
   TextEditingController _confirmPasswordInputController;
@@ -168,7 +169,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     hintText: 'Phone Number',
                                     hintStyle: TextStyle(fontSize: 15.0)),
                                 validator: (String value) =>
-                                    _auth.phoneNumberValidator(value),
+                                    ValidatorHelper.phoneNumberValidator(value),
                               ),
                             ),
                           ),
@@ -231,7 +232,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     hintText: 'Password',
                                     hintStyle: TextStyle(fontSize: 15.0)),
                                 validator: (String value) =>
-                                    _auth.passwordValidator(value),
+                                    ValidatorHelper.passwordValidator(value),
                               ),
                             ),
                           ),
@@ -264,7 +265,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     hintText: 'Confirm Password',
                                     hintStyle: TextStyle(fontSize: 15.0)),
                                 validator: (String value) =>
-                                    _auth.confirmPasswordValidator(
+                                    ValidatorHelper.confirmPasswordValidator(
                                         _passwordInputController.text, value),
                               ),
                             ),
@@ -282,25 +283,23 @@ class _SignupScreenState extends State<SignupScreen> {
             GestureDetector(
               onTap: () async {
                 if (_signupFormKey.currentState.validate()) {
-                  String result = await _auth.registerUser(
-                      _emailInputController.text,
-                      _passwordInputController.text,
-                      _firstNameInputController.text,
-                      _lastNameInputController.text,
-                      _phoneNumberInputController.text);
-                  if (result != 'complete') {
-                    print(result);
-                  } else {
-                    _emailInputController.clear();
-                    _passwordInputController.clear();
-                    _confirmPasswordInputController.clear();
-                    _firstNameInputController.clear();
-                    _lastNameInputController.clear();
-                    _phoneNumberInputController.clear();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => StpStartScreen()),
-                    );
+                  try {
+                    final authService =
+                        Provider.of<FirebaseAuthService>(context);
+                    final userService = Provider.of<UserService>(context);
+
+                    UserId userId =
+                        await authService.createUserWithEmailAndPassword(
+                            _emailInputController.text,
+                            _passwordInputController.text);
+                    User createdUser = await userService.createUser(
+                        _emailInputController.text,
+                        _firstNameInputController.text,
+                        _lastNameInputController.text,
+                        _phoneNumberInputController.text,
+                        userId.uid);
+                  } catch (e) {
+                    print(e);
                   }
                 }
               },

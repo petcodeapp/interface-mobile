@@ -4,9 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/services/firebase_storage_helper.dart';
-import 'package:petcode_app/services/pet_helper.dart';
+import 'package:petcode_app/services/firebase_storage_service.dart';
+import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:provider/provider.dart';
 
 class StpCompleteScreen extends StatefulWidget {
   StpCompleteScreen({Key key, this.pet, this.petImage}) : super(key: key);
@@ -29,13 +30,17 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
   }
 
   addToDB() async {
-    String downloadUrl = await FirebaseStorageHelper.addPetImageToStorage(widget.petImage);
+    final storageService = Provider.of<FirebaseStorageService>(context);
+
+    String downloadUrl =
+        await storageService.uploadPetImage(widget.petImage, widget.pet.pid);
 
     Pet updatedPet = widget.pet;
     updatedPet.profileUrl = downloadUrl;
     updatedPet.isLost = false;
 
-    PetHelper.addPetToDb(updatedPet);
+    final petService = Provider.of<PetService>(context);
+    petService.createPet(updatedPet);
   }
 
   @override

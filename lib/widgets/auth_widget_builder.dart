@@ -20,9 +20,6 @@ class AuthWidgetBuilder extends StatelessWidget {
             return MultiProvider(
               providers: [
                 Provider<UserId>.value(value: userId),
-                Provider<FirebaseStorageService>(
-                  create: (_) => FirebaseStorageService(),
-                ),
               ],
               child: builder(context, snapshot),
             );
