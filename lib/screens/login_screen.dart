@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {

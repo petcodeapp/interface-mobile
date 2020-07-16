@@ -13,7 +13,6 @@ class Pet {
   String specialNeeds;
   String vetName;
   String vetPhoneNumber;
-  String uid;
   bool isServiceAnimal;
   bool isLost;
   int age;
@@ -34,7 +33,6 @@ class Pet {
       this.specialNeeds,
       this.vetName,
       this.vetPhoneNumber,
-      this.uid,
       this.isServiceAnimal,
       this.isLost,
       this.age,
@@ -99,7 +97,6 @@ class Pet {
       specialNeeds: json['specialNeeds'] as String,
       vetName: json['vetName'] as String,
       vetPhoneNumber: json['vetPhoneNumber'] as String,
-      uid: json['uid'] as String,
       isServiceAnimal: json['isServiceAnimal'] as bool,
       isLost: json['isLost'] as bool,
       age: json['age'] as int,
@@ -122,7 +119,6 @@ class Pet {
         'specialNeeds': instance.specialNeeds,
         'vetName': instance.vetName,
         'vetPhoneNumber': instance.vetPhoneNumber,
-        'uid': instance.uid,
         'isServiceAnimal': instance.isServiceAnimal,
         'isLost': instance.isLost,
         'age': instance.age,

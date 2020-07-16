@@ -10,7 +10,7 @@ class UserId {
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
-class FirebaseAuthService with ChangeNotifier {
+class FirebaseAuthService extends ChangeNotifier {
   FirebaseAuth _firebaseAuth;
   FirebaseUser _firebaseUser;
   Status _status = Status.Uninitialized;

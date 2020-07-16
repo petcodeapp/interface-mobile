@@ -28,12 +28,6 @@ class MyApp extends StatelessWidget {
         Provider<ImagePickerService>(
           create: (_) => ImagePickerService(),
         ),
-        Provider<PetService>(
-          create: (_) => PetService(),
-        ),
-        Provider<UserService>(
-          create: (_) => UserService(),
-        ),
         Provider<DatabaseService>(
           create: (_) => DatabaseService(),
         )
@@ -67,7 +61,21 @@ class HomeScreen extends StatelessWidget {
           if (auth.isSigningIn) {
             return StpStartScreen();
           } else {
-            return RootScreen();
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (_) {
+                    String uid =
+                        Provider.of<FirebaseAuthService>(context).user.uid;
+                    return UserService(uid);
+                  },
+                ),
+                ChangeNotifierProvider(
+                  create: (_) => PetService(),
+                )
+              ],
+              child: RootScreen(),
+            );
           }
         }
       },

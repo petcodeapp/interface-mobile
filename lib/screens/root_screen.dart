@@ -4,7 +4,9 @@ import 'package:petcode_app/screens/account_screen.dart';
 import 'package:petcode_app/screens/home_screen.dart';
 import 'package:petcode_app/screens/medical_info_screen.dart';
 import 'package:petcode_app/screens/scans_screen.dart';
+import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:provider/provider.dart';
 
 class RootScreen extends StatefulWidget {
   @override
@@ -18,7 +20,11 @@ class _RootScreenState extends State<RootScreen> {
     HomeScreen(),
     ScansScreen(),
     MedicalInfoScreen(),
-    AccountScreen(),
+    Consumer<UserService>(
+      builder: (BuildContext context, UserService service, _) {
+        return AccountScreen();
+      },
+    ),
   ];
 
   @override
