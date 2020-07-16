@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/stp_petinfo_screen.dart';
-import 'package:petcode_app/services/firebase_storage_helper.dart';
+import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:provider/provider.dart';
 
 class StpAddPhotoScreen extends StatefulWidget {
   StpAddPhotoScreen({Key key, this.pet}) : super(key: key);
@@ -55,8 +57,9 @@ class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
               ),
               GestureDetector(
                 onTap: () async {
+                  final imagePicker = Provider.of<ImagePickerService>(context, listen: false);
                   chosenImage =
-                      await FirebaseStorageHelper().getImageFromGallery();
+                      await imagePicker.pickImage(ImageSource.gallery);
                   setState(() {});
                 },
                 child: Container(
@@ -79,8 +82,13 @@ class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => StpPetInfoScreen(pet: widget.pet, petImage: chosenImage,)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => StpPetInfoScreen(
+                                pet: widget.pet,
+                                petImage: chosenImage,
+                              )));
                 },
                 child: Container(
                   height: 55.0,

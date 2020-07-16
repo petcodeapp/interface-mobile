@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:petcode_app/screens/stp_connecttag_screen.dart';
 import 'package:petcode_app/screens/stp_medinfo_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/utils/style_constants.dart';
