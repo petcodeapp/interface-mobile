@@ -18,6 +18,7 @@ class _AccountScreenState extends State<AccountScreen> {
           onPressed: () {
             final auth = Provider.of<FirebaseAuthService>(context, listen: false);
             auth.signOut();
+            Navigator.pop(context);
           },
         )
       ]),

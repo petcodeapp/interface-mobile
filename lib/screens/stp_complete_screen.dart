@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -40,7 +41,12 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
     updatedPet.isLost = false;
 
     final petService = Provider.of<PetService>(context, listen: false);
-    petService.createPet(updatedPet);
+    await petService.createPet(updatedPet);
+    updateSigningIn();
+  }
+
+  void updateSigningIn() {
+    Provider.of<FirebaseAuthService>(context, listen: false).isSigningIn = false;
   }
 
   @override
@@ -100,8 +106,7 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
               height: height * 0.05,
             ),
             GestureDetector(
-              onTap: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => RootScreen())),
+              onTap: () => Navigator.pop(context),
               child: Container(
                 height: 55.0,
                 width: 250.0,

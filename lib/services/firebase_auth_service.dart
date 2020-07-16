@@ -8,37 +8,73 @@ class UserId {
   final String uid;
 }
 
-class FirebaseAuthService {
-  final _firebaseAuth = FirebaseAuth.instance;
+enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
-  UserId _userIdFromFirebaseUser(FirebaseUser user) {
-    if (user == null) {
-      return null;
-    } else {
-      return UserId(uid: user.uid);
+class FirebaseAuthService with ChangeNotifier {
+  FirebaseAuth _firebaseAuth;
+  FirebaseUser _firebaseUser;
+  Status _status = Status.Uninitialized;
+  bool isSigningIn = false;
+
+  FirebaseAuthService.instance() : _firebaseAuth = FirebaseAuth.instance {
+    _firebaseAuth.onAuthStateChanged.listen(_onAuthStateChanged);
+  }
+
+  Status get status => _status;
+
+  FirebaseUser get user => _firebaseUser;
+
+  Future<bool> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      _status = Status.Authenticating;
+      notifyListeners();
+      final authResult = await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
+      return true;
+    } catch (e) {
+      _status = Status.Unauthenticated;
+      print(e);
+      notifyListeners();
+      return false;
     }
   }
 
-  Stream<UserId> get onAuthStateChanged {
-    return _firebaseAuth.onAuthStateChanged
-        .map((FirebaseUser user) => _userIdFromFirebaseUser(user));
+  Future<bool> createUserWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      _status = Status.Authenticating;
+      isSigningIn = true;
+      notifyListeners();
+      final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      return true;
+    } catch (e) {
+      _status = Status.Unauthenticated;
+      print(e);
+      notifyListeners();
+      return false;
+    }
   }
 
-  Future<UserId> signInWithEmailAndPassword(
-      String email, String password) async {
-    final authResult = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email, password: password);
-    return _userIdFromFirebaseUser(authResult.user);
-  }
-
-  Future<UserId> createUserWithEmailAndPassword(
-      String email, String password) async {
-    final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
-    return _userIdFromFirebaseUser(authResult.user);
+  Future<void> _onAuthStateChanged(FirebaseUser firebaseUser) async {
+    if (firebaseUser == null) {
+      _status = Status.Unauthenticated;
+    } else {
+      print(firebaseUser);
+      _firebaseUser = firebaseUser;
+      _status = Status.Authenticated;
+    }
+    notifyListeners();
   }
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
+    _status = Status.Unauthenticated;
+    notifyListeners();
+  }
+
+  finishedSignIn() {
+    isSigningIn = false;
+    notifyListeners();
   }
 }

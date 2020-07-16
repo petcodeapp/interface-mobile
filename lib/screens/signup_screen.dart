@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/User.dart';
+import 'package:petcode_app/screens/stp_connecttag_screen.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -284,20 +285,26 @@ class _SignupScreenState extends State<SignupScreen> {
               onTap: () async {
                 if (_signupFormKey.currentState.validate()) {
                   try {
-                    final authService =
-                        Provider.of<FirebaseAuthService>(context, listen: false);
-                    final userService = Provider.of<UserService>(context, listen: false);
+                    final authService = Provider.of<FirebaseAuthService>(
+                        context,
+                        listen: false);
+                    final userService =
+                        Provider.of<UserService>(context, listen: false);
 
-                    UserId userId =
-                        await authService.createUserWithEmailAndPassword(
-                            _emailInputController.text,
-                            _passwordInputController.text);
+                    authService.isSigningIn = true;
+
+                    await authService.createUserWithEmailAndPassword(
+                        _emailInputController.text,
+                        _passwordInputController.text);
+
                     User createdUser = await userService.createUser(
                         _emailInputController.text,
                         _firstNameInputController.text,
                         _lastNameInputController.text,
                         _phoneNumberInputController.text,
-                        userId.uid);
+                        authService.user.uid);
+
+                    authService.isSigningIn = false;
                   } catch (e) {
                     print(e);
                   }

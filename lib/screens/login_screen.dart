@@ -24,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final auth = Provider.of<FirebaseAuthService>(context);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -143,7 +144,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                             border: InputBorder.none,
                                             hintText: 'Password',
                                             hintStyle:
-                                                TextStyle(fontSize: 15.0)),
+                                                TextStyle(fontSize: 15.0),),
+                                        obscureText: true,
                                       ),
                                     ),
                                   ),
@@ -158,9 +160,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             onTap: () async {
                               if (_loginFormKey.currentState.validate()) {
                                 try {
-                                  final auth = Provider.of<FirebaseAuthService>(context, listen: false);
-                                  final user = auth.signInWithEmailAndPassword(_emailInputController.text, _passwordInputController.text);
-                                  if (user != null) {
+                                  final successful = await auth.signInWithEmailAndPassword(_emailInputController.text, _passwordInputController.text);
+                                  if (successful) {
                                     _emailInputController.clear();
                                     _passwordInputController.clear();
                                     Navigator.push(
@@ -174,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }
                               }
                             },
-                            child: Container(
+                            child: auth.status == Status.Unauthenticated ? Container(
                               decoration: StyleConstants.roundYellowButtonDeco,
                               width: 220.0,
                               height: 60.0,
@@ -184,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   style: StyleConstants.whiteButtonText,
                                 ),
                               ),
-                            ),
+                            ) : CircularProgressIndicator(),
                           ),
                         ),
                       ],

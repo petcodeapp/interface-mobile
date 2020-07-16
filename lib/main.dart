@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/services/image_picker_service.dart';
-import 'package:petcode_app/services/pet_service.dart';
-import 'package:petcode_app/services/user_service.dart';
-import 'package:petcode_app/widgets/auth_widget.dart';
-import 'package:petcode_app/widgets/auth_widget_builder.dart';
+import 'package:petcode_app/screens/entry_screen.dart';
+import 'package:petcode_app/screens/root_screen.dart';
+import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
-import 'services/firebase_storage_service.dart';
+import 'package:petcode_app/services/firebase_storage_service.dart';
+import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -15,31 +14,41 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<FirebaseAuthService>(
-          create: (_) => FirebaseAuthService(),
-        ),
-        Provider<FirebaseStorageService>(
-          create: (_) => FirebaseStorageService(),
-        ),
-        Provider<UserService>(
-          create: (_) => UserService(),
-        ),
-        Provider<PetService>(
-          create: (_) => PetService(),
-        ),
-        Provider<ImagePickerService>(
-          create: (_) => ImagePickerService(),
-        ),
-      ],
-      child: AuthWidgetBuilder(builder: (context, userIdSnapshot) {
-        return MaterialApp(
-          title: 'Flutter Demo',
-          debugShowCheckedModeBanner: false,
-          home: AuthWidget(userIdSnapshot: userIdSnapshot,),
-        );
-      }),
+    return ChangeNotifierProvider(
+      create: (_) => FirebaseAuthService.instance(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        home: HomeScreen(),
+      ),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<FirebaseAuthService>(
+      builder: (context, FirebaseAuthService auth, _) {
+        print('changed: ' + auth.status.index.toString());
+        if (auth.status == Status.Uninitialized) {
+          return Scaffold(
+            body: Center(
+              child: Text('loading'),
+            ),
+          );
+        } else if (auth.status == Status.Authenticating ||
+            auth.status == Status.Unauthenticated) {
+          print('entry screen!');
+          return EntryScreen();
+        } else {
+          if (auth.isSigningIn) {
+            return StpStartScreen();
+          } else {
+            return RootScreen();
+          }
+        }
+      },
     );
   }
 }
