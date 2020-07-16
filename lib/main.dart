@@ -5,6 +5,8 @@ import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
+import 'package:petcode_app/services/pet_service.dart';
+import 'package:petcode_app/services/user_service.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -14,8 +16,24 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => FirebaseAuthService.instance(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<FirebaseAuthService>(
+          create: (_) => FirebaseAuthService.instance(),
+        ),
+        Provider<FirebaseStorageService>(
+          create: (_) => FirebaseStorageService(),
+        ),
+        Provider<ImagePickerService>(
+          create: (_) => ImagePickerService(),
+        ),
+        Provider<PetService>(
+          create: (_) => PetService(),
+        ),
+        Provider<UserService>(
+          create: (_) => UserService(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,

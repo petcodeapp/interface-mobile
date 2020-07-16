@@ -35,6 +35,9 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authService =
+        Provider.of<FirebaseAuthService>(context, listen: false);
+    print(authService.status);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -285,42 +288,45 @@ class _SignupScreenState extends State<SignupScreen> {
               onTap: () async {
                 if (_signupFormKey.currentState.validate()) {
                   try {
-                    final authService = Provider.of<FirebaseAuthService>(
-                        context,
-                        listen: false);
                     final userService =
                         Provider.of<UserService>(context, listen: false);
 
                     authService.isSigningIn = true;
 
-                    await authService.createUserWithEmailAndPassword(
-                        _emailInputController.text,
-                        _passwordInputController.text);
+                    bool success =
+                        await authService.createUserWithEmailAndPassword(
+                            _emailInputController.text,
+                            _passwordInputController.text);
 
-                    User createdUser = await userService.createUser(
-                        _emailInputController.text,
-                        _firstNameInputController.text,
-                        _lastNameInputController.text,
-                        _phoneNumberInputController.text,
-                        authService.user.uid);
+                    if (success) {
+                      User createdUser = await userService.createUser(
+                          _emailInputController.text,
+                          _firstNameInputController.text,
+                          _lastNameInputController.text,
+                          _phoneNumberInputController.text,
+                          authService.user.uid);
 
-                    authService.isSigningIn = false;
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/', (_) => false);
+                    }
                   } catch (e) {
                     print(e);
                   }
                 }
               },
-              child: Container(
-                height: 55.0,
-                width: 250.0,
-                decoration: StyleConstants.roundYellowButtonDeco,
-                child: Center(
-                  child: Text(
-                    'Submit',
-                    style: StyleConstants.whiteButtonText,
-                  ),
-                ),
-              ),
+              child: authService.status != Status.Authenticating
+                  ? Container(
+                      height: 55.0,
+                      width: 250.0,
+                      decoration: StyleConstants.roundYellowButtonDeco,
+                      child: Center(
+                        child: Text(
+                          'Submit',
+                          style: StyleConstants.whiteButtonText,
+                        ),
+                      ),
+                    )
+                  : CircularProgressIndicator(),
             ),
             SizedBox(
               height: 10.0,

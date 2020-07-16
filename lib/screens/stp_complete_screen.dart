@@ -47,6 +47,7 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
 
   void updateSigningIn() {
     Provider.of<FirebaseAuthService>(context, listen: false).isSigningIn = false;
+    Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
   }
 
   @override

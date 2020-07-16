@@ -141,10 +141,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       child: TextFormField(
                                         controller: _passwordInputController,
                                         decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: 'Password',
-                                            hintStyle:
-                                                TextStyle(fontSize: 15.0),),
+                                          border: InputBorder.none,
+                                          hintText: 'Password',
+                                          hintStyle: TextStyle(fontSize: 15.0),
+                                        ),
                                         obscureText: true,
                                       ),
                                     ),
@@ -160,32 +160,35 @@ class _LoginScreenState extends State<LoginScreen> {
                             onTap: () async {
                               if (_loginFormKey.currentState.validate()) {
                                 try {
-                                  final successful = await auth.signInWithEmailAndPassword(_emailInputController.text, _passwordInputController.text);
+                                  final successful =
+                                      await auth.signInWithEmailAndPassword(
+                                          _emailInputController.text,
+                                          _passwordInputController.text);
                                   if (successful) {
                                     _emailInputController.clear();
                                     _passwordInputController.clear();
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => RootScreen()));
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, '/', (_) => false);
                                   }
-                                }
-                                catch (e) {
+                                } catch (e) {
                                   print(e);
                                 }
                               }
                             },
-                            child: auth.status == Status.Unauthenticated ? Container(
-                              decoration: StyleConstants.roundYellowButtonDeco,
-                              width: 220.0,
-                              height: 60.0,
-                              child: Center(
-                                child: Text(
-                                  'Login',
-                                  style: StyleConstants.whiteButtonText,
-                                ),
-                              ),
-                            ) : CircularProgressIndicator(),
+                            child: auth.status == Status.Unauthenticated
+                                ? Container(
+                                    decoration:
+                                        StyleConstants.roundYellowButtonDeco,
+                                    width: 220.0,
+                                    height: 60.0,
+                                    child: Center(
+                                      child: Text(
+                                        'Login',
+                                        style: StyleConstants.whiteButtonText,
+                                      ),
+                                    ),
+                                  )
+                                : CircularProgressIndicator(),
                           ),
                         ),
                       ],

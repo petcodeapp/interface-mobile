@@ -43,6 +43,7 @@ class FirebaseAuthService with ChangeNotifier {
       String email, String password) async {
     try {
       _status = Status.Authenticating;
+      print('updated status');
       isSigningIn = true;
       notifyListeners();
       final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
