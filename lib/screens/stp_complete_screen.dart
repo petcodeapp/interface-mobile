@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/pet_service.dart';
@@ -31,7 +32,8 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
   }
 
   addToDB() async {
-    final storageService = Provider.of<FirebaseStorageService>(context, listen: false);
+    final storageService =
+        Provider.of<FirebaseStorageService>(context, listen: false);
 
     String downloadUrl =
         await storageService.uploadPetImage(widget.petImage, widget.pet.pid);
@@ -40,13 +42,15 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
     updatedPet.profileUrl = downloadUrl;
     updatedPet.isLost = false;
 
-    final petService = Provider.of<PetService>(context, listen: false);
-    await petService.createPet(updatedPet);
+    final databaseService =
+        Provider.of<DatabaseService>(context, listen: false);
+    await databaseService.createPet(updatedPet);
     updateSigningIn();
   }
 
   void updateSigningIn() {
-    Provider.of<FirebaseAuthService>(context, listen: false).isSigningIn = false;
+    Provider.of<FirebaseAuthService>(context, listen: false).isSigningIn =
+        false;
     Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
   }
 

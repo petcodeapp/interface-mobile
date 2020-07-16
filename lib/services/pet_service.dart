@@ -1,19 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 
-class PetService {
+class PetService with ChangeNotifier {
   Firestore _firestore = Firestore.instance;
 
-  Future<void> createPet(Pet pet) async {
-    await _firestore.collection('pets').document(pet.pid).setData(pet.toJson());
-  }
+  List<Pet> _allPets = new List<Pet>();
 
-  Future<void> updatePet(Pet pet) async {
-    await _firestore
-        .collection('pets')
-        .document(pet.pid)
-        .updateData(pet.toJson());
-  }
+  List<Pet> get _pets => _allPets;
 
   List<Pet> petListFromQuery(QuerySnapshot snapshot) {
     List<Pet> returnedList = new List<Pet>();
