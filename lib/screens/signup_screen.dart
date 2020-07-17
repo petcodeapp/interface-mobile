@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/User.dart';
 import 'package:petcode_app/screens/stp_connecttag_screen.dart';
+import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -36,7 +37,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     final authService =
-        Provider.of<FirebaseAuthService>(context, listen: false);
+        Provider.of<FirebaseAuthService>(context);
     print(authService.status);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -288,10 +289,10 @@ class _SignupScreenState extends State<SignupScreen> {
               onTap: () async {
                 if (_signupFormKey.currentState.validate()) {
                   try {
-                    final userService =
-                        Provider.of<UserService>(context, listen: false);
+                    final databaseService =
+                        Provider.of<DatabaseService>(context, listen: false);
 
-                    authService.isSigningIn = true;
+                    authService.startSigningUp();
 
                     bool success =
                         await authService.createUserWithEmailAndPassword(
@@ -299,7 +300,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             _passwordInputController.text);
 
                     if (success) {
-                      User createdUser = await userService.createUser(
+                      User createdUser = await databaseService.createUser(
                           _emailInputController.text,
                           _firstNameInputController.text,
                           _lastNameInputController.text,

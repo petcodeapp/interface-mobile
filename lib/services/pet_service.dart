@@ -1,34 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 
-class PetService {
+class PetService extends ChangeNotifier {
   Firestore _firestore = Firestore.instance;
 
-  Future<void> createPet(Pet pet) async {
-    await _firestore.collection('pets').document(pet.pid).setData(pet.toJson());
+  List<Pet> _allPets = new List<Pet>();
+
+  List<Pet> get allPets => _allPets;
+
+  PetService(List<String> petIds) {
+    startPetStream(petIds);
   }
 
-  Future<void> updatePet(Pet pet) async {
-    await _firestore
-        .collection('pets')
-        .document(pet.pid)
-        .updateData(pet.toJson());
-  }
-
-  List<Pet> petListFromQuery(QuerySnapshot snapshot) {
+  List<Pet> petListFromQuery(QuerySnapshot querySnapshot) {
     List<Pet> returnedList = new List<Pet>();
-    List<DocumentSnapshot> petSnapshots = snapshot.documents;
+    List<DocumentSnapshot> petSnapshots = querySnapshot.documents;
     for (int i = 0; i < petSnapshots.length; i++) {
       returnedList.add(Pet.fromSnapshot(petSnapshots[i]));
     }
     return returnedList;
   }
 
-  Stream<List<Pet>> petStream(String uid) {
-    return _firestore
+  void startPetStream(List<String> petIds) {
+    _firestore
         .collection('pets')
-        .where('uid', isEqualTo: uid)
+        .where('pid', whereIn: petIds)
         .snapshots()
-        .map((QuerySnapshot querySnapshot) => petListFromQuery(querySnapshot));
+        .listen((QuerySnapshot querySnapshot) {
+      _allPets = petListFromQuery(querySnapshot);
+      notifyListeners();
+    });
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/pet_service.dart';
@@ -26,12 +27,12 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
   @override
   void initState() {
     tagNum = widget.pet.pid;
-    addToDB();
     super.initState();
   }
 
   addToDB() async {
-    final storageService = Provider.of<FirebaseStorageService>(context, listen: false);
+    final storageService =
+        Provider.of<FirebaseStorageService>(context, listen: false);
 
     String downloadUrl =
         await storageService.uploadPetImage(widget.petImage, widget.pet.pid);
@@ -40,13 +41,20 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
     updatedPet.profileUrl = downloadUrl;
     updatedPet.isLost = false;
 
-    final petService = Provider.of<PetService>(context, listen: false);
-    await petService.createPet(updatedPet);
-    updateSigningIn();
+    final databaseService =
+        Provider.of<DatabaseService>(context, listen: false);
+    await databaseService.createPet(updatedPet);
+
+    final authService =
+        Provider.of<FirebaseAuthService>(context, listen: false);
+    await databaseService.createUserPetList(
+        updatedPet.pid, authService.user.uid);
+
+    updateSigningUp();
   }
 
-  void updateSigningIn() {
-    Provider.of<FirebaseAuthService>(context, listen: false).isSigningIn = false;
+  void updateSigningUp() {
+    Provider.of<FirebaseAuthService>(context, listen: false).finishedSignUp();
     Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
   }
 
@@ -107,7 +115,9 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
               height: height * 0.05,
             ),
             GestureDetector(
-              onTap: () => Navigator.pop(context),
+              onTap: () {
+                addToDB();
+              },
               child: Container(
                 height: 55.0,
                 width: 250.0,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/screens/stp_start_screen.dart';
+import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
@@ -27,12 +28,9 @@ class MyApp extends StatelessWidget {
         Provider<ImagePickerService>(
           create: (_) => ImagePickerService(),
         ),
-        Provider<PetService>(
-          create: (_) => PetService(),
-        ),
-        Provider<UserService>(
-          create: (_) => UserService(),
-        ),
+        Provider<DatabaseService>(
+          create: (_) => DatabaseService(),
+        )
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -60,10 +58,25 @@ class HomeScreen extends StatelessWidget {
           print('entry screen!');
           return EntryScreen();
         } else {
-          if (auth.isSigningIn) {
+          if (auth.isSigningUp) {
             return StpStartScreen();
           } else {
-            return RootScreen();
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (_) {
+                    String uid =
+                        Provider.of<FirebaseAuthService>(context).user.uid;
+                    return UserService(uid);
+                  },
+                ),
+                ChangeNotifierProxyProvider<UserService, PetService>(
+                  update: (_, userService, __) =>
+                      PetService(userService.currentUser.petIds),
+                ),
+              ],
+              child: RootScreen(),
+            );
           }
         }
       },

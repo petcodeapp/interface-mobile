@@ -10,11 +10,11 @@ class UserId {
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
-class FirebaseAuthService with ChangeNotifier {
+class FirebaseAuthService extends ChangeNotifier {
   FirebaseAuth _firebaseAuth;
   FirebaseUser _firebaseUser;
   Status _status = Status.Uninitialized;
-  bool isSigningIn = false;
+  bool _isSigningUp = false;
 
   FirebaseAuthService.instance() : _firebaseAuth = FirebaseAuth.instance {
     _firebaseAuth.onAuthStateChanged.listen(_onAuthStateChanged);
@@ -23,6 +23,8 @@ class FirebaseAuthService with ChangeNotifier {
   Status get status => _status;
 
   FirebaseUser get user => _firebaseUser;
+
+  bool get isSigningUp => _isSigningUp;
 
   Future<bool> signInWithEmailAndPassword(String email, String password) async {
     try {
@@ -44,7 +46,7 @@ class FirebaseAuthService with ChangeNotifier {
     try {
       _status = Status.Authenticating;
       print('updated status');
-      isSigningIn = true;
+      _isSigningUp = true;
       notifyListeners();
       final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -68,14 +70,19 @@ class FirebaseAuthService with ChangeNotifier {
     notifyListeners();
   }
 
+  void startSigningUp() {
+    _isSigningUp = true;
+    notifyListeners();
+  }
+
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
     _status = Status.Unauthenticated;
     notifyListeners();
   }
 
-  finishedSignIn() {
-    isSigningIn = false;
+  void finishedSignUp() {
+    _isSigningUp = false;
     notifyListeners();
   }
 }

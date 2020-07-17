@@ -1,22 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:petcode_app/models/User.dart';
 
-class UserService {
+class UserService extends ChangeNotifier {
   Firestore _firestore = Firestore.instance;
 
-  Future<User> createUser(String email, String firstName, String lastName,
-      String phoneNumber, String uid) async {
-    User newUser = User(
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
-      phoneNumber: phoneNumber,
-      uid: uid,
-    );
-    await _firestore
+  String _uid;
+  User _currentUser;
+
+  User get currentUser => _currentUser;
+
+  UserService(String uid) {
+    _uid = uid;
+    startUserStream();
+  }
+
+  void startUserStream() {
+    _firestore
         .collection('users')
-        .document(uid)
-        .setData(newUser.toJson());
-    return newUser;
+        .document(_uid)
+        .snapshots()
+        .listen((DocumentSnapshot snapshot) {
+      _currentUser = User.fromSnapshot(snapshot);
+      notifyListeners();
+    });
   }
 }
