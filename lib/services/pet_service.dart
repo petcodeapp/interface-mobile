@@ -9,6 +9,10 @@ class PetService extends ChangeNotifier {
 
   List<Pet> get allPets => _allPets;
 
+  PetService(List<String> petIds) {
+    startPetStream(petIds);
+  }
+
   List<Pet> petListFromQuery(QuerySnapshot querySnapshot) {
     List<Pet> returnedList = new List<Pet>();
     List<DocumentSnapshot> petSnapshots = querySnapshot.documents;

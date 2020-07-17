@@ -27,7 +27,6 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
   @override
   void initState() {
     tagNum = widget.pet.pid;
-    addToDB();
     super.initState();
   }
 
@@ -45,12 +44,17 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
     final databaseService =
         Provider.of<DatabaseService>(context, listen: false);
     await databaseService.createPet(updatedPet);
-    updateSigningIn();
+
+    final authService =
+        Provider.of<FirebaseAuthService>(context, listen: false);
+    await databaseService.createUserPetList(
+        updatedPet.pid, authService.user.uid);
+
+    updateSigningUp();
   }
 
-  void updateSigningIn() {
-    Provider.of<FirebaseAuthService>(context, listen: false).isSigningIn =
-        false;
+  void updateSigningUp() {
+    Provider.of<FirebaseAuthService>(context, listen: false).finishedSignUp();
     Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
   }
 
@@ -111,7 +115,9 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
               height: height * 0.05,
             ),
             GestureDetector(
-              onTap: () => Navigator.pop(context),
+              onTap: () {
+                addToDB();
+              },
               child: Container(
                 height: 55.0,
                 width: 250.0,

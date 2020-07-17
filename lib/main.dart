@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
           print('entry screen!');
           return EntryScreen();
         } else {
-          if (auth.isSigningIn) {
+          if (auth.isSigningUp) {
             return StpStartScreen();
           } else {
             return MultiProvider(
@@ -70,9 +70,10 @@ class HomeScreen extends StatelessWidget {
                     return UserService(uid);
                   },
                 ),
-                ChangeNotifierProvider(
-                  create: (_) => PetService(),
-                )
+                ChangeNotifierProxyProvider<UserService, PetService>(
+                  update: (_, userService, __) =>
+                      PetService(userService.currentUser.petIds),
+                ),
               ],
               child: RootScreen(),
             );

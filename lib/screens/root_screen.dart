@@ -4,6 +4,7 @@ import 'package:petcode_app/screens/account_screen.dart';
 import 'package:petcode_app/screens/home_screen.dart';
 import 'package:petcode_app/screens/medical_info_screen.dart';
 import 'package:petcode_app/screens/scans_screen.dart';
+import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,11 @@ class _RootScreenState extends State<RootScreen> {
   int _currentIndex = 0;
   PageController _pageController = PageController(initialPage: 0);
   var _pageOptions = [
-    HomeScreen(),
+    Consumer<PetService>(
+      builder: (BuildContext context, PetService petService, _) {
+        return HomeScreen();
+      },
+    ),
     ScansScreen(),
     MedicalInfoScreen(),
     Consumer<UserService>(
@@ -57,7 +62,6 @@ class _RootScreenState extends State<RootScreen> {
         bottomNavigationBar: BottomNavyBar(
           selectedIndex: _currentIndex,
           showElevation: true,
-
           itemCornerRadius: 20,
           curve: Curves.decelerate,
           onItemSelected: (index) => setState(() {

@@ -37,7 +37,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     final authService =
-        Provider.of<FirebaseAuthService>(context, listen: false);
+        Provider.of<FirebaseAuthService>(context);
     print(authService.status);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -292,7 +292,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     final databaseService =
                         Provider.of<DatabaseService>(context, listen: false);
 
-                    authService.isSigningIn = true;
+                    authService.startSigningUp();
 
                     bool success =
                         await authService.createUserWithEmailAndPassword(
