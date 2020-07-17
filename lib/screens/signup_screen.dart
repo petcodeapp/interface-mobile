@@ -296,15 +296,15 @@ class _SignupScreenState extends State<SignupScreen> {
 
                     bool success =
                         await authService.createUserWithEmailAndPassword(
-                            _emailInputController.text,
-                            _passwordInputController.text);
+                            _emailInputController.text.trim(),
+                            _passwordInputController.text.trim());
 
                     if (success) {
                       User createdUser = await databaseService.createUser(
-                          _emailInputController.text,
-                          _firstNameInputController.text,
-                          _lastNameInputController.text,
-                          _phoneNumberInputController.text,
+                          _emailInputController.text.trim(),
+                          _firstNameInputController.text.trim(),
+                          _lastNameInputController.text.trim(),
+                          _phoneNumberInputController.text.trim(),
                           authService.user.uid);
 
                       Navigator.pushNamedAndRemoveUntil(

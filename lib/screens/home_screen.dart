@@ -13,12 +13,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String name = 'Lucas';
+  PetService petService;
 
   PageController _mainPageController;
   PageController _secondPageController;
   ValueNotifier _currentPageNotifier = ValueNotifier<int>(0);
 
-  List<String> images;
   List<String> names;
 
   List<String> reminders = [
@@ -41,16 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
-    final petService = Provider.of<PetService>(context);
+    petService = Provider.of<PetService>(context);
     if (petService.allPets == null) {
       return Scaffold(
         body: Center(
@@ -58,13 +52,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     } else {
-      images = new List<String>();
       names = new List<String>();
 
       for (int i = 0; i < petService.allPets.length; i++) {
         Pet currentPet = petService.allPets[i];
         names.add(currentPet.name);
-        images.add('assets/images/stockphotodog1.jpg');
       }
 
       return Scaffold(
@@ -82,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   height: 200.0,
                   child: PageView.builder(
-                    itemCount: images.length,
+                    itemCount: petService.petImages.length,
                     controller: _mainPageController,
                     onPageChanged: (int index) {
                       _currentPageNotifier.value = index;
@@ -98,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 CirclePageIndicator(
                   selectedDotColor: Colors.white,
-                  itemCount: images.length,
+                  itemCount: petService.petImages.length,
                   currentPageNotifier: _currentPageNotifier,
                 ),
                 SizedBox(
@@ -135,9 +127,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       padding: const EdgeInsets.all(15.0),
                                       child: Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             'Pet Actions',
@@ -151,8 +143,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             padding: const EdgeInsets.all(15.0),
                                             child: Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 GestureDetector(
                                                   onTap: () =>
@@ -169,16 +161,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         style: TextStyle(
                                                             color: Colors.white,
                                                             fontWeight:
-                                                            FontWeight
-                                                                .w400),
+                                                                FontWeight
+                                                                    .w400),
                                                       )
                                                     ],
                                                   ),
                                                 ),
                                                 GestureDetector(
-                                                  onTap: () =>
-                                                      print(
-                                                          'schedule meds tapped'),
+                                                  onTap: () => print(
+                                                      'schedule meds tapped'),
                                                   child: Column(
                                                     children: [
                                                       Icon(
@@ -191,8 +182,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         style: TextStyle(
                                                             color: Colors.white,
                                                             fontWeight:
-                                                            FontWeight
-                                                                .w400),
+                                                                FontWeight
+                                                                    .w400),
                                                       )
                                                     ],
                                                   ),
@@ -212,8 +203,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         style: TextStyle(
                                                             color: Colors.white,
                                                             fontWeight:
-                                                            FontWeight
-                                                                .w400),
+                                                                FontWeight
+                                                                    .w400),
                                                       )
                                                     ],
                                                   ),
@@ -248,12 +239,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   borderRadius:
-                                                  BorderRadius.circular(
-                                                      15.0)),
+                                                      BorderRadius.circular(
+                                                          15.0)),
                                               height: 60.0,
                                               child: Padding(
                                                 padding:
-                                                const EdgeInsets.all(8.0),
+                                                    const EdgeInsets.all(8.0),
                                                 child: Row(
                                                   //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
@@ -265,28 +256,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         });
                                                       },
                                                       activeColor:
-                                                      StyleConstants.green,
+                                                          StyleConstants.green,
                                                     ),
                                                     Column(
                                                       crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
                                                         Text(
                                                           reminders[index],
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               fontWeight:
-                                                              FontWeight
-                                                                  .w400),
+                                                                  FontWeight
+                                                                      .w400),
                                                         ),
                                                         Text(
                                                           reminderPets[index],
                                                           style: TextStyle(
                                                               fontSize: 15.0,
                                                               fontWeight:
-                                                              FontWeight
-                                                                  .w300),
+                                                                  FontWeight
+                                                                      .w300),
                                                         ),
                                                       ],
                                                     ),
@@ -339,9 +330,8 @@ class _HomeScreenState extends State<HomeScreen> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
           ),
-          child: Image.asset(
-            images[index],
-            fit: BoxFit.cover,
+          child: Image(
+            image: petService.petImages[index],
           ),
         ),
       ),

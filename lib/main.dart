@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
@@ -71,9 +72,15 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
                 ChangeNotifierProxyProvider<UserService, PetService>(
-                  update: (_, userService, __) =>
-                      PetService(userService.currentUser.petIds),
-                ),
+                    create: (BuildContext context) => PetService(),
+                    update: (_, userService, __) {
+                      if (userService.currentUser == null) {
+                        return PetService();
+                      } else {
+                        return PetService.fromPetIds(
+                            userService.currentUser.petIds);
+                      }
+                    }),
               ],
               child: RootScreen(),
             );
