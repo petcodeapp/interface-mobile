@@ -30,30 +30,30 @@ class _StpStartScreenState extends State<StpStartScreen> {
                         bottomLeft: Radius.circular(185.0)),
                   ),
                 ),
-                Positioned(
-                  top: height * 0.04,
-                  child: Container(
-                    width: width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.arrow_back_ios),
-                          onPressed: () => Navigator.pop(context),
-                          iconSize: 30.0,
-                          color: StyleConstants.white,
-                        ),
-                        SizedBox(
-                          width: width * 0.08,
-                        ),
-                        Text(
-                          'Setting Up Your Tag',
-                          style: StyleConstants.whiteTitleText,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+//                Positioned(
+//                  top: height * 0.04,
+//                  child: Container(
+//                    width: width,
+//                    child: Row(
+//                      mainAxisAlignment: MainAxisAlignment.start,
+//                      children: [
+//                        IconButton(
+//                          icon: Icon(Icons.arrow_back_ios),
+//                          onPressed: () => Navigator.pop(context),
+//                          iconSize: 30.0,
+//                          color: StyleConstants.white,
+//                        ),
+//                        SizedBox(
+//                          width: width * 0.08,
+//                        ),
+//                        Text(
+//                          'Setting Up Your Tag',
+//                          style: StyleConstants.whiteTitleText,
+//                        ),
+//                      ],
+//                    ),
+//                  ),
+//                ),
                 Positioned(
                   top: height * 0.2,
                   child: Column(
