@@ -48,7 +48,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       height: height * 0.03,
                     ),
                     Text(
-                      'Owner 1:',
+                      'Account Info:',
                       style: StyleConstants.whiteTitleText,
                     ),
                     SizedBox(
