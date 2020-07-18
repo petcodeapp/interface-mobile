@@ -41,14 +41,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
     final petService = Provider.of<PetService>(context);
     if (petService.allPets == null) {
@@ -135,9 +129,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       padding: const EdgeInsets.all(15.0),
                                       child: Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             'Pet Actions',
@@ -151,8 +145,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             padding: const EdgeInsets.all(15.0),
                                             child: Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 GestureDetector(
                                                   onTap: () =>
@@ -169,16 +163,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         style: TextStyle(
                                                             color: Colors.white,
                                                             fontWeight:
-                                                            FontWeight
-                                                                .w400),
+                                                                FontWeight
+                                                                    .w400),
                                                       )
                                                     ],
                                                   ),
                                                 ),
                                                 GestureDetector(
-                                                  onTap: () =>
-                                                      print(
-                                                          'schedule meds tapped'),
+                                                  onTap: () => print(
+                                                      'schedule meds tapped'),
                                                   child: Column(
                                                     children: [
                                                       Icon(
@@ -191,8 +184,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         style: TextStyle(
                                                             color: Colors.white,
                                                             fontWeight:
-                                                            FontWeight
-                                                                .w400),
+                                                                FontWeight
+                                                                    .w400),
                                                       )
                                                     ],
                                                   ),
@@ -212,8 +205,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         style: TextStyle(
                                                             color: Colors.white,
                                                             fontWeight:
-                                                            FontWeight
-                                                                .w400),
+                                                                FontWeight
+                                                                    .w400),
                                                       )
                                                     ],
                                                   ),
@@ -248,12 +241,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   borderRadius:
-                                                  BorderRadius.circular(
-                                                      15.0)),
+                                                      BorderRadius.circular(
+                                                          15.0)),
                                               height: 60.0,
                                               child: Padding(
                                                 padding:
-                                                const EdgeInsets.all(8.0),
+                                                    const EdgeInsets.all(8.0),
                                                 child: Row(
                                                   //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
@@ -265,28 +258,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         });
                                                       },
                                                       activeColor:
-                                                      StyleConstants.green,
+                                                          StyleConstants.green,
                                                     ),
                                                     Column(
                                                       crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
                                                         Text(
                                                           reminders[index],
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               fontWeight:
-                                                              FontWeight
-                                                                  .w400),
+                                                                  FontWeight
+                                                                      .w400),
                                                         ),
                                                         Text(
                                                           reminderPets[index],
                                                           style: TextStyle(
                                                               fontSize: 15.0,
                                                               fontWeight:
-                                                              FontWeight
-                                                                  .w300),
+                                                                  FontWeight
+                                                                      .w300),
                                                         ),
                                                       ],
                                                     ),
