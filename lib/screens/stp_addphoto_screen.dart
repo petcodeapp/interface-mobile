@@ -25,10 +25,11 @@ class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
   }
 
   _handleImage(ImageSource source) async {
+    final imagePickerService = Provider.of<ImagePickerService>(context, listen: false);
+
     Navigator.pop(context);
-    File imageFile = await ImagePicker.pickImage(source: source);
+    File imageFile = await imagePickerService.pickImage(source);
     if (imageFile != null) {
-      //imageFile = await _cropImage(imageFile);
       setState(() {
         chosenImage = imageFile;
       });
@@ -102,12 +103,6 @@ class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
               ),
               GestureDetector(
                 onTap: _showSelectImageDialog,
-                    /*() async {
-                  final imagePicker = Provider.of<ImagePickerService>(context, listen: false);
-                  chosenImage =
-                      await imagePicker.pickImage(ImageSource.gallery);
-                  setState(() {});
-                },*/
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
                   child: Container(
@@ -117,14 +112,17 @@ class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    child: chosenImage == null ? Icon(
-                      Icons.photo_camera,
-                      size: 100.0,
-                    ) :
-                        Image(
-                          image: FileImage(chosenImage,),
-                          fit: BoxFit.cover,
-                        ),
+                    child: chosenImage == null
+                        ? Icon(
+                            Icons.photo_camera,
+                            size: 100.0,
+                          )
+                        : Image(
+                            image: FileImage(
+                              chosenImage,
+                            ),
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
               ),

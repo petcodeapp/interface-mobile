@@ -9,10 +9,12 @@ import 'package:petcode_app/utils/style_constants.dart';
 import 'package:slimy_card/slimy_card.dart';
 
 class StpRemindersScreen extends StatefulWidget {
-  StpRemindersScreen({Key key, this.pet, this.petImage}) : super(key: key);
+  StpRemindersScreen({Key key, this.pet, this.petImage, this.vaccineImages})
+      : super(key: key);
 
   final Pet pet;
   final File petImage;
+  final List<File> vaccineImages;
 
   @override
   _StpRemindersScreenState createState() => _StpRemindersScreenState();
@@ -26,7 +28,6 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
   List<TextEditingController> _medicationFrequencyInputControllers;
   List<DateTime> _dates;
 
-
   @override
   void initState() {
     _medicationNameInputControllers = new List<TextEditingController>();
@@ -36,7 +37,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
     _medicationFrequencyInputControllers = new List<TextEditingController>();
     _medicationFrequencyInputControllers.add(new TextEditingController());
     _medicationFrequencyInputControllers.add(new TextEditingController());
-    
+
     _dates = new List<DateTime>(2);
 
     super.initState();
@@ -134,6 +135,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                           builder: (_) => StpCompleteScreen(
                                 pet: updatedPet,
                                 petImage: widget.petImage,
+                                vaccineImages: widget.vaccineImages,
                               )));
                 },
                 child: Container(

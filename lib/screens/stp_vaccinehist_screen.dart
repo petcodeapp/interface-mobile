@@ -24,7 +24,7 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
   double width;
   double height;
 
-  List files = [File, File];
+  List<File> _vaccineImages;
 
   List<TextEditingController> _vaccineNameInputControllers;
 
@@ -34,11 +34,13 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
 
   _handleImage(ImageSource source, int num) async {
     Navigator.pop(context);
-    File imageFile = await ImagePicker.pickImage(source: source);
+
+    final imagePickerService = Provider.of<ImagePickerService>(context, listen: false);
+
+    File imageFile = await imagePickerService.pickImage(source);
     if (imageFile != null) {
-      //imageFile = await _cropImage(imageFile);
       setState(() {
-        files[num] = imageFile;
+        _vaccineImages[num] = imageFile;
       });
     }
   }
@@ -51,11 +53,10 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
           title: Text('Add Photo'),
           children: <Widget>[
             SimpleDialogOption(
-              child: Text('Take Photo'),
-              onPressed: () {
-                _handleImage(ImageSource.camera, num);
-              }
-            ),
+                child: Text('Take Photo'),
+                onPressed: () {
+                  _handleImage(ImageSource.camera, num);
+                }),
             SimpleDialogOption(
               child: Text('Choose From Gallery'),
               onPressed: () => _handleImage(ImageSource.gallery, num),
@@ -80,6 +81,7 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
     _vaccineNameInputControllers = new List<TextEditingController>();
     _vaccineNameInputControllers.add(new TextEditingController());
     _vaccineNameInputControllers.add(new TextEditingController());
+    _vaccineImages = new List<File>(2);
     super.initState();
   }
 
@@ -141,14 +143,24 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
                 onTap: () {
                   Pet updatedPet = widget.pet;
                   updatedPet.vaccinations = new List<Vaccination>();
-                  for (int i = 0; i < _vaccineNameInputControllers.length; i++) {
-                    if (_vaccineNameInputControllers[i].text != null && _vaccineNameInputControllers[i].text.isNotEmpty) {
-                      updatedPet.vaccinations.add(new Vaccination(name: _vaccineNameInputControllers[i].text));
+                  for (int i = 0;
+                      i < _vaccineNameInputControllers.length;
+                      i++) {
+                    if (_vaccineNameInputControllers[i].text != null &&
+                        _vaccineNameInputControllers[i].text.isNotEmpty) {
+                      updatedPet.vaccinations.add(new Vaccination(
+                          name: _vaccineNameInputControllers[i].text));
                     }
                   }
 
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => StpRemindersScreen(pet: updatedPet, petImage: widget.petImage,)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => StpRemindersScreen(
+                                pet: updatedPet,
+                                petImage: widget.petImage,
+                                vaccineImages: _vaccineImages,
+                              )));
                 },
                 child: Container(
                   height: 55.0,
@@ -251,12 +263,6 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
           ),
           GestureDetector(
             onTap: () => _androidDialog(0),
-            /* () async {
-              final imagePicker = Provider.of<ImagePickerService>(context, listen: false);
-              chosenImage1 =
-              await imagePicker.pickImage(ImageSource.gallery);
-              setState(() {});
-            },*/
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -353,12 +359,6 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
           ),
           GestureDetector(
             onTap: () => _androidDialog(1),
-                /*() async {
-              final imagePicker = Provider.of<ImagePickerService>(context, listen: false);
-              chosenImage2 =
-              await imagePicker.pickImage(ImageSource.gallery);
-              setState(() {});
-            },*/
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
