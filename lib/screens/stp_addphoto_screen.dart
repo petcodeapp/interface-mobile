@@ -20,6 +20,51 @@ class StpAddPhotoScreen extends StatefulWidget {
 class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
   File chosenImage;
 
+  _showSelectImageDialog() {
+    return _androidDialog();
+  }
+
+  _handleImage(ImageSource source) async {
+    Navigator.pop(context);
+    File imageFile = await ImagePicker.pickImage(source: source);
+    if (imageFile != null) {
+      //imageFile = await _cropImage(imageFile);
+      setState(() {
+        chosenImage = imageFile;
+      });
+    }
+  }
+
+  _androidDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text('Add Photo'),
+          children: <Widget>[
+            SimpleDialogOption(
+              child: Text('Take Photo'),
+              onPressed: () => _handleImage(ImageSource.camera),
+            ),
+            SimpleDialogOption(
+              child: Text('Choose From Gallery'),
+              onPressed: () => _handleImage(ImageSource.gallery),
+            ),
+            SimpleDialogOption(
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.redAccent,
+                ),
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -56,24 +101,30 @@ class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
                 height: height * 0.06,
               ),
               GestureDetector(
-                onTap: () async {
+                onTap: _showSelectImageDialog,
+                    /*() async {
                   final imagePicker = Provider.of<ImagePickerService>(context, listen: false);
                   chosenImage =
                       await imagePicker.pickImage(ImageSource.gallery);
                   setState(() {});
-                },
-                child: Container(
-                  height: height * 0.4,
-                  width: height * 0.4,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Center(
-                    child: Icon(
+                },*/
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Container(
+                    height: height * 0.4,
+                    width: height * 0.4,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: chosenImage == null ? Icon(
                       Icons.photo_camera,
                       size: 100.0,
-                    ),
+                    ) :
+                        Image(
+                          image: FileImage(chosenImage,),
+                          fit: BoxFit.cover,
+                        ),
                   ),
                 ),
               ),
