@@ -31,14 +31,17 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
   }
 
   addToDB() async {
-    final storageService =
-        Provider.of<FirebaseStorageService>(context, listen: false);
-
-    String downloadUrl =
-        await storageService.uploadPetImage(widget.petImage, widget.pet.pid);
-
     Pet updatedPet = widget.pet;
-    updatedPet.profileUrl = downloadUrl;
+
+    if (widget.petImage != null) {
+      final storageService =
+          Provider.of<FirebaseStorageService>(context, listen: false);
+
+      String downloadUrl =
+          await storageService.uploadPetImage(widget.petImage, widget.pet.pid);
+      updatedPet.profileUrl = downloadUrl;
+    }
+
     updatedPet.isLost = false;
 
     final databaseService =

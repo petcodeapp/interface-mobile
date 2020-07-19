@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Medication.dart';
 import 'package:petcode_app/screens/stp_complete_screen.dart';
@@ -23,9 +24,8 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
 
   List<TextEditingController> _medicationNameInputControllers;
   List<TextEditingController> _medicationFrequencyInputControllers;
+  List<DateTime> _dates;
 
-  DateTime _nextDate1;
-  DateTime _nextDate2;
 
   @override
   void initState() {
@@ -36,6 +36,8 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
     _medicationFrequencyInputControllers = new List<TextEditingController>();
     _medicationFrequencyInputControllers.add(new TextEditingController());
     _medicationFrequencyInputControllers.add(new TextEditingController());
+    
+    _dates = new List<DateTime>(2);
 
     super.initState();
   }
@@ -119,7 +121,10 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                       updatedPet.medications.add(new Medication(
                           name: _medicationNameInputControllers[i].text,
                           frequency: int.parse(
-                              _medicationFrequencyInputControllers[i].text)));
+                              _medicationFrequencyInputControllers[i].text),
+                          date: _dates[i] != null
+                              ? Timestamp.fromDate(_dates[i])
+                              : null));
                     }
                   }
 
@@ -233,14 +238,14 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
           GestureDetector(
             onTap: () {
               showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2019),
-                  lastDate: DateTime(2021)
-              ).then((date){
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2019),
+                      lastDate: DateTime(2021))
+                  .then((date) {
                 setState(() {
-                  _nextDate1 = date;
-                  print(_nextDate1.toString());
+                  _dates[0] = date;
+                  print(_dates[0].toString());
                 });
               });
             },
@@ -253,7 +258,14 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                       'Next Date: ',
                       style: StyleConstants.whiteTitleTextXS,
                     ),
-                    Text(_nextDate1 == null ? 'Select Date' : _nextDate1.toString().substring(0, _nextDate1.toString().indexOf(' ')), style: TextStyle(color: Colors.black),),
+                    Text(
+                      _dates[0] == null
+                          ? 'Select Date'
+                          : _dates[0]
+                              .toString()
+                              .substring(0, _dates[0].toString().indexOf(' ')),
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ],
                 ),
                 Icon(
@@ -347,14 +359,14 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
           GestureDetector(
             onTap: () {
               showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2019),
-                  lastDate: DateTime(2021)
-              ).then((date){
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2019),
+                      lastDate: DateTime(2021))
+                  .then((date) {
                 setState(() {
-                  _nextDate2 = date;
-                  print(_nextDate2.toString());
+                  _dates[1] = date;
+                  print(_dates[1].toString());
                 });
               });
             },
@@ -367,7 +379,14 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                       'Next Date: ',
                       style: StyleConstants.whiteTitleTextXS,
                     ),
-                    Text(_nextDate2 == null ? 'Select Date' : _nextDate2.toString().substring(0, _nextDate2.toString().indexOf(' ')), style: TextStyle(color: Colors.black),),
+                    Text(
+                      _dates[1] == null
+                          ? 'Select Date'
+                          : _dates[1]
+                              .toString()
+                              .substring(0, _dates[1].toString().indexOf(' ')),
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ],
                 ),
                 Icon(
