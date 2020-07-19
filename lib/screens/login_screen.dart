@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/root_screen.dart';
+import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
@@ -26,6 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<FirebaseAuthService>(context);
+    final checkRegistration =
+        Provider.of<CheckRegistrationService>(context, listen: false);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -151,6 +154,25 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ),
                                 ),
+                                FlatButton(
+                                  child: Text('Sign in with Google'),
+                                  onPressed: () async {
+                                    bool successful =
+                                        await auth.signInWithGoogle();
+                                    if (successful) {
+                                      bool hasAccount = await checkRegistration
+                                          .hasAccount(auth.user.uid);
+                                      if (!hasAccount) {
+                                        auth.setNeedsAccount();
+                                      }
+
+                                      _emailInputController.clear();
+                                      _passwordInputController.clear();
+                                      Navigator.pushNamedAndRemoveUntil(
+                                          context, '/', (_) => false);
+                                    }
+                                  },
+                                )
                               ],
                             ),
                           ),
@@ -165,7 +187,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                       await auth.signInWithEmailAndPassword(
                                           _emailInputController.text,
                                           _passwordInputController.text);
+
                                   if (successful) {
+                                    bool hasAccount = await checkRegistration
+                                        .hasAccount(auth.user.uid);
+                                    if (!hasAccount) {
+                                      auth.setNeedsAccount();
+                                    }
+
                                     _emailInputController.clear();
                                     _passwordInputController.clear();
                                     Navigator.pushNamedAndRemoveUntil(

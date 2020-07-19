@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/screens/stp_start_screen.dart';
+import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<FirebaseAuthService>(
-          create: (_) => FirebaseAuthService.instance(),
+          create: (_) => FirebaseAuthService(),
         ),
         Provider<FirebaseStorageService>(
           create: (_) => FirebaseStorageService(),
@@ -31,7 +32,10 @@ class MyApp extends StatelessWidget {
         ),
         Provider<DatabaseService>(
           create: (_) => DatabaseService(),
-        )
+        ),
+        Provider<CheckRegistrationService>(
+          create: (_) => CheckRegistrationService(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -59,7 +63,7 @@ class HomeScreen extends StatelessWidget {
           print('entry screen!');
           return EntryScreen();
         } else {
-          if (auth.isSigningUp) {
+          if (auth.isSigningUp || auth.needsAccount) {
             return StpStartScreen();
           } else {
             return MultiProvider(
