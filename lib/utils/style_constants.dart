@@ -64,6 +64,48 @@ class StyleConstants{
     fontSize: 20.0,
     fontWeight: FontWeight.w400,
   );
+  
+  static TextStyle blackTitleText =  new TextStyle(
+    color: Colors.black,
+    fontSize: 30.0,
+    fontFamily: 'Lilita',
+  );
+
+  static TextStyle blackTitleTextLarge =  new TextStyle(
+    color: Colors.black,
+    fontSize: 40.0,
+    fontFamily: 'Lilita',
+  );
+
+  static TextStyle blackTitleTextSmall =  new TextStyle(
+    color: Colors.black,
+    fontSize: 25.0,
+    fontFamily: 'Lilita',
+  );
+
+  static TextStyle blackTitleTextXS =  new TextStyle(
+    color: Colors.black,
+    fontSize: 20.0,
+    fontFamily: 'Lilita',
+  );
+
+  static TextStyle blackTitleTextXL =  new TextStyle(
+    color: Colors.black,
+    fontSize: 50.0,
+    fontFamily: 'Lilita',
+  );
+
+  static TextStyle blackDescriptionText = new TextStyle(
+    color: Colors.black,
+    fontSize: 20.0,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle blackThinDescriptionText = new TextStyle(
+    color: Colors.black,
+    fontSize: 20.0,
+    fontWeight: FontWeight.w300,
+  );
 
   //box decorations
   static BoxDecoration roundYellowButtonDeco = new BoxDecoration(
@@ -71,7 +113,7 @@ class StyleConstants{
       borderRadius: BorderRadius.circular(30.0),
       boxShadow: [
         BoxShadow(
-          color: Colors.grey.withOpacity(0.6),
+          color: Colors.black.withOpacity(0.2),
           blurRadius: 5.0,
           spreadRadius: 2,
           offset: Offset(0,2),
@@ -83,12 +125,25 @@ class StyleConstants{
       borderRadius: BorderRadius.circular(30.0),
       boxShadow: [
         BoxShadow(
-          color: Colors.grey.withOpacity(0.6),
+          color: Colors.black.withOpacity(0.2),
           blurRadius: 5.0,
           spreadRadius: 2,
           offset: Offset(0,2),
         ),
       ]
+  );
+
+  static BoxDecoration roundRedButtonDeco = new BoxDecoration(
+    color: StyleConstants.red,
+    borderRadius: BorderRadius.circular(50.0),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(0.2),
+        blurRadius: 6.0,
+        //spreadRadius: 2,
+        offset: Offset(0,3),
+      ),
+    ],
   );
 
   static BoxDecoration infoEntryBoxDeco = new BoxDecoration(
@@ -101,5 +156,18 @@ class StyleConstants{
           offset: Offset(0, 3),
         ),
       ]
+  );
+
+  static BoxDecoration lightBlueItemBoxDeco = new BoxDecoration(
+      color: StyleConstants.lightBlue,
+      borderRadius: BorderRadius.circular(5.0),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.2),
+          blurRadius: 6.0,
+          //spreadRadius: 2,
+          offset: Offset(0,3),
+        ),
+      ],
   );
 }

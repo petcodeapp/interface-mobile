@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:petcode_app/models/Vaccination.dart';
 import 'package:petcode_app/screens/stp_reminders_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:provider/provider.dart';
 import 'package:slimy_card/slimy_card.dart';
 
 class StpVaccineScreen extends StatefulWidget {
@@ -20,6 +23,9 @@ class StpVaccineScreen extends StatefulWidget {
 class _StpVaccineScreenState extends State<StpVaccineScreen> {
   double width;
   double height;
+
+  File chosenImage1;
+  File chosenImage2;
 
   List<TextEditingController> _vaccineNameInputControllers;
 
@@ -197,18 +203,26 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
           SizedBox(
             height: height * 0.02,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Upload a Photo',
-                style: StyleConstants.whiteTitleTextXS,
-              ),
-              Icon(
-                Icons.add_a_photo,
-                color: Colors.white,
-              ),
-            ],
+          GestureDetector(
+            onTap: () async {
+              final imagePicker = Provider.of<ImagePickerService>(context, listen: false);
+              chosenImage1 =
+              await imagePicker.pickImage(ImageSource.gallery);
+              setState(() {});
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Upload a Photo',
+                  style: StyleConstants.whiteTitleTextXS,
+                ),
+                Icon(
+                  Icons.add_a_photo,
+                  color: Colors.white,
+                ),
+              ],
+            ),
           )
         ]));
   }
@@ -290,18 +304,26 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
           SizedBox(
             height: height * 0.02,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Upload a Photo',
-                style: StyleConstants.whiteTitleTextXS,
-              ),
-              Icon(
-                Icons.add_a_photo,
-                color: Colors.white,
-              ),
-            ],
+          GestureDetector(
+            onTap: () async {
+              final imagePicker = Provider.of<ImagePickerService>(context, listen: false);
+              chosenImage2 =
+              await imagePicker.pickImage(ImageSource.gallery);
+              setState(() {});
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Upload a Photo',
+                  style: StyleConstants.whiteTitleTextXS,
+                ),
+                Icon(
+                  Icons.add_a_photo,
+                  color: Colors.white,
+                ),
+              ],
+            ),
           )
         ]));
   }

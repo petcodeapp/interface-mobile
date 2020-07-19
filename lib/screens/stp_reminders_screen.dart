@@ -24,6 +24,9 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
   List<TextEditingController> _medicationNameInputControllers;
   List<TextEditingController> _medicationFrequencyInputControllers;
 
+  DateTime _nextDate1;
+  DateTime _nextDate2;
+
   @override
   void initState() {
     _medicationNameInputControllers = new List<TextEditingController>();
@@ -39,14 +42,8 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    height = MediaQuery
-        .of(context)
-        .size
-        .height;
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: StyleConstants.blue,
@@ -78,6 +75,15 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
               SizedBox(
                 height: height * 0.01,
               ),
+              /*Expanded(
+                child: ListView(
+                  children: [
+                    medWidget1(),
+                    medWidget2(),
+                  ],
+                ),
+              )*/
+
               Expanded(
                 child: ListView(
                   children: [
@@ -101,19 +107,29 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                 onTap: () {
                   Pet updatedPet = widget.pet;
                   updatedPet.medications = new List<Medication>();
-                  for (int i = 0; i <
-                      _medicationNameInputControllers.length; i++) {
+                  for (int i = 0;
+                      i < _medicationNameInputControllers.length;
+                      i++) {
                     if (_medicationNameInputControllers[i].text != null &&
                         _medicationNameInputControllers[i].text.isNotEmpty &&
                         _medicationFrequencyInputControllers[i].text != null &&
-                        _medicationFrequencyInputControllers[i].text
+                        _medicationFrequencyInputControllers[i]
+                            .text
                             .isNotEmpty) {
-                      updatedPet.medications.add(new Medication(name: _medicationNameInputControllers[i].text, frequency: int.parse(_medicationFrequencyInputControllers[i].text)));
+                      updatedPet.medications.add(new Medication(
+                          name: _medicationNameInputControllers[i].text,
+                          frequency: int.parse(
+                              _medicationFrequencyInputControllers[i].text)));
                     }
                   }
 
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => StpCompleteScreen(pet: updatedPet, petImage: widget.petImage,)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => StpCompleteScreen(
+                                pet: updatedPet,
+                                petImage: widget.petImage,
+                              )));
                 },
                 child: Container(
                   height: 55.0,
@@ -139,7 +155,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
 
   Widget medWidget1() {
     return Container(
-        height: 250.0,
+        //height: 250.0,
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.4),
           borderRadius: BorderRadius.circular(12.0),
@@ -205,7 +221,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                   controller: _medicationFrequencyInputControllers[0],
                   decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Frequency',
+                      hintText: 'Frequency (months)',
                       hintStyle: TextStyle(fontSize: 15.0)),
                 ),
               ),
@@ -214,25 +230,46 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
           SizedBox(
             height: height * 0.02,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Next Date',
-                style: StyleConstants.whiteTitleTextXS,
-              ),
-              Icon(
-                Icons.calendar_today,
-                color: Colors.white,
-              ),
-            ],
-          )
+          GestureDetector(
+            onTap: () {
+              showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2019),
+                  lastDate: DateTime(2021)
+              ).then((date){
+                setState(() {
+                  _nextDate1 = date;
+                  print(_nextDate1.toString());
+                });
+              });
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'Next Date: ',
+                      style: StyleConstants.whiteTitleTextXS,
+                    ),
+                    Text(_nextDate1 == null ? 'Select Date' : _nextDate1.toString().substring(0, _nextDate1.toString().indexOf(' ')), style: TextStyle(color: Colors.black),),
+                  ],
+                ),
+                Icon(
+                  Icons.calendar_today,
+                  color: Colors.white,
+                  //size: 20.0,
+                ),
+              ],
+            ),
+          ),
         ]));
   }
 
   Widget medWidget2() {
     return Container(
-      //height: 250.0,
+        //height: 250.0,
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.4),
           borderRadius: BorderRadius.circular(12.0),
@@ -298,7 +335,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                   controller: _medicationFrequencyInputControllers[1],
                   decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Frequency',
+                      hintText: 'Frequency (months)',
                       hintStyle: TextStyle(fontSize: 15.0)),
                 ),
               ),
@@ -307,19 +344,40 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
           SizedBox(
             height: height * 0.02,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Next Date',
-                style: StyleConstants.whiteTitleTextXS,
-              ),
-              Icon(
-                Icons.calendar_today,
-                color: Colors.white,
-              ),
-            ],
-          )
+          GestureDetector(
+            onTap: () {
+              showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2019),
+                  lastDate: DateTime(2021)
+              ).then((date){
+                setState(() {
+                  _nextDate2 = date;
+                  print(_nextDate2.toString());
+                });
+              });
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'Next Date: ',
+                      style: StyleConstants.whiteTitleTextXS,
+                    ),
+                    Text(_nextDate2 == null ? 'Select Date' : _nextDate2.toString().substring(0, _nextDate2.toString().indexOf(' ')), style: TextStyle(color: Colors.black),),
+                  ],
+                ),
+                Icon(
+                  Icons.calendar_today,
+                  color: Colors.white,
+                  //size: 20.0,
+                ),
+              ],
+            ),
+          ),
         ]));
   }
 }
