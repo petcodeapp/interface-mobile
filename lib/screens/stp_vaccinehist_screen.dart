@@ -26,6 +26,9 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
 
   List<File> _vaccineImages;
 
+  DateTime _expireDate1;
+  DateTime _expireDate2;
+
   List<TextEditingController> _vaccineNameInputControllers;
 
   _showSelectImageDialog(int num) {
@@ -231,29 +234,53 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
           SizedBox(
             height: height * 0.02,
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            height: 50.0,
-            width: 250.0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Center(
-                child: TextFormField(
-                  //controller: _passwordInputController,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Expiration Date',
-                      hintStyle: TextStyle(fontSize: 15.0)),
+          GestureDetector(
+            onTap: () {
+              showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2019),
+                  lastDate: DateTime(2021)
+              ).then((date){
+                setState(() {
+                  _expireDate1 = date;
+                  print(_expireDate1.toString());
+                });
+              });
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              height: 50.0,
+              width: 250.0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text('Expires: '),
+                        Text(
+                          _expireDate1 == null
+                              ? 'Select Date'
+                              : _expireDate1.toString().substring(
+                                  0, _expireDate1.toString().indexOf(' ')),
+                          style: TextStyle(color: Colors.black),
+                        )
+                      ],
+                    ),
+                    Icon(Icons.today),
+                  ],
                 ),
               ),
             ),
@@ -327,29 +354,53 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
           SizedBox(
             height: height * 0.02,
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            height: 50.0,
-            width: 250.0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Center(
-                child: TextFormField(
-                  //controller: _passwordInputController,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Expiration Date',
-                      hintStyle: TextStyle(fontSize: 15.0)),
+          GestureDetector(
+            onTap: () {
+              showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2019),
+                  lastDate: DateTime(2021)
+              ).then((date){
+                setState(() {
+                  _expireDate2 = date;
+                  print(_expireDate2.toString());
+                });
+              });
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              height: 50.0,
+              width: 250.0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text('Expires: '),
+                        Text(
+                          _expireDate2 == null
+                              ? 'Select Date'
+                              : _expireDate2.toString().substring(
+                              0, _expireDate2.toString().indexOf(' ')),
+                          style: TextStyle(color: Colors.black),
+                        )
+                      ],
+                    ),
+                    Icon(Icons.today),
+                  ],
                 ),
               ),
             ),
