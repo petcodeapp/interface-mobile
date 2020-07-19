@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:petcode_app/models/Vaccination.dart';
@@ -25,9 +26,7 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
   double height;
 
   List<File> _vaccineImages;
-
-  DateTime _expireDate1;
-  DateTime _expireDate2;
+  List<DateTime> _expireDates;
 
   List<TextEditingController> _vaccineNameInputControllers;
 
@@ -38,7 +37,8 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
   _handleImage(ImageSource source, int num) async {
     Navigator.pop(context);
 
-    final imagePickerService = Provider.of<ImagePickerService>(context, listen: false);
+    final imagePickerService =
+        Provider.of<ImagePickerService>(context, listen: false);
 
     File imageFile = await imagePickerService.pickImage(source);
     if (imageFile != null) {
@@ -85,6 +85,7 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
     _vaccineNameInputControllers.add(new TextEditingController());
     _vaccineNameInputControllers.add(new TextEditingController());
     _vaccineImages = new List<File>(2);
+    _expireDates = new List<DateTime>(2);
     super.initState();
   }
 
@@ -152,7 +153,10 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
                     if (_vaccineNameInputControllers[i].text != null &&
                         _vaccineNameInputControllers[i].text.isNotEmpty) {
                       updatedPet.vaccinations.add(new Vaccination(
-                          name: _vaccineNameInputControllers[i].text));
+                          name: _vaccineNameInputControllers[i].text,
+                          date: _expireDates[i] != null
+                              ? Timestamp.fromDate(_expireDates[i])
+                              : null));
                     }
                   }
 
@@ -237,14 +241,14 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
           GestureDetector(
             onTap: () {
               showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2019),
-                  lastDate: DateTime(2021)
-              ).then((date){
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2019),
+                      lastDate: DateTime(2021))
+                  .then((date) {
                 setState(() {
-                  _expireDate1 = date;
-                  print(_expireDate1.toString());
+                  _expireDates[0] = date;
+                  print(_expireDates[0].toString());
                 });
               });
             },
@@ -271,10 +275,10 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
                       children: [
                         Text('Expires: '),
                         Text(
-                          _expireDate1 == null
+                          _expireDates[0] == null
                               ? 'Select Date'
-                              : _expireDate1.toString().substring(
-                                  0, _expireDate1.toString().indexOf(' ')),
+                              : _expireDates[0].toString().substring(
+                                  0, _expireDates[0].toString().indexOf(' ')),
                           style: TextStyle(color: Colors.black),
                         )
                       ],
@@ -357,14 +361,14 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
           GestureDetector(
             onTap: () {
               showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2019),
-                  lastDate: DateTime(2021)
-              ).then((date){
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2019),
+                      lastDate: DateTime(2021))
+                  .then((date) {
                 setState(() {
-                  _expireDate2 = date;
-                  print(_expireDate2.toString());
+                  _expireDates[1] = date;
+                  print(_expireDates[1].toString());
                 });
               });
             },
@@ -391,10 +395,10 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
                       children: [
                         Text('Expires: '),
                         Text(
-                          _expireDate2 == null
+                          _expireDates[1] == null
                               ? 'Select Date'
-                              : _expireDate2.toString().substring(
-                              0, _expireDate2.toString().indexOf(' ')),
+                              : _expireDates[1].toString().substring(
+                                  0, _expireDates[1].toString().indexOf(' ')),
                           style: TextStyle(color: Colors.black),
                         )
                       ],
