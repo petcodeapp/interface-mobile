@@ -19,4 +19,19 @@ class FirebaseStorageService {
       return downloadUrl;
     }
   }
+
+  Future<String> uploadVaccineImage(File image, String imageName) async {
+    StorageTaskSnapshot storageTaskSnapshot = await _firebaseStorage
+        .ref()
+        .child('vaccineImages/' + imageName)
+        .putFile(image)
+        .onComplete;
+    if (storageTaskSnapshot.error != null) {
+      print('error: ' + storageTaskSnapshot.error.toString());
+      throw storageTaskSnapshot;
+    } else {
+      String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
+      return downloadUrl;
+    }
+  }
 }

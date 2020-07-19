@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Medication.dart';
 import 'package:petcode_app/screens/stp_complete_screen.dart';
@@ -8,10 +9,12 @@ import 'package:petcode_app/utils/style_constants.dart';
 import 'package:slimy_card/slimy_card.dart';
 
 class StpRemindersScreen extends StatefulWidget {
-  StpRemindersScreen({Key key, this.pet, this.petImage}) : super(key: key);
+  StpRemindersScreen({Key key, this.pet, this.petImage, this.vaccineImages})
+      : super(key: key);
 
   final Pet pet;
   final File petImage;
+  final List<File> vaccineImages;
 
   @override
   _StpRemindersScreenState createState() => _StpRemindersScreenState();
@@ -23,6 +26,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
 
   List<TextEditingController> _medicationNameInputControllers;
   List<TextEditingController> _medicationFrequencyInputControllers;
+  List<DateTime> _dates;
 
   @override
   void initState() {
@@ -34,19 +38,15 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
     _medicationFrequencyInputControllers.add(new TextEditingController());
     _medicationFrequencyInputControllers.add(new TextEditingController());
 
+    _dates = new List<DateTime>(2);
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    height = MediaQuery
-        .of(context)
-        .size
-        .height;
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: StyleConstants.blue,
@@ -78,6 +78,15 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
               SizedBox(
                 height: height * 0.01,
               ),
+              /*Expanded(
+                child: ListView(
+                  children: [
+                    medWidget1(),
+                    medWidget2(),
+                  ],
+                ),
+              )*/
+
               Expanded(
                 child: ListView(
                   children: [
@@ -101,19 +110,33 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                 onTap: () {
                   Pet updatedPet = widget.pet;
                   updatedPet.medications = new List<Medication>();
-                  for (int i = 0; i <
-                      _medicationNameInputControllers.length; i++) {
+                  for (int i = 0;
+                      i < _medicationNameInputControllers.length;
+                      i++) {
                     if (_medicationNameInputControllers[i].text != null &&
                         _medicationNameInputControllers[i].text.isNotEmpty &&
                         _medicationFrequencyInputControllers[i].text != null &&
-                        _medicationFrequencyInputControllers[i].text
+                        _medicationFrequencyInputControllers[i]
+                            .text
                             .isNotEmpty) {
-                      updatedPet.medications.add(new Medication(name: _medicationNameInputControllers[i].text, frequency: int.parse(_medicationFrequencyInputControllers[i].text)));
+                      updatedPet.medications.add(new Medication(
+                          name: _medicationNameInputControllers[i].text,
+                          frequency: int.parse(
+                              _medicationFrequencyInputControllers[i].text),
+                          date: _dates[i] != null
+                              ? Timestamp.fromDate(_dates[i])
+                              : null));
                     }
                   }
 
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => StpCompleteScreen(pet: updatedPet, petImage: widget.petImage,)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => StpCompleteScreen(
+                                pet: updatedPet,
+                                petImage: widget.petImage,
+                                vaccineImages: widget.vaccineImages,
+                              )));
                 },
                 child: Container(
                   height: 55.0,
@@ -139,7 +162,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
 
   Widget medWidget1() {
     return Container(
-        height: 250.0,
+        //height: 250.0,
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.4),
           borderRadius: BorderRadius.circular(12.0),
@@ -205,7 +228,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                   controller: _medicationFrequencyInputControllers[0],
                   decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Frequency',
+                      hintText: 'Frequency (months)',
                       hintStyle: TextStyle(fontSize: 15.0)),
                 ),
               ),
@@ -214,25 +237,53 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
           SizedBox(
             height: height * 0.02,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Next Date',
-                style: StyleConstants.whiteTitleTextXS,
-              ),
-              Icon(
-                Icons.calendar_today,
-                color: Colors.white,
-              ),
-            ],
-          )
+          GestureDetector(
+            onTap: () {
+              showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2019),
+                      lastDate: DateTime(2021))
+                  .then((date) {
+                setState(() {
+                  _dates[0] = date;
+                  print(_dates[0].toString());
+                });
+              });
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'Next Date: ',
+                      style: StyleConstants.whiteTitleTextXS,
+                    ),
+                    Text(
+                      _dates[0] == null
+                          ? 'Select Date'
+                          : _dates[0]
+                              .toString()
+                              .substring(0, _dates[0].toString().indexOf(' ')),
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+                Icon(
+                  Icons.calendar_today,
+                  color: Colors.white,
+                  //size: 20.0,
+                ),
+              ],
+            ),
+          ),
         ]));
   }
 
   Widget medWidget2() {
     return Container(
-      //height: 250.0,
+        //height: 250.0,
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.4),
           borderRadius: BorderRadius.circular(12.0),
@@ -298,7 +349,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                   controller: _medicationFrequencyInputControllers[1],
                   decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Frequency',
+                      hintText: 'Frequency (months)',
                       hintStyle: TextStyle(fontSize: 15.0)),
                 ),
               ),
@@ -307,19 +358,47 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
           SizedBox(
             height: height * 0.02,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Next Date',
-                style: StyleConstants.whiteTitleTextXS,
-              ),
-              Icon(
-                Icons.calendar_today,
-                color: Colors.white,
-              ),
-            ],
-          )
+          GestureDetector(
+            onTap: () {
+              showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2019),
+                      lastDate: DateTime(2021))
+                  .then((date) {
+                setState(() {
+                  _dates[1] = date;
+                  print(_dates[1].toString());
+                });
+              });
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'Next Date: ',
+                      style: StyleConstants.whiteTitleTextXS,
+                    ),
+                    Text(
+                      _dates[1] == null
+                          ? 'Select Date'
+                          : _dates[1]
+                              .toString()
+                              .substring(0, _dates[1].toString().indexOf(' ')),
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+                Icon(
+                  Icons.calendar_today,
+                  color: Colors.white,
+                  //size: 20.0,
+                ),
+              ],
+            ),
+          ),
         ]));
   }
 }
