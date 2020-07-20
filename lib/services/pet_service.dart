@@ -32,6 +32,7 @@ class PetService extends ChangeNotifier {
         .where('pid', whereIn: petIds)
         .snapshots()
         .listen((QuerySnapshot querySnapshot) {
+          _allPets.clear();
       _allPets = petListFromQuery(querySnapshot);
       for (int i = 0; i < _allPets.length; i++) {
         _petImages.add(NetworkImage(_allPets[i].profileUrl));

@@ -30,13 +30,13 @@ class _StpStartScreenState extends State<StpStartScreen> {
                         bottomLeft: Radius.circular(185.0)),
                   ),
                 ),
-//                Positioned(
-//                  top: height * 0.04,
-//                  child: Container(
-//                    width: width,
-//                    child: Row(
-//                      mainAxisAlignment: MainAxisAlignment.start,
-//                      children: [
+                Positioned(
+                  top: height * 0.04,
+                  child: Container(
+                    width: width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
 //                        IconButton(
 //                          icon: Icon(Icons.arrow_back_ios),
 //                          onPressed: () => Navigator.pop(context),
@@ -46,14 +46,14 @@ class _StpStartScreenState extends State<StpStartScreen> {
 //                        SizedBox(
 //                          width: width * 0.08,
 //                        ),
-//                        Text(
-//                          'Setting Up Your Tag',
-//                          style: StyleConstants.whiteTitleText,
-//                        ),
-//                      ],
-//                    ),
-//                  ),
-//                ),
+                        Text(
+                          'Setting Up Your Tag',
+                          style: StyleConstants.whiteTitleText,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Positioned(
                   top: height * 0.2,
                   child: Column(
