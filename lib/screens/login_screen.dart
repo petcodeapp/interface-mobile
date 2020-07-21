@@ -298,18 +298,22 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void signInWithGoogle() async {
-    bool successful = await authService.signInWithGoogle();
-    if (successful) {
-      bool hasAccount =
-          await checkRegistrationService.hasAccount(authService.user.uid);
-      if (!hasAccount) {
-        authService.setNeedsAccount();
-        authService.startSigningUp();
-      }
+    try {
+      bool successful = await authService.signInWithGoogle();
+      if (successful) {
+        bool hasAccount =
+            await checkRegistrationService.hasAccount(authService.user.uid);
+        if (!hasAccount) {
+          authService.setNeedsAccount();
+          authService.setSigningUp();
+        }
 
-      _emailInputController.clear();
-      _passwordInputController.clear();
-      Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+        _emailInputController.clear();
+        _passwordInputController.clear();
+        Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }

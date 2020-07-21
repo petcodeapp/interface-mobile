@@ -283,7 +283,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: Text(
                             'Sign Up With Google',
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            signUpWithGoogle();
+                          },
                         )
                       ],
                     ),
@@ -327,8 +329,6 @@ class _SignupScreenState extends State<SignupScreen> {
         final databaseService =
             Provider.of<DatabaseService>(context, listen: false);
 
-        authService.startSigningUp();
-
         bool success = await authService.createUserWithEmailAndPassword(
             _emailInputController.text.trim(),
             _passwordInputController.text.trim());
@@ -358,16 +358,17 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void signUpWithGoogle() async {
     try {
+      authService.setSigningUp();
+      authService.setNeedsAccount();
       bool success = await authService.signInWithGoogle();
 
       if (success) {
-        bool needsAccount =
+        bool hasAccount =
             await checkRegistrationService.hasAccount(authService.user.uid);
 
-        if (!needsAccount) {
-          //TODO - Create reminder that account has already been created
-        } else {
-          authService.setNeedsAccount();
+        if (hasAccount) {
+          authService.setFinishedSignUp();
+          authService.setCreatedAccount();
         }
 
         clearAllControllers();

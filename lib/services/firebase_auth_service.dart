@@ -99,7 +99,7 @@ class FirebaseAuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void startSigningUp() {
+  void setSigningUp() {
     _isSigningUp = true;
     notifyListeners();
   }
@@ -115,7 +115,7 @@ class FirebaseAuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void finishedSignUp() {
+  void setFinishedSignUp() {
     _isSigningUp = false;
     notifyListeners();
   }
