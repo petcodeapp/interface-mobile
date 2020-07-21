@@ -6,10 +6,14 @@ class PetService extends ChangeNotifier {
   Firestore _firestore = Firestore.instance;
 
   List<Pet> _allPets = new List<Pet>();
+  List<ImageProvider> _petImages = new List<NetworkImage>();
 
   List<Pet> get allPets => _allPets;
+  List<ImageProvider> get petImages => _petImages;
 
-  PetService(List<String> petIds) {
+  PetService();
+
+  setPetIds(List<String> petIds) {
     startPetStream(petIds);
   }
 
@@ -28,7 +32,11 @@ class PetService extends ChangeNotifier {
         .where('pid', whereIn: petIds)
         .snapshots()
         .listen((QuerySnapshot querySnapshot) {
+          _allPets.clear();
       _allPets = petListFromQuery(querySnapshot);
+      for (int i = 0; i < _allPets.length; i++) {
+        _petImages.add(NetworkImage(_allPets[i].profileUrl));
+      }
       notifyListeners();
     });
   }

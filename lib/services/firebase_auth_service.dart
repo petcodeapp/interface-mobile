@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 @immutable
 class UserId {
@@ -13,11 +14,16 @@ enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 class FirebaseAuthService extends ChangeNotifier {
   FirebaseAuth _firebaseAuth;
   FirebaseUser _firebaseUser;
+  GoogleSignIn _googleSignIn;
+
   Status _status = Status.Uninitialized;
   bool _isSigningUp = false;
+  bool _needsAccount = false;
 
-  FirebaseAuthService.instance() : _firebaseAuth = FirebaseAuth.instance {
+  FirebaseAuthService() {
+    _firebaseAuth = FirebaseAuth.instance;
     _firebaseAuth.onAuthStateChanged.listen(_onAuthStateChanged);
+    _googleSignIn = new GoogleSignIn();
   }
 
   Status get status => _status;
@@ -25,6 +31,8 @@ class FirebaseAuthService extends ChangeNotifier {
   FirebaseUser get user => _firebaseUser;
 
   bool get isSigningUp => _isSigningUp;
+
+  bool get needsAccount => _needsAccount;
 
   Future<bool> signInWithEmailAndPassword(String email, String password) async {
     try {
@@ -59,6 +67,24 @@ class FirebaseAuthService extends ChangeNotifier {
     }
   }
 
+  Future<bool> signInWithGoogle() async {
+    try {
+      GoogleSignInAccount account = await _googleSignIn.signIn();
+      GoogleSignInAuthentication authentication = await account.authentication;
+      AuthCredential credential = GoogleAuthProvider.getCredential(
+          idToken: authentication.idToken,
+          accessToken: authentication.accessToken);
+
+      print(account.displayName);
+      AuthResult authResult =
+          await _firebaseAuth.signInWithCredential(credential);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   Future<void> _onAuthStateChanged(FirebaseUser firebaseUser) async {
     if (firebaseUser == null) {
       _status = Status.Unauthenticated;
@@ -70,19 +96,34 @@ class FirebaseAuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void startSigningUp() {
+  void setSigningUp() {
     _isSigningUp = true;
     notifyListeners();
   }
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
+    try {
+      await _googleSignIn.signOut();
+    } catch (e) {
+      print(e);
+    }
     _status = Status.Unauthenticated;
     notifyListeners();
   }
 
-  void finishedSignUp() {
+  void setFinishedSignUp() {
     _isSigningUp = false;
+    notifyListeners();
+  }
+
+  void setNeedsAccount() {
+    _needsAccount = true;
+    notifyListeners();
+  }
+
+  void setCreatedAccount() {
+    _needsAccount = false;
     notifyListeners();
   }
 }

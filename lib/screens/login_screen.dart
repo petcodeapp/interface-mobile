@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/screens/root_screen.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
+import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,6 +14,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _emailInputController;
   TextEditingController _passwordInputController;
+
+  FirebaseAuthService authService;
+  CheckRegistrationService checkRegistrationService;
 
   GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
 
@@ -25,7 +29,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final auth = Provider.of<FirebaseAuthService>(context);
+    authService = Provider.of<FirebaseAuthService>(context);
+    checkRegistrationService =
+        Provider.of<CheckRegistrationService>(context, listen: false);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -69,6 +75,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   'Welcome Back',
                   style: StyleConstants.whiteTitleTextLarge,
                 ),
+                SizedBox(
+                  height: height * 0.02,
+                ),
                 Expanded(
                   child: Container(
                     width: MediaQuery.of(context).size.width,
@@ -87,7 +96,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.white.withOpacity(0.4),
                               borderRadius: BorderRadius.circular(12.0),
                             ),
-                            padding: EdgeInsets.all(30.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30.0, vertical: 20.0),
                             child: Column(
                               children: [
                                 Container(
@@ -151,6 +161,81 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ),
                                 ),
+                                SizedBox(
+                                  height: height * 0.02,
+                                ),
+                                Container(
+                                  width: 250.0,
+                                  child: SignInButton(
+                                    Buttons.Google,
+                                    text: 'Log in with Google',
+                                    onPressed: () async {
+                                      signInWithGoogle();
+                                    },
+                                  ),
+                                ),
+                                Container(
+                                  width: 250.0,
+                                  child: SignInButton(
+                                    Buttons.Apple,
+                                    text: 'Log in with Apple',
+                                    onPressed: () {},
+                                  ),
+                                ),
+                                /*
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      icon: FaIcon(FontAwesomeIcons.google),
+                                      color: Colors.blue,
+                                      iconSize: 30.0,
+                                      onPressed: () async {
+                                        bool successful =
+                                        await auth.signInWithGoogle();
+                                        if (successful) {
+                                          bool hasAccount = await checkRegistration
+                                              .hasAccount(auth.user.uid);
+                                          if (!hasAccount) {
+                                            auth.setNeedsAccount();
+                                          }
+
+                                          _emailInputController.clear();
+                                          _passwordInputController.clear();
+                                          Navigator.pushNamedAndRemoveUntil(
+                                              context, '/', (_) => false);
+                                        }
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: FaIcon(FontAwesomeIcons.apple),
+                                      color: Colors.blue,
+                                      iconSize: 30.0,
+                                      onPressed: () => print('clicked apple'),
+                                    ),
+                                  ],
+                                ),*/
+
+                                /*
+                                FlatButton(
+                                  child: Text('Sign in with Google'),
+                                  onPressed: () async {
+                                    bool successful =
+                                        await auth.signInWithGoogle();
+                                    if (successful) {
+                                      bool hasAccount = await checkRegistration
+                                          .hasAccount(auth.user.uid);
+                                      if (!hasAccount) {
+                                        auth.setNeedsAccount();
+                                      }
+
+                                      _emailInputController.clear();
+                                      _passwordInputController.clear();
+                                      Navigator.pushNamedAndRemoveUntil(
+                                          context, '/', (_) => false);
+                                    }
+                                  },
+                                )
+                                */
                               ],
                             ),
                           ),
@@ -159,24 +244,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           bottom: height * 0.16,
                           child: GestureDetector(
                             onTap: () async {
-                              if (_loginFormKey.currentState.validate()) {
-                                try {
-                                  final successful =
-                                      await auth.signInWithEmailAndPassword(
-                                          _emailInputController.text,
-                                          _passwordInputController.text);
-                                  if (successful) {
-                                    _emailInputController.clear();
-                                    _passwordInputController.clear();
-                                    Navigator.pushNamedAndRemoveUntil(
-                                        context, '/', (_) => false);
-                                  }
-                                } catch (e) {
-                                  print(e);
-                                }
-                              }
+                              signInWithForm();
                             },
-                            child: auth.status == Status.Unauthenticated
+                            child: authService.status == Status.Unauthenticated
                                 ? Container(
                                     decoration:
                                         StyleConstants.roundYellowButtonDeco,
@@ -202,5 +272,48 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void signInWithForm() async {
+    if (_loginFormKey.currentState.validate()) {
+      try {
+        final successful = await authService.signInWithEmailAndPassword(
+            _emailInputController.text, _passwordInputController.text);
+
+        if (successful) {
+          bool hasAccount =
+              await checkRegistrationService.hasAccount(authService.user.uid);
+          if (!hasAccount) {
+            authService.setNeedsAccount();
+          }
+
+          _emailInputController.clear();
+          _passwordInputController.clear();
+          Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
+
+  void signInWithGoogle() async {
+    try {
+      bool successful = await authService.signInWithGoogle();
+      if (successful) {
+        bool hasAccount =
+            await checkRegistrationService.hasAccount(authService.user.uid);
+        if (!hasAccount) {
+          authService.setNeedsAccount();
+          authService.setSigningUp();
+        }
+
+        _emailInputController.clear();
+        _passwordInputController.clear();
+        Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

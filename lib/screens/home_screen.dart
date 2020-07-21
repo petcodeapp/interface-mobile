@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
+import 'package:petcode_app/models/Medication.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/pet_service.dart';
+import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
 import 'package:provider/provider.dart';
@@ -13,12 +16,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String name = 'Lucas';
+  PetService petService;
 
   PageController _mainPageController;
   PageController _secondPageController;
   ValueNotifier _currentPageNotifier = ValueNotifier<int>(0);
 
-  List<String> images;
   List<String> names;
 
   List<String> reminders = [
@@ -44,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    final petService = Provider.of<PetService>(context);
+    petService = Provider.of<PetService>(context);
     if (petService.allPets == null) {
       return Scaffold(
         body: Center(
@@ -52,13 +55,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     } else {
-      images = new List<String>();
       names = new List<String>();
 
       for (int i = 0; i < petService.allPets.length; i++) {
         Pet currentPet = petService.allPets[i];
         names.add(currentPet.name);
-        images.add('assets/images/stockphotodog1.jpg');
       }
 
       return Scaffold(
@@ -76,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   height: 200.0,
                   child: PageView.builder(
-                    itemCount: images.length,
+                    itemCount: petService.petImages.length,
                     controller: _mainPageController,
                     onPageChanged: (int index) {
                       _currentPageNotifier.value = index;
@@ -92,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 CirclePageIndicator(
                   selectedDotColor: Colors.white,
-                  itemCount: images.length,
+                  itemCount: petService.petImages.length,
                   currentPageNotifier: _currentPageNotifier,
                 ),
                 SizedBox(
@@ -332,9 +333,8 @@ class _HomeScreenState extends State<HomeScreen> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
           ),
-          child: Image.asset(
-            images[index],
-            fit: BoxFit.cover,
+          child: Image(
+            image: petService.petImages[index],
           ),
         ),
       ),

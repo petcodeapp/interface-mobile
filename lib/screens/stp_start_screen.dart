@@ -31,21 +31,21 @@ class _StpStartScreenState extends State<StpStartScreen> {
                   ),
                 ),
                 Positioned(
-                  top: height * 0.04,
+                  top: height * 0.1,
                   child: Container(
                     width: width,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        IconButton(
-                          icon: Icon(Icons.arrow_back_ios),
-                          onPressed: () => Navigator.pop(context),
-                          iconSize: 30.0,
-                          color: StyleConstants.white,
-                        ),
-                        SizedBox(
-                          width: width * 0.08,
-                        ),
+//                        IconButton(
+//                          icon: Icon(Icons.arrow_back_ios),
+//                          onPressed: () => Navigator.pop(context),
+//                          iconSize: 30.0,
+//                          color: StyleConstants.white,
+//                        ),
+//                        SizedBox(
+//                          width: width * 0.08,
+//                        ),
                         Text(
                           'Setting Up Your Tag',
                           style: StyleConstants.whiteTitleText,

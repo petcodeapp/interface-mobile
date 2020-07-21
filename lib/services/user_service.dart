@@ -21,8 +21,10 @@ class UserService extends ChangeNotifier {
         .document(_uid)
         .snapshots()
         .listen((DocumentSnapshot snapshot) {
-      _currentUser = User.fromSnapshot(snapshot);
-      notifyListeners();
+      if (snapshot.data != null) {
+        _currentUser = User.fromSnapshot(snapshot);
+        notifyListeners();
+      }
     });
   }
 }

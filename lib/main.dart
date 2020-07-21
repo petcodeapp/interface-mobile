@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
+import 'package:petcode_app/screens/stp_nameandphone_screen.dart';
 import 'package:petcode_app/screens/stp_start_screen.dart';
+import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<FirebaseAuthService>(
-          create: (_) => FirebaseAuthService.instance(),
+          create: (_) => FirebaseAuthService(),
         ),
         Provider<FirebaseStorageService>(
           create: (_) => FirebaseStorageService(),
@@ -31,7 +33,10 @@ class MyApp extends StatelessWidget {
         ),
         Provider<DatabaseService>(
           create: (_) => DatabaseService(),
-        )
+        ),
+        Provider<CheckRegistrationService>(
+          create: (_) => CheckRegistrationService(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -59,22 +64,32 @@ class HomeScreen extends StatelessWidget {
           print('entry screen!');
           return EntryScreen();
         } else {
-          if (auth.isSigningUp) {
+          if (auth.needsAccount) {
+            print('needs account');
+            return StpNameAndPhoneScreen();
+          } else if (auth.isSigningUp) {
             return StpStartScreen();
           } else {
             return MultiProvider(
               providers: [
                 ChangeNotifierProvider(
                   create: (_) {
+                    print('creating user service');
                     String uid =
                         Provider.of<FirebaseAuthService>(context).user.uid;
                     return UserService(uid);
                   },
                 ),
                 ChangeNotifierProxyProvider<UserService, PetService>(
-                  update: (_, userService, __) =>
-                      PetService(userService.currentUser.petIds),
-                ),
+                    create: (BuildContext context) => PetService(),
+                    update: (_, userService, petService) {
+                      if (userService.currentUser == null) {
+                        return petService;
+                      } else {
+                        return petService
+                          ..setPetIds(userService.currentUser.petIds);
+                      }
+                    }),
               ],
               child: RootScreen(),
             );
