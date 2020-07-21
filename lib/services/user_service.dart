@@ -10,7 +10,9 @@ class UserService extends ChangeNotifier {
 
   User get currentUser => _currentUser;
 
-  UserService(String uid) {
+  UserService();
+
+  setUid(String uid) {
     _uid = uid;
     startUserStream();
   }

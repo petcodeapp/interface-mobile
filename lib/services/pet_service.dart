@@ -9,9 +9,8 @@ class PetService extends ChangeNotifier {
   List<ImageProvider> _petImages = new List<NetworkImage>();
 
   List<Pet> get allPets => _allPets;
-  List<ImageProvider> get petImages => _petImages;
 
-  PetService();
+  List<ImageProvider> get petImages => _petImages;
 
   setPetIds(List<String> petIds) {
     startPetStream(petIds);
@@ -32,11 +31,13 @@ class PetService extends ChangeNotifier {
         .where('pid', whereIn: petIds)
         .snapshots()
         .listen((QuerySnapshot querySnapshot) {
-          _allPets.clear();
+      _allPets.clear();
+      _petImages.clear();
       _allPets = petListFromQuery(querySnapshot);
       for (int i = 0; i < _allPets.length; i++) {
         _petImages.add(NetworkImage(_allPets[i].profileUrl));
       }
+      print('All Pets length : ' + _allPets.length.toString());
       notifyListeners();
     });
   }

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
-import 'package:petcode_app/models/Medication.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/services/check_registration_service.dart';
+import 'package:petcode_app/screens/pet_info_screen.dart';
 import 'package:petcode_app/services/pet_service.dart';
-import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
 import 'package:provider/provider.dart';
@@ -56,11 +54,15 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     } else {
       names = new List<String>();
+      print(petService.allPets.length);
 
       for (int i = 0; i < petService.allPets.length; i++) {
         Pet currentPet = petService.allPets[i];
         names.add(currentPet.name);
       }
+
+      print('namesLength: ' + names.length.toString());
+      print('petImagesLength: ' + petService.petImages.length.toString());
 
       return Scaffold(
         backgroundColor: StyleConstants.blue,
@@ -150,8 +152,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       .spaceBetween,
                                               children: [
                                                 GestureDetector(
-                                                  onTap: () =>
-                                                      print('pet info tapped'),
+                                                  onTap: () {
+                                                    print('tapped pet info');
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder:
+                                                              (context) =>
+                                                                  PetInfoScreen(
+                                                                    currentPet:
+                                                                        petService
+                                                                            .allPets[index],
+                                                                  )),
+                                                    );
+                                                  },
                                                   child: Column(
                                                     children: [
                                                       Icon(
