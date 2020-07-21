@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
@@ -75,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   'Welcome Back',
                   style: StyleConstants.whiteTitleTextLarge,
                 ),
+                SizedBox(height: height * 0.02,),
                 Expanded(
                   child: Container(
                     width: MediaQuery.of(context).size.width,
@@ -93,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.white.withOpacity(0.4),
                               borderRadius: BorderRadius.circular(12.0),
                             ),
-                            padding: EdgeInsets.all(30.0),
+                            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
                             child: Column(
                               children: [
                                 Container(
@@ -111,6 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   width: 250.0,
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
+
                                         horizontal: 10.0),
                                     child: Center(
                                       child: TextFormField(
@@ -157,12 +162,79 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ),
                                 ),
+                                SizedBox(height: height * 0.02,),
+                                Container(
+                                  width: 250.0,
+                                  child: SignInButton(
+                                    Buttons.Google,
+                                    text: 'Sign up with Google',
+                                    onPressed: () async {
+                                      signInWithGoogle();
+                                    },
+                                  ),
+                                ),
+                                Container(
+                                  width: 250.0,
+                                  child: SignInButton(
+                                    Buttons.Apple,
+                                    text: 'Sign up with Apple',
+                                    onPressed: (){},
+                                  ),
+                                ),
+                                /*
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      icon: FaIcon(FontAwesomeIcons.google),
+                                      color: Colors.blue,
+                                      iconSize: 30.0,
+                                      onPressed: () async {
+                                        bool successful =
+                                        await auth.signInWithGoogle();
+                                        if (successful) {
+                                          bool hasAccount = await checkRegistration
+                                              .hasAccount(auth.user.uid);
+                                          if (!hasAccount) {
+                                            auth.setNeedsAccount();
+                                          }
+
+                                          _emailInputController.clear();
+                                          _passwordInputController.clear();
+                                          Navigator.pushNamedAndRemoveUntil(
+                                              context, '/', (_) => false);
+                                        }
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: FaIcon(FontAwesomeIcons.apple),
+                                      color: Colors.blue,
+                                      iconSize: 30.0,
+                                      onPressed: () => print('clicked apple'),
+                                    ),
+                                  ],
+                                ),*/
+
+                                /*
                                 FlatButton(
                                   child: Text('Sign in with Google'),
                                   onPressed: () async {
-                                    signInWithGoogle();
+                                    bool successful =
+                                        await auth.signInWithGoogle();
+                                    if (successful) {
+                                      bool hasAccount = await checkRegistration
+                                          .hasAccount(auth.user.uid);
+                                      if (!hasAccount) {
+                                        auth.setNeedsAccount();
+                                      }
+
+                                      _emailInputController.clear();
+                                      _passwordInputController.clear();
+                                      Navigator.pushNamedAndRemoveUntil(
+                                          context, '/', (_) => false);
+                                    }
                                   },
-                                ),
+                                )
+                                */
                               ],
                             ),
                           ),
