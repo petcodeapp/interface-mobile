@@ -165,7 +165,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: SignInButton(
                                     Buttons.Google,
                                     text: 'Sign up with Google',
-                                    onPressed: (){},
+                                    onPressed: () async {
+                                      bool successful =
+                                      await auth.signInWithGoogle();
+                                      if (successful) {
+                                        bool hasAccount = await checkRegistration
+                                            .hasAccount(auth.user.uid);
+                                        if (!hasAccount) {
+                                          auth.setNeedsAccount();
+                                        }
+
+                                        _emailInputController.clear();
+                                        _passwordInputController.clear();
+                                        Navigator.pushNamedAndRemoveUntil(
+                                            context, '/', (_) => false);
+                                      }
+                                    },
                                   ),
                                 ),
                                 Container(
