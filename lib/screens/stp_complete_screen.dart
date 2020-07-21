@@ -12,10 +12,12 @@ import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
 class StpCompleteScreen extends StatefulWidget {
-  StpCompleteScreen({Key key, this.pet, this.petImage}) : super(key: key);
+  StpCompleteScreen({Key key, this.pet, this.petImage, this.vaccineImages})
+      : super(key: key);
 
   final Pet pet;
   final File petImage;
+  final List<File> vaccineImages;
 
   @override
   _StpCompleteScreenState createState() => _StpCompleteScreenState();
@@ -31,14 +33,24 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
   }
 
   addToDB() async {
+    Pet updatedPet = widget.pet;
     final storageService =
         Provider.of<FirebaseStorageService>(context, listen: false);
 
-    String downloadUrl =
-        await storageService.uploadPetImage(widget.petImage, widget.pet.pid);
+    if (widget.petImage != null) {
+      String downloadUrl =
+          await storageService.uploadPetImage(widget.petImage, widget.pet.pid);
+      updatedPet.profileUrl = downloadUrl;
+    }
 
-    Pet updatedPet = widget.pet;
-    updatedPet.profileUrl = downloadUrl;
+    for (int i = 0; i < updatedPet.vaccinations.length; i++) {
+      if (widget.vaccineImages[i] != null) {
+        String downloadUrl = await storageService.uploadVaccineImage(
+            widget.vaccineImages[i], updatedPet.pid + 'vaccine' + i.toString());
+        updatedPet.vaccinations[i].imageUrl = downloadUrl;
+      }
+    }
+
     updatedPet.isLost = false;
 
     final databaseService =

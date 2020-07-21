@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:petcode_app/models/Vaccination.dart';
@@ -24,16 +25,67 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
   double width;
   double height;
 
-  File chosenImage1;
-  File chosenImage2;
+  List<File> _vaccineImages;
+  List<DateTime> _expireDates;
 
   List<TextEditingController> _vaccineNameInputControllers;
+
+  _showSelectImageDialog(int num) {
+    return _androidDialog(num);
+  }
+
+  _handleImage(ImageSource source, int num) async {
+    Navigator.pop(context);
+
+    final imagePickerService =
+        Provider.of<ImagePickerService>(context, listen: false);
+
+    File imageFile = await imagePickerService.pickImage(source);
+    if (imageFile != null) {
+      setState(() {
+        _vaccineImages[num] = imageFile;
+      });
+    }
+  }
+
+  _androidDialog(int num) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text('Add Photo'),
+          children: <Widget>[
+            SimpleDialogOption(
+                child: Text('Take Photo'),
+                onPressed: () {
+                  _handleImage(ImageSource.camera, num);
+                }),
+            SimpleDialogOption(
+              child: Text('Choose From Gallery'),
+              onPressed: () => _handleImage(ImageSource.gallery, num),
+            ),
+            SimpleDialogOption(
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.redAccent,
+                ),
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   void initState() {
     _vaccineNameInputControllers = new List<TextEditingController>();
     _vaccineNameInputControllers.add(new TextEditingController());
     _vaccineNameInputControllers.add(new TextEditingController());
+    _vaccineImages = new List<File>(2);
+    _expireDates = new List<DateTime>(2);
     super.initState();
   }
 
@@ -95,14 +147,27 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
                 onTap: () {
                   Pet updatedPet = widget.pet;
                   updatedPet.vaccinations = new List<Vaccination>();
-                  for (int i = 0; i < _vaccineNameInputControllers.length; i++) {
-                    if (_vaccineNameInputControllers[i].text != null && _vaccineNameInputControllers[i].text.isNotEmpty) {
-                      updatedPet.vaccinations.add(new Vaccination(name: _vaccineNameInputControllers[i].text));
+                  for (int i = 0;
+                      i < _vaccineNameInputControllers.length;
+                      i++) {
+                    if (_vaccineNameInputControllers[i].text != null &&
+                        _vaccineNameInputControllers[i].text.isNotEmpty) {
+                      updatedPet.vaccinations.add(new Vaccination(
+                          name: _vaccineNameInputControllers[i].text,
+                          date: _expireDates[i] != null
+                              ? Timestamp.fromDate(_expireDates[i])
+                              : null));
                     }
                   }
 
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => StpRemindersScreen(pet: updatedPet, petImage: widget.petImage,)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => StpRemindersScreen(
+                                pet: updatedPet,
+                                petImage: widget.petImage,
+                                vaccineImages: _vaccineImages,
+                              )));
                 },
                 child: Container(
                   height: 55.0,
@@ -173,29 +238,53 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
           SizedBox(
             height: height * 0.02,
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            height: 50.0,
-            width: 250.0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Center(
-                child: TextFormField(
-                  //controller: _passwordInputController,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Expiration Date',
-                      hintStyle: TextStyle(fontSize: 15.0)),
+          GestureDetector(
+            onTap: () {
+              showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2019),
+                      lastDate: DateTime(2021))
+                  .then((date) {
+                setState(() {
+                  _expireDates[0] = date;
+                  print(_expireDates[0].toString());
+                });
+              });
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              height: 50.0,
+              width: 250.0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text('Expires: '),
+                        Text(
+                          _expireDates[0] == null
+                              ? 'Select Date'
+                              : _expireDates[0].toString().substring(
+                                  0, _expireDates[0].toString().indexOf(' ')),
+                          style: TextStyle(color: Colors.black),
+                        )
+                      ],
+                    ),
+                    Icon(Icons.today),
+                  ],
                 ),
               ),
             ),
@@ -204,12 +293,7 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
             height: height * 0.02,
           ),
           GestureDetector(
-            onTap: () async {
-              final imagePicker = Provider.of<ImagePickerService>(context, listen: false);
-              chosenImage1 =
-              await imagePicker.pickImage(ImageSource.gallery);
-              setState(() {});
-            },
+            onTap: () => _androidDialog(0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -274,29 +358,53 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
           SizedBox(
             height: height * 0.02,
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            height: 50.0,
-            width: 250.0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Center(
-                child: TextFormField(
-                  //controller: _passwordInputController,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Expiration Date',
-                      hintStyle: TextStyle(fontSize: 15.0)),
+          GestureDetector(
+            onTap: () {
+              showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2019),
+                      lastDate: DateTime(2021))
+                  .then((date) {
+                setState(() {
+                  _expireDates[1] = date;
+                  print(_expireDates[1].toString());
+                });
+              });
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              height: 50.0,
+              width: 250.0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text('Expires: '),
+                        Text(
+                          _expireDates[1] == null
+                              ? 'Select Date'
+                              : _expireDates[1].toString().substring(
+                                  0, _expireDates[1].toString().indexOf(' ')),
+                          style: TextStyle(color: Colors.black),
+                        )
+                      ],
+                    ),
+                    Icon(Icons.today),
+                  ],
                 ),
               ),
             ),
@@ -305,12 +413,7 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
             height: height * 0.02,
           ),
           GestureDetector(
-            onTap: () async {
-              final imagePicker = Provider.of<ImagePickerService>(context, listen: false);
-              chosenImage2 =
-              await imagePicker.pickImage(ImageSource.gallery);
-              setState(() {});
-            },
+            onTap: () => _androidDialog(1),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
