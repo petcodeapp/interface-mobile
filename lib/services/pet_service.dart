@@ -13,7 +13,7 @@ class PetService extends ChangeNotifier {
 
   PetService();
 
-  PetService.fromPetIds(List<String> petIds) {
+  setPetIds(List<String> petIds) {
     startPetStream(petIds);
   }
 

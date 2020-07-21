@@ -24,6 +24,9 @@ class FirebaseAuthService extends ChangeNotifier {
     _firebaseAuth = FirebaseAuth.instance;
     _firebaseAuth.onAuthStateChanged.listen(_onAuthStateChanged);
     _googleSignIn = new GoogleSignIn();
+
+    _firebaseAuth.signOut();
+    _googleSignIn.signOut();
   }
 
   Status get status => _status;
@@ -119,6 +122,11 @@ class FirebaseAuthService extends ChangeNotifier {
 
   void setNeedsAccount() {
     _needsAccount = true;
+    notifyListeners();
+  }
+
+  void setCreatedAccount() {
+    _needsAccount = false;
     notifyListeners();
   }
 }

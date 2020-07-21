@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:petcode_app/models/User.dart';
+import 'package:petcode_app/services/database_service.dart';
+import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:provider/provider.dart';
 
 class StpNameAndPhoneScreen extends StatefulWidget {
   @override
@@ -7,16 +11,32 @@ class StpNameAndPhoneScreen extends StatefulWidget {
 }
 
 class _StpNameAndPhoneScreenState extends State<StpNameAndPhoneScreen> {
+  FirebaseAuthService authService;
+  DatabaseService databaseService;
+
+  TextEditingController _firstNameInputController;
+  TextEditingController _lastNameInputController;
+  TextEditingController _phoneNumberInputController;
+
+  @override
+  void initState() {
+    _firstNameInputController = new TextEditingController();
+    _lastNameInputController = new TextEditingController();
+    _phoneNumberInputController = new TextEditingController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    authService = Provider.of<FirebaseAuthService>(context);
+    databaseService = Provider.of<DatabaseService>(context);
 
     return Scaffold(
       backgroundColor: StyleConstants.blue,
       body: SingleChildScrollView(
         child: Form(
-
           child: Container(
             height: height,
             width: width,
@@ -24,21 +44,7 @@ class _StpNameAndPhoneScreenState extends State<StpNameAndPhoneScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: height * 0.015,
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.arrow_back_ios),
-                      color: Colors.white,
-                      iconSize: 30.0,
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    Spacer()
-                  ],
-                ),
-                SizedBox(
-                  height: height * 0.01,
+                  height: height * 0.025,
                 ),
                 Container(
                   width: width * 0.6,
@@ -91,12 +97,12 @@ class _StpNameAndPhoneScreenState extends State<StpNameAndPhoneScreen> {
                                         horizontal: 10.0),
                                     child: Center(
                                       child: TextFormField(
-                                        //controller: _emailInputController,
+                                        controller: _firstNameInputController,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
                                             hintText: 'First Name',
                                             hintStyle:
-                                            TextStyle(fontSize: 15.0)),
+                                                TextStyle(fontSize: 15.0)),
                                       ),
                                     ),
                                   ),
@@ -122,12 +128,12 @@ class _StpNameAndPhoneScreenState extends State<StpNameAndPhoneScreen> {
                                         horizontal: 10.0),
                                     child: Center(
                                       child: TextFormField(
-                                        //controller: _emailInputController,
+                                        controller: _lastNameInputController,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
-                                            hintText: 'First Name',
+                                            hintText: 'Last Name',
                                             hintStyle:
-                                            TextStyle(fontSize: 15.0)),
+                                                TextStyle(fontSize: 15.0)),
                                       ),
                                     ),
                                   ),
@@ -154,7 +160,7 @@ class _StpNameAndPhoneScreenState extends State<StpNameAndPhoneScreen> {
                                         horizontal: 10.0),
                                     child: Center(
                                       child: TextFormField(
-                                        //controller: _passwordInputController,
+                                        controller: _phoneNumberInputController,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText: 'Phone Number',
@@ -171,12 +177,22 @@ class _StpNameAndPhoneScreenState extends State<StpNameAndPhoneScreen> {
                         Positioned(
                           bottom: height * 0.16,
                           child: GestureDetector(
-                            onTap: () {
-
+                            onTap: () async {
+                              try {
+                                User createdUser =
+                                    await databaseService.createUser(
+                                        authService.user.email,
+                                        _firstNameInputController.text,
+                                        _lastNameInputController.text,
+                                        _phoneNumberInputController.text,
+                                        authService.user.uid);
+                                authService.setCreatedAccount();
+                              } catch (e) {
+                                print(e);
+                              }
                             },
                             child: Container(
-                              decoration:
-                              StyleConstants.roundYellowButtonDeco,
+                              decoration: StyleConstants.roundYellowButtonDeco,
                               width: 220.0,
                               height: 60.0,
                               child: Center(
@@ -185,8 +201,7 @@ class _StpNameAndPhoneScreenState extends State<StpNameAndPhoneScreen> {
                                   style: StyleConstants.whiteButtonText,
                                 ),
                               ),
-                            )
-
+                            ),
                           ),
                         ),
                       ],

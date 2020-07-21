@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -78,7 +75,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   'Welcome Back',
                   style: StyleConstants.whiteTitleTextLarge,
                 ),
-                SizedBox(height: height * 0.02,),
+                SizedBox(
+                  height: height * 0.02,
+                ),
                 Expanded(
                   child: Container(
                     width: MediaQuery.of(context).size.width,
@@ -97,7 +96,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.white.withOpacity(0.4),
                               borderRadius: BorderRadius.circular(12.0),
                             ),
-                            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30.0, vertical: 20.0),
                             child: Column(
                               children: [
                                 Container(
@@ -115,7 +115,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   width: 250.0,
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-
                                         horizontal: 10.0),
                                     child: Center(
                                       child: TextFormField(
@@ -162,12 +161,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: height * 0.02,),
+                                SizedBox(
+                                  height: height * 0.02,
+                                ),
                                 Container(
                                   width: 250.0,
                                   child: SignInButton(
                                     Buttons.Google,
-                                    text: 'Sign up with Google',
+                                    text: 'Log in with Google',
                                     onPressed: () async {
                                       signInWithGoogle();
                                     },
@@ -177,8 +178,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   width: 250.0,
                                   child: SignInButton(
                                     Buttons.Apple,
-                                    text: 'Sign up with Apple',
-                                    onPressed: (){},
+                                    text: 'Log in with Apple',
+                                    onPressed: () {},
                                   ),
                                 ),
                                 /*
@@ -303,6 +304,7 @@ class _LoginScreenState extends State<LoginScreen> {
           await checkRegistrationService.hasAccount(authService.user.uid);
       if (!hasAccount) {
         authService.setNeedsAccount();
+        authService.startSigningUp();
       }
 
       _emailInputController.clear();

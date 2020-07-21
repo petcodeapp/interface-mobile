@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
+import 'package:petcode_app/screens/stp_nameandphone_screen.dart';
 import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
@@ -65,13 +66,8 @@ class HomeScreen extends StatelessWidget {
         } else {
           if (auth.needsAccount) {
             print('needs account');
-            return Scaffold(
-              body: Center(
-                child: Text('needs account'),
-              ),
-            );
-          }
-          else if (auth.isSigningUp) {
+            return StpNameAndPhoneScreen();
+          } else if (auth.isSigningUp) {
             return StpStartScreen();
           } else {
             return MultiProvider(
@@ -86,12 +82,12 @@ class HomeScreen extends StatelessWidget {
                 ),
                 ChangeNotifierProxyProvider<UserService, PetService>(
                     create: (BuildContext context) => PetService(),
-                    update: (_, userService, __) {
+                    update: (_, userService, petService) {
                       if (userService.currentUser == null) {
-                        return PetService();
+                        return petService;
                       } else {
-                        return PetService.fromPetIds(
-                            userService.currentUser.petIds);
+                        return petService
+                          ..setPetIds(userService.currentUser.petIds);
                       }
                     }),
               ],

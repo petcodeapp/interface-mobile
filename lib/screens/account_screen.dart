@@ -94,7 +94,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       height: height * 0.03,
                     ),
                     GestureDetector(
-                      onTap: () => print('Presed contact'),
+                      onTap: () => print('Pressed contact'),
                       child: Container(
                         height: 50.0,
                         width: width - 50,
