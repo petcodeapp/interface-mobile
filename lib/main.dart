@@ -63,13 +63,22 @@ class HomeScreen extends StatelessWidget {
           print('entry screen!');
           return EntryScreen();
         } else {
-          if (auth.isSigningUp || auth.needsAccount) {
+          if (auth.needsAccount) {
+            print('needs account');
+            return Scaffold(
+              body: Center(
+                child: Text('needs account'),
+              ),
+            );
+          }
+          else if (auth.isSigningUp) {
             return StpStartScreen();
           } else {
             return MultiProvider(
               providers: [
                 ChangeNotifierProvider(
                   create: (_) {
+                    print('creating user service');
                     String uid =
                         Provider.of<FirebaseAuthService>(context).user.uid;
                     return UserService(uid);

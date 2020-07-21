@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/User.dart';
-import 'package:petcode_app/screens/stp_connecttag_screen.dart';
+import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
-import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +20,9 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController _lastNameInputController;
   TextEditingController _phoneNumberInputController;
 
+  FirebaseAuthService authService;
+  CheckRegistrationService checkRegistrationService;
+
   final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
 
   @override
@@ -36,8 +38,9 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authService =
-        Provider.of<FirebaseAuthService>(context);
+    authService = Provider.of<FirebaseAuthService>(context);
+    checkRegistrationService = Provider.of<CheckRegistrationService>(context);
+
     print(authService.status);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -276,6 +279,12 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                           ),
                         ),
+                        FlatButton(
+                          child: Text(
+                            'Sign Up With Google',
+                          ),
+                          onPressed: () {},
+                        )
                       ],
                     ),
                   ),
@@ -287,33 +296,7 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             GestureDetector(
               onTap: () async {
-                if (_signupFormKey.currentState.validate()) {
-                  try {
-                    final databaseService =
-                        Provider.of<DatabaseService>(context, listen: false);
-
-                    authService.startSigningUp();
-
-                    bool success =
-                        await authService.createUserWithEmailAndPassword(
-                            _emailInputController.text.trim(),
-                            _passwordInputController.text.trim());
-
-                    if (success) {
-                      User createdUser = await databaseService.createUser(
-                          _emailInputController.text.trim(),
-                          _firstNameInputController.text.trim(),
-                          _lastNameInputController.text.trim(),
-                          _phoneNumberInputController.text.trim(),
-                          authService.user.uid);
-
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, '/', (_) => false);
-                    }
-                  } catch (e) {
-                    print(e);
-                  }
-                }
+                signUpWithForm();
               },
               child: authService.status != Status.Authenticating
                   ? Container(
@@ -336,5 +319,71 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
+  }
+
+  void signUpWithForm() async {
+    if (_signupFormKey.currentState.validate()) {
+      try {
+        final databaseService =
+            Provider.of<DatabaseService>(context, listen: false);
+
+        authService.startSigningUp();
+
+        bool success = await authService.createUserWithEmailAndPassword(
+            _emailInputController.text.trim(),
+            _passwordInputController.text.trim());
+
+        if (success) {
+          bool needsAccount =
+              await checkRegistrationService.hasAccount(authService.user.uid);
+          if (!needsAccount) {
+            //TODO - Create reminder that account has already been created
+          } else {
+            User createdUser = await databaseService.createUser(
+                _emailInputController.text.trim(),
+                _firstNameInputController.text.trim(),
+                _lastNameInputController.text.trim(),
+                _phoneNumberInputController.text.trim(),
+                authService.user.uid);
+          }
+          clearAllControllers();
+
+          Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
+
+  void signUpWithGoogle() async {
+    try {
+      bool success = await authService.signInWithGoogle();
+
+      if (success) {
+        bool needsAccount =
+            await checkRegistrationService.hasAccount(authService.user.uid);
+
+        if (!needsAccount) {
+          //TODO - Create reminder that account has already been created
+        } else {
+          authService.setNeedsAccount();
+        }
+
+        clearAllControllers();
+        Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void clearAllControllers() {
+    _emailInputController.clear();
+    _passwordInputController.clear();
+    _confirmPasswordInputController.clear();
+    _firstNameInputController.clear();
+    _lastNameInputController.clear();
+    _phoneNumberInputController.clear();
   }
 }

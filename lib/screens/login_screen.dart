@@ -15,6 +15,9 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _emailInputController;
   TextEditingController _passwordInputController;
 
+  FirebaseAuthService authService;
+  CheckRegistrationService checkRegistrationService;
+
   GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
 
   @override
@@ -26,8 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final auth = Provider.of<FirebaseAuthService>(context);
-    final checkRegistration =
+    authService = Provider.of<FirebaseAuthService>(context);
+    checkRegistrationService =
         Provider.of<CheckRegistrationService>(context, listen: false);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -157,22 +160,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 FlatButton(
                                   child: Text('Sign in with Google'),
                                   onPressed: () async {
-                                    bool successful =
-                                        await auth.signInWithGoogle();
-                                    if (successful) {
-                                      bool hasAccount = await checkRegistration
-                                          .hasAccount(auth.user.uid);
-                                      if (!hasAccount) {
-                                        auth.setNeedsAccount();
-                                      }
-
-                                      _emailInputController.clear();
-                                      _passwordInputController.clear();
-                                      Navigator.pushNamedAndRemoveUntil(
-                                          context, '/', (_) => false);
-                                    }
+                                    signInWithGoogle();
                                   },
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -181,31 +171,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           bottom: height * 0.16,
                           child: GestureDetector(
                             onTap: () async {
-                              if (_loginFormKey.currentState.validate()) {
-                                try {
-                                  final successful =
-                                      await auth.signInWithEmailAndPassword(
-                                          _emailInputController.text,
-                                          _passwordInputController.text);
-
-                                  if (successful) {
-                                    bool hasAccount = await checkRegistration
-                                        .hasAccount(auth.user.uid);
-                                    if (!hasAccount) {
-                                      auth.setNeedsAccount();
-                                    }
-
-                                    _emailInputController.clear();
-                                    _passwordInputController.clear();
-                                    Navigator.pushNamedAndRemoveUntil(
-                                        context, '/', (_) => false);
-                                  }
-                                } catch (e) {
-                                  print(e);
-                                }
-                              }
+                              signInWithForm();
                             },
-                            child: auth.status == Status.Unauthenticated
+                            child: authService.status == Status.Unauthenticated
                                 ? Container(
                                     decoration:
                                         StyleConstants.roundYellowButtonDeco,
@@ -231,5 +199,43 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void signInWithForm() async {
+    if (_loginFormKey.currentState.validate()) {
+      try {
+        final successful = await authService.signInWithEmailAndPassword(
+            _emailInputController.text, _passwordInputController.text);
+
+        if (successful) {
+          bool hasAccount =
+              await checkRegistrationService.hasAccount(authService.user.uid);
+          if (!hasAccount) {
+            authService.setNeedsAccount();
+          }
+
+          _emailInputController.clear();
+          _passwordInputController.clear();
+          Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
+
+  void signInWithGoogle() async {
+    bool successful = await authService.signInWithGoogle();
+    if (successful) {
+      bool hasAccount =
+          await checkRegistrationService.hasAccount(authService.user.uid);
+      if (!hasAccount) {
+        authService.setNeedsAccount();
+      }
+
+      _emailInputController.clear();
+      _passwordInputController.clear();
+      Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+    }
   }
 }
