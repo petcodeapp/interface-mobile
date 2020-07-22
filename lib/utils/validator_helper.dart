@@ -49,4 +49,12 @@ class ValidatorHelper {
       return null;
     }
   }
+
+  static String petIdValidator(String petId) {
+    if (petId.trim().length != 6) {
+      return 'Please enter a valid pet id';
+    } else {
+      return null;
+    }
+  }
 }
