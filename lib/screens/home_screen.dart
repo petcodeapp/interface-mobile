@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/pet_info_screen.dart';
+import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
@@ -50,6 +51,21 @@ class _HomeScreenState extends State<HomeScreen> {
       return Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
+        ),
+      );
+    } else if (petService.allPets.length == 0) {
+      return Scaffold(
+        backgroundColor: StyleConstants.blue,
+        body: Column(
+          children: [
+            Text('You don\'t have any pets registered!'),
+            FlatButton(
+              child: Text('Register a pet'),
+              onPressed: () {
+                Provider.of<FirebaseAuthService>(context, listen: false).setSigningUp();
+              },
+            )
+          ],
         ),
       );
     } else {

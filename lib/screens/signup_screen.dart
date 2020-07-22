@@ -334,9 +334,9 @@ class _SignupScreenState extends State<SignupScreen> {
             _passwordInputController.text.trim());
 
         if (success) {
-          bool needsAccount =
+          bool hasAccount =
               await checkRegistrationService.hasAccount(authService.user.uid);
-          if (!needsAccount) {
+          if (hasAccount) {
             //TODO - Create reminder that account has already been created
           } else {
             User createdUser = await databaseService.createUser(

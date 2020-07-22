@@ -51,9 +51,7 @@ class Pet {
   factory Pet.fromJson(Map<String, dynamic> json) {
     List<dynamic> vaccinationMaps = json['vaccinations'] as List;
     List<Vaccination> convertedList;
-    if (vaccinationMaps == null) {
-      return null;
-    } else {
+    if (vaccinationMaps != null) {
       convertedList = new List<Vaccination>();
       vaccinationMaps.forEach((vaccination) {
         convertedList.add(Vaccination.fromJson(vaccination));
@@ -63,8 +61,6 @@ class Pet {
     List<dynamic> medicationMaps = json['medications'] as List;
     List<Medication> medicationConverted;
     if (convertedList == null) {
-      return null;
-    } else {
       medicationConverted = new List<Medication>();
       medicationMaps.forEach((medication) {
         medicationConverted.add(Medication.fromJson(medication));
