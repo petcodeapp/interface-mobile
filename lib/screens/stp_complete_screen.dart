@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petcode_app/screens/root_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
-import 'package:petcode_app/services/pet_service.dart';
+import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
@@ -53,14 +53,21 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
 
     updatedPet.isLost = false;
 
+    final userService = Provider.of<UserService>(context, listen: false);
+
     final databaseService =
         Provider.of<DatabaseService>(context, listen: false);
-    await databaseService.createPet(updatedPet);
 
-    final authService =
-        Provider.of<FirebaseAuthService>(context, listen: false);
+    List<String> currentUserPets = userService.currentUser.petIds;
+    if (currentUserPets == null || currentUserPets.length == 0) {
+      await databaseService.createPet(updatedPet);
+    } else {
+      await databaseService.addToUserPetList(
+          updatedPet.pid, userService.currentUser.uid, currentUserPets);
+    }
+
     await databaseService.createUserPetList(
-        updatedPet.pid, authService.user.uid);
+        updatedPet.pid, userService.currentUser.uid);
 
     updateSigningUp();
   }

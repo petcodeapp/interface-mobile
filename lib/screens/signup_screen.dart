@@ -115,6 +115,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                     border: InputBorder.none,
                                     hintText: 'First Name',
                                     hintStyle: TextStyle(fontSize: 15.0)),
+                                validator: (value) =>
+                                    ValidatorHelper.firstNameValidator(value),
                               ),
                             ),
                           ),
@@ -145,6 +147,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                     border: InputBorder.none,
                                     hintText: 'Last Name',
                                     hintStyle: TextStyle(fontSize: 15.0)),
+                                validator: (value) =>
+                                    ValidatorHelper.lastNameValidator(value),
                               ),
                             ),
                           ),
@@ -208,6 +212,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                     border: InputBorder.none,
                                     hintText: 'Email',
                                     hintStyle: TextStyle(fontSize: 15.0)),
+                                validator: (value) =>
+                                    ValidatorHelper.emailValidator(value),
                               ),
                             ),
                           ),
@@ -334,9 +340,9 @@ class _SignupScreenState extends State<SignupScreen> {
             _passwordInputController.text.trim());
 
         if (success) {
-          bool needsAccount =
+          bool hasAccount =
               await checkRegistrationService.hasAccount(authService.user.uid);
-          if (!needsAccount) {
+          if (hasAccount) {
             //TODO - Create reminder that account has already been created
           } else {
             User createdUser = await databaseService.createUser(

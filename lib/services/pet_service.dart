@@ -9,9 +9,8 @@ class PetService extends ChangeNotifier {
   List<ImageProvider> _petImages = new List<NetworkImage>();
 
   List<Pet> get allPets => _allPets;
-  List<ImageProvider> get petImages => _petImages;
 
-  PetService();
+  List<ImageProvider> get petImages => _petImages;
 
   setPetIds(List<String> petIds) {
     startPetStream(petIds);
@@ -27,17 +26,21 @@ class PetService extends ChangeNotifier {
   }
 
   void startPetStream(List<String> petIds) {
-    _firestore
-        .collection('pets')
-        .where('pid', whereIn: petIds)
-        .snapshots()
-        .listen((QuerySnapshot querySnapshot) {
-          _allPets.clear();
-      _allPets = petListFromQuery(querySnapshot);
-      for (int i = 0; i < _allPets.length; i++) {
-        _petImages.add(NetworkImage(_allPets[i].profileUrl));
-      }
-      notifyListeners();
-    });
+    if (petIds != null && petIds.length > 0) {
+      _firestore
+          .collection('pets')
+          .where('pid', whereIn: petIds)
+          .snapshots()
+          .listen((QuerySnapshot querySnapshot) {
+        _allPets.clear();
+        _petImages.clear();
+        _allPets = petListFromQuery(querySnapshot);
+        for (int i = 0; i < _allPets.length; i++) {
+          _petImages.add(NetworkImage(_allPets[i].profileUrl));
+        }
+        print('All Pets length : ' + _allPets.length.toString());
+        notifyListeners();
+      });
+    }
   }
 }

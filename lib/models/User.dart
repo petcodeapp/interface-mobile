@@ -27,9 +27,11 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     List<String> convertPetIds = new List<String>();
     List petIds = json['petIds'] as List;
-    petIds.forEach((petId) {
-      convertPetIds.add(petId.toString());
-    });
+    if (petIds != null) {
+      petIds.forEach((petId) {
+        convertPetIds.add(petId.toString());
+      });
+    }
 
     return User(
       uid: json['uid'] as String,

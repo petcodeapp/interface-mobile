@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
@@ -11,6 +10,7 @@ import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
+import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -37,6 +37,28 @@ class MyApp extends StatelessWidget {
         Provider<CheckRegistrationService>(
           create: (_) => CheckRegistrationService(),
         ),
+        ChangeNotifierProxyProvider<FirebaseAuthService, UserService>(
+          create: (_) => UserService(),
+          update: (BuildContext context, FirebaseAuthService authService,
+              UserService userService) {
+            if (authService.user == null) {
+              return userService;
+            } else {
+              return userService..setUid(authService.user.uid);
+            }
+          },
+        ),
+        ChangeNotifierProxyProvider<UserService, PetService>(
+          create: (_) => PetService(),
+          update: (BuildContext context, UserService userService,
+              PetService petService) {
+            if (userService.currentUser == null) {
+              return petService;
+            } else {
+              return petService..setPetIds(userService.currentUser.petIds);
+            }
+          },
+        )
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -55,6 +77,7 @@ class HomeScreen extends StatelessWidget {
         print('changed: ' + auth.status.index.toString());
         if (auth.status == Status.Uninitialized) {
           return Scaffold(
+            backgroundColor: StyleConstants.blue,
             body: Center(
               child: Text('loading'),
             ),
@@ -70,29 +93,7 @@ class HomeScreen extends StatelessWidget {
           } else if (auth.isSigningUp) {
             return StpStartScreen();
           } else {
-            return MultiProvider(
-              providers: [
-                ChangeNotifierProvider(
-                  create: (_) {
-                    print('creating user service');
-                    String uid =
-                        Provider.of<FirebaseAuthService>(context).user.uid;
-                    return UserService(uid);
-                  },
-                ),
-                ChangeNotifierProxyProvider<UserService, PetService>(
-                    create: (BuildContext context) => PetService(),
-                    update: (_, userService, petService) {
-                      if (userService.currentUser == null) {
-                        return petService;
-                      } else {
-                        return petService
-                          ..setPetIds(userService.currentUser.petIds);
-                      }
-                    }),
-              ],
-              child: RootScreen(),
-            );
+            return RootScreen();
           }
         }
       },
