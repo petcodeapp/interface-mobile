@@ -176,7 +176,7 @@ class PetInfoScreen extends StatelessWidget {
                           name: 'Name',
                           phoneNumber: '1234567890',
                           email: 'owneremail@email.com',
-                          address: '43 Wyndehaven Lakes Dr.')),
+                          address: '5 Address Ln.')),
                       SizedBox(
                         height: height * 0.07,
                       ),
@@ -195,7 +195,7 @@ class PetInfoScreen extends StatelessWidget {
                           name: 'Name2',
                           phoneNumber: '1234567890',
                           email: 'owner2email@email.com',
-                          address: '43 Wyndehaven Lakes Dr.asdfdafdsaf')),
+                          address: '1 New Dr.')),
                     ],
                   ),
                 ),
