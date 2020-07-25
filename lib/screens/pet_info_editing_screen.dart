@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/services/database_service.dart';
+import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
@@ -51,6 +55,54 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
   Widget build(BuildContext context) {
     _petService = Provider.of<PetService>(context);
     _databaseService = Provider.of<DatabaseService>(context);
+
+    File chosenImage;
+
+    _handleImage(ImageSource source) async {
+      final imagePickerService = Provider.of<ImagePickerService>(context, listen: false);
+
+      Navigator.pop(context);
+      File imageFile = await imagePickerService.pickImage(source);
+      if (imageFile != null) {
+        setState(() {
+          chosenImage = imageFile;
+        });
+      }
+    }
+
+    _androidDialog() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: Text('Add Photo'),
+            children: <Widget>[
+              SimpleDialogOption(
+                child: Text('Take Photo'),
+                onPressed: () => _handleImage(ImageSource.camera),
+              ),
+              SimpleDialogOption(
+                child: Text('Choose From Gallery'),
+                onPressed: () => _handleImage(ImageSource.gallery),
+              ),
+              SimpleDialogOption(
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                  ),
+                ),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    _showSelectImageDialog() {
+      return _androidDialog();
+    }
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -137,12 +189,15 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                   SizedBox(
                     height: height * 0.01,
                   ),
-                  Text(
-                    'Change Pet Photo',
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w600),
+                  GestureDetector(
+                    onTap: _showSelectImageDialog,
+                    child: Text(
+                      'Change Pet Photo',
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
                   Divider(),
                   Row(
