@@ -4,30 +4,29 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class PetInfoScreen extends StatelessWidget {
-  PetInfoScreen({Key key, this.currentPet}) : super(key: key);
+  PetInfoScreen({Key key, this.currentPet, this.petImage}) : super(key: key);
   final Pet currentPet;
-
-  double height;
-  double width;
+  final ImageProvider petImage;
 
   @override
   Widget build(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: StyleConstants.blue,
       body: SingleChildScrollView(
-        child: Container(
-          height: height * 1.5,
-          child: Stack(
+        child: Stack(
             children: [
-              Container(
-                height: height * 0.4,
-                child: Image.asset(
-                  'assets/images/puppyphoto.jpg',
-                  fit: BoxFit.cover,
-                ),
-              ),
+          Container(
+          height: height * 1.5,
+          width: width,),
+          Container(
+                  height: height * 0.4,
+                  width: width,
+                  child: Image(
+                    image: petImage,
+                    fit: BoxFit.cover,
+                  )),
               Positioned(
                 height: height * 0.15,
                 child: Container(
@@ -73,8 +72,26 @@ class PetInfoScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Reggie',
+                                currentPet.name,
                                 style: StyleConstants.blackTitleText,
+                              ),
+                              SizedBox(
+                                height: height * 0.01,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Breed: ',
+                                    style: StyleConstants.blackDescriptionText,
+                                  ),
+                                  Text(
+                                    currentPet.breed,
+                                    style:
+                                    StyleConstants.blackThinDescriptionText,
+                                  ),
+                                ],
                               ),
                               SizedBox(
                                 height: height * 0.01,
@@ -88,7 +105,7 @@ class PetInfoScreen extends StatelessWidget {
                                     style: StyleConstants.blackDescriptionText,
                                   ),
                                   Text(
-                                    'Chill',
+                                    currentPet.temperament,
                                     style:
                                         StyleConstants.blackThinDescriptionText,
                                   ),
@@ -106,7 +123,7 @@ class PetInfoScreen extends StatelessWidget {
                                     style: StyleConstants.blackDescriptionText,
                                   ),
                                   Text(
-                                    'No',
+                                    currentPet.isServiceAnimal ? 'Yes' : 'No',
                                     style:
                                         StyleConstants.blackThinDescriptionText,
                                   ),
@@ -172,15 +189,11 @@ class PetInfoScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      createOwnerWidget(Owner(
-                          name: 'Name',
-                          phoneNumber: '1234567890',
-                          email: 'owneremail@email.com',
-                          address: '5 Address Ln.')),
+                      createOwnerWidget(currentPet.contact_1, height, width),
                       SizedBox(
                         height: height * 0.07,
                       ),
-                      Container(
+                      currentPet.contact_2 != null ? Container(
                         width: width * 0.85,
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(0, 0, 0, height * 0.01),
@@ -190,12 +203,11 @@ class PetInfoScreen extends StatelessWidget {
                             textAlign: TextAlign.start,
                           ),
                         ),
-                      ),
-                      createOwnerWidget(Owner(
-                          name: 'Name2',
-                          phoneNumber: '1234567890',
-                          email: 'owner2email@email.com',
-                          address: '1 New Dr.')),
+                      ) : SizedBox.shrink(),
+                      currentPet.contact_2 != null ? createOwnerWidget(
+                          currentPet.contact_2,
+                          height,
+                          width) : SizedBox.shrink(),
                     ],
                   ),
                 ),
@@ -203,11 +215,10 @@ class PetInfoScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
     );
   }
 
-  Widget createOwnerWidget(Owner owner) {
+  Widget createOwnerWidget(Owner owner, double height, double width) {
     return Container(
       width: width * 0.85,
       //height: height * 0.15,
