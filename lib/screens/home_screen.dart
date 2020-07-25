@@ -62,7 +62,8 @@ class _HomeScreenState extends State<HomeScreen> {
             FlatButton(
               child: Text('Register a pet'),
               onPressed: () {
-                Provider.of<FirebaseAuthService>(context, listen: false).setSigningUp();
+                Provider.of<FirebaseAuthService>(context, listen: false)
+                    .setSigningUp();
               },
             )
           ],
@@ -176,9 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           builder:
                                                               (context) =>
                                                                   PetInfoScreen(
-                                                                    currentPet:
-                                                                        petService
-                                                                            .allPets[index],
+                                                                    petIndex: index,
                                                                   )),
                                                     );
                                                   },

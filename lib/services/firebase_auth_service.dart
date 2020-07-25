@@ -89,7 +89,7 @@ class FirebaseAuthService extends ChangeNotifier {
     if (firebaseUser == null) {
       _status = Status.Unauthenticated;
     } else {
-      print(firebaseUser);
+          print(firebaseUser);
       _firebaseUser = firebaseUser;
       _status = Status.Authenticated;
     }
