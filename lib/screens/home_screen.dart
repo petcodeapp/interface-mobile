@@ -177,12 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           builder:
                                                               (context) =>
                                                                   PetInfoScreen(
-                                                                    currentPet:
-                                                                        petService
-                                                                            .allPets[index],
-                                                                    petImage: petService
-                                                                            .petImages[
-                                                                        index],
+                                                                    petIndex: index,
                                                                   )),
                                                     );
                                                   },

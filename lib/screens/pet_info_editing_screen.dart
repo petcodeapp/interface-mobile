@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
@@ -58,6 +59,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
         Provider.of<ImagePickerService>(context, listen: false);
 
     File imageFile = await imagePickerService.pickImage(source);
+    Navigator.pop(context);
     if (imageFile != null) {
       setState(() {
         chosenImageFile = imageFile;
@@ -137,8 +139,35 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                 onTap: () async {
                   if (_formKey.currentState.validate()) {
                     Pet updatedPet = widget.currentPet;
-                    updatedPet.name = _nameInputController.text;
                     updatedPet.isServiceAnimal = _isServiceAnimal;
+                    updatedPet.name = _nameInputController.text.trim();
+                    updatedPet.breed = _breedInputController.text.trim();
+                    updatedPet.temperament =
+                        _temperamentInputController.text.trim();
+
+                    //TODO: Add additional info to database
+
+                    Owner contact_1 = new Owner(
+                      name: _owner1NameInputController.text.trim(),
+                      email: _owner1EmailInputController.text.trim(),
+                      phoneNumber: _owner1PhoneInputController.text.trim(),
+                      address: _owner1AddressInputController.text.trim(),
+                    );
+
+                    updatedPet.contact_1 = contact_1;
+
+                    if (!owner2IsNull()) {
+                      Owner contact_2 = new Owner(
+                        name: _owner2NameInputController.text.trim(),
+                        email: _owner2EmailInputController.text.trim(),
+                        phoneNumber: _owner2PhoneInputController.text.trim(),
+                        address: _owner2AddressInputController.text.trim(),
+                      );
+
+                      updatedPet.contact_2 = contact_2;
+                    } else {
+                      updatedPet.contact_2 = null;
+                    }
 
                     if (widget.petImage != updatedImage) {
                       FirebaseStorageService firebaseStorageService =
@@ -450,8 +479,9 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                         //height: height * 0.07,
                         width: width * 0.7,
                         child: TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.firstNameValidator(value),
+                          validator: (value) => !owner2IsNull()
+                              ? ValidatorHelper.firstNameValidator(value)
+                              : null,
                           controller: _owner2NameInputController,
                           maxLines: null,
                           keyboardType: TextInputType.multiline,
@@ -475,8 +505,9 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                         //height: height * 0.07,
                         width: width * 0.7,
                         child: TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.emailValidator(value),
+                          validator: (value) => !owner2IsNull()
+                              ? ValidatorHelper.emailValidator(value)
+                              : null,
                           controller: _owner2EmailInputController,
                           maxLines: null,
                           keyboardType: TextInputType.multiline,
@@ -500,8 +531,9 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                         //height: height * 0.07,
                         width: width * 0.7,
                         child: TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.phoneNumberValidator(value),
+                          validator: (value) => !owner2IsNull()
+                              ? ValidatorHelper.phoneNumberValidator(value)
+                              : null,
                           controller: _owner2PhoneInputController,
                           maxLines: null,
                           keyboardType: TextInputType.multiline,
@@ -525,8 +557,9 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                         //height: height * 0.07,
                         width: width * 0.7,
                         child: TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.addressValidator(value),
+                          validator: (value) => !owner2IsNull()
+                              ? ValidatorHelper.addressValidator(value)
+                              : null,
                           controller: _owner2AddressInputController,
                           maxLines: null,
                           keyboardType: TextInputType.multiline,
@@ -577,5 +610,12 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
           widget.currentPet.contact_2.phoneNumber;
       _owner2AddressInputController.text = widget.currentPet.contact_2.address;
     }
+  }
+
+  bool owner2IsNull() {
+    return _owner2NameInputController.text.trim().isEmpty &&
+        _owner2EmailInputController.text.trim().isEmpty &&
+        _owner2PhoneInputController.text.trim().isEmpty &&
+        _owner2AddressInputController.text.trim().isEmpty;
   }
 }
