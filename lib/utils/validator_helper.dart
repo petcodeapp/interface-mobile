@@ -42,6 +42,46 @@ class ValidatorHelper {
     }
   }
 
+  static String addressValidator(String address) {
+    if (address == null || address.trim().length == 0) {
+      return 'Please enter a valid pet name';
+    } else {
+      return null;
+    }
+  }
+
+  static String petNameValidator(String petName) {
+    if (petName == null || petName.trim().length == 0) {
+      return 'Please enter a valid pet name';
+    } else {
+      return null;
+    }
+  }
+
+  static String petBreedValidator(String petBreed) {
+    if (petBreed == null || petBreed.trim().length == 0) {
+      return 'Please enter a valid pet name';
+    } else {
+      return null;
+    }
+  }
+
+  static String petTempValidator(String petTemp) {
+    if (petTemp == null || petTemp.trim().length == 0) {
+      return 'Please enter a valid pet name';
+    } else {
+      return null;
+    }
+  }
+
+  static String petAddInfoValidator(String addInfo) {
+    if (addInfo == null || addInfo.trim().length == 0) {
+      return 'Please enter a valid pet name';
+    } else {
+      return null;
+    }
+  }
+
   static String phoneNumberValidator(String phoneNumber) {
     if (int.tryParse(phoneNumber.trim()) == null) {
       return 'Please enter a valid phone number';

@@ -48,7 +48,7 @@ class PetInfoScreen extends StatelessWidget {
                         icon: Icon(Icons.edit),
                         color: Colors.white,
                         iconSize: 30.0,
-                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => PetInfoEditingScreen())),
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => PetInfoEditingScreen(currentPet: currentPet,))),
                       ),
                     ],
                   ),
