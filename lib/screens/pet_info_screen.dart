@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/screens/pet_info_editing_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class PetInfoScreen extends StatelessWidget {
@@ -46,9 +47,7 @@ class PetInfoScreen extends StatelessWidget {
                         icon: Icon(Icons.edit),
                         color: Colors.white,
                         iconSize: 30.0,
-                        onPressed: () {
-                          print('edit');
-                        },
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => PetInfoEditingScreen(currentPet: currentPet,))),
                       ),
                     ],
                   ),
@@ -132,29 +131,7 @@ class PetInfoScreen extends StatelessWidget {
                               SizedBox(
                                 height: height * 0.01,
                               ),
-                              SizedBox(
-                                height: height * 0.01,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Additional Notes: ',
-                                    style: StyleConstants.blackDescriptionText,
-                                  ),
-                                  Flexible(
-                                    child: Text(
-                                      'Eats a lot, likes cat food',
-                                      style: StyleConstants
-                                          .blackThinDescriptionText,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: height * 0.01,
-                              ),
+
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -171,6 +148,27 @@ class PetInfoScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
+                              SizedBox(
+                                height: height * 0.01,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Additional Notes: ',
+                                    style: StyleConstants.blackDescriptionText,
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      'Eats a lot, likes cat food',
+                                      style: StyleConstants
+                                          .blackThinDescriptionText,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
                             ],
                           ),
                         ),
