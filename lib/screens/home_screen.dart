@@ -258,78 +258,89 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: ListView.builder(
                                   itemCount: _allPetUpcomingEvents.length,
                                   itemBuilder: (context, index) {
-                                    return Row(
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15.0)),
-                                              height: 60.0,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(
+                                                    15.0)),
+                                        height: 60.0,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              CircularCheckBox(
+                                                value: _value,
+                                                onChanged: (bool value) {
+                                                  setState(() {
+                                                    _value = value;
+                                                  });
+                                                },
+                                                activeColor:
+                                                StyleConstants.green,
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment
+                                                      .start,
                                                   children: [
-                                                    CircularCheckBox(
-                                                      value: _value,
-                                                      onChanged: (bool value) {
-                                                        setState(() {
-                                                          _value = value;
-                                                        });
-                                                      },
-                                                      activeColor:
-                                                          StyleConstants.green,
+                                                    Text(
+                                                      _allPetUpcomingEvents[
+                                                      index]
+                                                          .name,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      softWrap: false,
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                          fontSize: 18.0,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w400),
                                                     ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          _allPetUpcomingEvents[
-                                                                  index]
-                                                              .name,
-                                                          style: TextStyle(
-                                                              fontSize: 18.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400),
-                                                        ),
-                                                        Text(
-                                                          _allPetUpcomingEvents[
-                                                                  index]
-                                                              .petName,
-                                                          style: TextStyle(
-                                                              fontSize: 15.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w300),
-                                                        ),
-                                                      ],
+                                                    Text(
+                                                      _allPetUpcomingEvents[
+                                                      index]
+                                                          .petName,
+                                                      overflow: TextOverflow
+                                                          .ellipsis,
+                                                      style: TextStyle(
+                                                          fontSize: 15.0,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w300),
                                                     ),
-                                                    Spacer(),
-                                                    _allPetUpcomingEvents[index]
-                                                                .date !=
-                                                            null
-                                                        ? Text(formatDate(
-                                                            _allPetUpcomingEvents[
-                                                                    index]
-                                                                .date
-                                                                .toDate()))
-                                                        : Text('No date given'),
                                                   ],
                                                 ),
                                               ),
-                                            ),
+                                             
+                                              _allPetUpcomingEvents[index]
+                                                  .date !=
+                                                  null
+                                                  ? Text(
+                                                formatDate(
+                                                    _allPetUpcomingEvents[
+                                                    index]
+                                                        .date
+                                                        .toDate()),
+                                                overflow:
+                                                TextOverflow
+                                                    .ellipsis,
+                                              )
+                                                  : Text(
+                                                'No date given',
+                                                overflow:
+                                                TextOverflow
+                                                    .ellipsis,
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
+                                      ),
                                     );
                                   }),
                             )
