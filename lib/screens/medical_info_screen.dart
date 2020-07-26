@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class MedicalInfoScreen extends StatefulWidget {
@@ -24,6 +25,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
         title: new Theme(
           child: new DropdownButtonHideUnderline(
             child: new DropdownButton(
+              iconEnabledColor: Colors.white,
               dropdownColor: StyleConstants.blue,
               value: _value,
               items: [
@@ -114,10 +116,13 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Icon(
-                            Icons.settings,
-                            color: StyleConstants.yellow,
-                            size: 30.0,
+                          Container(
+                            width: 25.0,
+                            child: FaIcon(
+                              FontAwesomeIcons.syringe,
+                              color: StyleConstants.yellow,
+                              size: 30.0,
+                            ),
                           ),
                           SizedBox(
                             width: width * 0.03,
@@ -145,10 +150,13 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Icon(
-                            Icons.settings,
-                            color: StyleConstants.yellow,
-                            size: 30.0,
+                          Container(
+                            width: 25.0,
+                            child: FaIcon(
+                              FontAwesomeIcons.fileMedical,
+                              color: StyleConstants.yellow,
+                              size: 30.0,
+                            ),
                           ),
                           SizedBox(
                             width: width * 0.03,
@@ -176,10 +184,20 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          /*
                           Icon(
                             Icons.settings,
                             color: StyleConstants.yellow,
                             size: 30.0,
+                          ),
+                          */
+                          Container(
+                            width: 25.0,
+                            child: FaIcon(
+                              FontAwesomeIcons.share,
+                              color: StyleConstants.yellow,
+                              size: 30.0,
+                            ),
                           ),
                           SizedBox(
                             width: width * 0.03,
@@ -207,10 +225,19 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          /*
                           Icon(
                             Icons.settings,
                             color: StyleConstants.yellow,
                             size: 30.0,
+                          ),*/
+                          Container(
+                            width: 25.0,
+                            child: FaIcon(
+                              FontAwesomeIcons.weight,
+                              color: StyleConstants.yellow,
+                              size: 30.0,
+                            ),
                           ),
                           SizedBox(
                             width: width * 0.03,
@@ -224,6 +251,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                     ),
                   ),
                 ),
+                SizedBox(height: height * 0.01,),
               ],
             ),
           ),
