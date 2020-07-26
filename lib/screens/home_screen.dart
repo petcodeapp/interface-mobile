@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
+import 'package:petcode_app/models/Medication.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/models/UpcomingEvent.dart';
 import 'package:petcode_app/screens/pet_info_screen.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/pet_service.dart';
@@ -23,14 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<String> names;
 
-  List<String> reminders = [
-    'Flea and Tick Medication',
-    'Heartworm Medication',
-    'Flea and Tick Medication',
-    'Heartworm Medication'
-  ];
-  List<String> dates = ['7/4/20', '6/3/21', '7/4/20', '6/3/21'];
-  List<String> reminderPets = ['Reggie', 'Buddy', 'Doggo', 'Jimmy'];
+  List<UpcomingEvent> _allPetUpcomingEvents;
 
   bool _value = false;
 
@@ -80,6 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
       print('namesLength: ' + names.length.toString());
       print('petImagesLength: ' + petService.petImages.length.toString());
+
+      _allPetUpcomingEvents = petService.getAllPetMedication();
 
       return Scaffold(
         backgroundColor: StyleConstants.blue,
@@ -174,11 +171,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
-                                                          builder:
-                                                              (context) =>
-                                                                  PetInfoScreen(
-                                                                    petIndex: index,
-                                                                  )),
+                                                          builder: (context) =>
+                                                              PetInfoScreen(
+                                                                petIndex: index,
+                                                              )),
                                                     );
                                                   },
                                                   child: Column(
@@ -260,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Expanded(
                               child: ListView.builder(
-                                  itemCount: reminders.length,
+                                  itemCount: _allPetUpcomingEvents.length,
                                   itemBuilder: (context, index) {
                                     return Row(
                                       children: [
@@ -296,7 +292,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               .start,
                                                       children: [
                                                         Text(
-                                                          reminders[index],
+                                                          _allPetUpcomingEvents[
+                                                                  index]
+                                                              .name,
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               fontWeight:
@@ -304,7 +302,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       .w400),
                                                         ),
                                                         Text(
-                                                          reminderPets[index],
+                                                          _allPetUpcomingEvents[
+                                                                  index]
+                                                              .petName,
                                                           style: TextStyle(
                                                               fontSize: 15.0,
                                                               fontWeight:
@@ -314,7 +314,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       ],
                                                     ),
                                                     Spacer(),
-                                                    Text(dates[index])
+                                                    _allPetUpcomingEvents[index]
+                                                                .date !=
+                                                            null
+                                                        ? Text(formatDate(
+                                                            _allPetUpcomingEvents[
+                                                                    index]
+                                                                .date
+                                                                .toDate()))
+                                                        : Text('No date given'),
                                                   ],
                                                 ),
                                               ),
@@ -368,5 +376,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  String formatDate(DateTime date) {
+    return date.month.toString() +
+        '/' +
+        date.day.toString() +
+        '/' +
+        (date.year % 100).toString();
   }
 }

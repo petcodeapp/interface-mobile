@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:petcode_app/models/Medication.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/models/UpcomingEvent.dart';
+import 'package:petcode_app/models/Vaccination.dart';
 
 class PetService extends ChangeNotifier {
   Firestore _firestore = Firestore.instance;
@@ -42,5 +46,70 @@ class PetService extends ChangeNotifier {
         notifyListeners();
       });
     }
+  }
+
+  List<UpcomingEvent> getAllPetMedication() {
+    List<UpcomingEvent> allUpcomingEvents = new List<UpcomingEvent>();
+    List<UpcomingEvent> allUpcomingEventsNoDate = new List<UpcomingEvent>();
+    for (int i = 0; i < _allPets.length; i++) {
+      if (_allPets[i].medications != null) {
+        for (int j = 0; j < _allPets[i].medications.length; j++) {
+          Medication currentMedication = _allPets[i].medications[j];
+          if (currentMedication.name == null ||
+              currentMedication.name.trim().isEmpty) {
+            currentMedication.name = 'Untitled';
+          }
+          if (currentMedication.date != null) {
+            UpcomingEvent upcomingEvent = UpcomingEvent(
+                name: currentMedication.name,
+                petName: _allPets[i].name,
+                date: currentMedication.date);
+            allUpcomingEvents.add(upcomingEvent);
+          } else {
+            UpcomingEvent upcomingEvent = UpcomingEvent(
+              name: currentMedication.name,
+              petName: _allPets[i].name,
+            );
+            allUpcomingEventsNoDate.add(upcomingEvent);
+          }
+        }
+      }
+      if (_allPets[i].vaccinations != null) {
+        for (int j = 0; j < _allPets[i].vaccinations.length; j++) {
+          Vaccination currentVaccination = _allPets[i].vaccinations[j];
+          if (currentVaccination.name == null ||
+              currentVaccination.name.trim().isEmpty) {
+            currentVaccination.name = 'Untitled';
+          }
+          if (currentVaccination.date != null) {
+            UpcomingEvent upcomingEvent = UpcomingEvent(
+                name: currentVaccination.name,
+                petName: _allPets[i].name,
+                date: currentVaccination.date);
+            allUpcomingEvents.add(upcomingEvent);
+          } else {
+            UpcomingEvent upcomingEvent = UpcomingEvent(
+              name: currentVaccination.name,
+              petName: _allPets[i].name,
+            );
+            allUpcomingEventsNoDate.add(upcomingEvent);
+          }
+        }
+      }
+    }
+    allUpcomingEvents
+        .sort((UpcomingEvent upcomingEventA, UpcomingEvent upcomingEventB) {
+      return upcomingEventA.date.compareTo(upcomingEventB.date);
+    });
+    allUpcomingEventsNoDate
+        .sort((UpcomingEvent upcomingEventA, UpcomingEvent upcomingEventB) {
+      if (upcomingEventA.petName == upcomingEventB.petName) {
+        return upcomingEventA.name.compareTo(upcomingEventB.name);
+      } else {
+        return upcomingEventA.petName.compareTo(upcomingEventB.petName);
+      }
+    });
+    allUpcomingEvents.addAll(allUpcomingEventsNoDate);
+    return allUpcomingEvents;
   }
 }
