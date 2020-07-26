@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: StyleConstants.blue,
         body: SingleChildScrollView(
           child: Container(
-            height: height,
+            height: height + reminders.length * 35.0,
             width: width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -263,6 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Expanded(
                               child: ListView.builder(
                                   itemCount: reminders.length,
+                                  physics: NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
                                     return Row(
                                       children: [
