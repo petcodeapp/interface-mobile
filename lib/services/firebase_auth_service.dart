@@ -17,7 +17,6 @@ class FirebaseAuthService extends ChangeNotifier {
   GoogleSignIn _googleSignIn;
 
   Status _status = Status.Uninitialized;
-  bool _needsAccount = false;
 
   FirebaseAuthService() {
     _firebaseAuth = FirebaseAuth.instance;
@@ -28,8 +27,6 @@ class FirebaseAuthService extends ChangeNotifier {
   Status get status => _status;
 
   FirebaseUser get user => _firebaseUser;
-
-  bool get needsAccount => _needsAccount;
 
   Future<bool> signInWithEmailAndPassword(String email, String password) async {
     try {
@@ -104,13 +101,4 @@ class FirebaseAuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setNeedsAccount() {
-    _needsAccount = true;
-    notifyListeners();
-  }
-
-  void setCreatedAccount() {
-    _needsAccount = false;
-    notifyListeners();
-  }
 }

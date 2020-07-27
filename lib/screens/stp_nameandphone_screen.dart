@@ -7,6 +7,9 @@ import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
 class StpNameAndPhoneScreen extends StatefulWidget {
+  StpNameAndPhoneScreen({Key key, this.registerPet}) : super(key: key);
+  final bool registerPet;
+
   @override
   _StpNameAndPhoneScreenState createState() => _StpNameAndPhoneScreenState();
 }
@@ -187,12 +190,15 @@ class _StpNameAndPhoneScreenState extends State<StpNameAndPhoneScreen> {
                                         _lastNameInputController.text,
                                         _phoneNumberInputController.text,
                                         authService.user.uid);
-                                authService.setCreatedAccount();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => StpStartScreen()),
-                                );
+                                if (widget.registerPet) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => StpStartScreen()),
+                                  );
+                                }
+                                else {
+                                  Navigator.pop(context);
+                                }
                               } catch (e) {
                                 print(e);
                               }

@@ -86,12 +86,7 @@ class HomeScreen extends StatelessWidget {
           print('entry screen!');
           return EntryScreen();
         } else {
-          if (auth.needsAccount) {
-            print('needs account');
-            return StpNameAndPhoneScreen();
-          } else {
-            return RootScreen();
-          }
+          return RootScreen();
         }
       },
     );

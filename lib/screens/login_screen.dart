@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:petcode_app/screens/stp_nameandphone_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -284,12 +285,16 @@ class _LoginScreenState extends State<LoginScreen> {
           bool hasAccount =
               await checkRegistrationService.hasAccount(authService.user.uid);
           if (!hasAccount) {
-            authService.setNeedsAccount();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => StpNameAndPhoneScreen(registerPet: true,)),
+            );
+          } else {
+            Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
           }
 
           _emailInputController.clear();
           _passwordInputController.clear();
-          Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
         }
       } catch (e) {
         print(e);
@@ -304,11 +309,15 @@ class _LoginScreenState extends State<LoginScreen> {
         bool hasAccount =
             await checkRegistrationService.hasAccount(authService.user.uid);
         if (!hasAccount) {
-          authService.setNeedsAccount();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => StpNameAndPhoneScreen(registerPet: true,)),
+          );
+        } else {
+          Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
         }
         _emailInputController.clear();
         _passwordInputController.clear();
-        Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
       }
     } catch (e) {
       print(e);
