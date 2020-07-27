@@ -33,17 +33,18 @@ class _StpStartScreenState extends State<StpStartScreen> {
                   ),
                 ),
                 Positioned(
-                  top: height * 0.1,
+                  top: height * 0.04,
                   child: Container(
                     width: width,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         IconButton(
                           icon: Icon(Icons.arrow_back_ios),
-                          onPressed: () {
-                            Provider.of<FirebaseAuthService>(context, listen: false).setFinishedRegisteringPet();
-                          },
+                          onPressed: () => Provider.of<FirebaseAuthService>(
+                                  context,
+                                  listen: false)
+                              .setFinishedRegisteringPet(),
                           iconSize: 30.0,
                           color: StyleConstants.white,
                         ),

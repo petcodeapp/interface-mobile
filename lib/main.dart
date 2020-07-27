@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           update: (BuildContext context, FirebaseAuthService authService,
               UserService userService) {
             if (authService.user == null) {
-              return userService;
+              return userService..clearUid();
             } else {
               return userService..setUid(authService.user.uid);
             }
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
           update: (BuildContext context, UserService userService,
               PetService petService) {
             if (userService.currentUser == null) {
-              return petService;
+              return petService..stopPetStream();
             } else {
               return petService..setPetIds(userService.currentUser.petIds);
             }
