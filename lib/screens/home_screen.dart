@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
 import 'package:petcode_app/models/Medication.dart';
@@ -48,22 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
           child: CircularProgressIndicator(),
         ),
       );
-    } else if (petService.allPets.length == 0) {
-      return Scaffold(
-        backgroundColor: StyleConstants.blue,
-        body: Column(
-          children: [
-            Text('You don\'t have any pets registered!'),
-            FlatButton(
-              child: Text('Register a pet'),
-              onPressed: () {
-                Provider.of<FirebaseAuthService>(context, listen: false)
-                    .setSigningUp();
-              },
-            )
-          ],
-        ),
-      );
     } else {
       names = new List<String>();
       print(petService.allPets.length);
@@ -80,6 +66,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
       return Scaffold(
         backgroundColor: StyleConstants.blue,
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          backgroundColor: StyleConstants.lightBlue,
+          onPressed: () {
+            Provider.of<FirebaseAuthService>(context, listen: false)
+                .setSigningUp();
+          },
+        ),
         body: SingleChildScrollView(
           child: Container(
             height: height,
@@ -264,12 +258,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius:
-                                                BorderRadius.circular(
-                                                    15.0)),
+                                                BorderRadius.circular(15.0)),
                                         height: 60.0,
                                         child: Padding(
-                                          padding:
-                                              const EdgeInsets.all(8.0),
+                                          padding: const EdgeInsets.all(8.0),
                                           child: Row(
                                             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
@@ -281,62 +273,57 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   });
                                                 },
                                                 activeColor:
-                                                StyleConstants.green,
+                                                    StyleConstants.green,
                                               ),
                                               Expanded(
                                                 child: Column(
                                                   crossAxisAlignment:
-                                                  CrossAxisAlignment
-                                                      .start,
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       _allPetUpcomingEvents[
-                                                      index]
+                                                              index]
                                                           .name,
-                                                      overflow: TextOverflow.ellipsis,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                       softWrap: false,
                                                       maxLines: 1,
                                                       style: TextStyle(
                                                           fontSize: 18.0,
                                                           fontWeight:
-                                                          FontWeight
-                                                              .w400),
+                                                              FontWeight.w400),
                                                     ),
                                                     Text(
                                                       _allPetUpcomingEvents[
-                                                      index]
+                                                              index]
                                                           .petName,
-                                                      overflow: TextOverflow
-                                                          .ellipsis,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                       style: TextStyle(
                                                           fontSize: 15.0,
                                                           fontWeight:
-                                                          FontWeight
-                                                              .w300),
+                                                              FontWeight.w300),
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                             
                                               _allPetUpcomingEvents[index]
-                                                  .date !=
-                                                  null
+                                                          .date !=
+                                                      null
                                                   ? Text(
-                                                formatDate(
-                                                    _allPetUpcomingEvents[
-                                                    index]
-                                                        .date
-                                                        .toDate()),
-                                                overflow:
-                                                TextOverflow
-                                                    .ellipsis,
-                                              )
+                                                      formatDate(
+                                                          _allPetUpcomingEvents[
+                                                                  index]
+                                                              .date
+                                                              .toDate()),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    )
                                                   : Text(
-                                                'No date given',
-                                                overflow:
-                                                TextOverflow
-                                                    .ellipsis,
-                                              ),
+                                                      'No date given',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
                                             ],
                                           ),
                                         ),

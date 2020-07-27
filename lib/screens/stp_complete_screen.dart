@@ -59,15 +59,14 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
         Provider.of<DatabaseService>(context, listen: false);
 
     List<String> currentUserPets = userService.currentUser.petIds;
+    await databaseService.createPet(updatedPet);
     if (currentUserPets == null || currentUserPets.length == 0) {
-      await databaseService.createPet(updatedPet);
+      await databaseService.createUserPetList(
+          updatedPet.pid, userService.currentUser.uid);
     } else {
       await databaseService.addToUserPetList(
           updatedPet.pid, userService.currentUser.uid, currentUserPets);
     }
-
-    await databaseService.createUserPetList(
-        updatedPet.pid, userService.currentUser.uid);
 
     updateSigningUp();
   }
