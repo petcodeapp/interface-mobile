@@ -42,7 +42,7 @@ class _StpStartScreenState extends State<StpStartScreen> {
                         IconButton(
                           icon: Icon(Icons.arrow_back_ios),
                           onPressed: () {
-                            Provider.of<FirebaseAuthService>(context, listen: false).setFinishedSignUp();
+                            Provider.of<FirebaseAuthService>(context, listen: false).setFinishedRegisteringPet();
                           },
                           iconSize: 30.0,
                           color: StyleConstants.white,

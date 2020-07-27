@@ -73,7 +73,7 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
 
   void updateSigningUp() {
     Provider.of<FirebaseAuthService>(context, listen: false)
-        .setFinishedSignUp();
+        .setFinishedRegisteringPet();
     Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
   }
 

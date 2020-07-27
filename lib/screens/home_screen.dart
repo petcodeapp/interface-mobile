@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: StyleConstants.lightBlue,
           onPressed: () {
             Provider.of<FirebaseAuthService>(context, listen: false)
-                .setSigningUp();
+                .setRegisteringPet();
           },
         ),
         body: SingleChildScrollView(

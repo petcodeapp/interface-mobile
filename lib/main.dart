@@ -90,7 +90,7 @@ class HomeScreen extends StatelessWidget {
           if (auth.needsAccount) {
             print('needs account');
             return StpNameAndPhoneScreen();
-          } else if (auth.isSigningUp) {
+          } else if (auth.isRegisteringPet) {
             return StpStartScreen();
           } else {
             return RootScreen();

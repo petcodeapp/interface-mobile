@@ -364,7 +364,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void signUpWithGoogle() async {
     try {
-      authService.setSigningUp();
+      authService.setRegisteringPet();
       authService.setNeedsAccount();
       bool success = await authService.signInWithGoogle();
 
@@ -373,7 +373,7 @@ class _SignupScreenState extends State<SignupScreen> {
             await checkRegistrationService.hasAccount(authService.user.uid);
 
         if (hasAccount) {
-          authService.setFinishedSignUp();
+          authService.setFinishedRegisteringPet();
           authService.setCreatedAccount();
         }
 

@@ -305,9 +305,9 @@ class _LoginScreenState extends State<LoginScreen> {
             await checkRegistrationService.hasAccount(authService.user.uid);
         if (!hasAccount) {
           authService.setNeedsAccount();
-          authService.setSigningUp();
+          authService.setFinishedRegisteringPet();
         }
-
+r
         _emailInputController.clear();
         _passwordInputController.clear();
         Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);

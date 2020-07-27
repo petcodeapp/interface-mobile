@@ -17,7 +17,7 @@ class FirebaseAuthService extends ChangeNotifier {
   GoogleSignIn _googleSignIn;
 
   Status _status = Status.Uninitialized;
-  bool _isSigningUp = false;
+  bool _isRegisteringPet = false;
   bool _needsAccount = false;
 
   FirebaseAuthService() {
@@ -30,7 +30,7 @@ class FirebaseAuthService extends ChangeNotifier {
 
   FirebaseUser get user => _firebaseUser;
 
-  bool get isSigningUp => _isSigningUp;
+  bool get isRegisteringPet => _isRegisteringPet;
 
   bool get needsAccount => _needsAccount;
 
@@ -54,7 +54,7 @@ class FirebaseAuthService extends ChangeNotifier {
     try {
       _status = Status.Authenticating;
       print('updated status');
-      _isSigningUp = true;
+      _isRegisteringPet = true;
       notifyListeners();
       final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -96,8 +96,8 @@ class FirebaseAuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setSigningUp() {
-    _isSigningUp = true;
+  void setRegisteringPet() {
+    _isRegisteringPet = true;
     notifyListeners();
   }
 
@@ -112,8 +112,8 @@ class FirebaseAuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setFinishedSignUp() {
-    _isSigningUp = false;
+  void setFinishedRegisteringPet() {
+    _isRegisteringPet = false;
     notifyListeners();
   }
 
