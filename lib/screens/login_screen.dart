@@ -307,7 +307,7 @@ class _LoginScreenState extends State<LoginScreen> {
           authService.setNeedsAccount();
           authService.setFinishedRegisteringPet();
         }
-r
+
         _emailInputController.clear();
         _passwordInputController.clear();
         Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
