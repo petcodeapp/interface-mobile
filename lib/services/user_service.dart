@@ -21,7 +21,8 @@ class UserService extends ChangeNotifier {
   }
 
   clearUid() {
-    _uid = '';
+    _uid = null;
+    _currentUser = null;
     if (_userStream != null) {
       _userStream.cancel();
     }

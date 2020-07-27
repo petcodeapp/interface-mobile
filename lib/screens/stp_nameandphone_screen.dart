@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/User.dart';
+import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -187,6 +188,11 @@ class _StpNameAndPhoneScreenState extends State<StpNameAndPhoneScreen> {
                                         _phoneNumberInputController.text,
                                         authService.user.uid);
                                 authService.setCreatedAccount();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => StpStartScreen()),
+                                );
                               } catch (e) {
                                 print(e);
                               }

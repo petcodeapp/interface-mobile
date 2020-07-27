@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/models/Medication.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
@@ -24,6 +23,8 @@ class PetService extends ChangeNotifier {
   }
 
   stopPetStream() {
+    _allPets = new List<Pet>();
+    _petImages = new List<ImageProvider>();
     if (_petStream != null) {
       _petStream.cancel();
     }

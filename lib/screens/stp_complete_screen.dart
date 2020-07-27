@@ -2,10 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/services/database_service.dart';
-import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -72,8 +70,6 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
   }
 
   void updateSigningUp() {
-    Provider.of<FirebaseAuthService>(context, listen: false)
-        .setFinishedRegisteringPet();
     Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
   }
 

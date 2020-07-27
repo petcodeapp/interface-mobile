@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/stp_connecttag_screen.dart';
-import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:provider/provider.dart';
 
 class StpStartScreen extends StatefulWidget {
   @override
@@ -41,10 +39,7 @@ class _StpStartScreenState extends State<StpStartScreen> {
                       children: [
                         IconButton(
                           icon: Icon(Icons.arrow_back_ios),
-                          onPressed: () => Provider.of<FirebaseAuthService>(
-                                  context,
-                                  listen: false)
-                              .setFinishedRegisteringPet(),
+                          onPressed: () => Navigator.pop(context),
                           iconSize: 30.0,
                           color: StyleConstants.white,
                         ),
