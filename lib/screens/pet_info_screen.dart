@@ -174,7 +174,7 @@ class PetInfoScreen extends StatelessWidget {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    'Eats a lot, likes cat food',
+                                    currentPet.additionalInfo,
                                     style:
                                         StyleConstants.blackThinDescriptionText,
                                   ),
