@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/User.dart';
+import 'package:petcode_app/screens/stp_nameandphone_screen.dart';
+import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
@@ -343,8 +345,12 @@ class _SignupScreenState extends State<SignupScreen> {
           bool hasAccount =
               await checkRegistrationService.hasAccount(authService.user.uid);
           if (hasAccount) {
-            //TODO - Create reminder that account has already been created
+            Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
           } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => StpStartScreen()),
+            );
             User createdUser = await databaseService.createUser(
                 _emailInputController.text.trim(),
                 _firstNameInputController.text.trim(),
@@ -353,8 +359,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 authService.user.uid);
           }
           clearAllControllers();
-
-          Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
         }
       } catch (e) {
         print(e);
@@ -364,21 +368,22 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void signUpWithGoogle() async {
     try {
-      authService.setSigningUp();
-      authService.setNeedsAccount();
       bool success = await authService.signInWithGoogle();
 
       if (success) {
         bool hasAccount =
             await checkRegistrationService.hasAccount(authService.user.uid);
-
         if (hasAccount) {
-          authService.setFinishedSignUp();
-          authService.setCreatedAccount();
+          Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
         }
-
+        else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => StpNameAndPhoneScreen(registerPet: true,)),
+          );
+        }
         clearAllControllers();
-        Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+
       }
     } catch (e) {
       print(e);

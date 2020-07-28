@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/models/Medication.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
@@ -10,7 +11,8 @@ class PetService extends ChangeNotifier {
   Firestore _firestore = Firestore.instance;
 
   List<Pet> _allPets = new List<Pet>();
-  List<ImageProvider> _petImages = new List<NetworkImage>();
+  List<ImageProvider> _petImages = new List<ImageProvider>();
+  StreamSubscription _petStream;
 
   List<Pet> get allPets => _allPets;
 
@@ -18,6 +20,14 @@ class PetService extends ChangeNotifier {
 
   setPetIds(List<String> petIds) {
     startPetStream(petIds);
+  }
+
+  stopPetStream() {
+    _allPets = new List<Pet>();
+    _petImages = new List<ImageProvider>();
+    if (_petStream != null) {
+      _petStream.cancel();
+    }
   }
 
   List<Pet> petListFromQuery(QuerySnapshot querySnapshot) {
@@ -31,7 +41,7 @@ class PetService extends ChangeNotifier {
 
   void startPetStream(List<String> petIds) {
     if (petIds != null && petIds.length > 0) {
-      _firestore
+      _petStream = _firestore
           .collection('pets')
           .where('pid', whereIn: petIds)
           .snapshots()
@@ -40,7 +50,12 @@ class PetService extends ChangeNotifier {
         _petImages.clear();
         _allPets = petListFromQuery(querySnapshot);
         for (int i = 0; i < _allPets.length; i++) {
-          _petImages.add(NetworkImage(_allPets[i].profileUrl));
+          if (_allPets[i].profileUrl != null) {
+            _petImages.add(NetworkImage(_allPets[i].profileUrl));
+          }
+          else {
+            _petImages.add(AssetImage('assets/images/puppyphoto.jpg'));
+          }
         }
         print('All Pets length : ' + _allPets.length.toString());
         notifyListeners();

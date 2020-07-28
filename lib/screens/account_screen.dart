@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/User.dart';
+import 'package:petcode_app/screens/stp_nameandphone_screen.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -85,7 +86,26 @@ class _AccountScreenState extends State<AccountScreen> {
                               ],
                             )
                           : Center(
-                              child: Text('Loading user data'),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      'It seems you didn\'t set up your contact info',),
+                                  FlatButton(
+                                    child: Text('Register info'),
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                StpNameAndPhoneScreen(
+                                                  registerPet: false,
+                                                )),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                     ),
                   ),
