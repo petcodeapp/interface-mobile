@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:petcode_app/models/User.dart';
@@ -7,6 +9,7 @@ class UserService extends ChangeNotifier {
 
   String _uid;
   User _currentUser;
+  StreamSubscription _userStream;
 
   User get currentUser => _currentUser;
 
@@ -17,8 +20,16 @@ class UserService extends ChangeNotifier {
     startUserStream();
   }
 
+  clearUid() {
+    _uid = null;
+    _currentUser = null;
+    if (_userStream != null) {
+      _userStream.cancel();
+    }
+  }
+
   void startUserStream() {
-    _firestore
+    _userStream = _firestore
         .collection('users')
         .document(_uid)
         .snapshots()

@@ -65,7 +65,7 @@ class Pet {
 
     List<dynamic> medicationMaps = json['medications'] as List;
     List<Medication> medicationConverted;
-    if (convertedList == null) {
+    if (medicationMaps != null) {
       medicationConverted = new List<Medication>();
       medicationMaps.forEach((medication) {
         medicationConverted.add(Medication.fromJson(medication));
