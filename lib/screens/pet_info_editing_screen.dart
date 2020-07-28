@@ -145,7 +145,8 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                     updatedPet.temperament =
                         _temperamentInputController.text.trim();
 
-                    //TODO: Add additional info to database
+                    updatedPet.additionalInfo =
+                        _additionalInfoInputController.text.trim();
 
                     Owner contact_1 = new Owner(
                       name: _owner1NameInputController.text.trim(),
@@ -588,7 +589,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
     _temperamentInputController =
         new TextEditingController(text: widget.currentPet.temperament);
     _additionalInfoInputController =
-        new TextEditingController(text: 'Additional Info - not set up with db');
+        new TextEditingController(text: widget.currentPet.additionalInfo);
     _owner1NameInputController =
         new TextEditingController(text: widget.currentPet.contact_1.name);
     _owner1EmailInputController =

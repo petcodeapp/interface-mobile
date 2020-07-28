@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
               return petService..setPetIds(userService.currentUser.petIds);
             }
           },
-        )
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

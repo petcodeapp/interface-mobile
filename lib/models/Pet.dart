@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:petcode_app/models/Medication.dart';
 import 'package:petcode_app/models/Owner.dart';
+import 'package:petcode_app/models/Scan.dart';
 import 'package:petcode_app/models/Vaccination.dart';
 
 class Pet {
@@ -13,11 +14,13 @@ class Pet {
   String specialNeeds;
   String vetName;
   String vetPhoneNumber;
+  String additionalInfo;
   bool isServiceAnimal;
   bool isLost;
   int age;
   List<Vaccination> vaccinations;
   List<Medication> medications;
+  List<Scan> scans;
   Owner contact_1;
   Owner contact_2;
 
@@ -33,11 +36,13 @@ class Pet {
       this.specialNeeds,
       this.vetName,
       this.vetPhoneNumber,
+      this.additionalInfo,
       this.isServiceAnimal,
       this.isLost,
       this.age,
       this.vaccinations,
       this.medications,
+      this.scans,
       this.contact_1,
       this.contact_2,
       this.reference});
@@ -67,6 +72,14 @@ class Pet {
       });
     }
 
+    List<dynamic> scanMaps = json['scans'] as List;
+    List<Scan> scanConverted;
+    if (scanMaps != null) {
+      scanMaps.forEach((scan) {
+        scanConverted.add(Scan.fromJson(scan));
+      });
+    }
+
     Map owner1Map = json['contact_1'] as Map;
     Owner owner1;
     if (owner1Map == null) {
@@ -93,11 +106,13 @@ class Pet {
       specialNeeds: json['specialNeeds'] as String,
       vetName: json['vetName'] as String,
       vetPhoneNumber: json['vetPhoneNumber'] as String,
+      additionalInfo: json['additionalInfo'] as String,
       isServiceAnimal: json['isServiceAnimal'] as bool,
       isLost: json['isLost'] as bool,
       age: json['age'] as int,
       vaccinations: convertedList,
       medications: medicationConverted,
+      scans: scanConverted,
       contact_1: owner1,
       contact_2: owner2,
     );
@@ -115,11 +130,13 @@ class Pet {
         'specialNeeds': instance.specialNeeds,
         'vetName': instance.vetName,
         'vetPhoneNumber': instance.vetPhoneNumber,
+        'additionalInfo': instance.additionalInfo,
         'isServiceAnimal': instance.isServiceAnimal,
         'isLost': instance.isLost,
         'age': instance.age,
         'vaccinations': _vaccinationMaps(instance.vaccinations),
         'medications': _medicationMaps(instance.medications),
+        'scans': _scanMaps(instance.scans),
         'contact_1': _ownerMap(instance.contact_1),
         'contact_2': _ownerMap(instance.contact_2),
       };
@@ -154,5 +171,16 @@ class Pet {
     } else {
       return owner.toJson();
     }
+  }
+
+  List<Map<String, dynamic>> _scanMaps(List<Scan> allScans) {
+    if (allScans == null) {
+      return null;
+    }
+    List<Map<String, dynamic>> convertedMaps = new List<Map<String, dynamic>>();
+    allScans.forEach((scan) {
+      convertedMaps.add(scan.toJson());
+    });
+    return convertedMaps;
   }
 }
