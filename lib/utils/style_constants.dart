@@ -16,6 +16,8 @@ class StyleConstants{
 
   static Color yellow = new Color(0xffFBC658);
 
+  static Color lightGrey = new Color(0xffDAD8D5);
+
   //text styles
   static TextStyle whiteButtonText =  new TextStyle(
     color: white,
