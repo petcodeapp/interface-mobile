@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       _allPetUpcomingEvents = petService.getAllPetMedication();
 
+
       /*
       return Scaffold(
         body: Center(
@@ -70,6 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
       );*/
 
       return Scaffold(
+        backgroundColor: StyleConstants.blue,
+
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           backgroundColor: StyleConstants.lightBlue,
