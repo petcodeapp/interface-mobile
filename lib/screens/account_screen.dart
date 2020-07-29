@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/User.dart';
 import 'package:petcode_app/screens/stp_nameandphone_screen.dart';
+import 'package:petcode_app/screens/update_contactinfo_screen.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -90,7 +91,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                      'It seems you didn\'t set up your contact info',),
+                                    'It seems you didn\'t set up your contact info',
+                                  ),
                                   FlatButton(
                                     child: Text('Register info'),
                                     onPressed: () {
@@ -113,7 +115,14 @@ class _AccountScreenState extends State<AccountScreen> {
                     height: height * 0.03,
                   ),
                   GestureDetector(
-                    onTap: () => print('Pressed contact'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                UpdateContactInfoScreen(currentUser: user)),
+                      );
+                    },
                     child: Container(
                       height: 50.0,
                       width: width - 50,
