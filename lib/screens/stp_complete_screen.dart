@@ -143,7 +143,7 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
                 decoration: StyleConstants.roundYellowButtonDeco,
                 child: Center(
                   child: Text(
-                    'Next Step',
+                    'Finish',
                     style: StyleConstants.whiteButtonText,
                   ),
                 ),

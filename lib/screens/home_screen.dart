@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
@@ -61,8 +62,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
       _allPetUpcomingEvents = petService.getAllPetMedication();
 
+
+      /*
+      return Scaffold(
+        body: Center(
+          child: noPetsAvailableIndicator(),
+        ),
+      );*/
+
       return Scaffold(
         backgroundColor: StyleConstants.blue,
+
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           backgroundColor: StyleConstants.lightBlue,
@@ -84,19 +94,83 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: height * 0.03,
                 ),
                 Container(
-                  height: 200.0,
-                  child: PageView.builder(
-                    itemCount: petService.petImages.length,
-                    controller: _mainPageController,
-                    onPageChanged: (int index) {
-                      _currentPageNotifier.value = index;
-                      _secondPageController.jumpToPage(index);
+                  height: 300.0,
+                  width: width * 0.9,
+                  child: Swiper(
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        height: 300.0,
+                        //color: Colors.blue,
+                        child: Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                height: 250.0,
+                                width: width * 0.9,
+                                decoration: BoxDecoration(
+                                  color: StyleConstants.lightGrey,
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20.0),
+                                child: Container(
+                                  height: 210.0,
+                                  width: width * 0.84,
+                                  child: Image(
+                                    image: petService.petImages[index],
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 15.0,
+                              left: width * 0.03,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(petService.allPets[index].name, style: StyleConstants.blackTitleText,),
+                                  Text(petService.allPets[index].breed, style: StyleConstants.blackDescriptionText,),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
                     },
-                    itemBuilder: (context, position) {
-                      return imageSlider(position);
-                    },
+                    itemCount: petService.allPets.length,
+                    pagination: new SwiperPagination(),
+                    //viewportFraction: 0.9,
+                    scale: 0.9,
+                    //control: new SwiperControl(),
                   ),
                 ),
+
+                /*
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    height: 200.0,
+                    child: PageView.builder(
+                      itemCount: petService.petImages.length,
+                      controller: _mainPageController,
+                      onPageChanged: (int index) {
+                        _currentPageNotifier.value = index;
+                        _secondPageController.jumpToPage(index);
+                      },
+                      itemBuilder: (context, position) {
+                        return imageSlider(position);
+                      },
+                    ),
+                  ),
+                ),
+                */
+
                 SizedBox(
                   height: height * 0.02,
                 ),
@@ -121,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               names[index],
-                              style: StyleConstants.whiteTitleText,
+                              style: StyleConstants.blackTitleText,
                             ),
                             SizedBox(
                               height: height * 0.03,
@@ -130,30 +204,24 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Expanded(
                                   child: Container(
-                                    height: 150.0,
+                                    height: height * 0.13,
                                     decoration: BoxDecoration(
-                                      color: StyleConstants.green,
-                                      borderRadius: BorderRadius.circular(30.0),
+                                      color: StyleConstants.blue,
+                                      borderRadius: BorderRadius.circular(15.0),
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(15.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Pet Actions',
-                                            style: StyleConstants
-                                                .whiteTitleTextSmall,
-                                          ),
-                                          SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Row(
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 5.0,
+                                            ),
+                                            Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
@@ -174,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     children: [
                                                       Icon(
                                                         Icons.pets,
-                                                        size: 40.0,
+                                                        size: 38.0,
                                                         color: Colors.white,
                                                       ),
                                                       Text(
@@ -194,8 +262,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   child: Column(
                                                     children: [
                                                       Icon(
+                                                        Icons.person,
+                                                        size: 38.0,
+                                                        color: Colors.white,
+                                                      ),
+                                                      Text(
+                                                        'Owner Info',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () => print(
+                                                      'schedule meds tapped'),
+                                                  child: Column(
+                                                    children: [
+                                                      Icon(
                                                         Icons.today,
-                                                        size: 40.0,
+                                                        size: 38.0,
                                                         color: Colors.white,
                                                       ),
                                                       Text(
@@ -216,7 +305,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     children: [
                                                       Icon(
                                                         Icons.assignment,
-                                                        size: 40.0,
+                                                        size: 38.0,
                                                         color: Colors.white,
                                                       ),
                                                       Text(
@@ -231,9 +320,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ),
                                                 ),
                                               ],
-                                            ),
-                                          )
-                                        ],
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -245,7 +334,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               'Upcoming',
-                              style: StyleConstants.whiteTitleText,
+                              style: StyleConstants.blackTitleText,
                             ),
                             Expanded(
                               child: ListView.builder(
@@ -344,33 +433,110 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  noPetsAvailableIndicator() {
+    return Container(
+      decoration: BoxDecoration(
+        color: StyleConstants.yellow,
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      width: 300,
+      height: 200.0,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'You currently have no',
+              style: StyleConstants.whiteTitleTextSmall,
+            ),
+            Text(
+              'registered pets',
+              style: StyleConstants.whiteTitleTextSmall,
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Container(
+              width: 150.0,
+              height: 45.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                color: StyleConstants.blue,
+              ),
+              child: Center(
+                child: Text(
+                  'Register a Tag',
+                  style: StyleConstants.whiteTitleTextXS,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   imageSlider(int index) {
     return AnimatedBuilder(
       animation: _mainPageController,
       builder: (context, widget) {
         double value = 1;
+        /*
         if (_mainPageController.position.haveDimensions) {
           value = _mainPageController.page - index;
           value = (1 - (value.abs() * 0.3)).clamp(0.0, 1.0);
-        }
+        }*/
+
         return Center(
           child: SizedBox(
-            height: Curves.easeInOut.transform(value) * 200.0,
-            width: Curves.easeInOut.transform(value) * 350.0,
+            height: 500.0,
+            width: 400.0,
+            //height: Curves.easeInOut.transform(value) * 200.0,
+            //width: Curves.easeInOut.transform(value) * 350.0,
             child: widget,
           ),
         );
       },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20.0),
-        child: Container(
-          decoration: BoxDecoration(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned(
+            child: Container(
+              height: 500.0,
+              width: 300.0,
+              color: Colors.blue,
+            ),
+          ),
+          ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
+            child: Container(
+              width: 300.0,
+              height: 400.0,
+              decoration: BoxDecoration(
+                color: StyleConstants.lightGrey,
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Column(
+                children: [
+                  Text(petService.allPets[index].name),
+                  Text(petService.allPets[index].breed),
+                ],
+              ),
+            ),
           ),
-          child: Image(
-            image: petService.petImages[index],
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              height: 175.0,
+              width: 250.0,
+              child: Image(
+                image: petService.petImages[index],
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
