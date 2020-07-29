@@ -2,31 +2,33 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/services/database_service.dart';
+import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
-import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
 import 'package:provider/provider.dart';
 
 class PetInfoEditingScreen extends StatefulWidget {
-  PetInfoEditingScreen({Key key, this.currentPet}) : super(key: key);
+  PetInfoEditingScreen({Key key, this.currentPet, this.petImage})
+      : super(key: key);
 
   final Pet currentPet;
+  final ImageProvider petImage;
 
   @override
   _PetInfoEditingScreenState createState() => _PetInfoEditingScreenState();
 }
 
 class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
-  PetService _petService;
-
   DatabaseService _databaseService;
   TextEditingController _nameInputController;
   TextEditingController _breedInputController;
   TextEditingController _temperamentInputController;
   TextEditingController _additionalInfoInputController;
+
   TextEditingController _owner1NameInputController;
   TextEditingController _owner1EmailInputController;
   TextEditingController _owner1PhoneInputController;
@@ -37,72 +39,72 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
   TextEditingController _owner2PhoneInputController;
   TextEditingController _owner2AddressInputController;
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  File chosenImageFile;
+  ImageProvider updatedImage;
 
-  bool _isServiceAnimal = false;
+  bool _isServiceAnimal;
+
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _isServiceAnimal = widget.currentPet.isServiceAnimal;
-    _nameInputController = new TextEditingController(
-      text: widget.currentPet.name,
+    updatedImage = widget.petImage;
+    setUpInputControllers();
+  }
+
+  _handleImage(ImageSource source) async {
+    final imagePickerService =
+        Provider.of<ImagePickerService>(context, listen: false);
+
+    File imageFile = await imagePickerService.pickImage(source);
+    Navigator.pop(context);
+    if (imageFile != null) {
+      setState(() {
+        chosenImageFile = imageFile;
+        updatedImage = FileImage(imageFile);
+      });
+    }
+  }
+
+  _androidDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text('Add Photo'),
+          children: <Widget>[
+            SimpleDialogOption(
+              child: Text('Take Photo'),
+              onPressed: () => _handleImage(ImageSource.camera),
+            ),
+            SimpleDialogOption(
+              child: Text('Choose From Gallery'),
+              onPressed: () => _handleImage(ImageSource.gallery),
+            ),
+            SimpleDialogOption(
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.redAccent,
+                ),
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        );
+      },
     );
+  }
+
+  _showSelectImageDialog() {
+    return _androidDialog();
   }
 
   @override
   Widget build(BuildContext context) {
-    _petService = Provider.of<PetService>(context);
     _databaseService = Provider.of<DatabaseService>(context);
-
-    File chosenImage;
-
-    _handleImage(ImageSource source) async {
-      final imagePickerService = Provider.of<ImagePickerService>(context, listen: false);
-
-      Navigator.pop(context);
-      File imageFile = await imagePickerService.pickImage(source);
-      if (imageFile != null) {
-        setState(() {
-          chosenImage = imageFile;
-        });
-      }
-    }
-
-    _androidDialog() {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            title: Text('Add Photo'),
-            children: <Widget>[
-              SimpleDialogOption(
-                child: Text('Take Photo'),
-                onPressed: () => _handleImage(ImageSource.camera),
-              ),
-              SimpleDialogOption(
-                child: Text('Choose From Gallery'),
-                onPressed: () => _handleImage(ImageSource.gallery),
-              ),
-              SimpleDialogOption(
-                child: Text(
-                  'Cancel',
-                  style: TextStyle(
-                    color: Colors.redAccent,
-                  ),
-                ),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
-          );
-        },
-      );
-    }
-
-    _showSelectImageDialog() {
-      return _androidDialog();
-    }
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -134,13 +136,48 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: GestureDetector(
-                onTap: () {
+                onTap: () async {
                   if (_formKey.currentState.validate()) {
-                    Pet updatePet = widget.currentPet;
-                    updatePet.name = _nameInputController.text;
-                    updatePet.isServiceAnimal = _isServiceAnimal;
+                    Pet updatedPet = widget.currentPet;
+                    updatedPet.isServiceAnimal = _isServiceAnimal;
+                    updatedPet.name = _nameInputController.text.trim();
+                    updatedPet.breed = _breedInputController.text.trim();
+                    updatedPet.temperament =
+                        _temperamentInputController.text.trim();
 
+                    updatedPet.additionalInfo =
+                        _additionalInfoInputController.text.trim();
 
+                    Owner contact_1 = new Owner(
+                      name: _owner1NameInputController.text.trim(),
+                      email: _owner1EmailInputController.text.trim(),
+                      phoneNumber: _owner1PhoneInputController.text.trim(),
+                      address: _owner1AddressInputController.text.trim(),
+                    );
+
+                    updatedPet.contact_1 = contact_1;
+
+                    if (!owner2IsNull()) {
+                      Owner contact_2 = new Owner(
+                        name: _owner2NameInputController.text.trim(),
+                        email: _owner2EmailInputController.text.trim(),
+                        phoneNumber: _owner2PhoneInputController.text.trim(),
+                        address: _owner2AddressInputController.text.trim(),
+                      );
+
+                      updatedPet.contact_2 = contact_2;
+                    } else {
+                      updatedPet.contact_2 = null;
+                    }
+
+                    if (widget.petImage != updatedImage) {
+                      FirebaseStorageService firebaseStorageService =
+                          Provider.of<FirebaseStorageService>(context,
+                              listen: false);
+                      String updatedProfileUrl = await firebaseStorageService
+                          .uploadPetImage(chosenImageFile, updatedPet.pid);
+                      updatedPet.profileUrl = updatedProfileUrl;
+                    }
 
                     _databaseService.updatePet(widget.currentPet);
                     Navigator.pop(context);
@@ -180,8 +217,8 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
-                      child: Image.asset(
-                        'assets/images/stockdog1.jpg',
+                      child: Image(
+                        image: updatedImage,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -443,8 +480,9 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                         //height: height * 0.07,
                         width: width * 0.7,
                         child: TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.firstNameValidator(value),
+                          validator: (value) => !owner2IsNull()
+                              ? ValidatorHelper.firstNameValidator(value)
+                              : null,
                           controller: _owner2NameInputController,
                           maxLines: null,
                           keyboardType: TextInputType.multiline,
@@ -468,8 +506,9 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                         //height: height * 0.07,
                         width: width * 0.7,
                         child: TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.emailValidator(value),
+                          validator: (value) => !owner2IsNull()
+                              ? ValidatorHelper.emailValidator(value)
+                              : null,
                           controller: _owner2EmailInputController,
                           maxLines: null,
                           keyboardType: TextInputType.multiline,
@@ -493,8 +532,9 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                         //height: height * 0.07,
                         width: width * 0.7,
                         child: TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.phoneNumberValidator(value),
+                          validator: (value) => !owner2IsNull()
+                              ? ValidatorHelper.phoneNumberValidator(value)
+                              : null,
                           controller: _owner2PhoneInputController,
                           maxLines: null,
                           keyboardType: TextInputType.multiline,
@@ -518,8 +558,9 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                         //height: height * 0.07,
                         width: width * 0.7,
                         child: TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.addressValidator(value),
+                          validator: (value) => !owner2IsNull()
+                              ? ValidatorHelper.addressValidator(value)
+                              : null,
                           controller: _owner2AddressInputController,
                           maxLines: null,
                           keyboardType: TextInputType.multiline,
@@ -538,5 +579,44 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
         ),
       ),
     );
+  }
+
+  void setUpInputControllers() {
+    _nameInputController =
+        new TextEditingController(text: widget.currentPet.name);
+    _breedInputController =
+        new TextEditingController(text: widget.currentPet.breed);
+    _temperamentInputController =
+        new TextEditingController(text: widget.currentPet.temperament);
+    _additionalInfoInputController =
+        new TextEditingController(text: widget.currentPet.additionalInfo);
+    _owner1NameInputController =
+        new TextEditingController(text: widget.currentPet.contact_1.name);
+    _owner1EmailInputController =
+        new TextEditingController(text: widget.currentPet.contact_1.email);
+    _owner1PhoneInputController = new TextEditingController(
+        text: widget.currentPet.contact_1.phoneNumber);
+    _owner1AddressInputController =
+        new TextEditingController(text: widget.currentPet.contact_1.address);
+
+    _owner2NameInputController = new TextEditingController();
+    _owner2EmailInputController = new TextEditingController();
+    _owner2PhoneInputController = new TextEditingController();
+    _owner2AddressInputController = new TextEditingController();
+
+    if (widget.currentPet.contact_2 != null) {
+      _owner2NameInputController.text = widget.currentPet.contact_2.name;
+      _owner2EmailInputController.text = widget.currentPet.contact_2.email;
+      _owner2PhoneInputController.text =
+          widget.currentPet.contact_2.phoneNumber;
+      _owner2AddressInputController.text = widget.currentPet.contact_2.address;
+    }
+  }
+
+  bool owner2IsNull() {
+    return _owner2NameInputController.text.trim().isEmpty &&
+        _owner2EmailInputController.text.trim().isEmpty &&
+        _owner2PhoneInputController.text.trim().isEmpty &&
+        _owner2AddressInputController.text.trim().isEmpty;
   }
 }

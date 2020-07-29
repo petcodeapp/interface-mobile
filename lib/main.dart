@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/screens/stp_nameandphone_screen.dart';
-import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
@@ -42,7 +41,7 @@ class MyApp extends StatelessWidget {
           update: (BuildContext context, FirebaseAuthService authService,
               UserService userService) {
             if (authService.user == null) {
-              return userService;
+              return userService..clearUid();
             } else {
               return userService..setUid(authService.user.uid);
             }
@@ -53,12 +52,12 @@ class MyApp extends StatelessWidget {
           update: (BuildContext context, UserService userService,
               PetService petService) {
             if (userService.currentUser == null) {
-              return petService;
+              return petService..stopPetStream();
             } else {
               return petService..setPetIds(userService.currentUser.petIds);
             }
           },
-        )
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -87,14 +86,7 @@ class HomeScreen extends StatelessWidget {
           print('entry screen!');
           return EntryScreen();
         } else {
-          if (auth.needsAccount) {
-            print('needs account');
-            return StpNameAndPhoneScreen();
-          } else if (auth.isSigningUp) {
-            return StpStartScreen();
-          } else {
-            return RootScreen();
-          }
+          return RootScreen();
         }
       },
     );

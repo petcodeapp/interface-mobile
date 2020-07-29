@@ -2,10 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/models/Scan.dart';
 import 'package:petcode_app/services/database_service.dart';
-import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -52,6 +51,9 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
     }
 
     updatedPet.isLost = false;
+    updatedPet.scans = new List<Scan>();
+
+    print(updatedPet.additionalInfo);
 
     final userService = Provider.of<UserService>(context, listen: false);
 
@@ -59,22 +61,19 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
         Provider.of<DatabaseService>(context, listen: false);
 
     List<String> currentUserPets = userService.currentUser.petIds;
+    await databaseService.createPet(updatedPet);
     if (currentUserPets == null || currentUserPets.length == 0) {
-      await databaseService.createPet(updatedPet);
+      await databaseService.createUserPetList(
+          updatedPet.pid, userService.currentUser.uid);
     } else {
       await databaseService.addToUserPetList(
           updatedPet.pid, userService.currentUser.uid, currentUserPets);
     }
 
-    await databaseService.createUserPetList(
-        updatedPet.pid, userService.currentUser.uid);
-
     updateSigningUp();
   }
 
   void updateSigningUp() {
-    Provider.of<FirebaseAuthService>(context, listen: false)
-        .setFinishedSignUp();
     Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
   }
 

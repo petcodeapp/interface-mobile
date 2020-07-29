@@ -76,6 +76,9 @@ class _StpMedicalInfoScreenState extends State<StpMedicalInfoScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           color: Colors.white,

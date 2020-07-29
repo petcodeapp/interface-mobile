@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Medication.dart';
+import 'package:petcode_app/screens/stp_additionalinfo_screen.dart';
 import 'package:petcode_app/screens/stp_complete_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -130,13 +131,14 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                   }
 
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => StpCompleteScreen(
-                                pet: updatedPet,
-                                petImage: widget.petImage,
-                                vaccineImages: widget.vaccineImages,
-                              )));
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => StpAdditionalInfoScreen(
+                              pet: updatedPet,
+                              petImage: widget.petImage,
+                              vaccineImages: widget.vaccineImages,
+                            )),
+                  );
                 },
                 child: Container(
                   height: 55.0,

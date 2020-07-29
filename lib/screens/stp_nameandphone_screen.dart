@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/User.dart';
+import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
 class StpNameAndPhoneScreen extends StatefulWidget {
+  StpNameAndPhoneScreen({Key key, this.registerPet}) : super(key: key);
+  final bool registerPet;
+
   @override
   _StpNameAndPhoneScreenState createState() => _StpNameAndPhoneScreenState();
 }
@@ -186,7 +190,15 @@ class _StpNameAndPhoneScreenState extends State<StpNameAndPhoneScreen> {
                                         _lastNameInputController.text,
                                         _phoneNumberInputController.text,
                                         authService.user.uid);
-                                authService.setCreatedAccount();
+                                if (widget.registerPet) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => StpStartScreen()),
+                                  );
+                                }
+                                else {
+                                  Navigator.pop(context);
+                                }
                               } catch (e) {
                                 print(e);
                               }
