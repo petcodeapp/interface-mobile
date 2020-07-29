@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/User.dart';
 import 'package:petcode_app/services/database_service.dart';
-import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:provider/provider.dart';

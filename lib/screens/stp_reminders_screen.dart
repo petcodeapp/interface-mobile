@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Medication.dart';
 import 'package:petcode_app/screens/stp_additionalinfo_screen.dart';
-import 'package:petcode_app/screens/stp_complete_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:slimy_card/slimy_card.dart';
