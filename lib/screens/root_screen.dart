@@ -47,6 +47,16 @@ class _RootScreenState extends State<RootScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: StyleConstants.blue,
+          title: Container(
+            height: 175,
+              child: Image.asset(
+            'assets/images/logoyellow.png',
+            fit: BoxFit.cover,
+          )),
+        ),
         body: SizedBox.expand(
           child: PageView(
             physics: NeverScrollableScrollPhysics(),
@@ -77,19 +87,19 @@ class _RootScreenState extends State<RootScreen> {
             ),
             BottomNavyBarItem(
               icon: Icon(Icons.location_on),
-              title: Text('Stats'),
+              title: Text('Scans'),
               activeColor: StyleConstants.yellow,
               inactiveColor: Colors.grey.withOpacity(0.6),
             ),
             BottomNavyBarItem(
               icon: Icon(Icons.assignment),
-              title: Text('Settings'),
+              title: Text('Social'),
               activeColor: StyleConstants.yellow,
               inactiveColor: Colors.grey.withOpacity(0.6),
             ),
             BottomNavyBarItem(
               icon: Icon(Icons.account_circle),
-              title: Text('Settings'),
+              title: Text('Account'),
               activeColor: StyleConstants.yellow,
               inactiveColor: Colors.grey.withOpacity(0.6),
             ),

@@ -61,14 +61,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
       _allPetUpcomingEvents = petService.getAllPetMedication();
 
+      /*
       return Scaffold(
         body: Center(
           child: noPetsAvailableIndicator(),
         ),
-      );
+      );*/
 
       return Scaffold(
-        backgroundColor: StyleConstants.blue,
+
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           backgroundColor: StyleConstants.lightBlue,
@@ -127,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               names[index],
-                              style: StyleConstants.whiteTitleText,
+                              style: StyleConstants.blackTitleText,
                             ),
                             SizedBox(
                               height: height * 0.03,
@@ -149,11 +150,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            'Pet Actions',
-                                            style: StyleConstants
-                                                .whiteTitleTextSmall,
-                                          ),
                                           SizedBox(
                                             height: 5.0,
                                           ),
@@ -251,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               'Upcoming',
-                              style: StyleConstants.whiteTitleText,
+                              style: StyleConstants.blackTitleText,
                             ),
                             Expanded(
                               child: ListView.builder(
