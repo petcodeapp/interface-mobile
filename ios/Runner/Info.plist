@@ -14,7 +14,7 @@
 		</dict>
 	</array>
 	<key>io.flutter.embedded_views_preview</key>
-	<boolean>YES<boolean>
+	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>We need to access your camera!</string>
 	<key>NSPhotoLibraryUsageDescription</key>
