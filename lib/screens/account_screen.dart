@@ -3,6 +3,7 @@ import 'package:petcode_app/models/User.dart';
 import 'package:petcode_app/screens/stp_nameandphone_screen.dart';
 import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/screens/update_contactinfo_screen.dart';
+import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
