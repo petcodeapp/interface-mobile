@@ -63,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _allPetUpcomingEvents = petService.getAllPetMedication();
 
       return Scaffold(
+        /*
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           backgroundColor: StyleConstants.lightBlue,
@@ -73,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
         ),
+        */
         body: SingleChildScrollView(
           child: Container(
             height: height,
@@ -134,7 +136,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                     itemCount: petService.allPets.length,
-                    pagination: new SwiperPagination(),
+                    loop: false,
+                    pagination: new SwiperPagination(
+                    ),
                     //viewportFraction: 0.9,
                     scale: 0.9,
                     //control: new SwiperControl(),
@@ -162,13 +166,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: height * 0.02,
                 ),
+                /*
                 CirclePageIndicator(
                   selectedDotColor: Colors.white,
                   itemCount: petService.petImages.length,
                   currentPageNotifier: _currentPageNotifier,
-                ),
+                ),*/
                 SizedBox(
-                  height: height * 0.03,
+                  height: height * 0.01,
                 ),
                 Expanded(
                   child: PageView.builder(
@@ -181,10 +186,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            /*
                             Text(
                               names[index],
                               style: StyleConstants.blackTitleText,
                             ),
+                            */
                             SizedBox(
                               height: height * 0.03,
                             ),
@@ -320,6 +327,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                               height: height * 0.03,
                             ),
+                            Divider(height: 2.0,
+                            thickness: 5.0,),
+                            SizedBox(height: height * 0.01,),
                             Text(
                               'Upcoming',
                               style: StyleConstants.blackTitleText,
