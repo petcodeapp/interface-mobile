@@ -134,7 +134,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Icon(
-                              Icons.contacts,
+                              Icons.account_circle,
                               color: StyleConstants.yellow,
                               size: 30.0,
                             ),
@@ -142,7 +142,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               width: width * 0.03,
                             ),
                             Text(
-                              'Update Contact Info',
+                              'Update Account Info',
                               style: StyleConstants.whiteTitleText,
                             )
                           ],
@@ -154,7 +154,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     height: height * 0.03,
                   ),
                   GestureDetector(
-                    onTap: () => print('pressed medical'),
+                    onTap: () => print('Pressed contact'),
                     child: Container(
                       height: 50.0,
                       width: width - 50,
@@ -165,7 +165,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Icon(
-                              Icons.assignment,
+                              Icons.settings,
                               color: StyleConstants.yellow,
                               size: 30.0,
                             ),
@@ -173,38 +173,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               width: width * 0.03,
                             ),
                             Text(
-                              'Update Medical Info',
-                              style: StyleConstants.whiteTitleText,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.03,
-                  ),
-                  GestureDetector(
-                    onTap: () => print('clicked pet'),
-                    child: Container(
-                      height: 50.0,
-                      width: width - 50,
-                      decoration: StyleConstants.lightBlueItemBoxDeco,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.pets,
-                              color: StyleConstants.yellow,
-                              size: 30.0,
-                            ),
-                            SizedBox(
-                              width: width * 0.03,
-                            ),
-                            Text(
-                              'Update Pet Info',
+                              'App Settings',
                               style: StyleConstants.whiteTitleText,
                             )
                           ],
