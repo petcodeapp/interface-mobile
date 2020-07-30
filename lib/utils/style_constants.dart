@@ -66,6 +66,18 @@ class StyleConstants{
     fontSize: 20.0,
     fontWeight: FontWeight.w400,
   );
+
+  static TextStyle whiteDescriptionTextSmall = new TextStyle(
+    color: Colors.white,
+    fontSize: 14.0,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle whiteDescriptionTextXS = new TextStyle(
+    color: Colors.white,
+    fontSize: 10.0,
+    fontWeight: FontWeight.w400,
+  );
   
   static TextStyle blackTitleText =  new TextStyle(
     color: Colors.black,
