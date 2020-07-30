@@ -62,13 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
       _allPetUpcomingEvents = petService.getAllPetMedication();
 
-      /*
-      return Scaffold(
-        body: Center(
-          child: noPetsAvailableIndicator(),
-        ),
-      );*/
-
       return Scaffold(
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
@@ -147,7 +140,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     //control: new SwiperControl(),
                   ),
                 ),
-
                 /*
                 Align(
                   alignment: Alignment.center,
@@ -167,7 +159,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 */
-
                 SizedBox(
                   height: height * 0.02,
                 ),
