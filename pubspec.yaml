@@ -45,6 +45,7 @@ dependencies:
   slimy_card: ^1.0.4
   flutter_swiper: ^1.1.6
   dots_indicator: ^1.2.0
+  google_fonts: ^1.1.0
 
 
 
@@ -79,10 +80,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: Lilita
-      fonts:
-        - asset: assets/fonts/LilitaOne-Regular.ttf
+  #fonts:
+  #  - family: Lilita
+  #    fonts:
+  #      - asset: assets/fonts/LilitaOne-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

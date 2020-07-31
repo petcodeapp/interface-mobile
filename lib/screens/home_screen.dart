@@ -129,8 +129,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(petService.allPets[index].name, style: StyleConstants.blackTitleText,),
-                                  Text(petService.allPets[index].breed, style: StyleConstants.blackDescriptionText,),
+                                  Text(
+                                    petService.allPets[index].name,
+                                    style: StyleConstants.blackTitleText,
+                                  ),
+                                  Text(
+                                    petService.allPets[index].breed,
+                                    style: StyleConstants.blackDescriptionText,
+                                  ),
                                 ],
                               ),
                             ),
@@ -239,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               PetInfoScreen(
-                                                                petIndex: index,
+                                                                petIndex: pageIndex,
                                                               )),
                                                     );
                                                   },
@@ -337,9 +343,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                               height: height * 0.03,
                             ),
-                            Divider(height: 2.0,
-                            thickness: 5.0,),
-                            SizedBox(height: height * 0.01,),
+                            Divider(
+                              height: 2.0,
+                              thickness: 5.0,
+                            ),
+                            SizedBox(
+                              height: height * 0.01,
+                            ),
                             Text(
                               'Upcoming',
                               style: StyleConstants.blackTitleText,
@@ -353,6 +363,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Container(
                                         decoration: BoxDecoration(
                                             color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black.withOpacity(0.2),
+                                                blurRadius: 5,
+                                                offset: Offset(0, 3),
+                                              ),
+                                            ],
                                             borderRadius:
                                                 BorderRadius.circular(15.0)),
                                         height: 60.0,
