@@ -4,6 +4,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
+import 'package:petcode_app/screens/medical_info_screen.dart';
 import 'package:petcode_app/screens/pet_info_screen.dart';
 import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/services/pet_service.dart';
@@ -310,8 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ),
                                                 ),
                                                 GestureDetector(
-                                                  onTap: () =>
-                                                      print('med info tapped'),
+                                                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => MedicalInfoScreen())),
                                                   child: Column(
                                                     children: [
                                                       Icon(
