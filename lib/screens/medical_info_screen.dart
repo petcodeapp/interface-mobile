@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:petcode_app/screens/vaccine_history_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class MedicalInfoScreen extends StatefulWidget {
@@ -101,7 +102,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                 ),
                 SizedBox(height: height * 0.03,),
                 GestureDetector(
-                  onTap: () => print('Pressed contact'),
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => VaccineHistoryScreen())),
                   child: Container(
                     height: 55.0,
                     width: width - 50,
