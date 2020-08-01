@@ -1,3 +1,4 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
@@ -28,6 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<UpcomingEvent> _allPetUpcomingEvents;
 
   bool _value = false;
+
+  int pageIndex = 0;
 
   @override
   void initState() {
@@ -86,19 +89,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: height * 0.03,
                 ),
                 Container(
-                  height: 300.0,
+                  height: 290.0,
                   width: width * 0.9,
                   child: Swiper(
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
-                        height: 300.0,
+                        height: 280.0,
                         //color: Colors.blue,
                         child: Stack(
                           children: [
                             Align(
-                              alignment: Alignment.bottomCenter,
+                              alignment: Alignment.topCenter,
                               child: Container(
-                                height: 250.0,
+                                height: 270.0,
                                 width: width * 0.9,
                                 decoration: BoxDecoration(
                                   color: StyleConstants.lightGrey,
@@ -111,8 +114,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20.0),
                                 child: Container(
-                                  height: 210.0,
-                                  width: width * 0.84,
+                                  height: 200.0,
+                                  width: width * 0.9,
                                   child: Image(
                                     image: petService.petImages[index],
                                     fit: BoxFit.cover,
@@ -121,24 +124,40 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Positioned(
-                              bottom: 15.0,
+                              bottom: 30.0,
                               left: width * 0.03,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(petService.allPets[index].name, style: StyleConstants.blackTitleText,),
-                                  Text(petService.allPets[index].breed, style: StyleConstants.blackDescriptionText,),
+                                  Text(
+                                    petService.allPets[index].name,
+                                    style: StyleConstants.blackTitleText,
+                                  ),
+                                  Text(
+                                    petService.allPets[index].breed,
+                                    style: StyleConstants.blackDescriptionText,
+                                  ),
                                 ],
                               ),
                             ),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: DotsIndicator(
+                                dotsCount: petService.allPets.length,
+                                position: 0.0 + pageIndex,
+                              ),
+                            )
                           ],
                         ),
                       );
                     },
                     itemCount: petService.allPets.length,
                     loop: false,
-                    pagination: new SwiperPagination(
-                    ),
+                    index: 0,
+                    onIndexChanged: (int index) {
+                      pageIndex = index;
+                    },
+                    //pagination: new SwiperPagination(),
                     //viewportFraction: 0.9,
                     scale: 0.9,
                     //control: new SwiperControl(),
@@ -163,9 +182,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 */
-                SizedBox(
-                  height: height * 0.02,
-                ),
                 /*
                 CirclePageIndicator(
                   selectedDotColor: Colors.white,
@@ -173,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   currentPageNotifier: _currentPageNotifier,
                 ),*/
                 SizedBox(
-                  height: height * 0.01,
+                  height: height * 0.005,
                 ),
                 Expanded(
                   child: PageView.builder(
@@ -229,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               PetInfoScreen(
-                                                                petIndex: index,
+                                                                petIndex: pageIndex,
                                                               )),
                                                     );
                                                   },
@@ -327,9 +343,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                               height: height * 0.03,
                             ),
-                            Divider(height: 2.0,
-                            thickness: 5.0,),
-                            SizedBox(height: height * 0.01,),
+                            Divider(
+                              height: 2.0,
+                              thickness: 5.0,
+                            ),
+                            SizedBox(
+                              height: height * 0.01,
+                            ),
                             Text(
                               'Upcoming',
                               style: StyleConstants.blackTitleText,
@@ -343,6 +363,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Container(
                                         decoration: BoxDecoration(
                                             color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black.withOpacity(0.2),
+                                                blurRadius: 5,
+                                                offset: Offset(0, 3),
+                                              ),
+                                            ],
                                             borderRadius:
                                                 BorderRadius.circular(15.0)),
                                         height: 60.0,

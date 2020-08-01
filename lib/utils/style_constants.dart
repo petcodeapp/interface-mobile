@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class StyleConstants{
   //colors
@@ -19,46 +20,53 @@ class StyleConstants{
   static Color lightGrey = new Color(0xffDAD8D5);
 
   //text styles
-  static TextStyle whiteButtonText =  new TextStyle(
-    color: white,
-    fontSize: 25.0,
-    fontFamily: 'Lilita',
+  static TextStyle whiteButtonText =  GoogleFonts.getFont('Lilita One',
+    textStyle: TextStyle(
+      color: white,
+      fontSize: 25.0,
+    )
   );
 
-  static TextStyle yellowButtonText =  new TextStyle(
-    color: yellow,
-    fontSize: 25.0,
-    fontFamily: 'Lilita',
+  static TextStyle yellowButtonText =  GoogleFonts.getFont('Lilita One',
+      textStyle: TextStyle(
+        color: yellow,
+        fontSize: 25.0,
+      )
   );
 
-  static TextStyle whiteTitleText =  new TextStyle(
-    color: Colors.white,
-    fontSize: 30.0,
-    fontFamily: 'Lilita',
+  static TextStyle whiteTitleText =  GoogleFonts.getFont('Lilita One',
+    textStyle: TextStyle(
+      color: Colors.white,
+      fontSize: 30.0,
+    )
   );
 
-  static TextStyle whiteTitleTextLarge =  new TextStyle(
-    color: Colors.white,
-    fontSize: 40.0,
-    fontFamily: 'Lilita',
+  static TextStyle whiteTitleTextLarge =  GoogleFonts.getFont('Lilita One',
+    textStyle: TextStyle(
+      color: Colors.white,
+      fontSize: 40.0,
+    )
   );
 
-  static TextStyle whiteTitleTextSmall =  new TextStyle(
-    color: Colors.white,
-    fontSize: 25.0,
-    fontFamily: 'Lilita',
+  static TextStyle whiteTitleTextSmall =   GoogleFonts.getFont('Lilita One',
+      textStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 25.0,
+      )
   );
 
-  static TextStyle whiteTitleTextXS =  new TextStyle(
-    color: Colors.white,
-    fontSize: 20.0,
-    fontFamily: 'Lilita',
+  static TextStyle whiteTitleTextXS =   GoogleFonts.getFont('Lilita One',
+      textStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 20.0,
+      )
   );
 
-  static TextStyle whiteTitleTextXL =  new TextStyle(
-    color: Colors.white,
-    fontSize: 50.0,
-    fontFamily: 'Lilita',
+  static TextStyle whiteTitleTextXL =   GoogleFonts.getFont('Lilita One',
+      textStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 50.0,
+      )
   );
 
   static TextStyle whiteDescriptionText = new TextStyle(
@@ -67,34 +75,44 @@ class StyleConstants{
     fontWeight: FontWeight.w400,
   );
   
-  static TextStyle blackTitleText =  new TextStyle(
-    color: Colors.black,
-    fontSize: 30.0,
-    fontFamily: 'Lilita',
+  static TextStyle blackTitleText =  GoogleFonts.getFont(
+    'Lilita One',
+    textStyle: TextStyle(
+      color: Colors.black,
+      fontSize: 30.0,
+    )
   );
 
-  static TextStyle blackTitleTextLarge =  new TextStyle(
-    color: Colors.black,
-    fontSize: 40.0,
-    fontFamily: 'Lilita',
+  static TextStyle blackTitleTextLarge =  GoogleFonts.getFont(
+      'Lilita One',
+      textStyle: TextStyle(
+        color: Colors.black,
+        fontSize: 40.0,
+      )
   );
 
-  static TextStyle blackTitleTextSmall =  new TextStyle(
-    color: Colors.black,
-    fontSize: 25.0,
-    fontFamily: 'Lilita',
+  static TextStyle blackTitleTextSmall =  GoogleFonts.getFont(
+      'Lilita One',
+      textStyle: TextStyle(
+        color: Colors.black,
+        fontSize: 25.0,
+      )
   );
 
-  static TextStyle blackTitleTextXS =  new TextStyle(
-    color: Colors.black,
-    fontSize: 20.0,
-    fontFamily: 'Lilita',
+  static TextStyle blackTitleTextXS =  GoogleFonts.getFont(
+      'Lilita One',
+      textStyle: TextStyle(
+        color: Colors.black,
+        fontSize: 20.0,
+      )
   );
 
-  static TextStyle blackTitleTextXL =  new TextStyle(
-    color: Colors.black,
-    fontSize: 50.0,
-    fontFamily: 'Lilita',
+  static TextStyle blackTitleTextXL =  GoogleFonts.getFont(
+      'Lilita One',
+      textStyle: TextStyle(
+        color: Colors.black,
+        fontSize: 50.0,
+      )
   );
 
   static TextStyle blackDescriptionText = new TextStyle(
