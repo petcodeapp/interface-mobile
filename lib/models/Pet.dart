@@ -75,6 +75,7 @@ class Pet {
     List<dynamic> scanMaps = json['scans'] as List;
     List<Scan> scanConverted;
     if (scanMaps != null) {
+      scanConverted = new List<Scan>();
       scanMaps.forEach((scan) {
         scanConverted.add(Scan.fromJson(scan));
       });
