@@ -16,6 +16,13 @@ class DatabaseService {
         .updateData(pet.toJson());
   }
 
+  Future<void> updateUser(User user) async {
+    await _firestore
+        .collection('users')
+        .document(user.uid)
+        .updateData(user.toJson());
+  }
+
   Future<User> createUser(String email, String firstName, String lastName,
       String phoneNumber, String uid) async {
     User newUser = User(
