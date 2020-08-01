@@ -135,7 +135,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             Text(
                               'Update Account Info',
                               style: StyleConstants.whiteTitleText,
-                            )
+                            ),
                           ],
                         ),
                       ),

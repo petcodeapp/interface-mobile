@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:petcode_app/screens/login_screen.dart';
 import 'package:petcode_app/screens/signup_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -33,6 +34,7 @@ class _EntryScreenState extends State<EntryScreen> {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
+                    Text('Hello World'),
                     Positioned(
                         bottom: 0,
                         right: 0,

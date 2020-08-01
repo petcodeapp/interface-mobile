@@ -9,6 +9,8 @@ import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
+import 'account_screen2.dart';
+
 class RootScreen extends StatefulWidget {
   @override
   _RootScreenState createState() => _RootScreenState();
@@ -27,7 +29,7 @@ class _RootScreenState extends State<RootScreen> {
     MedicalInfoScreen(),
     Consumer<UserService>(
       builder: (BuildContext context, UserService service, _) {
-        return AccountScreen();
+        return AccountScreen2();
       },
     ),
   ];
