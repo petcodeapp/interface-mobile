@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/models/Scan.dart';
 import 'package:petcode_app/services/map_service.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -32,11 +33,26 @@ class _ScansScreenState extends State<ScansScreen> {
 
     _mapService = Provider.of<MapService>(context);
     _petService = Provider.of<PetService>(context);
-    Pet currentPet = _petService.allPets[0];
 
     if (_mapService.currentLocation == null) {
       _mapService.getCurrentLocation();
     }
+
+    List<Scan> petScans = new List<Scan>();
+    List<Pet> allPets = _petService.allPets;
+    for (int i = 0; i < allPets.length; i++) {
+      if (allPets[i].scans != null) {
+        for (int j = 0; j < allPets[i].scans.length; j++) {
+          Scan currentScan = allPets[i].scans[j];
+          currentScan.petName = allPets[i].name;
+          petScans.add(currentScan);
+        }
+      }
+    }
+
+    petScans.sort((Scan scanA, Scan scanB) {
+      return scanB.date.compareTo(scanB.date);
+    });
 
     return Scaffold(
       body: Column(
@@ -69,7 +85,7 @@ class _ScansScreenState extends State<ScansScreen> {
                           _controller.complete(controller);
                         },
                         zoomControlsEnabled: true,
-                        markers: _mapService.createMarkers(currentPet.scans),
+                        markers: _mapService.createMarkers(petScans),
                       )
                     : Center(
                         child: CircularProgressIndicator(),
@@ -96,13 +112,13 @@ class _ScansScreenState extends State<ScansScreen> {
                     behavior: NoGlowBehavior(),
                     child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: currentPet.scans.length,
+                      itemCount: petScans.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Column(
                           children: [
                             recentScanWidget(
-                                currentPet.name,
-                                currentPet.scans[index].date.toDate(),
+                                petScans[index].petName,
+                                petScans[index].date.toDate(),
                                 '5 Address Ln. City, State 77494 USA'),
                             SizedBox(
                               height: height * 0.02,
@@ -208,7 +224,9 @@ class _ScansScreenState extends State<ScansScreen> {
   String formatDate(DateTime date) {
     DateTime locationDate = date.toLocal();
     String end = date.hour < 12 ? 'am' : 'pm';
-    String hour = date.hour < 12 ? locationDate.hour.toString() : (locationDate.hour - 12).toString();
+    String hour = date.hour < 12
+        ? locationDate.hour.toString()
+        : (locationDate.hour - 12).toString();
     if (hour == '0') {
       hour = '12';
     }

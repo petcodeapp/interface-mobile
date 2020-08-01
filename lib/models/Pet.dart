@@ -79,9 +79,6 @@ class Pet {
       scanMaps.forEach((scan) {
         scanConverted.add(Scan.fromJson(scan));
       });
-      scanConverted.sort((Scan scanA, Scan scanB) {
-        return scanB.date.compareTo(scanA.date);
-      });
     }
 
     Map owner1Map = json['contact_1'] as Map;
