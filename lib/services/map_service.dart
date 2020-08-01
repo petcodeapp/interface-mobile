@@ -25,7 +25,7 @@ class MapService extends ChangeNotifier {
     return allMarkers.toSet();
   }
 
-  Future<Position> getCurrentLocation() async {
+  getCurrentLocation() async {
     Position currentLocation = await _geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best);
     _currentLocation = currentLocation;

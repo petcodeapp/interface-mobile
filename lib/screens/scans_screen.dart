@@ -1,9 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:petcode_app/main.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/services/map_service.dart';
 import 'package:petcode_app/services/pet_service.dart';

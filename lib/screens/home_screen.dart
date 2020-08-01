@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:page_view_indicators/circle_page_indicator.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
 import 'package:petcode_app/screens/pet_info_screen.dart';
-import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
