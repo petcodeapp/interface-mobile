@@ -34,7 +34,6 @@ class _EntryScreenState extends State<EntryScreen> {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    Text('Hello World'),
                     Positioned(
                         bottom: 0,
                         right: 0,
