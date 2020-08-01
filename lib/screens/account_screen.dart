@@ -21,293 +21,305 @@ class _AccountScreenState extends State<AccountScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: StyleConstants.blue,
       body: SingleChildScrollView(
         child: Container(
-          //height: height,
+          height: height * 1.1,
           width: width,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                //mainAxisAlignment: MainAxisAlignment.spaceAround,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: height * 0.02,
+              ),
+              CircleAvatar(
+                radius: 100.0,
+                backgroundImage: AssetImage('assets/images/stockdog1.jpg'),
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              Text('Lucas Cai', style: StyleConstants.blackTitleTextLarge,),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(
-                    height: height * 0.03,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('3', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25.0),),
+                      Text('Pets', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16.0),),
+                    ],
                   ),
-                  Text(
-                    'Profile',
-                    style: StyleConstants.whiteTitleTextXL,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('254', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25.0),),
+                      Text('Scans', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16.0),),
+                    ],
                   ),
-                  SizedBox(
-                    height: height * 0.03,
-                  ),
-                  Text(
-                    'Account Info:',
-                    style: StyleConstants.whiteTitleText,
-                  ),
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
-                  Container(
-                    height: 150.0,
-                    width: width - 50,
-                    decoration: BoxDecoration(
+                ],
+              ),
+              SizedBox(
+                height: height * 0.03,
+              ),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: userService.currentUser != null
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  user.firstName + ' ' + user.lastName,
-                                  style: StyleConstants.blackTitleText,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 5,
+                          offset: Offset(0, -3),
+                        ),
+                      ]
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(
+                      children: [
+                        SizedBox(height: height * 0.03,),
+                        GestureDetector(
+                          onTap: () => print('pressed update account info'),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 50.0,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  color: StyleConstants.green.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                SizedBox(
-                                  height: 5.0,
+                                child: Icon(
+                                  Icons.account_circle,
+                                  color: StyleConstants.green,
+                                  size: 50.0,
                                 ),
-                                Text(
-                                  'Phone: ' + user.phoneNumber,
-                                  style:
-                                      StyleConstants.blackThinDescriptionText,
-                                ),
-                                Text(
-                                  'Email: ' + user.email,
-                                  style:
-                                      StyleConstants.blackThinDescriptionText,
-                                ),
-                                Text(
-                                  'Address: ' + user.email,
-                                  style:
-                                      StyleConstants.blackThinDescriptionText,
-                                ),
-                              ],
-                            )
-                          : Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      'It seems you didn\'t set up your contact info',),
-                                  FlatButton(
-                                    child: Text('Register info'),
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                StpNameAndPhoneScreen(
-                                                  registerPet: false,
-                                                )),
-                                      );
-                                    },
-                                  ),
-                                ],
                               ),
-                            ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.03,
-                  ),
-                  GestureDetector(
-                    onTap: () => print('Pressed contact'),
-                    child: Container(
-                      height: 50.0,
-                      width: width - 50,
-                      decoration: StyleConstants.lightBlueItemBoxDeco,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.account_circle,
-                              color: StyleConstants.yellow,
-                              size: 30.0,
-                            ),
-                            SizedBox(
-                              width: width * 0.03,
-                            ),
-                            Text(
-                              'Update Account Info',
-                              style: StyleConstants.whiteTitleText,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.03,
-                  ),
-                  GestureDetector(
-                    onTap: () => print('Pressed contact'),
-                    child: Container(
-                      height: 50.0,
-                      width: width - 50,
-                      decoration: StyleConstants.lightBlueItemBoxDeco,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.settings,
-                              color: StyleConstants.yellow,
-                              size: 30.0,
-                            ),
-                            SizedBox(
-                              width: width * 0.03,
-                            ),
-                            Text(
-                              'App Settings',
-                              style: StyleConstants.whiteTitleText,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.03,
-                  ),
-                  GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => StpStartScreen()),
-                    ),
-                    child: Container(
-                      height: 50.0,
-                      width: width - 50,
-                      decoration: StyleConstants.lightBlueItemBoxDeco,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.turned_in,
-                              color: StyleConstants.yellow,
-                              size: 30.0,
-                            ),
-                            SizedBox(
-                              width: width * 0.03,
-                            ),
-                            Text(
-                              'Register a Tag',
-                              style: StyleConstants.whiteTitleText,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.03,
-                  ),
-                  GestureDetector(
-                    onTap: () => print('clicked pet'),
-                    child: Container(
-                      height: 50.0,
-                      width: width - 50,
-                      decoration: StyleConstants.lightBlueItemBoxDeco,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.place,
-                              color: StyleConstants.yellow,
-                              size: 30.0,
-                            ),
-                            SizedBox(
-                              width: width * 0.03,
-                            ),
-                            Text(
-                              'Lost Pet Settings',
-                              style: StyleConstants.whiteTitleText,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.03,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      final auth = Provider.of<FirebaseAuthService>(context,
-                          listen: false);
-                      auth.signOut();
-                    },
-                    child: Container(
-                      height: 50.0,
-                      width: width - 50,
-                      decoration: StyleConstants.lightBlueItemBoxDeco,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.exit_to_app,
-                              color: StyleConstants.yellow,
-                              size: 30.0,
-                            ),
-                            SizedBox(
-                              width: width * 0.03,
-                            ),
-                            Text(
-                              'Log Out',
-                              style: StyleConstants.whiteTitleText,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.03,
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: () => print('lost pet'),
-                      child: Container(
-                        height: 75,
-                        width: 250.0,
-                        decoration: StyleConstants.roundRedButtonDeco,
-                        child: Center(
-                          child: Text(
-                            'LOST PET',
-                            style: StyleConstants.whiteTitleTextLarge,
+                              SizedBox(
+                                width: width * 0.03,
+                              ),
+                              Text(
+                                'Update Account Info',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: 25.0,
+                              ),
+                            ],
                           ),
                         ),
-                      ),
+                        SizedBox(height: height * 0.02,),
+                        GestureDetector(
+                          onTap: () => print('pressed app settings'),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 50.0,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  color: StyleConstants.green.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: Icon(
+                                  Icons.settings,
+                                  color: StyleConstants.green,
+                                  size: 50.0,
+                                ),
+                              ),
+                              SizedBox(
+                                width: width * 0.03,
+                              ),
+                              Text(
+                                'App Settings',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: 25.0,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: height * 0.01,),
+                        Divider(thickness: 1.0,),
+                        SizedBox(height: height * 0.01,),
+                        GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => StpStartScreen()),
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 50.0,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  color: StyleConstants.yellow.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: Icon(
+                                  Icons.turned_in,
+                                  color: StyleConstants.yellow,
+                                  size: 50.0,
+                                ),
+                              ),
+                              SizedBox(
+                                width: width * 0.03,
+                              ),
+                              Text(
+                                'Register a Tag',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: 25.0,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: height * 0.02,),
+                        GestureDetector(
+                          onTap: () => print('pressed lost pet settings'),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 50.0,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  color: StyleConstants.yellow.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: Icon(
+                                  Icons.place,
+                                  color: StyleConstants.yellow,
+                                  size: 50.0,
+                                ),
+                              ),
+                              SizedBox(
+                                width: width * 0.03,
+                              ),
+                              Text(
+                                'Lost Pet Settings',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: 25.0,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: height * 0.01,),
+                        Divider(thickness: 1.0,),
+                        SizedBox(height: height * 0.01,),
+                        GestureDetector(
+                          onTap: () {
+                            final auth = Provider.of<FirebaseAuthService>(context,
+                                listen: false);
+                            auth.signOut();
+                          },
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 50.0,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  color: StyleConstants.red.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: Icon(
+                                  Icons.exit_to_app,
+                                  color: StyleConstants.red,
+                                  size: 50.0,
+                                ),
+                              ),
+                              SizedBox(
+                                width: width * 0.03,
+                              ),
+                              Text(
+                                'Log Out',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: 25.0,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: height * 0.02,),
+                        GestureDetector(
+                          onTap: () => print('lost pet'),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 50.0,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  color: StyleConstants.red.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: Icon(
+                                  Icons.account_circle,
+                                  color: StyleConstants.red,
+                                  size: 50.0,
+                                ),
+                              ),
+                              SizedBox(
+                                width: width * 0.03,
+                              ),
+                              Text(
+                                'Lost Pet',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: 25.0,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  /*
-                    FlatButton(
-                      child: Text('Log out'),
-                      onPressed: () {
-                        final auth = Provider.of<FirebaseAuthService>(context,
-                            listen: false);
-                        auth.signOut();
-                      },
-                    )*/
-                ]),
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
+
+
+
   }
 }

@@ -29,7 +29,7 @@ class _RootScreenState extends State<RootScreen> {
     MedicalInfoScreen(),
     Consumer<UserService>(
       builder: (BuildContext context, UserService service, _) {
-        return AccountScreen2();
+        return AccountScreen();
       },
     ),
   ];
