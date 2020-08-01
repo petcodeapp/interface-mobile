@@ -3,7 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:petcode_app/main.dart';
+import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/services/map_service.dart';
+import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:provider/provider.dart';
 
 class ScansScreen extends StatefulWidget {
   @override
@@ -12,13 +17,13 @@ class ScansScreen extends StatefulWidget {
 
 class _ScansScreenState extends State<ScansScreen> {
   Completer<GoogleMapController> _controller = Completer();
-  Position _currentLocation;
+  PetService _petService;
+  MapService _mapService;
   double height;
   double width;
 
   @override
   void initState() {
-    _getCurrentLocation();
     super.initState();
   }
 
@@ -26,6 +31,14 @@ class _ScansScreenState extends State<ScansScreen> {
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
+
+    _mapService = Provider.of<MapService>(context);
+    _petService = Provider.of<PetService>(context);
+    Pet currentPet = _petService.allPets[0];
+
+    if (_mapService.currentLocation == null) {
+      _mapService.getCurrentLocation();
+    }
 
     return Scaffold(
       body: Column(
@@ -46,18 +59,19 @@ class _ScansScreenState extends State<ScansScreen> {
               borderRadius: BorderRadius.circular(10.0),
               child: Container(
                 height: height * 0.4,
-                child: _currentLocation != null
+                child: _mapService.currentLocation != null
                     ? GoogleMap(
                         mapType: MapType.hybrid,
                         initialCameraPosition: CameraPosition(
-                          target: LatLng(_currentLocation.latitude,
-                              _currentLocation.longitude),
+                          target: LatLng(_mapService.currentLocation.latitude,
+                              _mapService.currentLocation.longitude),
                           zoom: 14,
                         ),
                         onMapCreated: (GoogleMapController controller) {
                           _controller.complete(controller);
                         },
-                        zoomControlsEnabled: false,
+                        zoomControlsEnabled: true,
+                        markers: _mapService.createMarkers(currentPet.scans),
                       )
                     : Center(
                         child: CircularProgressIndicator(),
@@ -67,50 +81,46 @@ class _ScansScreenState extends State<ScansScreen> {
           ),
           Flexible(
             fit: FlexFit.loose,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: height * 0.02,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: height * 0.02,
+                ),
+                Text(
+                  'Most Recent',
+                  style: StyleConstants.blackDescriptionText,
+                ),
+                SizedBox(
+                  height: height * 0.02,
+                ),
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: NoGlowBehavior(),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: currentPet.scans.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          children: [
+                            recentScanWidget(
+                                currentPet.name,
+                                currentPet.scans[index].date.toDate(),
+                                '5 Address Ln. City, State 77494 USA'),
+                            SizedBox(
+                              height: height * 0.02,
+                            )
+                          ],
+                        );
+                      },
+                    ),
                   ),
-                  Text(
-                    'Most Recent',
-                    style: StyleConstants.blackDescriptionText,
-                  ),
-                  SizedBox(
-                    height: height * 0.02,
-                  ),
-                  recentScanWidget('Reggie', DateTime.now(),
-                      '5 Address Ln. City, State 77494 USA'),
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
-                  recentScanWidget('Reggie', DateTime.now(),
-                      '5 Address Ln. City, State 77494 USA'),
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
-                  recentScanWidget('Reggieasasdfdfasdfadsfa', DateTime.now(),
-                      '5 Address Ln. City, State 77494 USA'),
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           )
         ],
       ),
     );
-  }
-
-  _getCurrentLocation() async {
-    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-    Position currentLocation = await geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best);
-    setState(() {
-      _currentLocation = currentLocation;
-    });
   }
 
   Widget recentScanWidget(String petName, DateTime date, String address) {
@@ -200,6 +210,10 @@ class _ScansScreenState extends State<ScansScreen> {
   String formatDate(DateTime date) {
     DateTime locationDate = date.toLocal();
     String end = date.hour < 12 ? 'am' : 'pm';
+    String hour = date.hour < 12 ? locationDate.hour.toString() : (locationDate.hour - 12).toString();
+    if (hour == '0') {
+      hour = '12';
+    }
     String minute = date.minute < 10
         ? '0' + date.minute.toString()
         : date.minute.toString();
@@ -209,7 +223,7 @@ class _ScansScreenState extends State<ScansScreen> {
         '/' +
         locationDate.year.toString() +
         ' @ ' +
-        (locationDate.hour - 12).toString() +
+        hour +
         ':' +
         minute +
         ' ' +

@@ -6,6 +6,7 @@ import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
+import 'package:petcode_app/services/map_service.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -56,6 +57,9 @@ class MyApp extends StatelessWidget {
               return petService..setPetIds(userService.currentUser.petIds);
             }
           },
+        ),
+        ChangeNotifierProvider<MapService>(
+          create: (_) => MapService(),
         ),
       ],
       child: MaterialApp(
