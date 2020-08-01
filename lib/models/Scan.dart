@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Scan {
+  //These 2 variables are used on the scan screen only
   String petName;
+  int petIndex;
+
   GeoPoint location;
   Timestamp date;
 
-  Scan({this.petName, this.location, this.date});
+  Scan({this.petName, this.petIndex, this.location, this.date});
 
   factory Scan.fromJson(Map<String, dynamic> json) {
     return Scan(

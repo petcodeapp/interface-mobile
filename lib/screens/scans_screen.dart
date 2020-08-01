@@ -45,6 +45,7 @@ class _ScansScreenState extends State<ScansScreen> {
         for (int j = 0; j < allPets[i].scans.length; j++) {
           Scan currentScan = allPets[i].scans[j];
           currentScan.petName = allPets[i].name;
+          currentScan.petIndex = i;
           petScans.add(currentScan);
         }
       }
@@ -119,7 +120,9 @@ class _ScansScreenState extends State<ScansScreen> {
                             recentScanWidget(
                                 petScans[index].petName,
                                 petScans[index].date.toDate(),
-                                '5 Address Ln. City, State 77494 USA'),
+                                '5 Address Ln. City, State 77494 USA',
+                                _mapService
+                                    .markerColors[petScans[index].petIndex]),
                             SizedBox(
                               height: height * 0.02,
                             )
@@ -137,7 +140,8 @@ class _ScansScreenState extends State<ScansScreen> {
     );
   }
 
-  Widget recentScanWidget(String petName, DateTime date, String address) {
+  Widget recentScanWidget(
+      String petName, DateTime date, String address, Color markerColor) {
     return Container(
       height: height * 0.1,
       width: width * 0.9,
@@ -157,7 +161,7 @@ class _ScansScreenState extends State<ScansScreen> {
                   child: Center(
                     child: Icon(
                       Icons.place,
-                      color: StyleConstants.yellow,
+                      color: markerColor,
                       size: width * 0.1,
                     ),
                   ),
