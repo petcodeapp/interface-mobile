@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/models/Scan.dart';
@@ -17,7 +18,9 @@ class Pet {
   String additionalInfo;
   bool isServiceAnimal;
   bool isLost;
+  bool isAdopted;
   int age;
+  Timestamp birthday;
   List<Vaccination> vaccinations;
   List<Reminder> reminders;
   List<Scan> scans;
@@ -39,7 +42,9 @@ class Pet {
       this.additionalInfo,
       this.isServiceAnimal,
       this.isLost,
+      this.isAdopted,
       this.age,
+      this.birthday,
       this.vaccinations,
       this.reminders,
       this.scans,
@@ -110,7 +115,9 @@ class Pet {
       additionalInfo: json['additionalInfo'] as String,
       isServiceAnimal: json['isServiceAnimal'] as bool,
       isLost: json['isLost'] as bool,
+      isAdopted: json['isAdopted'] as bool,
       age: json['age'] as int,
+      birthday: json['birthday'] as Timestamp,
       vaccinations: convertedList,
       reminders: convertedReminders,
       scans: scanConverted,
@@ -134,7 +141,9 @@ class Pet {
         'additionalInfo': instance.additionalInfo,
         'isServiceAnimal': instance.isServiceAnimal,
         'isLost': instance.isLost,
+        'isAdopted': instance.isAdopted,
         'age': instance.age,
+        'birthday': instance.birthday,
         'vaccinations': _vaccinationMaps(instance.vaccinations),
         'reminders': _reminderMaps(instance.reminders),
         'scans': _scanMaps(instance.scans),

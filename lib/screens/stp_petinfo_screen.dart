@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/stp_medinfo_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
@@ -15,21 +16,28 @@ class StpPetInfoScreen extends StatefulWidget {
   _StpPetInfoScreenState createState() => _StpPetInfoScreenState();
 }
 
-bool checkedValue = false;
-
 class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
+  DateTime _petBirthday;
 
   TextEditingController _petNameInputController;
   TextEditingController _breedInputController;
-  TextEditingController _ageInputController;
+  TextEditingController _birthdayInputController;
   TextEditingController _temperamentInputController;
+
+  bool _isServiceAnimal;
+  bool _isAdopted;
 
   @override
   void initState() {
+    _petBirthday = DateTime.now();
+
     _petNameInputController = new TextEditingController();
     _breedInputController = new TextEditingController();
-    _ageInputController = new TextEditingController();
+    _birthdayInputController = new TextEditingController();
     _temperamentInputController = new TextEditingController();
+
+    _isServiceAnimal = false;
+    _isAdopted = false;
 
     super.initState();
   }
@@ -138,29 +146,44 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                     SizedBox(
                       height: height * 0.02,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 10.0,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      height: 50.0,
-                      width: 250.0,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Center(
-                          child: TextFormField(
-                            controller: _ageInputController,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Age',
-                                hintStyle: TextStyle(fontSize: 15.0)),
+                    GestureDetector(
+                      onTap: () async {
+                        DateTime pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: _petBirthday,
+                            firstDate: DateTime(1980),
+                            lastDate: DateTime.now());
+                        setState(() {
+                          _petBirthday = pickedDate;
+                          _birthdayInputController.text =
+                              _petBirthday.toIso8601String();
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 10.0,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        height: 50.0,
+                        width: 250.0,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Center(
+                            child: TextFormField(
+                              enabled: false,
+                              controller: _birthdayInputController,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Birthday',
+                                  hintStyle: TextStyle(fontSize: 15.0)),
+                            ),
                           ),
                         ),
                       ),
@@ -198,22 +221,54 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                     SizedBox(
                       height: height * 0.02,
                     ),
-                    Text(
-                      'Service Animal?',
-                      style: StyleConstants.whiteTitleTextSmall,
+                    Container(
+                      width: 250.0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Checkbox(
+                            //title: Text("title text"),
+                            checkColor: Colors.white,
+                            activeColor: StyleConstants.yellow,
+                            value: _isServiceAnimal,
+                            onChanged: (newValue) {
+                              setState(() {
+                                _isServiceAnimal = newValue;
+                              });
+                            },
+                            //controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                          ),
+                          Text(
+                            'Service Animal?',
+                            style: StyleConstants.whiteTitleTextSmall,
+                          ),
+                        ],
+                      ),
                     ),
-                    Checkbox(
-                      //title: Text("title text"),
-                      checkColor: Colors.white,
-                      activeColor: StyleConstants.yellow,
-                      value: checkedValue,
-                      onChanged: (newValue) {
-                        setState(() {
-                          checkedValue = newValue;
-                        });
-                      },
-                      //controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
-                    )
+                    Container(
+                      width: 250.0,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Checkbox(
+                            //title: Text("title text"),
+                            checkColor: Colors.white,
+                            activeColor: StyleConstants.yellow,
+                            value: _isAdopted,
+                            onChanged: (newValue) {
+                              setState(() {
+                                _isAdopted = newValue;
+                              });
+                            },
+                            //controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                          ),
+                          Text(
+                            'Adopted?',
+                            style: StyleConstants.whiteTitleTextSmall,
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -224,14 +279,24 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                 onTap: () {
                   Pet updatedPet = widget.pet;
 
+                  updatedPet.birthday = Timestamp.fromDate(_petBirthday);
+
                   updatedPet.name = _petNameInputController.text;
                   updatedPet.breed = _breedInputController.text;
-                  updatedPet.age = int.parse(_ageInputController.text);
                   updatedPet.temperament = _temperamentInputController.text;
-                  updatedPet.isServiceAnimal = checkedValue;
 
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => StpMedicalInfoScreen(pet: updatedPet, petImage: widget.petImage,)));
+                  updatedPet.age =
+                      _petBirthday.difference(DateTime.now()).inDays ~/ 365;
+                  updatedPet.isServiceAnimal = _isServiceAnimal;
+                  updatedPet.isAdopted = _isAdopted;
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => StpMedicalInfoScreen(
+                                pet: updatedPet,
+                                petImage: widget.petImage,
+                              )));
                 },
                 child: Container(
                   height: 55.0,
