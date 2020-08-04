@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/models/Pet.dart';
@@ -18,8 +19,9 @@ class _ScansScreenState extends State<ScansScreen> {
   Completer<GoogleMapController> _controller = Completer();
   PetService _petService;
   MapService _mapService;
-  double height;
-  double width;
+  double _height;
+  double _width;
+  LatLng _mapPosition;
 
   @override
   void initState() {
@@ -28,14 +30,14 @@ class _ScansScreenState extends State<ScansScreen> {
 
   @override
   Widget build(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
 
     _mapService = Provider.of<MapService>(context);
     _petService = Provider.of<PetService>(context);
 
     if (_mapService.currentLocation == null) {
-      _mapService.getCurrentLocation();
+      setCurrentLocation();
     }
 
     List<Scan> petScans = new List<Scan>();
@@ -69,18 +71,17 @@ class _ScansScreenState extends State<ScansScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: width * 0.03),
+            padding: EdgeInsets.symmetric(horizontal: _width * 0.03),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: Container(
-                height: height * 0.4,
+                height: _height * 0.4,
                 child: _mapService.currentLocation != null
                     ? GoogleMap(
                         mapType: MapType.hybrid,
                         initialCameraPosition: CameraPosition(
-                          target: LatLng(_mapService.currentLocation.latitude,
-                              _mapService.currentLocation.longitude),
-                          zoom: 14,
+                          target: _mapPosition,
+                          zoom: 14.0,
                         ),
                         onMapCreated: (GoogleMapController controller) {
                           _controller.complete(controller);
@@ -99,14 +100,14 @@ class _ScansScreenState extends State<ScansScreen> {
             child: Column(
               children: [
                 SizedBox(
-                  height: height * 0.02,
+                  height: _height * 0.02,
                 ),
                 Text(
                   'Most Recent',
                   style: StyleConstants.blackDescriptionText,
                 ),
                 SizedBox(
-                  height: height * 0.02,
+                  height: _height * 0.02,
                 ),
                 Expanded(
                   child: ScrollConfiguration(
@@ -122,9 +123,10 @@ class _ScansScreenState extends State<ScansScreen> {
                                 petScans[index].date.toDate(),
                                 '5 Address Ln. City, State 77494 USA',
                                 _mapService
-                                    .markerColors[petScans[index].petIndex]),
+                                    .markerColors[petScans[index].petIndex],
+                                petScans[index].location),
                             SizedBox(
-                              height: height * 0.02,
+                              height: _height * 0.02,
                             )
                           ],
                         );
@@ -140,87 +142,99 @@ class _ScansScreenState extends State<ScansScreen> {
     );
   }
 
-  Widget recentScanWidget(
-      String petName, DateTime date, String address, Color markerColor) {
-    return Container(
-      height: height * 0.1,
-      width: width * 0.9,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        color: StyleConstants.blue,
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: width * 0.445,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Center(
-                    child: Icon(
-                      Icons.place,
-                      color: markerColor,
-                      size: width * 0.1,
+  Widget recentScanWidget(String petName, DateTime date, String address,
+      Color markerColor, GeoPoint markerPosition) {
+    return GestureDetector(
+      onTap: () async {
+        GoogleMapController controller = await _controller.future;
+        _mapPosition =
+            LatLng(markerPosition.latitude, markerPosition.longitude);
+        controller.animateCamera(
+          CameraUpdate.newLatLng(
+            _mapPosition,
+          ),
+        );
+      },
+      child: Container(
+        height: _height * 0.1,
+        width: _width * 0.9,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          color: StyleConstants.blue,
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: _width * 0.445,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Center(
+                      child: Icon(
+                        Icons.place,
+                        color: markerColor,
+                        size: _width * 0.1,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 7,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          petName,
-                          style: StyleConstants.whiteTitleTextSmall,
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
+                  Expanded(
+                    flex: 7,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            petName,
+                            style: StyleConstants.whiteTitleTextSmall,
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          formatDate(date),
-                          style: StyleConstants.whiteDescriptionTextXS,
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis,
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            formatDate(date),
+                            style: StyleConstants.whiteDescriptionTextXS,
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          VerticalDivider(
-            width: 2.0,
-            color: StyleConstants.white,
-          ),
-          Container(
-            width: width * 0.445,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.01),
-                    child: Text(
-                      address,
-                      style: StyleConstants.whiteDescriptionTextSmall,
-                      textAlign: TextAlign.center,
-                      maxLines: 4,
-                      overflow: TextOverflow.ellipsis,
+                      ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+            VerticalDivider(
+              width: 2.0,
+              color: StyleConstants.white,
+            ),
+            Container(
+              width: _width * 0.445,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: _width * 0.01),
+                      child: Text(
+                        address,
+                        style: StyleConstants.whiteDescriptionTextSmall,
+                        textAlign: TextAlign.center,
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -248,5 +262,15 @@ class _ScansScreenState extends State<ScansScreen> {
         minute +
         ' ' +
         end;
+  }
+
+  void setCurrentLocation() async {
+    await _mapService.getCurrentLocation();
+    if (_mapPosition == null) {
+      setState(() {
+        _mapPosition = LatLng(_mapService.currentLocation.latitude,
+            _mapService.currentLocation.longitude);
+      });
+    }
   }
 }
