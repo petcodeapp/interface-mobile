@@ -94,7 +94,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => UpdateAccountInfoScreen()),
+                              MaterialPageRoute(builder: (context) => UpdateAccountInfoScreen(currentUser: user,)),
                             );
                           },
                           child: Row(
