@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/stp_medinfo_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class StpPetInfoScreen extends StatefulWidget {
@@ -21,7 +22,6 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
 
   TextEditingController _petNameInputController;
   TextEditingController _breedInputController;
-  TextEditingController _birthdayInputController;
   TextEditingController _temperamentInputController;
 
   bool _isServiceAnimal;
@@ -29,11 +29,8 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
 
   @override
   void initState() {
-    _petBirthday = DateTime.now();
-
     _petNameInputController = new TextEditingController();
     _breedInputController = new TextEditingController();
-    _birthdayInputController = new TextEditingController();
     _temperamentInputController = new TextEditingController();
 
     _isServiceAnimal = false;
@@ -150,13 +147,13 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                       onTap: () async {
                         DateTime pickedDate = await showDatePicker(
                             context: context,
-                            initialDate: _petBirthday,
+                            initialDate: _petBirthday != null
+                                ? _petBirthday
+                                : DateTime.now(),
                             firstDate: DateTime(1980),
                             lastDate: DateTime.now());
                         setState(() {
                           _petBirthday = pickedDate;
-                          _birthdayInputController.text =
-                              _petBirthday.toIso8601String();
                         });
                       },
                       child: Container(
@@ -175,15 +172,20 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                         width: 250.0,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Center(
-                            child: TextFormField(
-                              enabled: false,
-                              controller: _birthdayInputController,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Birthday',
-                                  hintStyle: TextStyle(fontSize: 15.0)),
-                            ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                _petBirthday != null
+                                    ? 'Birthday: ' +
+                                        StringHelper.getDateString(_petBirthday)
+                                    : 'Birthday:',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                              Icon(Icons.calendar_today),
+                            ],
                           ),
                         ),
                       ),

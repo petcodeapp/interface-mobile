@@ -7,6 +7,7 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Scan.dart';
 import 'package:petcode_app/services/map_service.dart';
 import 'package:petcode_app/services/pet_service.dart';
+import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,6 @@ class _ScansScreenState extends State<ScansScreen> {
   Completer<GoogleMapController> _controller = Completer();
   double _height;
   double _width;
-  LatLng _mapPosition;
 
   PetService _petService;
   MapService _mapService;
@@ -38,7 +38,7 @@ class _ScansScreenState extends State<ScansScreen> {
     _petService = Provider.of<PetService>(context);
 
     if (_mapService.currentLocation == null) {
-      setCurrentLocation();
+      _mapService.getCurrentLocation();
     }
 
     List<Scan> petScans = new List<Scan>();
@@ -55,7 +55,7 @@ class _ScansScreenState extends State<ScansScreen> {
     }
 
     petScans.sort((Scan scanA, Scan scanB) {
-      return scanB.date.compareTo(scanB.date);
+      return scanB.date.compareTo(scanA.date);
     });
 
     return Scaffold(
@@ -81,7 +81,8 @@ class _ScansScreenState extends State<ScansScreen> {
                     ? GoogleMap(
                         mapType: MapType.hybrid,
                         initialCameraPosition: CameraPosition(
-                          target: _mapPosition,
+                          target: LatLng(_mapService.currentLocation.latitude,
+                              _mapService.currentLocation.longitude),
                           zoom: 14.0,
                         ),
                         onMapCreated: (GoogleMapController controller) {
@@ -148,11 +149,11 @@ class _ScansScreenState extends State<ScansScreen> {
     return GestureDetector(
       onTap: () async {
         GoogleMapController controller = await _controller.future;
-        _mapPosition =
+        LatLng mapPosition =
             LatLng(markerPosition.latitude, markerPosition.longitude);
         controller.animateCamera(
           CameraUpdate.newLatLng(
-            _mapPosition,
+            mapPosition,
           ),
         );
       },
@@ -198,7 +199,9 @@ class _ScansScreenState extends State<ScansScreen> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            formatDate(date),
+                            StringHelper.getDateString(date) +
+                                ' ' +
+                                StringHelper.getTimeString(date),
                             style: StyleConstants.whiteDescriptionTextXS,
                             textAlign: TextAlign.left,
                             overflow: TextOverflow.ellipsis,
@@ -238,40 +241,5 @@ class _ScansScreenState extends State<ScansScreen> {
         ),
       ),
     );
-  }
-
-  String formatDate(DateTime date) {
-    DateTime locationDate = date.toLocal();
-    String end = date.hour < 12 ? 'am' : 'pm';
-    String hour = date.hour < 12
-        ? locationDate.hour.toString()
-        : (locationDate.hour - 12).toString();
-    if (hour == '0') {
-      hour = '12';
-    }
-    String minute = date.minute < 10
-        ? '0' + date.minute.toString()
-        : date.minute.toString();
-    return locationDate.month.toString() +
-        '/' +
-        locationDate.day.toString() +
-        '/' +
-        locationDate.year.toString() +
-        ' @ ' +
-        hour +
-        ':' +
-        minute +
-        ' ' +
-        end;
-  }
-
-  void setCurrentLocation() async {
-    await _mapService.getCurrentLocation();
-    if (_mapPosition == null) {
-      setState(() {
-        _mapPosition = LatLng(_mapService.currentLocation.latitude,
-            _mapService.currentLocation.longitude);
-      });
-    }
   }
 }

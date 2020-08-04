@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/stp_additionalinfo_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Reminder.dart';
+import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:slimy_card/slimy_card.dart';
 
@@ -230,9 +231,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                     Text(
                       _dates[0] == null
                           ? 'Select Date'
-                          : _dates[0]
-                              .toString()
-                              .substring(0, _dates[0].toString().indexOf(' ')),
+                          : StringHelper.getDateString(_dates[0]),
                       style: TextStyle(color: Colors.black),
                     ),
                   ],
@@ -321,9 +320,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                     Text(
                       _dates[1] == null
                           ? 'Select Date'
-                          : _dates[1]
-                              .toString()
-                              .substring(0, _dates[1].toString().indexOf(' ')),
+                          : StringHelper.getDateString(_dates[1]),
                       style: TextStyle(color: Colors.black),
                     ),
                   ],
