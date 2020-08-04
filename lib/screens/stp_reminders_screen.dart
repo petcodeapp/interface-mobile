@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:petcode_app/models/Medication.dart';
 import 'package:petcode_app/screens/stp_additionalinfo_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:slimy_card/slimy_card.dart';
 
@@ -24,19 +24,15 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
   double width;
   double height;
 
-  List<TextEditingController> _medicationNameInputControllers;
-  List<TextEditingController> _medicationFrequencyInputControllers;
+  List<TextEditingController> _reminderNameInputControllers;
+
   List<DateTime> _dates;
 
   @override
   void initState() {
-    _medicationNameInputControllers = new List<TextEditingController>();
-    _medicationNameInputControllers.add(new TextEditingController());
-    _medicationNameInputControllers.add(new TextEditingController());
-
-    _medicationFrequencyInputControllers = new List<TextEditingController>();
-    _medicationFrequencyInputControllers.add(new TextEditingController());
-    _medicationFrequencyInputControllers.add(new TextEditingController());
+    _reminderNameInputControllers = new List<TextEditingController>();
+    _reminderNameInputControllers.add(new TextEditingController());
+    _reminderNameInputControllers.add(new TextEditingController());
 
     _dates = new List<DateTime>(2);
 
@@ -93,8 +89,8 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                     SlimyCard(
                       color: StyleConstants.yellow,
                       width: 300,
-                      topCardHeight: 300,
-                      bottomCardHeight: 300,
+                      topCardHeight: 200,
+                      bottomCardHeight: 200,
                       borderRadius: 15,
                       topCardWidget: medWidget1(),
                       bottomCardWidget: medWidget2(),
@@ -109,23 +105,23 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
               GestureDetector(
                 onTap: () {
                   Pet updatedPet = widget.pet;
-                  updatedPet.medications = new List<Medication>();
+                  updatedPet.reminders = new List<Reminder>();
                   for (int i = 0;
-                      i < _medicationNameInputControllers.length;
+                      i < _reminderNameInputControllers.length;
                       i++) {
-                    if (_medicationNameInputControllers[i].text != null &&
-                        _medicationNameInputControllers[i].text.isNotEmpty &&
-                        _medicationFrequencyInputControllers[i].text != null &&
-                        _medicationFrequencyInputControllers[i]
+                    if (_reminderNameInputControllers[i].text != null &&
+                        _reminderNameInputControllers[i]
                             .text
+                            .trim()
                             .isNotEmpty) {
-                      updatedPet.medications.add(new Medication(
-                          name: _medicationNameInputControllers[i].text,
-                          frequency: int.parse(
-                              _medicationFrequencyInputControllers[i].text),
-                          date: _dates[i] != null
-                              ? Timestamp.fromDate(_dates[i])
-                              : null));
+                      updatedPet.reminders.add(
+                        new Reminder(
+                            name: _reminderNameInputControllers[i].text.trim(),
+                            done: false,
+                            date: _dates[i] != null
+                                ? Timestamp.fromDate(_dates[i])
+                                : null),
+                      );
                     }
                   }
 
@@ -171,7 +167,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
         padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
-            'Medication 1',
+            'Reminder 1',
             style: StyleConstants.whiteTitleTextSmall,
           ),
           SizedBox(
@@ -194,43 +190,13 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Center(
                 child: TextFormField(
-                  controller: _medicationNameInputControllers[0],
+                  controller: _reminderNameInputControllers[0],
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Name',
                       hintStyle: TextStyle(
                         fontSize: 15.0,
                       )),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: height * 0.02,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            height: 50.0,
-            width: 250.0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Center(
-                child: TextFormField(
-                  controller: _medicationFrequencyInputControllers[0],
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Frequency (months)',
-                      hintStyle: TextStyle(fontSize: 15.0)),
                 ),
               ),
             ),
@@ -292,7 +258,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
         padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
-            'Medication 2',
+            'Reminder 2',
             style: StyleConstants.whiteTitleTextSmall,
           ),
           SizedBox(
@@ -315,43 +281,13 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Center(
                 child: TextFormField(
-                  controller: _medicationNameInputControllers[1],
+                  controller: _reminderNameInputControllers[1],
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Name',
                       hintStyle: TextStyle(
                         fontSize: 15.0,
                       )),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: height * 0.02,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            height: 50.0,
-            width: 250.0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Center(
-                child: TextFormField(
-                  controller: _medicationFrequencyInputControllers[1],
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Frequency (months)',
-                      hintStyle: TextStyle(fontSize: 15.0)),
                 ),
               ),
             ),

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:petcode_app/models/Medication.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
 import 'package:petcode_app/models/Vaccination.dart';
 
@@ -67,9 +67,9 @@ class PetService extends ChangeNotifier {
     List<UpcomingEvent> allUpcomingEvents = new List<UpcomingEvent>();
     List<UpcomingEvent> allUpcomingEventsNoDate = new List<UpcomingEvent>();
     for (int i = 0; i < _allPets.length; i++) {
-      if (_allPets[i].medications != null) {
-        for (int j = 0; j < _allPets[i].medications.length; j++) {
-          Medication currentMedication = _allPets[i].medications[j];
+      if (_allPets[i].reminders != null) {
+        for (int j = 0; j < _allPets[i].reminders.length; j++) {
+          Reminder currentMedication = _allPets[i].reminders[j];
           if (currentMedication.name == null ||
               currentMedication.name.trim().isEmpty) {
             currentMedication.name = 'Untitled';

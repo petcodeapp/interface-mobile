@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:petcode_app/models/Medication.dart';
 import 'package:petcode_app/models/Owner.dart';
+import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/models/Scan.dart';
 import 'package:petcode_app/models/Vaccination.dart';
 
@@ -19,7 +19,7 @@ class Pet {
   bool isLost;
   int age;
   List<Vaccination> vaccinations;
-  List<Medication> medications;
+  List<Reminder> reminders;
   List<Scan> scans;
   Owner contact_1;
   Owner contact_2;
@@ -41,7 +41,7 @@ class Pet {
       this.isLost,
       this.age,
       this.vaccinations,
-      this.medications,
+      this.reminders,
       this.scans,
       this.contact_1,
       this.contact_2,
@@ -63,12 +63,12 @@ class Pet {
       });
     }
 
-    List<dynamic> medicationMaps = json['medications'] as List;
-    List<Medication> medicationConverted;
-    if (medicationMaps != null) {
-      medicationConverted = new List<Medication>();
-      medicationMaps.forEach((medication) {
-        medicationConverted.add(Medication.fromJson(medication));
+    List<dynamic> reminderMaps = json['reminders'] as List;
+    List<Reminder> convertedReminders;
+    if (reminderMaps != null) {
+      convertedReminders = new List<Reminder>();
+      reminderMaps.forEach((reminder) {
+        convertedReminders.add(Reminder.fromJson(reminder));
       });
     }
 
@@ -112,7 +112,7 @@ class Pet {
       isLost: json['isLost'] as bool,
       age: json['age'] as int,
       vaccinations: convertedList,
-      medications: medicationConverted,
+      reminders: convertedReminders,
       scans: scanConverted,
       contact_1: owner1,
       contact_2: owner2,
@@ -136,7 +136,7 @@ class Pet {
         'isLost': instance.isLost,
         'age': instance.age,
         'vaccinations': _vaccinationMaps(instance.vaccinations),
-        'medications': _medicationMaps(instance.medications),
+        'reminders': _reminderMaps(instance.reminders),
         'scans': _scanMaps(instance.scans),
         'contact_1': _ownerMap(instance.contact_1),
         'contact_2': _ownerMap(instance.contact_2),
@@ -155,15 +155,17 @@ class Pet {
     }
   }
 
-  List<Map<String, dynamic>> _medicationMaps(List<Medication> allMedications) {
-    if (allMedications == null) {
+  List<Map<String, dynamic>> _reminderMaps(List<Reminder> reminders) {
+    if (reminders == null) {
       return null;
+    } else {
+      List<Map<String, dynamic>> reminderMaps =
+          new List<Map<String, dynamic>>();
+      reminders.forEach((reminder) {
+        reminderMaps.add(reminder.toJson());
+      });
+      return reminderMaps;
     }
-    List<Map<String, dynamic>> convertedMaps = new List<Map<String, dynamic>>();
-    allMedications.forEach((medication) {
-      convertedMaps.add(medication.toJson());
-    });
-    return convertedMaps;
   }
 
   Map<String, dynamic> _ownerMap(Owner owner) {

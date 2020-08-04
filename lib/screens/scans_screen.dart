@@ -17,11 +17,12 @@ class ScansScreen extends StatefulWidget {
 
 class _ScansScreenState extends State<ScansScreen> {
   Completer<GoogleMapController> _controller = Completer();
-  PetService _petService;
-  MapService _mapService;
   double _height;
   double _width;
   LatLng _mapPosition;
+
+  PetService _petService;
+  MapService _mapService;
 
   @override
   void initState() {
