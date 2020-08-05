@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:petcode_app/screens/vaccine_history_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class MedicalInfoScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: StyleConstants.blue,
+      //backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: StyleConstants.blue,
         centerTitle: true,
@@ -50,65 +51,60 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: height * 0.01,
+                  height: height * 0.02,
                 ),
-                Text(
-                  'Clinic Info:',
-                  style: StyleConstants.whiteTitleText,
+                CircleAvatar(
+                  radius: 75.0,
+                  backgroundImage: AssetImage('assets/images/stockdog1.jpg'),
                 ),
-                SizedBox(
-                  height: height * 0.01,
-                ),
-                Container(
-                  height: 150.0,
-                  width: width - 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child:  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          'Pet Clinic',
-                          style: StyleConstants.blackTitleText,
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Text(
-                          'Phone: ' + '123456789',
-                          style:
-                          StyleConstants.blackThinDescriptionText,
-                        ),
-                        Text(
-                          'Email: ' + 'l@l.com',
-                          style:
-                          StyleConstants.blackThinDescriptionText,
-                        ),
-                        Text(
-                          'Address: ' + '123 four five street',
-                          style:
-                          StyleConstants.blackThinDescriptionText,
-                        ),
-                      ],
-                    ),
 
-                  ),
-                ),
                 SizedBox(
-                  height: height * 0.03,
+                  height: height * 0.04,
                 ),
                 GestureDetector(
                   onTap: () => print('Pressed contact'),
                   child: Container(
-                    height: 50.0,
+                    height: 55.0,
+                    width: width - 50,
+                    decoration: StyleConstants.lightBlueItemBoxDeco,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 25.0,
+                            child: FaIcon(
+                              FontAwesomeIcons.infoCircle,
+                              color: StyleConstants.yellow,
+                              size: 30.0,
+                            ),
+                          ),
+                          SizedBox(
+                            width: width * 0.03,
+                          ),
+                          Text(
+                            'General Information',
+                            style: StyleConstants.whiteTitleText,
+                          ),
+                          Spacer(),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: height * 0.03,),
+                GestureDetector(
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => VaccineHistoryScreen())),
+                  child: Container(
+                    height: 55.0,
                     width: width - 50,
                     decoration: StyleConstants.lightBlueItemBoxDeco,
                     child: Padding(
@@ -128,9 +124,14 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                             width: width * 0.03,
                           ),
                           Text(
-                            'Current Vaccines',
+                            'Vaccination History',
                             style: StyleConstants.whiteTitleText,
-                          )
+                          ),
+                          Spacer(),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                          ),
                         ],
                       ),
                     ),
@@ -142,7 +143,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                 GestureDetector(
                   onTap: () => print('Pressed contact'),
                   child: Container(
-                    height: 50.0,
+                    height: 55.0,
                     width: width - 50,
                     decoration: StyleConstants.lightBlueItemBoxDeco,
                     child: Padding(
@@ -164,7 +165,12 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                           Text(
                             'Documents',
                             style: StyleConstants.whiteTitleText,
-                          )
+                          ),
+                          Spacer(),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                          ),
                         ],
                       ),
                     ),
@@ -176,7 +182,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                 GestureDetector(
                   onTap: () => print('Pressed contact'),
                   child: Container(
-                    height: 50.0,
+                    height: 55.0,
                     width: width - 50,
                     decoration: StyleConstants.lightBlueItemBoxDeco,
                     child: Padding(
@@ -205,7 +211,12 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                           Text(
                             'Share Records',
                             style: StyleConstants.whiteTitleText,
-                          )
+                          ),
+                          Spacer(),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                          ),
                         ],
                       ),
                     ),
@@ -217,7 +228,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                 GestureDetector(
                   onTap: () => print('Pressed contact'),
                   child: Container(
-                    height: 50.0,
+                    height: 55.0,
                     width: width - 50,
                     decoration: StyleConstants.lightBlueItemBoxDeco,
                     child: Padding(
@@ -245,7 +256,12 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                           Text(
                             'Weight Tracker',
                             style: StyleConstants.whiteTitleText,
-                          )
+                          ),
+                          Spacer(),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                          ),
                         ],
                       ),
                     ),
