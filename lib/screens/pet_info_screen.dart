@@ -121,10 +121,12 @@ class PetInfoScreen extends StatelessWidget {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    StringHelper.getDateStringNoYear(
-                                        currentPet.birthday.toDate()),
+                                    currentPet.birthday != null
+                                        ? StringHelper.getDateStringNoYear(
+                                            currentPet.birthday.toDate())
+                                        : 'No birthday given',
                                     style:
-                                    StyleConstants.blackThinDescriptionText,
+                                        StyleConstants.blackThinDescriptionText,
                                   ),
                                 ),
                               ],
@@ -177,7 +179,9 @@ class PetInfoScreen extends StatelessWidget {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    currentPet.isAdopted ? 'Yes' : 'No',
+                                    currentPet.isAdopted != null
+                                        ? currentPet.isAdopted ? 'Yes' : 'No'
+                                        : 'No info given',
                                     style:
                                         StyleConstants.blackThinDescriptionText,
                                   ),
