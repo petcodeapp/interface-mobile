@@ -8,6 +8,11 @@ class StringHelper {
         (localDate.year % 100).toString();
   }
 
+  static String getDateStringNoYear(DateTime date) {
+    DateTime localDate = date.toLocal();
+    return localDate.month.toString() + '/' + localDate.day.toString();
+  }
+
   static String getTimeString(DateTime date) {
     DateTime localDate = date.toLocal();
     String minute = localDate.minute.toString();

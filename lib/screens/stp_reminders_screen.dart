@@ -225,14 +225,8 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                 Row(
                   children: [
                     Text(
-                      'Next Date: ',
+                      'Next Date: ' + (_dates[0] != null ? StringHelper.getDateString(_dates[0]) : 'Select Date'),
                       style: StyleConstants.whiteTitleTextXS,
-                    ),
-                    Text(
-                      _dates[0] == null
-                          ? 'Select Date'
-                          : StringHelper.getDateString(_dates[0]),
-                      style: TextStyle(color: Colors.black),
                     ),
                   ],
                 ),
@@ -314,14 +308,8 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                 Row(
                   children: [
                     Text(
-                      'Next Date: ',
+                      'Next Date: ' + (_dates[1] != null ? StringHelper.getDateString(_dates[1]) : 'Select Date'),
                       style: StyleConstants.whiteTitleTextXS,
-                    ),
-                    Text(
-                      _dates[1] == null
-                          ? 'Select Date'
-                          : StringHelper.getDateString(_dates[1]),
-                      style: TextStyle(color: Colors.black),
                     ),
                   ],
                 ),

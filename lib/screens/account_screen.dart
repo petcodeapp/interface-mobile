@@ -46,7 +46,10 @@ class _AccountScreenState extends State<AccountScreen> {
               SizedBox(
                 height: height * 0.02,
               ),
-              Text(user.firstName + ' ' + user.lastName, style: StyleConstants.blackTitleTextLarge,),
+              Text(
+                user.firstName + ' ' + user.lastName,
+                style: StyleConstants.blackTitleTextLarge,
+              ),
               SizedBox(
                 height: height * 0.02,
               ),
@@ -56,15 +59,31 @@ class _AccountScreenState extends State<AccountScreen> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(user.petIds.length.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25.0),),
-                      Text('Pets', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16.0),),
+                      Text(
+                        user.petIds.length.toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 25.0),
+                      ),
+                      Text(
+                        'Pets',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300, fontSize: 16.0),
+                      ),
                     ],
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(numScans.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25.0),),
-                      Text('Scans', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16.0),),
+                      Text(
+                        numScans.toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 25.0),
+                      ),
+                      Text(
+                        'Scans',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300, fontSize: 16.0),
+                      ),
                     ],
                   ),
                 ],
@@ -75,26 +94,33 @@ class _AccountScreenState extends State<AccountScreen> {
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 5,
-                          offset: Offset(0, -3),
-                        ),
-                      ]
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30.0),
+                        topRight: Radius.circular(30.0)),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 5,
+                        offset: Offset(0, -3),
+                      ),
+                    ],
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Column(
                       children: [
-                        SizedBox(height: height * 0.03,),
+                        SizedBox(
+                          height: height * 0.03,
+                        ),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => UpdateAccountInfoScreen(currentUser: user,)),
+                              MaterialPageRoute(
+                                  builder: (context) => UpdateAccountInfoScreen(
+                                        currentUser: user,
+                                      )),
                             );
                           },
                           child: Row(
@@ -130,7 +156,9 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: height * 0.02,),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
                         GestureDetector(
                           onTap: () => print('pressed app settings'),
                           child: Row(
@@ -166,13 +194,20 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: height * 0.01,),
-                        Divider(thickness: 1.0,),
-                        SizedBox(height: height * 0.01,),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
+                        Divider(
+                          thickness: 1.0,
+                        ),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
                         GestureDetector(
                           onTap: () => Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => StpStartScreen()),
+                            MaterialPageRoute(
+                                builder: (context) => StpStartScreen()),
                           ),
                           child: Row(
                             children: [
@@ -207,7 +242,9 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: height * 0.02,),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
                         GestureDetector(
                           onTap: () => print('pressed lost pet settings'),
                           child: Row(
@@ -243,12 +280,19 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: height * 0.01,),
-                        Divider(thickness: 1.0,),
-                        SizedBox(height: height * 0.01,),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
+                        Divider(
+                          thickness: 1.0,
+                        ),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
                         GestureDetector(
                           onTap: () {
-                            final auth = Provider.of<FirebaseAuthService>(context,
+                            final auth = Provider.of<FirebaseAuthService>(
+                                context,
                                 listen: false);
                             auth.signOut();
                           },
@@ -285,7 +329,9 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: height * 0.02,),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
                         GestureDetector(
                           onTap: () => print('lost pet'),
                           child: Row(
@@ -331,8 +377,5 @@ class _AccountScreenState extends State<AccountScreen> {
         ),
       ),
     );
-
-
-
   }
 }

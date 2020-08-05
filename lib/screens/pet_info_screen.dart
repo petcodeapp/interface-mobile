@@ -3,6 +3,7 @@ import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/pet_info_editing_screen.dart';
 import 'package:petcode_app/services/pet_service.dart';
+import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
@@ -90,7 +91,7 @@ class PetInfoScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              height: height * 0.01,
+                              height: height * 0.015,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,7 +110,27 @@ class PetInfoScreen extends StatelessWidget {
                               ],
                             ),
                             SizedBox(
-                              height: height * 0.01,
+                              height: height * 0.015,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Birthday: ',
+                                  style: StyleConstants.blackDescriptionText,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    StringHelper.getDateStringNoYear(
+                                        currentPet.birthday.toDate()),
+                                    style:
+                                    StyleConstants.blackThinDescriptionText,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: height * 0.015,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -128,7 +149,7 @@ class PetInfoScreen extends StatelessWidget {
                               ],
                             ),
                             SizedBox(
-                              height: height * 0.01,
+                              height: height * 0.015,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -145,7 +166,26 @@ class PetInfoScreen extends StatelessWidget {
                               ],
                             ),
                             SizedBox(
-                              height: height * 0.01,
+                              height: height * 0.015,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Adopted: ',
+                                  style: StyleConstants.blackDescriptionText,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    currentPet.isAdopted ? 'Yes' : 'No',
+                                    style:
+                                        StyleConstants.blackThinDescriptionText,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: height * 0.015,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,16 +194,15 @@ class PetInfoScreen extends StatelessWidget {
                                   'View Recent Scans: ',
                                   style: StyleConstants.blackDescriptionText,
                                 ),
-                                IconButton(
-                                  onPressed: () {
-                                    print('See recent scans');
-                                  },
-                                  icon: Icon(Icons.place),
-                                ),
+                                GestureDetector(
+                                    onTap: () {
+                                      print('See recent scans');
+                                    },
+                                    child: Icon(Icons.place)),
                               ],
                             ),
                             SizedBox(
-                              height: height * 0.01,
+                              height: height * 0.015,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
