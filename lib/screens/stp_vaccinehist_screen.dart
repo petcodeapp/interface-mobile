@@ -7,6 +7,7 @@ import 'package:petcode_app/models/Vaccination.dart';
 import 'package:petcode_app/screens/stp_reminders_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
+import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 import 'package:slimy_card/slimy_card.dart';
@@ -277,8 +278,7 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
                         Text(
                           _expireDates[0] == null
                               ? 'Select Date'
-                              : _expireDates[0].toString().substring(
-                                  0, _expireDates[0].toString().indexOf(' ')),
+                              : StringHelper.getDateString(_expireDates[0]),
                           style: TextStyle(color: Colors.black),
                         )
                       ],
@@ -397,8 +397,7 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
                         Text(
                           _expireDates[1] == null
                               ? 'Select Date'
-                              : _expireDates[1].toString().substring(
-                                  0, _expireDates[1].toString().indexOf(' ')),
+                              : StringHelper.getDateString(_expireDates[1]),
                           style: TextStyle(color: Colors.black),
                         )
                       ],

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/User.dart';
-import 'package:petcode_app/screens/stp_nameandphone_screen.dart';
 import 'package:petcode_app/screens/stp_start_screen.dart';
+import 'package:petcode_app/screens/update_accountinfo_screen.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
+import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,13 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     final userService = Provider.of<UserService>(context);
     User user = userService.currentUser;
+    final petService = Provider.of<PetService>(context);
+    int numScans = 0;
+    for (int i = 0; i < petService.allPets.length; i++) {
+      if (petService.allPets[i].scans != null) {
+        numScans += petService.allPets[i].scans.length;
+      }
+    }
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -33,12 +41,15 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               CircleAvatar(
                 radius: 100.0,
-                backgroundImage: AssetImage('assets/images/stockdog1.jpg'),
+                backgroundImage: petService.petImages[0],
               ),
               SizedBox(
                 height: height * 0.02,
               ),
-              Text('Lucas Cai', style: StyleConstants.blackTitleTextLarge,),
+              Text(
+                user.firstName + ' ' + user.lastName,
+                style: StyleConstants.blackTitleTextLarge,
+              ),
               SizedBox(
                 height: height * 0.02,
               ),
@@ -48,15 +59,31 @@ class _AccountScreenState extends State<AccountScreen> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('3', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25.0),),
-                      Text('Pets', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16.0),),
+                      Text(
+                        user.petIds.length.toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 25.0),
+                      ),
+                      Text(
+                        'Pets',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300, fontSize: 16.0),
+                      ),
                     ],
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('254', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25.0),),
-                      Text('Scans', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16.0),),
+                      Text(
+                        numScans.toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 25.0),
+                      ),
+                      Text(
+                        'Scans',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300, fontSize: 16.0),
+                      ),
                     ],
                   ),
                 ],
@@ -67,23 +94,35 @@ class _AccountScreenState extends State<AccountScreen> {
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 5,
-                          offset: Offset(0, -3),
-                        ),
-                      ]
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30.0),
+                        topRight: Radius.circular(30.0)),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 5,
+                        offset: Offset(0, -3),
+                      ),
+                    ],
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Column(
                       children: [
-                        SizedBox(height: height * 0.03,),
+                        SizedBox(
+                          height: height * 0.03,
+                        ),
                         GestureDetector(
-                          onTap: () => print('pressed update account info'),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UpdateAccountInfoScreen(
+                                        currentUser: user,
+                                      )),
+                            );
+                          },
                           child: Row(
                             children: [
                               Container(
@@ -117,7 +156,9 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: height * 0.02,),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
                         GestureDetector(
                           onTap: () => print('pressed app settings'),
                           child: Row(
@@ -153,13 +194,20 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: height * 0.01,),
-                        Divider(thickness: 1.0,),
-                        SizedBox(height: height * 0.01,),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
+                        Divider(
+                          thickness: 1.0,
+                        ),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
                         GestureDetector(
                           onTap: () => Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => StpStartScreen()),
+                            MaterialPageRoute(
+                                builder: (context) => StpStartScreen()),
                           ),
                           child: Row(
                             children: [
@@ -194,7 +242,9 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: height * 0.02,),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
                         GestureDetector(
                           onTap: () => print('pressed lost pet settings'),
                           child: Row(
@@ -230,12 +280,19 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: height * 0.01,),
-                        Divider(thickness: 1.0,),
-                        SizedBox(height: height * 0.01,),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
+                        Divider(
+                          thickness: 1.0,
+                        ),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
                         GestureDetector(
                           onTap: () {
-                            final auth = Provider.of<FirebaseAuthService>(context,
+                            final auth = Provider.of<FirebaseAuthService>(
+                                context,
                                 listen: false);
                             auth.signOut();
                           },
@@ -272,7 +329,9 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: height * 0.02,),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
                         GestureDetector(
                           onTap: () => print('lost pet'),
                           child: Row(
@@ -318,8 +377,5 @@ class _AccountScreenState extends State<AccountScreen> {
         ),
       ),
     );
-
-
-
   }
 }
