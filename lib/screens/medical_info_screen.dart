@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:petcode_app/screens/share_records_screen.dart';
 import 'package:petcode_app/screens/vaccine_history_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/services/pet_service.dart';
@@ -80,7 +81,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                   ),
                   CircleAvatar(
                     radius: 75.0,
-                    backgroundImage: AssetImage('assets/images/stockdog1.jpg'),
+                    backgroundImage: _petService.petImages[_petIndex],
                   ),
                   SizedBox(
                     height: height * 0.04,
@@ -206,7 +207,12 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                     height: height * 0.03,
                   ),
                   GestureDetector(
-                    onTap: () => print('Pressed contact'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ShareRecordsScreen()),
+                      );
+                    },
                     child: Container(
                       height: 55.0,
                       width: width - 50,

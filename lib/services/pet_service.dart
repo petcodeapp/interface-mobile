@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
@@ -51,7 +52,7 @@ class PetService extends ChangeNotifier {
         _allPets = petListFromQuery(querySnapshot);
         for (int i = 0; i < _allPets.length; i++) {
           if (_allPets[i].profileUrl != null) {
-            _petImages.add(NetworkImage(_allPets[i].profileUrl));
+            _petImages.add(CachedNetworkImageProvider(_allPets[i].profileUrl));
           }
           else {
             _petImages.add(AssetImage('assets/images/puppyphoto.jpg'));
