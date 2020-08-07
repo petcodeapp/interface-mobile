@@ -210,7 +210,10 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ShareRecordsScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => ShareRecordsScreen(
+                                  petVaccinations: selectedPet.vaccinations,
+                                )),
                       );
                     },
                     child: Container(

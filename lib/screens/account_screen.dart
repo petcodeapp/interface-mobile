@@ -41,7 +41,9 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               CircleAvatar(
                 radius: 100.0,
-                backgroundImage: petService.petImages[0],
+                backgroundImage: petService.petImages.length > 0
+                    ? petService.petImages[0]
+                    : null,
               ),
               SizedBox(
                 height: height * 0.02,
