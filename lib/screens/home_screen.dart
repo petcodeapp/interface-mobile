@@ -77,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
         */
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Container(
             height: height,
@@ -84,12 +85,9 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: height * 0.03,
-                ),
                 Container(
                   height: 290.0,
-                  width: width * 0.9,
+                  width: width,
                   child: Swiper(
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
@@ -100,25 +98,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             Align(
                               alignment: Alignment.topCenter,
                               child: Container(
-                                height: 270.0,
-                                width: width * 0.9,
+                                height: 300.0,
+                                width: width,
                                 decoration: BoxDecoration(
-                                  color: StyleConstants.lightGrey,
-                                  borderRadius: BorderRadius.circular(15.0),
+                                  //color: StyleConstants.lightGrey,
+                                  color: StyleConstants.purpleGrey,
+                                  //borderRadius: BorderRadius.circular(15.0),
                                 ),
                               ),
                             ),
                             Align(
                               alignment: Alignment.topCenter,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
-                                child: Container(
-                                  height: 200.0,
-                                  width: width * 0.9,
-                                  child: Image(
-                                    image: petService.petImages[index],
-                                    fit: BoxFit.cover,
-                                  ),
+                              child: Container(
+                                height: 200.0,
+                                width: width,
+                                child: Image(
+                                  image: petService.petImages[index],
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
@@ -139,28 +135,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                             ),
+                            /*
                             Align(
                               alignment: Alignment.bottomCenter,
-                              child: DotsIndicator(
-                                dotsCount: petService.allPets.length,
-                                position: 0.0 + pageIndex,
-                              ),
+                              child:
                             )
+                            */
                           ],
                         ),
                       );
                     },
                     itemCount: petService.allPets.length,
                     loop: false,
-                    index: 0,
+                    //index: 0,
                     onIndexChanged: (int index) {
-                      pageIndex = index;
+                      setState(() {
+                        pageIndex = index;
+                      });
                     },
                     //pagination: new SwiperPagination(),
                     //viewportFraction: 0.9,
-                    scale: 0.9,
+                    //scale: 0.9,
                     //control: new SwiperControl(),
                   ),
+                ),
+                DotsIndicator(
+                  dotsCount: petService.allPets.length,
+                  position: 0.0 + pageIndex,
                 ),
                 /*
                 Align(

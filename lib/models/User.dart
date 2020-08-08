@@ -52,5 +52,5 @@ class User {
         'phoneNumber': instance.phoneNumber,
         'email': instance.email,
         'petIds': instance.petIds,
-      };
+  };
 }

@@ -19,6 +19,8 @@ class StyleConstants{
 
   static Color lightGrey = new Color(0xffDAD8D5);
 
+  static Color purpleGrey = new Color(0xffEEF2F7);
+
   //text styles
   static TextStyle whiteButtonText =  GoogleFonts.getFont('Lilita One',
     textStyle: TextStyle(
