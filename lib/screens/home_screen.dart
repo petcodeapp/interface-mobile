@@ -119,18 +119,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Positioned(
-                              bottom: 30.0,
-                              left: width * 0.03,
+                              bottom: 12.0,
+                              left: width * 0.04,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     petService.allPets[index].name,
-                                    style: StyleConstants.blackTitleText,
+                                    style: StyleConstants.blackThinTitleTextLarge,
                                   ),
+                                  SizedBox(height: 5.0,),
                                   Text(
                                     petService.allPets[index].breed,
-                                    style: StyleConstants.blackDescriptionText,
+                                    style: StyleConstants.greyThinDescriptionText,
                                   ),
                                 ],
                               ),
@@ -198,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        padding: EdgeInsets.symmetric(horizontal: width *  0.035),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -252,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   child: Column(
                                                     children: [
                                                       Icon(
-                                                        Icons.pets,
+                                                        Icons.phone,
                                                         size: 38.0,
                                                         color: Colors.white,
                                                       ),
@@ -345,16 +346,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             Divider(
                               height: 2.0,
                               thickness: 5.0,
+                              color: StyleConstants.purpleGrey,
                             ),
                             SizedBox(
-                              height: height * 0.01,
+                              height: height * 0.02,
                             ),
                             Text(
                               'Upcoming',
-                              style: StyleConstants.blackTitleText,
+                              style: StyleConstants.greyThinTitleText,
+                            ),
+                            SizedBox(
+                              height: height * 0.02,
                             ),
                             Expanded(
                               child: ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
                                   itemCount: _allPetUpcomingEvents.length,
                                   itemBuilder: (context, index) {
                                     return Padding(
