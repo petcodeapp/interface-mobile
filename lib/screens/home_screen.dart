@@ -5,6 +5,7 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
 import 'package:petcode_app/screens/medical_info_screen.dart';
 import 'package:petcode_app/screens/pet_info_screen.dart';
+import 'package:petcode_app/screens/pet_info_screen2.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -93,6 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
                         height: 280.0,
+                        //width: width,
                         //color: Colors.blue,
                         child: Stack(
                           children: [
@@ -121,20 +123,64 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Positioned(
                               bottom: 12.0,
-                              left: width * 0.04,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    petService.allPets[index].name,
-                                    style: StyleConstants.blackThinTitleTextLarge,
+                              //left: width * 0.04,
+                              child: Container(
+                                width: width,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0),
+                                  child: Row(
+                                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            petService.allPets[index].name,
+                                            style: StyleConstants
+                                                .blackThinTitleTextLarge,
+                                          ),
+                                          SizedBox(
+                                            height: 2.0,
+                                          ),
+                                          Text(
+                                            petService.allPets[index].breed,
+                                            style: StyleConstants
+                                                .greyThinDescriptionText,
+                                          ),
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      IconButton(icon: Icon(
+                                        HeroIcons.icon_globe,
+                                        size: 30.0,
+                                        color: StyleConstants.darkPurpleGrey,
+                                      ), onPressed: () {} ),
+                                      SizedBox(
+                                        width: width * 0.03,
+                                      ),
+
+
+                                      IconButton(
+                                          icon: Icon(
+                                            HeroIcons.icon_edit,
+                                            size: 30.0,
+                                            color:
+                                            StyleConstants.darkPurpleGrey,
+                                          ),
+                                          onPressed: () => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) => PetInfoScreen(
+                                                    petIndex: pageIndex,
+                                                  )
+                                              )
+                                          )
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(height: 2.0,),
-                                  Text(
-                                    petService.allPets[index].breed,
-                                    style: StyleConstants.greyThinDescriptionText,
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
                             /*
@@ -162,7 +208,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 DotsIndicator(
-                  dotsCount: petService.allPets.length > 0 ? petService.allPets.length : 1 ,
+                  dotsCount: petService.allPets.length > 0
+                      ? petService.allPets.length
+                      : 1,
                   position: 0.0 + pageIndex,
                 ),
                 /*
@@ -200,7 +248,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: EdgeInsets.symmetric(horizontal: width *  0.035),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: width * 0.035),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -217,7 +266,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Expanded(
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15.0),
                                     child: Center(
                                       child: Column(
                                         mainAxisAlignment:
@@ -230,8 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               GestureDetector(
                                                 onTap: () {
@@ -240,8 +289,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            PetInfoScreen(
-                                                              petIndex: pageIndex,
+                                                            PetInfoScreen2(
+                                                              petIndex:
+                                                                  pageIndex,
                                                             )),
                                                   );
                                                 },
@@ -251,15 +301,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       //Icons.pets,
                                                       HeroIcons.icon_heart,
                                                       size: 30.0,
-                                                      color: StyleConstants.darkPurpleGrey,
+                                                      color: StyleConstants
+                                                          .darkPurpleGrey,
                                                     ),
                                                     Text(
                                                       'Pet Info',
                                                       style: TextStyle(
-                                                          color: StyleConstants.darkPurpleGrey,
+                                                          color: StyleConstants
+                                                              .darkPurpleGrey,
                                                           fontWeight:
-                                                              FontWeight
-                                                                  .w400),
+                                                              FontWeight.w400),
                                                     )
                                                   ],
                                                 ),
@@ -273,15 +324,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       //Icons.person,
                                                       HeroIcons.icon_call,
                                                       size: 30.0,
-                                                      color: StyleConstants.darkPurpleGrey,
+                                                      color: StyleConstants
+                                                          .darkPurpleGrey,
                                                     ),
                                                     Text(
                                                       'Owner Info',
                                                       style: TextStyle(
-                                                          color: StyleConstants.darkPurpleGrey,
+                                                          color: StyleConstants
+                                                              .darkPurpleGrey,
                                                           fontWeight:
-                                                              FontWeight
-                                                                  .w400),
+                                                              FontWeight.w400),
                                                     )
                                                   ],
                                                 ),
@@ -293,38 +345,44 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   children: [
                                                     Icon(
                                                       //Icons.today,
-                                                      HeroIcons.icon_clock,
+                                                      HeroIcons.icon_notification,
                                                       size: 30.0,
-                                                      color: StyleConstants.darkPurpleGrey,
+                                                      color: StyleConstants
+                                                          .darkPurpleGrey,
                                                     ),
                                                     Text(
                                                       'Reminders',
                                                       style: TextStyle(
-                                                          color: StyleConstants.darkPurpleGrey,
+                                                          color: StyleConstants
+                                                              .darkPurpleGrey,
                                                           fontWeight:
-                                                              FontWeight
-                                                                  .w400),
+                                                              FontWeight.w400),
                                                     )
                                                   ],
                                                 ),
                                               ),
                                               GestureDetector(
-                                                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => MedicalInfoScreen())),
+                                                onTap: () => Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (_) =>
+                                                            MedicalInfoScreen())),
                                                 child: Column(
                                                   children: [
                                                     Icon(
                                                       //Icons.assignment,
                                                       HeroIcons.icon_clipboard,
                                                       size: 30.0,
-                                                      color: StyleConstants.darkPurpleGrey,
+                                                      color: StyleConstants
+                                                          .darkPurpleGrey,
                                                     ),
                                                     Text(
                                                       'Med Info',
                                                       style: TextStyle(
-                                                          color: StyleConstants.darkPurpleGrey,
+                                                          color: StyleConstants
+                                                              .darkPurpleGrey,
                                                           fontWeight:
-                                                              FontWeight
-                                                                  .w400),
+                                                              FontWeight.w400),
                                                     )
                                                   ],
                                                 ),
@@ -358,7 +416,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Expanded(
                               child: ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
+                                  physics: NeverScrollableScrollPhysics(),
                                   itemCount: _allPetUpcomingEvents.length,
                                   itemBuilder: (context, index) {
                                     return Padding(
@@ -368,7 +426,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             color: Colors.white,
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Colors.black.withOpacity(0.2),
+                                                color: Colors.black
+                                                    .withOpacity(0.2),
                                                 blurRadius: 5,
                                                 offset: Offset(0, 3),
                                               ),
