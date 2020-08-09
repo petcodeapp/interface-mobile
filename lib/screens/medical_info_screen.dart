@@ -31,7 +31,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
               value: _value,
               items: [
                 new DropdownMenuItem(
-                    child: new Text('Reggie',style: TextStyle(color: Colors.white),),
+                    child: new Text('Reggie',style: TextStyle(color: Colors.white, fontSize: 20.0),),
                     value: 'dog1',
                 )
               ],

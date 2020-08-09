@@ -10,6 +10,7 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
   List vaccines = ['Rabies', 'DHPP', 'Influenza', 'Lyme Disease', 'Bordetella'];
   List dates = ['6/1/20', '6/10/20', '6/20/20', '6/25/20', '7/9/2020'];
   List overdue = [false, false, true, false, true];
+  String _value = 'dog1';
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,38 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: StyleConstants.blue,
+        centerTitle: true,
+        title: new Theme(
+          child: new DropdownButtonHideUnderline(
+            child: new DropdownButton(
+              iconEnabledColor: Colors.white,
+              dropdownColor: StyleConstants.blue,
+              value: _value,
+              items: [
+                new DropdownMenuItem(
+                  child: new Text(
+                    'Reggie',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                    ),
+
+                  ),
+                  value: 'dog1',
+                )
+              ],
+              onChanged: (String value) {
+                setState(() {
+                  _value = value;
+                });
+              },
+            ),
+          ),
+          data: ThemeData.light(),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {},
@@ -34,8 +67,10 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
             ),
             Expanded(
               child: ListView.separated(
-                separatorBuilder: (context, index){
-                  return Divider(thickness: 1.0,);
+                separatorBuilder: (context, index) {
+                  return Divider(
+                    thickness: 1.0,
+                  );
                 },
                 itemCount: vaccines.length,
                 itemBuilder: (context, index) {
