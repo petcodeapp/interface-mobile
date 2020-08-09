@@ -127,9 +127,13 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                   ),
                   GestureDetector(
                     onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => VaccineHistoryScreen())),
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => VaccineHistoryScreen(
+                          petId: _petService.allPets[_petIndex].pid,
+                        ),
+                      ),
+                    ),
                     child: Container(
                       height: 55.0,
                       width: width - 50,

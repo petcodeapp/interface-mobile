@@ -9,6 +9,7 @@ import 'package:petcode_app/models/Vaccination.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
+import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,7 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
 
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  _androidDialog(int num) {
+  _androidDialog() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -44,6 +45,8 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
                   _pickedImage = await Provider.of<ImagePickerService>(context,
                           listen: false)
                       .pickImage(ImageSource.camera);
+                  Navigator.pop(context);
+                  setState(() {});
                 }),
             SimpleDialogOption(
               child: Text('Choose From Gallery'),
@@ -51,6 +54,8 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
                 _pickedImage = await Provider.of<ImagePickerService>(context,
                         listen: false)
                     .pickImage(ImageSource.camera);
+                Navigator.pop(context);
+                setState(() {});
               },
             ),
             SimpleDialogOption(
@@ -90,18 +95,27 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
           FlatButton(
             onPressed: () async {
               if (_formKey.currentState.validate()) {
-                String downloadUrl = await Provider.of<FirebaseStorageService>(
-                        context,
-                        listen: false)
-                    .uploadVaccineImage(
-                        _pickedImage,
-                        widget.pet.pid +
-                            'vaccine' +
-                            widget.vaccinationIndex.toString());
                 Vaccination updatedVaccination = Vaccination(
-                    name: _nameInputController.text.trim(),
-                    imageUrl: downloadUrl,
-                    date: Timestamp.fromDate(_expirationDate));
+                  name: _nameInputController.text.trim(),
+                );
+
+                if (_expirationDate != null) {
+                  updatedVaccination.date = Timestamp.fromDate(_expirationDate);
+                }
+
+                if (_pickedImage != null) {
+                  String downloadUrl =
+                      await Provider.of<FirebaseStorageService>(context,
+                              listen: false)
+                          .uploadVaccineImage(
+                              _pickedImage,
+                              widget.pet.pid +
+                                  'vaccine' +
+                                  widget.vaccinationIndex.toString());
+                  updatedVaccination.imageUrl = downloadUrl;
+                } else if (_currentVaccination.imageUrl != null) {
+                  updatedVaccination.imageUrl = _currentVaccination.imageUrl;
+                }
                 Provider.of<DatabaseService>(context, listen: false)
                     .updateVaccination(updatedVaccination,
                         widget.vaccinationIndex, widget.pet);
@@ -121,9 +135,7 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
           children: [
             GestureDetector(
               onTap: () async {
-                _pickedImage = await Provider.of<ImagePickerService>(context,
-                        listen: false)
-                    .pickImage(ImageSource.camera);
+                _androidDialog();
               },
               child: Container(
                 height: height * 0.2,
@@ -158,7 +170,10 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
               child: Row(
                 children: [
                   Text(
-                    'Expiration Date: ' + (hasDate ? _expirationDate : 'None'),
+                    'Expiration Date: ' +
+                        (hasDate
+                            ? StringHelper.getDateString(_expirationDate)
+                            : 'None'),
                   ),
                 ],
               ),

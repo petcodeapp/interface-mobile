@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/models/Vaccination.dart';
+import 'package:petcode_app/screens/edit_vaccination_screen.dart';
+import 'package:petcode_app/services/pet_service.dart';
+import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:provider/provider.dart';
 
 class VaccineHistoryScreen extends StatefulWidget {
+  VaccineHistoryScreen({Key key, this.petId}) : super(key: key);
+  final String petId;
+
   @override
   _VaccineHistoryScreenState createState() => _VaccineHistoryScreenState();
 }
 
 class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
-  List vaccines = ['Rabies', 'DHPP', 'Influenza', 'Lyme Disease', 'Bordetella'];
-  List dates = ['6/1/20', '6/10/20', '6/20/20', '6/25/20', '7/9/2020'];
-  List overdue = [false, false, true, false, true];
+  List<Vaccination> _vaccinations;
 
   @override
   Widget build(BuildContext context) {
+    PetService petService = Provider.of<PetService>(context);
+    Pet currentPet =
+        petService.allPets.singleWhere((Pet pet) => pet.pid == widget.petId);
+
+    _vaccinations = currentPet.vaccinations;
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -33,21 +46,41 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
           Container(
             height: 500.0,
             child: ListView.separated(
-              separatorBuilder: (context, index){
-                return Divider(thickness: 1.0,);
+              separatorBuilder: (context, index) {
+                return Divider(
+                  thickness: 1.0,
+                );
               },
-              itemCount: vaccines.length,
+              itemCount: _vaccinations.length,
               itemBuilder: (context, index) {
+                bool hasDate = _vaccinations[index].date != null;
+
                 return ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditVaccinationScreen(
+                                pet: currentPet,
+                                vaccinationIndex: index,
+                              )),
+                    );
+                  },
                   title: Text(
-                    vaccines[index],
+                    _vaccinations[index].name,
                     style: TextStyle(color: StyleConstants.blue),
                   ),
-                  subtitle: Text(dates[index]),
+                  subtitle: Text(hasDate
+                      ? StringHelper.getDateString(
+                          _vaccinations[index].date.toDate())
+                      : 'No Date Given'),
                   trailing: Container(
                     width: 100.0,
-                    child: overdue[index]
+                    child: hasDate &&
+                            _vaccinations[index]
+                                .date
+                                .toDate()
+                                .isBefore(DateTime.now())
                         ? Row(
                             children: [
                               Container(
@@ -59,7 +92,7 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
                                 width: 60.0,
                                 child: Center(
                                   child: Text(
-                                    'Overdue',
+                                    'Expired',
                                     style: TextStyle(
                                       fontSize: 10.0,
                                       color: Colors.white,
