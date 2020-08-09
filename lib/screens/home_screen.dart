@@ -6,6 +6,7 @@ import 'package:petcode_app/models/UpcomingEvent.dart';
 import 'package:petcode_app/screens/medical_info_screen.dart';
 import 'package:petcode_app/screens/pet_info_screen.dart';
 import 'package:petcode_app/services/pet_service.dart';
+import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
 import 'package:provider/provider.dart';
@@ -128,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     petService.allPets[index].name,
                                     style: StyleConstants.blackThinTitleTextLarge,
                                   ),
-                                  SizedBox(height: 5.0,),
+                                  SizedBox(height: 2.0,),
                                   Text(
                                     petService.allPets[index].breed,
                                     style: StyleConstants.greyThinDescriptionText,
@@ -161,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 DotsIndicator(
-                  dotsCount: petService.allPets.length,
+                  dotsCount: petService.allPets.length > 0 ? petService.allPets.length : 1 ,
                   position: 0.0 + pageIndex,
                 ),
                 /*
@@ -190,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   currentPageNotifier: _currentPageNotifier,
                 ),*/
                 SizedBox(
-                  height: height * 0.005,
+                  height: height * 0.001,
                 ),
                 Expanded(
                   child: PageView.builder(
@@ -215,125 +216,122 @@ class _HomeScreenState extends State<HomeScreen> {
                             Row(
                               children: [
                                 Expanded(
-                                  child: Container(
-                                    height: height * 0.13,
-                                    decoration: BoxDecoration(
-                                      color: StyleConstants.blue,
-                                      borderRadius: BorderRadius.circular(15.0),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              height: 5.0,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    print('tapped pet info');
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              PetInfoScreen(
-                                                                petIndex: pageIndex,
-                                                              )),
-                                                    );
-                                                  },
-                                                  child: Column(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.phone,
-                                                        size: 38.0,
-                                                        color: Colors.white,
-                                                      ),
-                                                      Text(
-                                                        'Pet Info',
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w400),
-                                                      )
-                                                    ],
-                                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 5.0,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .spaceBetween,
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () {
+                                                  print('tapped pet info');
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            PetInfoScreen(
+                                                              petIndex: pageIndex,
+                                                            )),
+                                                  );
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    Icon(
+                                                      //Icons.pets,
+                                                      HeroIcons.icon_heart,
+                                                      size: 30.0,
+                                                      color: StyleConstants.darkPurpleGrey,
+                                                    ),
+                                                    Text(
+                                                      'Pet Info',
+                                                      style: TextStyle(
+                                                          color: StyleConstants.darkPurpleGrey,
+                                                          fontWeight:
+                                                              FontWeight
+                                                                  .w400),
+                                                    )
+                                                  ],
                                                 ),
-                                                GestureDetector(
-                                                  onTap: () => print(
-                                                      'schedule meds tapped'),
-                                                  child: Column(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.person,
-                                                        size: 38.0,
-                                                        color: Colors.white,
-                                                      ),
-                                                      Text(
-                                                        'Owner Info',
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w400),
-                                                      )
-                                                    ],
-                                                  ),
+                                              ),
+                                              GestureDetector(
+                                                onTap: () => print(
+                                                    'schedule meds tapped'),
+                                                child: Column(
+                                                  children: [
+                                                    Icon(
+                                                      //Icons.person,
+                                                      HeroIcons.icon_call,
+                                                      size: 30.0,
+                                                      color: StyleConstants.darkPurpleGrey,
+                                                    ),
+                                                    Text(
+                                                      'Owner Info',
+                                                      style: TextStyle(
+                                                          color: StyleConstants.darkPurpleGrey,
+                                                          fontWeight:
+                                                              FontWeight
+                                                                  .w400),
+                                                    )
+                                                  ],
                                                 ),
-                                                GestureDetector(
-                                                  onTap: () => print(
-                                                      'schedule meds tapped'),
-                                                  child: Column(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.today,
-                                                        size: 38.0,
-                                                        color: Colors.white,
-                                                      ),
-                                                      Text(
-                                                        'Reminders',
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w400),
-                                                      )
-                                                    ],
-                                                  ),
+                                              ),
+                                              GestureDetector(
+                                                onTap: () => print(
+                                                    'schedule meds tapped'),
+                                                child: Column(
+                                                  children: [
+                                                    Icon(
+                                                      //Icons.today,
+                                                      HeroIcons.icon_clock,
+                                                      size: 30.0,
+                                                      color: StyleConstants.darkPurpleGrey,
+                                                    ),
+                                                    Text(
+                                                      'Reminders',
+                                                      style: TextStyle(
+                                                          color: StyleConstants.darkPurpleGrey,
+                                                          fontWeight:
+                                                              FontWeight
+                                                                  .w400),
+                                                    )
+                                                  ],
                                                 ),
-                                                GestureDetector(
-                                                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => MedicalInfoScreen())),
-                                                  child: Column(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.assignment,
-                                                        size: 38.0,
-                                                        color: Colors.white,
-                                                      ),
-                                                      Text(
-                                                        'Med Info',
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w400),
-                                                      )
-                                                    ],
-                                                  ),
+                                              ),
+                                              GestureDetector(
+                                                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => MedicalInfoScreen())),
+                                                child: Column(
+                                                  children: [
+                                                    Icon(
+                                                      //Icons.assignment,
+                                                      HeroIcons.icon_clipboard,
+                                                      size: 30.0,
+                                                      color: StyleConstants.darkPurpleGrey,
+                                                    ),
+                                                    Text(
+                                                      'Med Info',
+                                                      style: TextStyle(
+                                                          color: StyleConstants.darkPurpleGrey,
+                                                          fontWeight:
+                                                              FontWeight
+                                                                  .w400),
+                                                    )
+                                                  ],
                                                 ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
                                       ),
                                     ),
                                   ),

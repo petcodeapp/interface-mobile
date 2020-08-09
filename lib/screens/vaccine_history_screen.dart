@@ -21,68 +21,70 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
         child: Icon(Icons.add),
         onPressed: () {},
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 20.0,
-          ),
-          Text(
-            'Vaccine History',
-            style: StyleConstants.blackTitleTextLarge,
-          ),
-          Container(
-            height: 500.0,
-            child: ListView.separated(
-              separatorBuilder: (context, index){
-                return Divider(thickness: 1.0,);
-              },
-              itemCount: vaccines.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  onTap: () {},
-                  title: Text(
-                    vaccines[index],
-                    style: TextStyle(color: StyleConstants.blue),
-                  ),
-                  subtitle: Text(dates[index]),
-                  trailing: Container(
-                    width: 100.0,
-                    child: overdue[index]
-                        ? Row(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  color: StyleConstants.red,
-                                ),
-                                height: 20.0,
-                                width: 60.0,
-                                child: Center(
-                                  child: Text(
-                                    'Overdue',
-                                    style: TextStyle(
-                                      fontSize: 10.0,
-                                      color: Colors.white,
+      body: Container(
+        height: height,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 20.0,
+            ),
+            Text(
+              'Vaccine History',
+              style: StyleConstants.blackTitleTextLarge,
+            ),
+            Expanded(
+              child: ListView.separated(
+                separatorBuilder: (context, index){
+                  return Divider(thickness: 1.0,);
+                },
+                itemCount: vaccines.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    onTap: () {},
+                    title: Text(
+                      vaccines[index],
+                      style: TextStyle(color: StyleConstants.blue),
+                    ),
+                    subtitle: Text(dates[index]),
+                    trailing: Container(
+                      width: 100.0,
+                      child: overdue[index]
+                          ? Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    color: StyleConstants.red,
+                                  ),
+                                  height: 20.0,
+                                  width: 60.0,
+                                  child: Center(
+                                    child: Text(
+                                      'Overdue',
+                                      style: TextStyle(
+                                        fontSize: 10.0,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Spacer(),
-                              Icon(Icons.arrow_forward_ios),
-                            ],
-                          )
-                        : Row(
-                            children: [
-                              Spacer(),
-                              Icon(Icons.arrow_forward_ios),
-                            ],
-                          ),
-                  ),
-                );
-              },
+                                Spacer(),
+                                Icon(Icons.arrow_forward_ios),
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                Spacer(),
+                                Icon(Icons.arrow_forward_ios),
+                              ],
+                            ),
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
