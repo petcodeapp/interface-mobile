@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Container(
-            height: height,
+            height: height + _allPetUpcomingEvents.length * 15.0,
             width: width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -367,7 +367,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (_) =>
-                                                            MedicalInfoScreen())),
+                                                            MedicalInfoScreen(
+                                                              petId: petService.allPets[pageIndex].pid,
+                                                            ))),
                                                 child: Column(
                                                   children: [
                                                     Icon(
