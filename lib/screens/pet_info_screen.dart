@@ -181,7 +181,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
 
                         children: [
                           Text('Adopted: '),
-                          Text('Yes'),
+                          currentPet.isAdopted == null ?  Text('N/A') : (currentPet.isAdopted ? Text('Yes') : Text('No')),
                         ],
                       ),
                       trailing: Icon(
