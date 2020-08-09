@@ -245,7 +245,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               PetInfoScreen(
-                                                                petIndex: pageIndex,
+                                                                petIndex:
+                                                                    pageIndex,
                                                               )),
                                                     );
                                                   },
@@ -310,7 +311,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ),
                                                 ),
                                                 GestureDetector(
-                                                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => MedicalInfoScreen())),
+                                                  onTap: () => Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (_) =>
+                                                          MedicalInfoScreen(
+                                                        petId: petService
+                                                            .allPets[pageIndex].pid,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   child: Column(
                                                     children: [
                                                       Icon(
@@ -364,7 +374,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             color: Colors.white,
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Colors.black.withOpacity(0.2),
+                                                color: Colors.black
+                                                    .withOpacity(0.2),
                                                 blurRadius: 5,
                                                 offset: Offset(0, 3),
                                               ),

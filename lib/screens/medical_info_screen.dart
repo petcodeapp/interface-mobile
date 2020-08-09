@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/screens/share_records_screen.dart';
@@ -8,17 +9,20 @@ import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
 class MedicalInfoScreen extends StatefulWidget {
+  MedicalInfoScreen({Key key, this.petId}) : super(key: key);
+  final String petId;
+
   @override
   _MedicalInfoScreenState createState() => _MedicalInfoScreenState();
 }
 
 class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
-  int _petIndex;
+  String _petId;
   PetService _petService;
 
   @override
   void initState() {
-    _petIndex = 0;
+    _petId = widget.petId;
     super.initState();
   }
 
@@ -29,21 +33,46 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
 
     _petService = Provider.of<PetService>(context);
 
-    if (_petService.allPets.length <= _petIndex) {
+    if (_petService.allPets.length == 0) {
       return Scaffold(
-        backgroundColor: StyleConstants.blue,
+        backgroundColor: StyleConstants.white,
       );
     } else {
-      Pet selectedPet = _petService.allPets[_petIndex];
-      List<DropdownMenuItem> dropdownMenuItems = new List<DropdownMenuItem>();
+      Pet selectedPet;
+      try {
+        selectedPet = _petService.allPets.singleWhere(
+            (Pet pet) => pet.pid == _petId,
+            orElse: () => null);
+        print('name:' + selectedPet.name);
+      } catch (e) {
+        return Scaffold(
+          body: Center(
+            child: Text(
+              'Error: Duplicate Pets found',
+              style: StyleConstants.blackDescriptionText,
+            ),
+          ),
+        );
+      }
+      if (selectedPet == null) {
+        return Scaffold(
+          body: Center(
+            child: Text(
+              'Error: Pet not found',
+              style: StyleConstants.blackDescriptionText,
+            ),
+          ),
+        );
+      }
+      List<DropdownMenuItem<String>> dropdownMenuItems = new List<DropdownMenuItem<String>>();
       for (int i = 0; i < _petService.allPets.length; i++) {
         dropdownMenuItems.add(
-          DropdownMenuItem(
+          DropdownMenuItem<String>(
               child: Text(
                 _petService.allPets[i].name,
                 style: StyleConstants.whiteDescriptionText,
               ),
-              value: i),
+              value: _petService.allPets[i].pid),
         );
       }
       return Scaffold(
@@ -53,14 +82,14 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
           centerTitle: true,
           title: new Theme(
             child: new DropdownButtonHideUnderline(
-              child: new DropdownButton(
+              child: new DropdownButton<String>(
                 iconEnabledColor: Colors.white,
                 dropdownColor: StyleConstants.blue,
-                value: _petIndex,
+                value: _petId,
                 items: dropdownMenuItems,
-                onChanged: (index) {
+                onChanged: (String petId) {
                   setState(() {
-                    _petIndex = index;
+                    _petId = petId;
                   });
                 },
               ),
@@ -81,7 +110,9 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                   ),
                   CircleAvatar(
                     radius: 75.0,
-                    backgroundImage: _petService.petImages[_petIndex],
+                    backgroundImage: CachedNetworkImageProvider(
+                      selectedPet.profileUrl,
+                    ),
                   ),
                   SizedBox(
                     height: height * 0.04,
@@ -130,7 +161,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (_) => VaccineHistoryScreen(
-                          petId: _petService.allPets[_petIndex].pid,
+                          petId: selectedPet.pid,
                         ),
                       ),
                     ),
