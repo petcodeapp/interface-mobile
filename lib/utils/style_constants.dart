@@ -17,7 +17,13 @@ class StyleConstants{
 
   static Color yellow = new Color(0xffFBC658);
 
-  static Color lightGrey = new Color(0xffDAD8D5);
+  static Color lightGrey = new Color(0xffB4C1CF);
+
+  static Color purpleGrey = new Color(0xffEEF2F7);
+
+  static Color darkPurpleGrey = new Color(0xffA2B0C0);
+
+
 
   //text styles
   static TextStyle whiteButtonText =  GoogleFonts.getFont('Lilita One',
@@ -127,6 +133,18 @@ class StyleConstants{
       )
   );
 
+  static TextStyle blackThinTitleText = new TextStyle(
+    color: Colors.black,
+    fontSize: 30.0,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle blackThinTitleTextLarge = new TextStyle(
+    color: Colors.black87.withOpacity(0.8),
+    fontSize: 40.0,
+    fontWeight: FontWeight.w400,
+  );
+
   static TextStyle blackDescriptionText = new TextStyle(
     color: Colors.black,
     fontSize: 20.0,
@@ -137,6 +155,18 @@ class StyleConstants{
     color: Colors.black,
     fontSize: 20.0,
     fontWeight: FontWeight.w300,
+  );
+
+  static TextStyle greyThinTitleText = new TextStyle(
+    color: darkPurpleGrey,
+    fontSize: 30.0,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle greyThinDescriptionText = new TextStyle(
+    color: lightGrey,
+    fontSize: 20.0,
+    fontWeight: FontWeight.w400,
   );
 
   //box decorations
