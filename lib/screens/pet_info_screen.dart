@@ -4,6 +4,7 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/pet_info_editing_screen.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
+import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
@@ -131,7 +132,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                         HeroIcons.icon_calander,
                         size: 30.0,
                       ),
-                      title: Text('Birthday', style: StyleConstants.greyedOutText),
+                      title: currentPet.birthday == null ? Text('Birthday',style: StyleConstants.greyedOutText) :  Text(StringHelper.getDateString(currentPet.birthday.toDate())),
                       trailing: Icon(
                         Icons.arrow_forward_ios,
                         size: 25.0,
