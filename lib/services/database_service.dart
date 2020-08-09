@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/User.dart';
+import 'package:petcode_app/models/Vaccination.dart';
 
 class DatabaseService {
   Firestore _firestore = Firestore.instance;
@@ -56,5 +57,15 @@ class DatabaseService {
         .collection('users')
         .document(uid)
         .updateData({'petIds': previousPets});
+  }
+
+  Future<void> updateVaccination(
+      Vaccination updatedVaccination, int index, Pet pet) async {
+    List<Vaccination> updatedList = pet.vaccinations;
+    updatedList[index] = updatedVaccination;
+    await _firestore.collection('pets').document(pet.pid).updateData({
+      'vaccinations':
+          updatedList.map((vaccination) => vaccination.toJson()).toList()
+    });
   }
 }
