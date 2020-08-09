@@ -7,6 +7,7 @@ import 'package:petcode_app/screens/medical_info_screen.dart';
 import 'package:petcode_app/screens/pet_info_screen.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
+import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
 import 'package:provider/provider.dart';
@@ -427,7 +428,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           .date !=
                                                       null
                                                   ? Text(
-                                                      formatDate(
+                                                      StringHelper.getDateString(
                                                           _allPetUpcomingEvents[
                                                                   index]
                                                               .date
@@ -567,13 +568,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
-  }
-
-  String formatDate(DateTime date) {
-    return date.month.toString() +
-        '/' +
-        date.day.toString() +
-        '/' +
-        (date.year % 100).toString();
   }
 }

@@ -5,16 +5,16 @@ import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:provider/provider.dart';
 
-class UpdateContactInfoScreen extends StatefulWidget {
-  UpdateContactInfoScreen({Key key, this.currentUser}) : super(key: key);
+class UpdateAccountInfoScreen extends StatefulWidget {
+  UpdateAccountInfoScreen({Key key, this.currentUser}) : super(key: key);
   final User currentUser;
 
   @override
-  _UpdateContactInfoScreenState createState() =>
-      _UpdateContactInfoScreenState();
+  _UpdateAccountInfoScreenState createState() =>
+      _UpdateAccountInfoScreenState();
 }
 
-class _UpdateContactInfoScreenState extends State<UpdateContactInfoScreen> {
+class _UpdateAccountInfoScreenState extends State<UpdateAccountInfoScreen> {
   TextEditingController _firstNameInputController;
   TextEditingController _lastNameInputController;
   TextEditingController _emailInputController;
