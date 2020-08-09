@@ -212,6 +212,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => ShareRecordsScreen(
+                                  petName: selectedPet.name,
                                   petVaccinations: selectedPet.vaccinations,
                                 )),
                       );
