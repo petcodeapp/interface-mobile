@@ -62,6 +62,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
     _isServiceAnimal = widget.currentPet.isServiceAnimal;
     _isAdopted = widget.currentPet.isAdopted;
     updatedImage = widget.petImage;
+    _birthDate = widget.currentPet.birthday.toDate();
     setUpInputControllers();
   }
 
@@ -152,14 +153,27 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                     Pet updatedPet = widget.currentPet;
 
                     updatedPet.name = _nameInputController.text.trim();
-                    //updatedPet.species = _speciesInputController.text.trim();
+                    updatedPet.species = _speciesInputController.text.trim();
                     updatedPet.breed = _breedInputController.text.trim();
                     updatedPet.birthday = Timestamp.fromDate(_birthDate);
-                    //updatedPet.color = _colorInputController.text.trim();
+                    updatedPet.color = _colorInputController.text.trim();
                     updatedPet.temperament = _temperamentInputController.text.trim();
                     updatedPet.isAdopted = _isAdopted;
                     updatedPet.isServiceAnimal = _isServiceAnimal;
                     updatedPet.additionalInfo = _additionalInfoInputController.text.trim();
+
+                    if (widget.petImage != updatedImage) {
+                      FirebaseStorageService firebaseStorageService =
+                          Provider.of<FirebaseStorageService>(context,
+                              listen: false);
+                      String updatedProfileUrl = await firebaseStorageService
+                          .uploadPetImage(chosenImageFile, updatedPet.pid);
+                      updatedPet.profileUrl = updatedProfileUrl;
+                    }
+
+                    _databaseService.updatePet(widget.currentPet);
+                    Navigator.pop(context);
+
 
                     /*
                     Owner contact_1 = new Owner(
@@ -185,18 +199,6 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                     }
 
                     */
-
-                    if (widget.petImage != updatedImage) {
-                      FirebaseStorageService firebaseStorageService =
-                          Provider.of<FirebaseStorageService>(context,
-                              listen: false);
-                      String updatedProfileUrl = await firebaseStorageService
-                          .uploadPetImage(chosenImageFile, updatedPet.pid);
-                      updatedPet.profileUrl = updatedProfileUrl;
-                    }
-
-                    _databaseService.updatePet(widget.currentPet);
-                    Navigator.pop(context);
                   }
                 },
                 child: Text(
@@ -370,7 +372,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                         width: width * 0.7,
                         child: TextFormField(
                           validator: (value) =>
-                              ValidatorHelper.petBreedValidator(value),
+                              ValidatorHelper.petColorValidator(value),
                           controller: _colorInputController,
                           decoration: InputDecoration(
                             hintText: 'Color',
@@ -713,6 +715,11 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
         new TextEditingController(text: widget.currentPet.temperament);
     _additionalInfoInputController =
         new TextEditingController(text: widget.currentPet.additionalInfo);
+    _speciesInputController =
+    new TextEditingController(text: widget.currentPet.species);
+
+    _colorInputController =
+    new TextEditingController(text: widget.currentPet.color);
 
     /*
     _owner1NameInputController =
