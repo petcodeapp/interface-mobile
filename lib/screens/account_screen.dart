@@ -41,7 +41,9 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               CircleAvatar(
                 radius: 100.0,
-                backgroundImage: petService.petImages[0],
+                backgroundImage: petService.petImages.length > 0
+                    ? petService.petImages[0]
+                    : null,
               ),
               SizedBox(
                 height: height * 0.02,
@@ -114,6 +116,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           height: height * 0.03,
                         ),
                         GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           onTap: () {
                             Navigator.push(
                               context,
@@ -161,6 +164,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         ),
                         GestureDetector(
                           onTap: () => print('pressed app settings'),
+                          behavior: HitTestBehavior.translucent,
                           child: Row(
                             children: [
                               Container(
@@ -204,6 +208,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           height: height * 0.01,
                         ),
                         GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           onTap: () => Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -246,6 +251,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           height: height * 0.02,
                         ),
                         GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           onTap: () => print('pressed lost pet settings'),
                           child: Row(
                             children: [
@@ -290,6 +296,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           height: height * 0.01,
                         ),
                         GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           onTap: () {
                             final auth = Provider.of<FirebaseAuthService>(
                                 context,
@@ -333,6 +340,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           height: height * 0.02,
                         ),
                         GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           onTap: () => print('lost pet'),
                           child: Row(
                             children: [
