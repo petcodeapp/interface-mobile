@@ -124,7 +124,7 @@ class _ScansScreenState extends State<ScansScreen> {
       scans.add(recentScanWidget(
           petScans[i].petName,
           petScans[i].date.toDate(),
-          '5 Address Ln. City, State 77494 USAasdfadsfadfffadsfsdfasdfadsfadsfadsfadsf asdfasdfadsfadsf',
+          '5 Address Ln. City, State 77494 USA',
           _mapService.markerColors[petScans[i].petIndex],
           petScans[i].location));
       scans.add(
