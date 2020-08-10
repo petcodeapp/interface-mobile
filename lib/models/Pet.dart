@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/models/Scan.dart';
@@ -13,6 +12,8 @@ class Pet {
   String temperament;
   String allergies;
   String specialNeeds;
+  String species;
+  String color;
   String vetName;
   String vetPhoneNumber;
   String additionalInfo;
@@ -37,6 +38,8 @@ class Pet {
       this.temperament,
       this.allergies,
       this.specialNeeds,
+      this.species,
+      this.color,
       this.vetName,
       this.vetPhoneNumber,
       this.additionalInfo,
@@ -110,6 +113,8 @@ class Pet {
       temperament: json['temperament'] as String,
       allergies: json['allergies'] as String,
       specialNeeds: json['specialNeeds'] as String,
+      species: json['species'] as String,
+      color: json['color'] as String,
       vetName: json['vetName'] as String,
       vetPhoneNumber: json['vetPhoneNumber'] as String,
       additionalInfo: json['additionalInfo'] as String,
@@ -136,6 +141,8 @@ class Pet {
         'temperament': instance.temperament,
         'allergies': instance.allergies,
         'specialNeeds': instance.specialNeeds,
+        'species': instance.species,
+        'color': instance.color,
         'vetName': instance.vetName,
         'vetPhoneNumber': instance.vetPhoneNumber,
         'additionalInfo': instance.additionalInfo,

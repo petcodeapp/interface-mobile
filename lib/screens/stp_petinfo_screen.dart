@@ -1,10 +1,8 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:petcode_app/screens/stp_medinfo_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/utils/string_helper.dart';
+import 'package:petcode_app/screens/stp_petinfo2_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class StpPetInfoScreen extends StatefulWidget {
@@ -18,23 +16,17 @@ class StpPetInfoScreen extends StatefulWidget {
 }
 
 class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
-  DateTime _petBirthday;
-
   TextEditingController _petNameInputController;
+  TextEditingController _speciesInputController;
   TextEditingController _breedInputController;
-  TextEditingController _temperamentInputController;
-
-  bool _isServiceAnimal;
-  bool _isAdopted;
+  TextEditingController _colorInputController;
 
   @override
   void initState() {
     _petNameInputController = new TextEditingController();
+    _speciesInputController = new TextEditingController();
     _breedInputController = new TextEditingController();
-    _temperamentInputController = new TextEditingController();
-
-    _isServiceAnimal = false;
-    _isAdopted = false;
+    _colorInputController = new TextEditingController();
 
     super.initState();
   }
@@ -68,7 +60,7 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                 height: height * 0.05,
               ),
               Text(
-                'Step 4: Pet Information',
+                'Step 3: Pet Information',
                 style: StyleConstants.whiteTitleText,
               ),
               SizedBox(
@@ -131,61 +123,11 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Center(
                           child: TextFormField(
-                            controller: _breedInputController,
+                            controller: _speciesInputController,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'Breed',
+                                hintText: 'Species',
                                 hintStyle: TextStyle(fontSize: 15.0)),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        DateTime pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: _petBirthday != null
-                                ? _petBirthday
-                                : DateTime.now(),
-                            firstDate: DateTime(1980),
-                            lastDate: DateTime.now());
-                        setState(() {
-                          _petBirthday = pickedDate;
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 10.0,
-                              offset: Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        height: 50.0,
-                        width: 250.0,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                _petBirthday != null
-                                    ? 'Birthday: ' +
-                                        StringHelper.getDateString(_petBirthday)
-                                    : 'Birthday:',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                ),
-                              ),
-                              Icon(Icons.calendar_today),
-                            ],
                           ),
                         ),
                       ),
@@ -211,10 +153,10 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Center(
                           child: TextFormField(
-                            controller: _temperamentInputController,
+                            controller: _breedInputController,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'Temperament',
+                                hintText: 'Breed',
                                 hintStyle: TextStyle(fontSize: 15.0)),
                           ),
                         ),
@@ -224,52 +166,34 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                       height: height * 0.02,
                     ),
                     Container(
-                      width: 250.0,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Checkbox(
-                            //title: Text("title text"),
-                            checkColor: Colors.white,
-                            activeColor: StyleConstants.yellow,
-                            value: _isServiceAnimal,
-                            onChanged: (newValue) {
-                              setState(() {
-                                _isServiceAnimal = newValue;
-                              });
-                            },
-                            //controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
-                          ),
-                          Text(
-                            'Service Animal?',
-                            style: StyleConstants.whiteTitleTextSmall,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 10.0,
+                            offset: Offset(0, 2),
                           ),
                         ],
+                      ),
+                      height: 50.0,
+                      width: 250.0,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Center(
+                          child: TextFormField(
+                            controller: _colorInputController,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'Color',
+                                hintStyle: TextStyle(fontSize: 15.0)),
+                          ),
+                        ),
                       ),
                     ),
-                    Container(
-                      width: 250.0,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Checkbox(
-                            //title: Text("title text"),
-                            checkColor: Colors.white,
-                            activeColor: StyleConstants.yellow,
-                            value: _isAdopted,
-                            onChanged: (newValue) {
-                              setState(() {
-                                _isAdopted = newValue;
-                              });
-                            },
-                            //controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
-                          ),
-                          Text(
-                            'Adopted?',
-                            style: StyleConstants.whiteTitleTextSmall,
-                          ),
-                        ],
-                      ),
+                    SizedBox(
+                      height: height * 0.02,
                     ),
                   ],
                 ),
@@ -281,23 +205,16 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                 onTap: () {
                   Pet updatedPet = widget.pet;
 
-                  updatedPet.birthday = Timestamp.fromDate(_petBirthday);
-
                   updatedPet.name = _petNameInputController.text;
+                  updatedPet.species = _speciesInputController.text;
                   updatedPet.breed = _breedInputController.text;
-                  updatedPet.temperament = _temperamentInputController.text;
-
-                  updatedPet.age =
-                      _petBirthday.difference(DateTime.now()).inDays ~/ 365;
-                  updatedPet.isServiceAnimal = _isServiceAnimal;
-                  updatedPet.isAdopted = _isAdopted;
+                  updatedPet.color = _colorInputController.text;
 
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => StpMedicalInfoScreen(
+                          builder: (_) => StpPetInfo2Screen(
                                 pet: updatedPet,
-                                petImage: widget.petImage,
                               )));
                 },
                 child: Container(

@@ -119,7 +119,7 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
                 height: height * 0.05,
               ),
               Text(
-                'Step 6: Vaccine History',
+                'Step 7: Vaccine History',
                 style: StyleConstants.whiteTitleText,
               ),
               SizedBox(
