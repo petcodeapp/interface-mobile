@@ -310,6 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ],
                                                   ),
                                                 ),
+                                                //TODO: Find out pageIndex
                                                 GestureDetector(
                                                   onTap: () => Navigator.push(
                                                     context,

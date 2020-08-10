@@ -57,7 +57,7 @@ class _StpAdditionalInfoScreenState extends State<StpAdditionalInfoScreen> {
                 height: height * 0.05,
               ),
               Text(
-                'Step 8: Additional Info',
+                'Step 9: Additional Info',
                 style: StyleConstants.whiteTitleText,
               ),
               SizedBox(

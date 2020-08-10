@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/screens/stp_petinfo_screen.dart';
+import 'package:petcode_app/screens/stp_medinfo_screen.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
@@ -95,7 +95,7 @@ class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
                 height: height * 0.05,
               ),
               Text(
-                'Step 3: Pet Image',
+                'Step 5: Pet Image',
                 style: StyleConstants.whiteTitleText,
               ),
               SizedBox(
@@ -134,7 +134,7 @@ class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => StpPetInfoScreen(
+                          builder: (_) => StpMedicalInfoScreen(
                                 pet: widget.pet,
                                 petImage: chosenImage,
                               )));
