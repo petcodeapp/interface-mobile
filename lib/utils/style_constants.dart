@@ -150,9 +150,19 @@ class StyleConstants {
     fontWeight: FontWeight.w400,
   );
 
-  static TextStyle greyedOutText = new TextStyle(
-      fontWeight: FontWeight.w400,
-      color: Colors.grey
+  static TextStyle greyedOutText =
+      new TextStyle(fontWeight: FontWeight.w400, color: Colors.grey);
+
+  static TextStyle greyThinTitleTextSmall = new TextStyle(
+    color: darkPurpleGrey,
+    fontSize: 20.0,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle greyThinDescriptionTextSmall = new TextStyle(
+    color: darkPurpleGrey,
+    fontSize: 14.0,
+    fontWeight: FontWeight.w100,
   );
 
   //box decorations
@@ -167,6 +177,7 @@ class StyleConstants {
           offset: Offset(0, 2),
         ),
       ]);
+
   static BoxDecoration roundWhiteButtonDeco = new BoxDecoration(
       color: white,
       borderRadius: BorderRadius.circular(30.0),

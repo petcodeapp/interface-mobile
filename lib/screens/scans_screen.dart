@@ -63,84 +63,79 @@ class _ScansScreenState extends State<ScansScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Scan Locations',
-                style: StyleConstants.blackTitleText,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: _width * 0.03),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
-              child: Container(
-                height: _height * 0.4,
-                child: _mapService.currentLocation != null
-                    ? GoogleMap(
-                        mapType: MapType.hybrid,
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(_mapService.currentLocation.latitude,
-                              _mapService.currentLocation.longitude),
-                          zoom: 14.0,
-                        ),
-                        onMapCreated: (GoogleMapController controller) {
-                          _controller.complete(controller);
-                        },
-                        zoomControlsEnabled: true,
-                        markers: _mapService.createMarkers(petScans),
-                      )
-                    : Center(
-                        child: CircularProgressIndicator(),
-                      ),
-              ),
-            ),
+            height: _height * 0.4,
+            child: _mapService.currentLocation != null
+                ? GoogleMap(
+                    mapType: MapType.hybrid,
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(_mapService.currentLocation.latitude,
+                          _mapService.currentLocation.longitude),
+                      zoom: 14.0,
+                    ),
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
+                    zoomControlsEnabled: true,
+                    markers: _mapService.createMarkers(petScans),
+                  )
+                : Center(
+                    child: CircularProgressIndicator(),
+                  ),
           ),
           Flexible(
             fit: FlexFit.loose,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: _height * 0.02,
-                ),
-                Text(
-                  'Most Recent',
-                  style: StyleConstants.blackDescriptionText,
-                ),
-                SizedBox(
-                  height: _height * 0.02,
-                ),
-                Expanded(
-                  child: ScrollConfiguration(
-                    behavior: NoGlowBehavior(),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: petScans.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Column(
-                          children: [
-                            recentScanWidget(
-                                petScans[index].petName,
-                                petScans[index].date.toDate(),
-                                '5 Address Ln. City, State 77494 USA',
-                                _mapService
-                                    .markerColors[petScans[index].petIndex],
-                                petScans[index].location),
-                            SizedBox(
-                              height: _height * 0.02,
-                            )
-                          ],
-                        );
-                      },
+            child: ScrollConfiguration(
+              behavior: NoGlowBehavior(),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      height: _height * 0.02,
                     ),
-                  ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: _width * 0.05),
+                      child: Container(
+                        width: _width,
+                        child: Text(
+                          'Scan Locations',
+                          style: StyleConstants.greyThinTitleText,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: _height * 0.02,
+                    ),
+                    scanLocationsList(petScans),
+                  ],
                 ),
-              ],
+              ),
             ),
           )
         ],
       ),
+    );
+  }
+
+  Widget scanLocationsList(List<Scan> petScans) {
+    List<Widget> scans = new List<Widget>();
+    for (int i = 0; i < petScans.length; i++) {
+      scans.add(recentScanWidget(
+          petScans[i].petName,
+          petScans[i].date.toDate(),
+          '5 Address Ln. City, State 77494 USA',
+          _mapService.markerColors[petScans[i].petIndex],
+          petScans[i].location));
+      scans.add(
+        SizedBox(
+          height: _height * 0.02,
+        ),
+      );
+    }
+
+    return Column(
+      children: scans,
     );
   }
 
@@ -158,16 +153,16 @@ class _ScansScreenState extends State<ScansScreen> {
         );
       },
       child: Container(
-        height: _height * 0.1,
+        height: _height * 0.13,
         width: _width * 0.9,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
-          color: StyleConstants.blue,
+          color: StyleConstants.purpleGrey,
         ),
         child: Row(
           children: [
             Container(
-              width: _width * 0.445,
+              width: _width * 0.443,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -190,7 +185,7 @@ class _ScansScreenState extends State<ScansScreen> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             petName,
-                            style: StyleConstants.whiteTitleTextSmall,
+                            style: StyleConstants.greyThinTitleTextSmall,
                             textAlign: TextAlign.left,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
@@ -202,9 +197,10 @@ class _ScansScreenState extends State<ScansScreen> {
                             StringHelper.getDateString(date) +
                                 ' ' +
                                 StringHelper.getTimeString(date),
-                            style: StyleConstants.whiteDescriptionTextXS,
+                            style: StyleConstants.greyThinDescriptionTextSmall,
                             textAlign: TextAlign.left,
                             overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                           ),
                         ),
                       ],
@@ -214,11 +210,13 @@ class _ScansScreenState extends State<ScansScreen> {
               ),
             ),
             VerticalDivider(
-              width: 2.0,
-              color: StyleConstants.white,
+              indent: _height * 0.02,
+              endIndent: _height * 0.02,
+              width: 4.0,
+              color: StyleConstants.darkPurpleGrey,
             ),
             Container(
-              width: _width * 0.445,
+              width: _width * 0.443,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -227,7 +225,7 @@ class _ScansScreenState extends State<ScansScreen> {
                       padding: EdgeInsets.symmetric(horizontal: _width * 0.01),
                       child: Text(
                         address,
-                        style: StyleConstants.whiteDescriptionTextSmall,
+                        style: StyleConstants.greyThinDescriptionTextSmall,
                         textAlign: TextAlign.center,
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
