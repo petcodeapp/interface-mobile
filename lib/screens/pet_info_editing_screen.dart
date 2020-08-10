@@ -7,6 +7,7 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
+import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +30,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
   TextEditingController _temperamentInputController;
   TextEditingController _additionalInfoInputController;
 
+  /*
   TextEditingController _owner1NameInputController;
   TextEditingController _owner1EmailInputController;
   TextEditingController _owner1PhoneInputController;
@@ -38,6 +40,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
   TextEditingController _owner2EmailInputController;
   TextEditingController _owner2PhoneInputController;
   TextEditingController _owner2AddressInputController;
+  */
 
   File chosenImageFile;
   ImageProvider updatedImage;
@@ -110,11 +113,11 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: StyleConstants.blue,
         centerTitle: true,
         title: Text(
           'Edit Profile',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
         leading: Center(
           child: Padding(
@@ -124,7 +127,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
               child: Text(
                 'Cancel',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: 15.0,
                 ),
               ),
@@ -148,6 +151,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                     updatedPet.additionalInfo =
                         _additionalInfoInputController.text.trim();
 
+                    /*
                     Owner contact_1 = new Owner(
                       name: _owner1NameInputController.text.trim(),
                       email: _owner1EmailInputController.text.trim(),
@@ -170,6 +174,8 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                       updatedPet.contact_2 = null;
                     }
 
+                    */
+
                     if (widget.petImage != updatedImage) {
                       FirebaseStorageService firebaseStorageService =
                           Provider.of<FirebaseStorageService>(context,
@@ -186,7 +192,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                 child: Text(
                   'Done',
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: Colors.white,
                     fontSize: 15.0,
                   ),
                 ),
@@ -353,6 +359,8 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                     ],
                   ),
                   Divider(),
+
+                  /*
                   Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -572,6 +580,8 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                       )
                     ],
                   ),
+
+                  */
                 ],
               ),
             ),
@@ -590,6 +600,8 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
         new TextEditingController(text: widget.currentPet.temperament);
     _additionalInfoInputController =
         new TextEditingController(text: widget.currentPet.additionalInfo);
+
+    /*
     _owner1NameInputController =
         new TextEditingController(text: widget.currentPet.contact_1.name);
     _owner1EmailInputController =
@@ -618,5 +630,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
         _owner2EmailInputController.text.trim().isEmpty &&
         _owner2PhoneInputController.text.trim().isEmpty &&
         _owner2AddressInputController.text.trim().isEmpty;
+  }
+  */
   }
 }
