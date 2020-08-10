@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class StyleConstants{
+class StyleConstants {
   //colors
   static Color darkGrey = new Color(0xff66615B);
 
@@ -17,57 +17,54 @@ class StyleConstants{
 
   static Color yellow = new Color(0xffFBC658);
 
-  static Color lightGrey = new Color(0xffDAD8D5);
+  static Color lightGrey = new Color(0xffB4C1CF);
+
+  static Color purpleGrey = new Color(0xffEEF2F7);
+
+  static Color darkPurpleGrey = new Color(0xffA2B0C0);
 
   //text styles
-  static TextStyle whiteButtonText =  GoogleFonts.getFont('Lilita One',
-    textStyle: TextStyle(
-      color: white,
-      fontSize: 25.0,
-    )
-  );
+  static TextStyle whiteButtonText = GoogleFonts.getFont('Lilita One',
+      textStyle: TextStyle(
+        color: white,
+        fontSize: 25.0,
+      ));
 
-  static TextStyle yellowButtonText =  GoogleFonts.getFont('Lilita One',
+  static TextStyle yellowButtonText = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: yellow,
         fontSize: 25.0,
-      )
-  );
+      ));
 
-  static TextStyle whiteTitleText =  GoogleFonts.getFont('Lilita One',
-    textStyle: TextStyle(
-      color: Colors.white,
-      fontSize: 30.0,
-    )
-  );
+  static TextStyle whiteTitleText = GoogleFonts.getFont('Lilita One',
+      textStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 30.0,
+      ));
 
-  static TextStyle whiteTitleTextLarge =  GoogleFonts.getFont('Lilita One',
-    textStyle: TextStyle(
-      color: Colors.white,
-      fontSize: 40.0,
-    )
-  );
+  static TextStyle whiteTitleTextLarge = GoogleFonts.getFont('Lilita One',
+      textStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 40.0,
+      ));
 
-  static TextStyle whiteTitleTextSmall =   GoogleFonts.getFont('Lilita One',
+  static TextStyle whiteTitleTextSmall = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.white,
         fontSize: 25.0,
-      )
-  );
+      ));
 
-  static TextStyle whiteTitleTextXS =   GoogleFonts.getFont('Lilita One',
+  static TextStyle whiteTitleTextXS = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.white,
         fontSize: 20.0,
-      )
-  );
+      ));
 
-  static TextStyle whiteTitleTextXL =   GoogleFonts.getFont('Lilita One',
+  static TextStyle whiteTitleTextXL = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.white,
         fontSize: 50.0,
-      )
-  );
+      ));
 
   static TextStyle whiteDescriptionText = new TextStyle(
     color: Colors.white,
@@ -86,45 +83,47 @@ class StyleConstants{
     fontSize: 10.0,
     fontWeight: FontWeight.w400,
   );
-  
-  static TextStyle blackTitleText =  GoogleFonts.getFont(
-    'Lilita One',
-    textStyle: TextStyle(
-      color: Colors.black,
-      fontSize: 30.0,
-    )
-  );
 
-  static TextStyle blackTitleTextLarge =  GoogleFonts.getFont(
-      'Lilita One',
+  static TextStyle blackTitleText = GoogleFonts.getFont('Lilita One',
+      textStyle: TextStyle(
+        color: Colors.black,
+        fontSize: 30.0,
+      ));
+
+  static TextStyle blackTitleTextLarge = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.black,
         fontSize: 40.0,
-      )
-  );
+      ));
 
-  static TextStyle blackTitleTextSmall =  GoogleFonts.getFont(
-      'Lilita One',
+  static TextStyle blackTitleTextSmall = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.black,
         fontSize: 25.0,
-      )
-  );
+      ));
 
-  static TextStyle blackTitleTextXS =  GoogleFonts.getFont(
-      'Lilita One',
+  static TextStyle blackTitleTextXS = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.black,
         fontSize: 20.0,
-      )
-  );
+      ));
 
-  static TextStyle blackTitleTextXL =  GoogleFonts.getFont(
-      'Lilita One',
+  static TextStyle blackTitleTextXL = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.black,
         fontSize: 50.0,
-      )
+      ));
+
+  static TextStyle blackThinTitleText = new TextStyle(
+    color: Colors.black,
+    fontSize: 30.0,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle blackThinTitleTextLarge = new TextStyle(
+    color: Colors.black87.withOpacity(0.8),
+    fontSize: 40.0,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle blackDescriptionText = new TextStyle(
@@ -139,6 +138,23 @@ class StyleConstants{
     fontWeight: FontWeight.w300,
   );
 
+  static TextStyle greyThinTitleText = new TextStyle(
+    color: darkPurpleGrey,
+    fontSize: 30.0,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle greyThinDescriptionText = new TextStyle(
+    color: lightGrey,
+    fontSize: 20.0,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle greyedOutText = new TextStyle(
+      fontWeight: FontWeight.w400,
+      color: Colors.grey
+  );
+
   //box decorations
   static BoxDecoration roundYellowButtonDeco = new BoxDecoration(
       color: yellow,
@@ -148,10 +164,9 @@ class StyleConstants{
           color: Colors.black.withOpacity(0.2),
           blurRadius: 5.0,
           spreadRadius: 2,
-          offset: Offset(0,2),
+          offset: Offset(0, 2),
         ),
-      ]
-  );
+      ]);
   static BoxDecoration roundWhiteButtonDeco = new BoxDecoration(
       color: white,
       borderRadius: BorderRadius.circular(30.0),
@@ -160,10 +175,9 @@ class StyleConstants{
           color: Colors.black.withOpacity(0.2),
           blurRadius: 5.0,
           spreadRadius: 2,
-          offset: Offset(0,2),
+          offset: Offset(0, 2),
         ),
-      ]
-  );
+      ]);
 
   static BoxDecoration roundRedButtonDeco = new BoxDecoration(
     color: StyleConstants.red,
@@ -173,7 +187,7 @@ class StyleConstants{
         color: Colors.black.withOpacity(0.2),
         blurRadius: 6.0,
         //spreadRadius: 2,
-        offset: Offset(0,3),
+        offset: Offset(0, 3),
       ),
     ],
   );
@@ -187,27 +201,26 @@ class StyleConstants{
           blurRadius: 6.0,
           offset: Offset(0, 3),
         ),
-      ]
-  );
+      ]);
 
   static BoxDecoration lightBlueItemBoxDeco = new BoxDecoration(
-      color: StyleConstants.lightBlue,
-      borderRadius: BorderRadius.circular(5.0),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.2),
-          blurRadius: 6.0,
-          //spreadRadius: 2,
-          offset: Offset(0,3),
-        ),
-      ],
+    color: StyleConstants.lightBlue,
+    borderRadius: BorderRadius.circular(5.0),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(0.2),
+        blurRadius: 6.0,
+        //spreadRadius: 2,
+        offset: Offset(0, 3),
+      ),
+    ],
   );
 }
 
-
 class NoGlowBehavior extends ScrollBehavior {
   @override
-  Widget buildViewportChrome(BuildContext context, Widget child, AxisDirection axisDirection) {
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
     return child;
   }
 }

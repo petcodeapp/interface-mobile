@@ -41,7 +41,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
       Pet selectedPet;
       try {
         selectedPet = _petService.allPets.singleWhere(
-            (Pet pet) => pet.pid == _petId,
+                (Pet pet) => pet.pid == _petId,
             orElse: () => null);
         print('name:' + selectedPet.name);
       } catch (e) {
@@ -247,9 +247,9 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => ShareRecordsScreen(
-                                  petName: selectedPet.name,
-                                  petVaccinations: selectedPet.vaccinations,
-                                )),
+                              petName: selectedPet.name,
+                              petVaccinations: selectedPet.vaccinations,
+                            )),
                       );
                     },
                     child: Container(
