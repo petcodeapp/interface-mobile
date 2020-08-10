@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:petcode_app/models/Owner.dart';
@@ -7,6 +8,7 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
+import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
@@ -26,7 +28,9 @@ class PetInfoEditingScreen extends StatefulWidget {
 class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
   DatabaseService _databaseService;
   TextEditingController _nameInputController;
+  TextEditingController _speciesInputController;
   TextEditingController _breedInputController;
+  TextEditingController _colorInputController;
   TextEditingController _temperamentInputController;
   TextEditingController _additionalInfoInputController;
 
@@ -46,6 +50,9 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
   ImageProvider updatedImage;
 
   bool _isServiceAnimal;
+  bool _isAdopted;
+
+  DateTime _birthDate;
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -53,6 +60,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
   void initState() {
     super.initState();
     _isServiceAnimal = widget.currentPet.isServiceAnimal;
+    _isAdopted = widget.currentPet.isAdopted;
     updatedImage = widget.petImage;
     setUpInputControllers();
   }
@@ -142,14 +150,16 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                 onTap: () async {
                   if (_formKey.currentState.validate()) {
                     Pet updatedPet = widget.currentPet;
-                    updatedPet.isServiceAnimal = _isServiceAnimal;
-                    updatedPet.name = _nameInputController.text.trim();
-                    updatedPet.breed = _breedInputController.text.trim();
-                    updatedPet.temperament =
-                        _temperamentInputController.text.trim();
 
-                    updatedPet.additionalInfo =
-                        _additionalInfoInputController.text.trim();
+                    updatedPet.name = _nameInputController.text.trim();
+                    //updatedPet.species = _speciesInputController.text.trim();
+                    updatedPet.breed = _breedInputController.text.trim();
+                    updatedPet.birthday = Timestamp.fromDate(_birthDate);
+                    //updatedPet.color = _colorInputController.text.trim();
+                    updatedPet.temperament = _temperamentInputController.text.trim();
+                    updatedPet.isAdopted = _isAdopted;
+                    updatedPet.isServiceAnimal = _isServiceAnimal;
+                    updatedPet.additionalInfo = _additionalInfoInputController.text.trim();
 
                     /*
                     Owner contact_1 = new Owner(
@@ -270,6 +280,29 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
+                        'Species',
+                        style: TextStyle(fontSize: 14.0),
+                      ),
+                      Spacer(),
+                      Container(
+                        height: height * 0.07,
+                        width: width * 0.7,
+                        child: TextFormField(
+                          validator: (value) =>
+                              ValidatorHelper.petSpeciesValidator(value),
+                          controller: _speciesInputController,
+                          decoration: InputDecoration(
+                            hintText: 'Species',
+                            hintStyle: TextStyle(fontSize: 14.0),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
                         'Breed',
                         style: TextStyle(fontSize: 14.0),
                       ),
@@ -283,6 +316,64 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                           controller: _breedInputController,
                           decoration: InputDecoration(
                             hintText: 'Breed',
+                            hintStyle: TextStyle(fontSize: 14.0),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Birthday',
+                        style: TextStyle(fontSize: 14.0),
+                      ),
+                      Spacer(),
+                      Container(
+                          height: height * 0.07,
+                          width: width * 0.58,
+                          child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: _birthDate == null ?
+                                  Text('Please select a date') : Text(StringHelper.getDateStringNoYear(_birthDate), style: TextStyle(fontSize: 18.0),),
+                          ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.calendar_today),
+                        onPressed: () {
+                          showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2019),
+                                  lastDate: DateTime(2021))
+                              .then((date) {
+                            setState(() {
+                              _birthDate = date;
+                              print(_birthDate.toString());
+                            });
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Color',
+                        style: TextStyle(fontSize: 14.0),
+                      ),
+                      Spacer(),
+                      Container(
+                        height: height * 0.07,
+                        width: width * 0.7,
+                        child: TextFormField(
+                          validator: (value) =>
+                              ValidatorHelper.petBreedValidator(value),
+                          controller: _colorInputController,
+                          decoration: InputDecoration(
+                            hintText: 'Color',
                             hintStyle: TextStyle(fontSize: 14.0),
                           ),
                         ),
@@ -316,24 +407,20 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Additional Info',
+                        'Adopted',
                         style: TextStyle(fontSize: 14.0),
                       ),
                       Spacer(),
                       Container(
-                        //height: height * 0.07,
+                        height: height * 0.07,
                         width: width * 0.7,
-                        child: TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.petAddInfoValidator(value),
-                          controller: _additionalInfoInputController,
-                          maxLines: null,
-                          keyboardType: TextInputType.multiline,
-                          decoration: InputDecoration(
-                            hintText: 'Additional Info',
-                            hintStyle: TextStyle(fontSize: 14.0),
-                          ),
-                        ),
+                        child: CircularCheckBox(
+                            value: _isAdopted,
+                            onChanged: (bool value) {
+                              setState(() {
+                                _isAdopted = value;
+                              });
+                            }),
                       )
                     ],
                   ),
@@ -358,6 +445,32 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                       )
                     ],
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Additional Info',
+                        style: TextStyle(fontSize: 14.0),
+                      ),
+                      Spacer(),
+                      Container(
+                        //height: height * 0.07,
+                        width: width * 0.7,
+                        child: TextFormField(
+                          validator: (value) =>
+                              ValidatorHelper.petAddInfoValidator(value),
+                          controller: _additionalInfoInputController,
+                          maxLines: null,
+                          keyboardType: TextInputType.multiline,
+                          decoration: InputDecoration(
+                            hintText: 'Additional Info',
+                            hintStyle: TextStyle(fontSize: 14.0),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+
                   Divider(),
 
                   /*
