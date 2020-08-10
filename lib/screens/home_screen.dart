@@ -4,6 +4,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
 import 'package:petcode_app/screens/medical_info_screen.dart';
+import 'package:petcode_app/screens/owner_info_screen.dart';
 import 'package:petcode_app/screens/pet_info_screen.dart';
 import 'package:petcode_app/screens/pet_info_screen2.dart';
 import 'package:petcode_app/services/pet_service.dart';
@@ -153,32 +154,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ],
                                       ),
                                       Spacer(),
-                                      IconButton(icon: Icon(
-                                        HeroIcons.icon_globe,
-                                        size: 30.0,
-                                        color: StyleConstants.darkPurpleGrey,
-                                      ), onPressed: () {} ),
+                                      IconButton(
+                                          icon: Icon(
+                                            HeroIcons.icon_globe,
+                                            size: 30.0,
+                                            color:
+                                                StyleConstants.darkPurpleGrey,
+                                          ),
+                                          onPressed: () {}),
                                       SizedBox(
                                         width: width * 0.03,
                                       ),
-
-
                                       IconButton(
                                           icon: Icon(
                                             HeroIcons.icon_edit,
                                             size: 30.0,
                                             color:
-                                            StyleConstants.darkPurpleGrey,
+                                                StyleConstants.darkPurpleGrey,
                                           ),
                                           onPressed: () => Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (_) => PetInfoScreen(
-                                                    petIndex: pageIndex,
-                                                  )
-                                              )
-                                          )
-                                      ),
+                                                        petIndex: pageIndex,
+                                                      )))),
                                     ],
                                   ),
                                 ),
@@ -317,8 +316,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                               ),
                                               GestureDetector(
-                                                onTap: () => print(
-                                                    'schedule meds tapped'),
+                                                onTap: () => Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (_) =>
+                                                            OwnerInfoScreen(
+                                                              petIndex:
+                                                                  pageIndex,
+                                                            ))),
                                                 child: Column(
                                                   children: [
                                                     Icon(
@@ -346,7 +351,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   children: [
                                                     Icon(
                                                       //Icons.today,
-                                                      HeroIcons.icon_notification,
+                                                      HeroIcons
+                                                          .icon_notification,
                                                       size: 30.0,
                                                       color: StyleConstants
                                                           .darkPurpleGrey,
@@ -368,7 +374,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     MaterialPageRoute(
                                                         builder: (_) =>
                                                             MedicalInfoScreen(
-                                                              petId: petService.allPets[pageIndex].pid,
+                                                              petId: petService
+                                                                  .allPets[
+                                                                      pageIndex]
+                                                                  .pid,
                                                             ))),
                                                 child: Column(
                                                   children: [
