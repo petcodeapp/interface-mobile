@@ -69,7 +69,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                 height: height * 0.05,
               ),
               Text(
-                'Step 7: Reminders',
+                'Step 8: Reminders',
                 style: StyleConstants.whiteTitleText,
               ),
               SizedBox(
@@ -225,7 +225,10 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                 Row(
                   children: [
                     Text(
-                      'Next Date: ' + (_dates[0] != null ? StringHelper.getDateString(_dates[0]) : 'Select Date'),
+                      'Next Date: ' +
+                          (_dates[0] != null
+                              ? StringHelper.getDateString(_dates[0])
+                              : 'Select Date'),
                       style: StyleConstants.whiteTitleTextXS,
                     ),
                   ],
@@ -308,7 +311,10 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                 Row(
                   children: [
                     Text(
-                      'Next Date: ' + (_dates[1] != null ? StringHelper.getDateString(_dates[1]) : 'Select Date'),
+                      'Next Date: ' +
+                          (_dates[1] != null
+                              ? StringHelper.getDateString(_dates[1])
+                              : 'Select Date'),
                       style: StyleConstants.whiteTitleTextXS,
                     ),
                   ],

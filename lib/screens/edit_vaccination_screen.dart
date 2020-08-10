@@ -43,7 +43,7 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
                 child: Text('Take Photo'),
                 onPressed: () async {
                   _pickedImage = await Provider.of<ImagePickerService>(context,
-                          listen: false)
+                      listen: false)
                       .pickImage(ImageSource.camera);
                   Navigator.pop(context);
                   setState(() {});
@@ -52,7 +52,7 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
               child: Text('Choose From Gallery'),
               onPressed: () async {
                 _pickedImage = await Provider.of<ImagePickerService>(context,
-                        listen: false)
+                    listen: false)
                     .pickImage(ImageSource.camera);
                 Navigator.pop(context);
                 setState(() {});
@@ -77,7 +77,7 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
   void initState() {
     _currentVaccination = widget.pet.vaccinations[widget.vaccinationIndex];
     _nameInputController =
-        new TextEditingController(text: _currentVaccination.name);
+    new TextEditingController(text: _currentVaccination.name);
     if (_currentVaccination.date != null) {
       _expirationDate = _currentVaccination.date.toDate();
     }
@@ -105,20 +105,20 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
 
                 if (_pickedImage != null) {
                   String downloadUrl =
-                      await Provider.of<FirebaseStorageService>(context,
-                              listen: false)
-                          .uploadVaccineImage(
-                              _pickedImage,
-                              widget.pet.pid +
-                                  'vaccine' +
-                                  widget.vaccinationIndex.toString());
+                  await Provider.of<FirebaseStorageService>(context,
+                      listen: false)
+                      .uploadVaccineImage(
+                      _pickedImage,
+                      widget.pet.pid +
+                          'vaccine' +
+                          widget.vaccinationIndex.toString());
                   updatedVaccination.imageUrl = downloadUrl;
                 } else if (_currentVaccination.imageUrl != null) {
                   updatedVaccination.imageUrl = _currentVaccination.imageUrl;
                 }
                 Provider.of<DatabaseService>(context, listen: false)
                     .updateVaccination(updatedVaccination,
-                        widget.vaccinationIndex, widget.pet);
+                    widget.vaccinationIndex, widget.pet);
                 Navigator.pop(context);
               }
             },
@@ -142,12 +142,12 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
                 child: _pickedImage != null
                     ? Image.file(_pickedImage)
                     : hasImage
-                        ? CachedNetworkImage(
-                            imageUrl: _currentVaccination.imageUrl)
-                        : Container(
-                            color: StyleConstants.lightGrey,
-                            child: Text('No Image'),
-                          ),
+                    ? CachedNetworkImage(
+                    imageUrl: _currentVaccination.imageUrl)
+                    : Container(
+                  color: StyleConstants.lightGrey,
+                  child: Text('No Image'),
+                ),
               ),
             ),
             TextFormField(

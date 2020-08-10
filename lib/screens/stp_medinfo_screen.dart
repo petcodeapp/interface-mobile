@@ -60,7 +60,7 @@ class _StpMedicalInfoScreenState extends State<StpMedicalInfoScreen> {
                 height: height * 0.05,
               ),
               Text(
-                'Step 5: Medical Information',
+                'Step 6: Medical Information',
                 style: StyleConstants.whiteTitleText,
               ),
               SizedBox(

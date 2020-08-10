@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:petcode_app/screens/login_screen.dart';
 import 'package:petcode_app/screens/signup_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';

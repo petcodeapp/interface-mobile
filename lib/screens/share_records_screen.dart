@@ -18,85 +18,85 @@ class ShareRecordsScreen extends StatelessWidget {
     return Scaffold(
       body: petVaccinations.length > 0
           ? Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.02),
-              child: ListView.builder(
-                itemCount: petVaccinations.length,
-                itemBuilder: (BuildContext context, int index) {
-                  print(petVaccinations[index].imageUrl);
+        padding: EdgeInsets.symmetric(horizontal: width * 0.02),
+        child: ListView.builder(
+          itemCount: petVaccinations.length,
+          itemBuilder: (BuildContext context, int index) {
+            print(petVaccinations[index].imageUrl);
 
-                  bool hasImage = petVaccinations[index].imageUrl != null;
-                  bool hasDate = petVaccinations[index].date != null;
+            bool hasImage = petVaccinations[index].imageUrl != null;
+            bool hasDate = petVaccinations[index].date != null;
 
-                  return Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          if (hasImage) {
-                            Share.share(petVaccinations[index].imageUrl,
-                                subject: petName + '\'s Vaccination Image');
-                          } else {
-                            String shareString = petName +
-                                ' recieved the ' +
-                                petVaccinations[index].name +
-                                ' vaccination';
-                            if (hasDate) {
-                              shareString += StringHelper.getDateString(
-                                  petVaccinations[index].date.toDate());
-                            }
-                            Share.share(shareString,
-                                subject: 'Pet Vaccination Info');
-                          }
-                        },
-                        child: Container(
-                          color: Colors.transparent,
-                          height: height * 0.2,
-                          width: width,
-                          child: Row(
-                            children: [
-                              Container(
-                                width: width * 0.3,
-                                child: hasImage
-                                    ? CachedNetworkImage(
-                                        imageUrl:
-                                            petVaccinations[index].imageUrl,
-                                        fit: BoxFit.cover,
-                                      )
-                                    : Container(
-                                        color: StyleConstants.lightGrey,
-                                        child: Center(child: Text('N/A'))),
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    petVaccinations[index].name,
-                                    style: StyleConstants.blackTitleTextSmall,
-                                  ),
-                                  Text(
-                                    (hasDate
-                                        ? StringHelper.getDateString(
-                                            petVaccinations[index]
-                                                .date
-                                                .toDate())
-                                        : 'No Date Given'),
-                                    style: StyleConstants.blackDescriptionText,
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
+            return Column(
+              children: [
+                InkWell(
+                  onTap: () {
+                    if (hasImage) {
+                      Share.share(petVaccinations[index].imageUrl,
+                          subject: petName + '\'s Vaccination Image');
+                    } else {
+                      String shareString = petName +
+                          ' recieved the ' +
+                          petVaccinations[index].name +
+                          ' vaccination';
+                      if (hasDate) {
+                        shareString += StringHelper.getDateString(
+                            petVaccinations[index].date.toDate());
+                      }
+                      Share.share(shareString,
+                          subject: 'Pet Vaccination Info');
+                    }
+                  },
+                  child: Container(
+                    color: Colors.transparent,
+                    height: height * 0.2,
+                    width: width,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: width * 0.3,
+                          child: hasImage
+                              ? CachedNetworkImage(
+                            imageUrl:
+                            petVaccinations[index].imageUrl,
+                            fit: BoxFit.cover,
+                          )
+                              : Container(
+                              color: StyleConstants.lightGrey,
+                              child: Center(child: Text('N/A'))),
                         ),
-                      ),
-                      Divider(),
-                    ],
-                  );
-                },
-              ),
-            )
+                        Column(
+                          children: [
+                            Text(
+                              petVaccinations[index].name,
+                              style: StyleConstants.blackTitleTextSmall,
+                            ),
+                            Text(
+                              (hasDate
+                                  ? StringHelper.getDateString(
+                                  petVaccinations[index]
+                                      .date
+                                      .toDate())
+                                  : 'No Date Given'),
+                              style: StyleConstants.blackDescriptionText,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Divider(),
+              ],
+            );
+          },
+        ),
+      )
           : Center(
-              child: Text(
-              'No Records Found!',
-              style: StyleConstants.blackTitleText,
-            )),
+          child: Text(
+            'No Records Found!',
+            style: StyleConstants.blackTitleText,
+          )),
     );
   }
 }

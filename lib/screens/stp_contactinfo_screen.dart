@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/screens/stp_addphoto_screen.dart';
+import 'package:petcode_app/screens/stp_petinfo_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:slimy_card/slimy_card.dart';
 
@@ -125,7 +125,7 @@ class _StpContactScreenState extends State<StpContactScreen> {
                     updatedPet.contact_2 = null;
                   }
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => StpAddPhotoScreen(pet: updatedPet,)));
+                      MaterialPageRoute(builder: (_) => StpPetInfoScreen(pet: updatedPet,)));
                 },
                 child: Container(
                   height: 55.0,
