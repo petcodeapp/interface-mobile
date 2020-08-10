@@ -101,7 +101,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                       ),
                       //need to add species field
                       title:
-                      Text('Species', style: StyleConstants.greyedOutText),
+                      Text(currentPet.species) ?? Text('Species', style: StyleConstants.greyedOutText),
                       trailing: Icon(
                         Icons.arrow_forward_ios,
                         size: 25.0,
@@ -147,7 +147,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                         HeroIcons.icon_view,
                         size: 30.0,
                       ),
-                      title: Text('Color', style: StyleConstants.greyedOutText),
+                      title: Text(currentPet.color) ?? Text('Color', style: StyleConstants.greyedOutText),
                       trailing: Icon(
                         Icons.arrow_forward_ios,
                         size: 25.0,
