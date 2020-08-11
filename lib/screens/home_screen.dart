@@ -23,8 +23,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String name = 'Lucas';
   PetService petService;
+  PetIdProvider _petIdProvider;
 
-  PageController _mainPageController;
+  SwiperController _swiperController;
   PageController _secondPageController;
   ValueNotifier _currentPageNotifier = ValueNotifier<int>(0);
 
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    _mainPageController = PageController(initialPage: 0, viewportFraction: 0.8);
+    _swiperController = new SwiperController();
     _secondPageController = new PageController();
     super.initState();
   }
@@ -49,6 +50,17 @@ class _HomeScreenState extends State<HomeScreen> {
     double height = MediaQuery.of(context).size.height;
 
     petService = Provider.of<PetService>(context);
+    _petIdProvider = Provider.of<PetIdProvider>(context);
+    pageIndex = petService.allPets
+        .indexWhere((Pet pet) => pet.pid == _petIdProvider.petId.pid);
+    if (pageIndex < 0) {
+      pageIndex = 0;
+      _swiperController.index = 0;
+    }
+    else {
+      print('page index: ' + pageIndex.toString());
+      _swiperController.move(pageIndex);
+    }
     if (petService.allPets == null) {
       return Scaffold(
         body: Center(
@@ -94,6 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 290.0,
                   width: width,
                   child: Swiper(
+                    controller: _swiperController,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
                         height: 280.0,
@@ -200,9 +213,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     onIndexChanged: (int index) {
                       Provider.of<PetIdProvider>(context, listen: false)
                           .setPetId(PetId(petService.allPets[index].pid));
-                      setState(() {
-                        pageIndex = index;
-                      });
                     },
                     //pagination: new SwiperPagination(),
                     //viewportFraction: 0.9,
@@ -291,8 +301,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            PetInfoScreen(),),
+                                                      builder: (context) =>
+                                                          PetInfoScreen(),
+                                                    ),
                                                   );
                                                 },
                                                 child: Column(
@@ -575,7 +586,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   imageSlider(int index) {
     return AnimatedBuilder(
-      animation: _mainPageController,
       builder: (context, widget) {
         double value = 1;
         /*
