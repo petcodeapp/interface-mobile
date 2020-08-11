@@ -2,47 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Vaccination.dart';
 import 'package:petcode_app/screens/edit_vaccination_screen.dart';
+import 'package:petcode_app/services/pet_id_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/changePetAppBar.dart';
 import 'package:provider/provider.dart';
 
 class VaccineHistoryScreen extends StatefulWidget {
-  VaccineHistoryScreen({Key key, this.petId}) : super(key: key);
-  final String petId;
-
+  VaccineHistoryScreen({Key key}) : super(key: key);
   @override
   _VaccineHistoryScreenState createState() => _VaccineHistoryScreenState();
 }
 
 class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
   List<Vaccination> _vaccinations;
-  String _petId;
 
   @override
   void initState() {
-    _petId = widget.petId;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    PetService _petService = Provider.of<PetService>(context);
-
-
+    PetService petService = Provider.of<PetService>(context);
+    PetIdProvider petIdProvider = Provider.of<PetIdProvider>(context);
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    if (_petService.allPets.length == 0) {
+    if (petService.allPets.length == 0) {
       return Scaffold(
         backgroundColor: StyleConstants.white,
       );
     } else {
       Pet selectedPet;
       try {
-        selectedPet = _petService.allPets
-            .singleWhere((Pet pet) => pet.pid == _petId, orElse: () => null);
+        selectedPet = petService.allPets
+            .singleWhere((Pet pet) => pet.pid == petIdProvider.petId.pid, orElse: () => null);
         print('name:' + selectedPet.name);
       } catch (e) {
         return Scaffold(
@@ -65,39 +62,9 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
         );
       }
       _vaccinations = selectedPet.vaccinations;
-      List<DropdownMenuItem<String>> dropdownMenuItems =
-          new List<DropdownMenuItem<String>>();
-      for (int i = 0; i < _petService.allPets.length; i++) {
-        dropdownMenuItems.add(
-          DropdownMenuItem<String>(
-              child: Text(
-                _petService.allPets[i].name,
-                style: StyleConstants.whiteDescriptionText,
-              ),
-              value: _petService.allPets[i].pid),
-        );
-      }
+
       return Scaffold(
-        appBar: AppBar(
-          backgroundColor: StyleConstants.blue,
-          centerTitle: true,
-          title: new Theme(
-            child: new DropdownButtonHideUnderline(
-              child: new DropdownButton<String>(
-                iconEnabledColor: Colors.white,
-                dropdownColor: StyleConstants.blue,
-                value: _petId,
-                items: dropdownMenuItems,
-                onChanged: (String petId) {
-                  setState(() {
-                    _petId = petId;
-                  });
-                },
-              ),
-            ),
-            data: ThemeData.light(),
-          ),
-        ),
+        appBar: ChangePetAppBar(),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {},

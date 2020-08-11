@@ -2,11 +2,12 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/models/PetId.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
 import 'package:petcode_app/screens/medical_info_screen.dart';
 import 'package:petcode_app/screens/owner_info_screen.dart';
 import 'package:petcode_app/screens/pet_info_screen.dart';
-import 'package:petcode_app/screens/pet_info_screen2.dart';
+import 'package:petcode_app/services/pet_id_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/string_helper.dart';
@@ -166,18 +167,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                         width: width * 0.03,
                                       ),
                                       IconButton(
-                                          icon: Icon(
-                                            HeroIcons.icon_edit,
-                                            size: 30.0,
-                                            color:
-                                                StyleConstants.darkPurpleGrey,
+                                        icon: Icon(
+                                          HeroIcons.icon_edit,
+                                          size: 30.0,
+                                          color: StyleConstants.darkPurpleGrey,
+                                        ),
+                                        onPressed: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) => PetInfoScreen(),
                                           ),
-                                          onPressed: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (_) => PetInfoScreen(
-                                                        petIndex: pageIndex,
-                                                      )))),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -197,6 +198,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     loop: false,
                     //index: 0,
                     onIndexChanged: (int index) {
+                      Provider.of<PetIdProvider>(context, listen: false)
+                          .setPetId(PetId(petService.allPets[index].pid));
                       setState(() {
                         pageIndex = index;
                       });
@@ -289,10 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            PetInfoScreen(
-                                                              petIndex:
-                                                                  pageIndex,
-                                                            )),
+                                                            PetInfoScreen(),),
                                                   );
                                                 },
                                                 child: Column(
@@ -370,15 +370,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               GestureDetector(
                                                 onTap: () => Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (_) =>
-                                                            MedicalInfoScreen(
-                                                              petId: petService
-                                                                  .allPets[
-                                                                      pageIndex]
-                                                                  .pid,
-                                                            ))),
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        MedicalInfoScreen(),
+                                                  ),
+                                                ),
                                                 child: Column(
                                                   children: [
                                                     Icon(

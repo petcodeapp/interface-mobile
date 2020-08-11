@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petcode_app/models/PetId.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
@@ -7,6 +8,7 @@ import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/services/map_service.dart';
+import 'package:petcode_app/services/pet_id_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -61,6 +63,19 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<MapService>(
           create: (_) => MapService(),
         ),
+        ChangeNotifierProxyProvider<PetService, PetIdProvider>(
+            create: (_) => PetIdProvider(),
+            update: (BuildContext context, PetService petService,
+                PetIdProvider petIdProvider) {
+              if (petService.allPets == null ||
+                  petService.allPets.length == 0 ||
+                  petIdProvider.petId != null) {
+                return petIdProvider;
+              } else {
+                return petIdProvider
+                  ..setPetId(PetId(petService.allPets[0].pid));
+              }
+            })
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

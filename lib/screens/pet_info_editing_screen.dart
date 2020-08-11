@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,11 +16,11 @@ import 'package:petcode_app/widgets/circular_check_box.dart';
 import 'package:provider/provider.dart';
 
 class PetInfoEditingScreen extends StatefulWidget {
-  PetInfoEditingScreen({Key key, this.currentPet, this.petImage})
+  PetInfoEditingScreen({Key key, this.currentPet, this.petImageUrl})
       : super(key: key);
 
   final Pet currentPet;
-  final ImageProvider petImage;
+  final String petImageUrl;
 
   @override
   _PetInfoEditingScreenState createState() => _PetInfoEditingScreenState();
@@ -54,6 +55,8 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
 
   DateTime _birthDate;
 
+  bool _changedImage;
+
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -61,8 +64,13 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
     super.initState();
     _isServiceAnimal = widget.currentPet.isServiceAnimal;
     _isAdopted = widget.currentPet.isAdopted;
-    updatedImage = widget.petImage;
+    if (widget.petImageUrl == null) {
+      updatedImage = CachedNetworkImageProvider(widget.petImageUrl);
+    } else {
+      updatedImage = AssetImage('assets/images/puppyphoto.jpg');
+    }
     _birthDate = widget.currentPet.birthday.toDate();
+    _changedImage = false;
     setUpInputControllers();
   }
 
@@ -74,6 +82,8 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
     Navigator.pop(context);
     if (imageFile != null) {
       setState(() {
+        //TODO: Have a better way to check if image is changed
+        _changedImage = true;
         chosenImageFile = imageFile;
         updatedImage = FileImage(imageFile);
       });
@@ -157,12 +167,14 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                     updatedPet.breed = _breedInputController.text.trim();
                     updatedPet.birthday = Timestamp.fromDate(_birthDate);
                     updatedPet.color = _colorInputController.text.trim();
-                    updatedPet.temperament = _temperamentInputController.text.trim();
+                    updatedPet.temperament =
+                        _temperamentInputController.text.trim();
                     updatedPet.isAdopted = _isAdopted;
                     updatedPet.isServiceAnimal = _isServiceAnimal;
-                    updatedPet.additionalInfo = _additionalInfoInputController.text.trim();
+                    updatedPet.additionalInfo =
+                        _additionalInfoInputController.text.trim();
 
-                    if (widget.petImage != updatedImage) {
+                    if (_changedImage) {
                       FirebaseStorageService firebaseStorageService =
                           Provider.of<FirebaseStorageService>(context,
                               listen: false);
@@ -173,7 +185,6 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
 
                     _databaseService.updatePet(widget.currentPet);
                     Navigator.pop(context);
-
 
                     /*
                     Owner contact_1 = new Owner(
@@ -333,13 +344,17 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                       ),
                       Spacer(),
                       Container(
-                          height: height * 0.07,
-                          width: width * 0.58,
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: _birthDate == null ?
-                                  Text('Please select a date') : Text(StringHelper.getDateStringNoYear(_birthDate), style: TextStyle(fontSize: 18.0),),
-                          ),
+                        height: height * 0.07,
+                        width: width * 0.58,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: _birthDate == null
+                              ? Text('Please select a date')
+                              : Text(
+                                  StringHelper.getDateStringNoYear(_birthDate),
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
+                        ),
                       ),
                       IconButton(
                         icon: Icon(Icons.calendar_today),
@@ -472,7 +487,6 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                       )
                     ],
                   ),
-
                   Divider(),
 
                   /*
@@ -716,10 +730,10 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
     _additionalInfoInputController =
         new TextEditingController(text: widget.currentPet.additionalInfo);
     _speciesInputController =
-    new TextEditingController(text: widget.currentPet.species);
+        new TextEditingController(text: widget.currentPet.species);
 
     _colorInputController =
-    new TextEditingController(text: widget.currentPet.color);
+        new TextEditingController(text: widget.currentPet.color);
 
     /*
     _owner1NameInputController =
