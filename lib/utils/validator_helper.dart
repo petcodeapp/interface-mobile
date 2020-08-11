@@ -58,9 +58,25 @@ class ValidatorHelper {
     }
   }
 
+  static String petSpeciesValidator(String petSpecies) {
+    if (petSpecies == null || petSpecies.trim().length == 0) {
+      return 'Please enter a valid pet species';
+    } else {
+      return null;
+    }
+  }
+
   static String petBreedValidator(String petBreed) {
     if (petBreed == null || petBreed.trim().length == 0) {
       return 'Please enter a valid pet name';
+    } else {
+      return null;
+    }
+  }
+
+  static String petColorValidator(String petColor) {
+    if (petColor == null || petColor.trim().length == 0) {
+      return 'Please enter a valid pet color';
     } else {
       return null;
     }
