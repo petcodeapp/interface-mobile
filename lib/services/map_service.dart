@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -41,7 +42,8 @@ class MapService extends ChangeNotifier {
             markerId: MarkerId(currentScan.date.toString()),
             position: LatLng(
                 currentScan.location.latitude, currentScan.location.longitude),
-            icon: BitmapDescriptor.defaultMarkerWithHue(_bitmapDesciptorHues[currentScan.petIndex]),
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+                _bitmapDesciptorHues[currentScan.petIndex]),
           ),
         );
       }
@@ -54,5 +56,31 @@ class MapService extends ChangeNotifier {
         desiredAccuracy: LocationAccuracy.best);
     _currentLocation = currentLocation;
     notifyListeners();
+  }
+
+  Future<String> getLocationAddress(GeoPoint coordinates) async {
+    List<Placemark> placemarks = await _geolocator.placemarkFromCoordinates(
+        coordinates.latitude, coordinates.longitude);
+    if (placemarks.length > 0) {
+      return placemarkToAddressName(placemarks[0]);
+    } else {
+      return 'Address Not Found';
+    }
+  }
+
+  String placemarkToAddressName(Placemark placemark) {
+    return placemark.name +
+        ' ' +
+        placemark.thoroughfare +
+        ' ' +
+        placemark.subLocality +
+        ' ' +
+        placemark.locality +
+        ' ' +
+        placemark.administrativeArea +
+        ' ' +
+        placemark.postalCode +
+        ' ' +
+        placemark.isoCountryCode;
   }
 }
