@@ -2,12 +2,11 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/models/PetId.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
 import 'package:petcode_app/screens/medical_info_screen.dart';
 import 'package:petcode_app/screens/owner_info_screen.dart';
 import 'package:petcode_app/screens/pet_info_screen.dart';
-import 'package:petcode_app/services/pet_id_provider.dart';
+import 'package:petcode_app/services/current_pet_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/string_helper.dart';
@@ -23,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String name = 'Lucas';
   PetService petService;
-  PetIdProvider _petIdProvider;
+  CurrentPetProvider _currentPetProvider;
 
   SwiperController _swiperController;
   PageController _secondPageController;
@@ -50,16 +49,17 @@ class _HomeScreenState extends State<HomeScreen> {
     double height = MediaQuery.of(context).size.height;
 
     petService = Provider.of<PetService>(context);
-    _petIdProvider = Provider.of<PetIdProvider>(context);
+    _currentPetProvider = Provider.of<CurrentPetProvider>(context);
+
     pageIndex = petService.allPets
-        .indexWhere((Pet pet) => pet.pid == _petIdProvider.petId.pid);
+        .indexWhere((Pet pet) => pet == _currentPetProvider.currentPet);
+
+    print('new page index: ' + pageIndex.toString());
     if (pageIndex < 0) {
       pageIndex = 0;
-      _swiperController.index = 0;
-    }
-    else {
-      print('page index: ' + pageIndex.toString());
-      _swiperController.move(pageIndex);
+      _swiperController.move(0);
+    } else {
+      _swiperController.move(pageIndex, animation: false);
     }
     if (petService.allPets == null) {
       return Scaffold(
@@ -69,18 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     } else {
       names = new List<String>();
-      print(petService.allPets.length);
 
       for (int i = 0; i < petService.allPets.length; i++) {
         Pet currentPet = petService.allPets[i];
         names.add(currentPet.name);
       }
-
-      print('namesLength: ' + names.length.toString());
-      print('petImagesLength: ' + petService.petImages.length.toString());
-
       _allPetUpcomingEvents = petService.getAllPetMedication();
-
       return Scaffold(
         /*
         floatingActionButton: FloatingActionButton(
@@ -211,8 +205,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     loop: false,
                     //index: 0,
                     onIndexChanged: (int index) {
-                      Provider.of<PetIdProvider>(context, listen: false)
-                          .setPetId(PetId(petService.allPets[index].pid));
+                      if (_currentPetProvider.currentPet !=
+                          petService.allPets[index]) {
+                        _currentPetProvider
+                            .setCurrentPet(petService.allPets[index]);
+                      }
                     },
                     //pagination: new SwiperPagination(),
                     //viewportFraction: 0.9,
@@ -328,13 +325,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               GestureDetector(
                                                 onTap: () => Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (_) =>
-                                                            OwnerInfoScreen(
-                                                              petIndex:
-                                                                  pageIndex,
-                                                            ))),
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        OwnerInfoScreen(),
+                                                  ),
+                                                ),
                                                 child: Column(
                                                   children: [
                                                     Icon(

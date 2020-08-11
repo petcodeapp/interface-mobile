@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:petcode_app/models/PetId.dart';
 import 'package:petcode_app/screens/share_records_screen.dart';
 import 'package:petcode_app/screens/vaccine_history_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/services/pet_id_provider.dart';
-import 'package:petcode_app/services/pet_service.dart';
+import 'package:petcode_app/services/current_pet_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/changePetAppBar.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +16,8 @@ class MedicalInfoScreen extends StatefulWidget {
 }
 
 class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
-  PetIdProvider _petIdProvider;
-  PetService _petService;
+  CurrentPetProvider _currentPetProvider;
+  //PetService _petService;
 
   @override
   void initState() {
@@ -30,41 +28,19 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    _currentPetProvider = Provider.of<CurrentPetProvider>(context);
 
-    _petService = Provider.of<PetService>(context);
-    _petIdProvider = Provider.of<PetIdProvider>(context);
-
-    if (_petService.allPets.length == 0) {
+    Pet selectedPet = _currentPetProvider.currentPet;
+    if (selectedPet == null) {
       return Scaffold(
-        backgroundColor: StyleConstants.white,
+        body: Center(
+          child: Text(
+            'Error: Pet not found',
+            style: StyleConstants.blackDescriptionText,
+          ),
+        ),
       );
     } else {
-      Pet selectedPet;
-      try {
-        selectedPet = _petService.allPets.singleWhere(
-            (Pet pet) => pet.pid == _petIdProvider.petId.pid,
-            orElse: () => null);
-        print('name:' + selectedPet.name);
-      } catch (e) {
-        return Scaffold(
-          body: Center(
-            child: Text(
-              'Error: Duplicate Pets found',
-              style: StyleConstants.blackDescriptionText,
-            ),
-          ),
-        );
-      }
-      if (selectedPet == null) {
-        return Scaffold(
-          body: Center(
-            child: Text(
-              'Error: Pet not found',
-              style: StyleConstants.blackDescriptionText,
-            ),
-          ),
-        );
-      }
       return Scaffold(
         //backgroundColor: Colors.white,
         appBar: ChangePetAppBar(),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/models/PetId.dart';
-import 'package:petcode_app/services/pet_id_provider.dart';
+import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/services/current_pet_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
@@ -17,23 +17,23 @@ class ChangePetAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _ChangePetAppBarState extends State<ChangePetAppBar> {
-  PetIdProvider _petIdProvider;
+  CurrentPetProvider _currentPetProvider;
   PetService _petService;
 
   @override
   Widget build(BuildContext context) {
-    _petIdProvider = Provider.of<PetIdProvider>(context);
+    _currentPetProvider = Provider.of<CurrentPetProvider>(context);
     _petService = Provider.of<PetService>(context);
-    List<DropdownMenuItem<PetId>> dropdownMenuItems =
-        new List<DropdownMenuItem<PetId>>();
+    List<DropdownMenuItem<Pet>> dropdownMenuItems =
+        new List<DropdownMenuItem<Pet>>();
     for (int i = 0; i < _petService.allPets.length; i++) {
       dropdownMenuItems.add(
-        DropdownMenuItem<PetId>(
+        DropdownMenuItem<Pet>(
             child: Text(
               _petService.allPets[i].name,
               style: StyleConstants.whiteDescriptionText,
             ),
-            value: PetId(_petService.allPets[i].pid)),
+            value: _petService.allPets[i]),
       );
     }
     return AppBar(
@@ -41,13 +41,14 @@ class _ChangePetAppBarState extends State<ChangePetAppBar> {
       centerTitle: true,
       title: new Theme(
         child: new DropdownButtonHideUnderline(
-          child: new DropdownButton<PetId>(
+          child: new DropdownButton<Pet>(
             iconEnabledColor: Colors.white,
             dropdownColor: StyleConstants.blue,
-            value: _petIdProvider.petId,
+            value: _currentPetProvider.currentPet,
             items: dropdownMenuItems,
-            onChanged: (PetId petId) {
-              _petIdProvider.setPetId(petId);
+            onChanged: (Pet pet) {
+              print(pet.name);
+              _currentPetProvider.setCurrentPet(pet);
             },
           ),
         ),

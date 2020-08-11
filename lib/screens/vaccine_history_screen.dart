@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Vaccination.dart';
 import 'package:petcode_app/screens/edit_vaccination_screen.dart';
-import 'package:petcode_app/services/pet_id_provider.dart';
-import 'package:petcode_app/services/pet_service.dart';
+import 'package:petcode_app/services/current_pet_provider.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/changePetAppBar.dart';
@@ -25,42 +24,21 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    PetService petService = Provider.of<PetService>(context);
-    PetIdProvider petIdProvider = Provider.of<PetIdProvider>(context);
+    CurrentPetProvider currentPetProvider =
+        Provider.of<CurrentPetProvider>(context);
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    Pet selectedPet = currentPetProvider.currentPet;
 
-    if (petService.allPets.length == 0) {
+    if (selectedPet == null) {
       return Scaffold(
-        backgroundColor: StyleConstants.white,
+        body: Text(
+          'No Pets Found',
+          style: StyleConstants.greyThinTitleText,
+        ),
       );
     } else {
-      Pet selectedPet;
-      try {
-        selectedPet = petService.allPets
-            .singleWhere((Pet pet) => pet.pid == petIdProvider.petId.pid, orElse: () => null);
-        print('name:' + selectedPet.name);
-      } catch (e) {
-        return Scaffold(
-          body: Center(
-            child: Text(
-              'Error: Duplicate Pets found',
-              style: StyleConstants.blackDescriptionText,
-            ),
-          ),
-        );
-      }
-      if (selectedPet == null) {
-        return Scaffold(
-          body: Center(
-            child: Text(
-              'Error: Pet not found',
-              style: StyleConstants.blackDescriptionText,
-            ),
-          ),
-        );
-      }
       _vaccinations = selectedPet.vaccinations;
 
       return Scaffold(

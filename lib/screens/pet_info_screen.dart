@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/pet_info_editing_screen.dart';
-import 'package:petcode_app/services/pet_id_provider.dart';
-import 'package:petcode_app/services/pet_service.dart';
+import 'package:petcode_app/services/current_pet_provider.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -19,15 +18,11 @@ class PetInfoScreen extends StatefulWidget {
 class _PetInfoScreenState extends State<PetInfoScreen> {
   @override
   Widget build(BuildContext context) {
-    PetService petService = Provider.of<PetService>(context);
-    PetIdProvider petIdProvider = Provider.of<PetIdProvider>(context);
-    Pet currentPet = petService.allPets
-        .singleWhere((Pet pet) => pet.pid == petIdProvider.petId.pid);
+    CurrentPetProvider currentPetProvider = Provider.of<CurrentPetProvider>(context);
+    Pet currentPet = currentPetProvider.currentPet;
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-
-    String _value = 'dog1';
 
     return Scaffold(
       backgroundColor: Colors.white,
