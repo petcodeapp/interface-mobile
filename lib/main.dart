@@ -7,6 +7,7 @@ import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/services/map_service.dart';
+import 'package:petcode_app/services/current_pet_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -61,6 +62,19 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<MapService>(
           create: (_) => MapService(),
         ),
+        ChangeNotifierProxyProvider<PetService, CurrentPetProvider>(
+            create: (_) => CurrentPetProvider(),
+            update: (BuildContext context, PetService petService,
+                CurrentPetProvider currentPetProvider) {
+              if (petService.allPets == null ||
+                  petService.allPets.length == 0 ||
+                  currentPetProvider.currentPet != null) {
+                return currentPetProvider;
+              } else {
+                return currentPetProvider
+                  ..setCurrentPet(petService.allPets[0]);
+              }
+            })
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

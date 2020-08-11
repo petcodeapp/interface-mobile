@@ -202,4 +202,12 @@ class Pet {
     });
     return convertedMaps;
   }
+
+  @override
+  bool operator ==(Object other) {
+    return other is Pet && hashCode == other.hashCode;
+  }
+
+  @override
+  int get hashCode => pid.hashCode;
 }

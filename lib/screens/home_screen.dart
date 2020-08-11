@@ -6,7 +6,7 @@ import 'package:petcode_app/models/UpcomingEvent.dart';
 import 'package:petcode_app/screens/medical_info_screen.dart';
 import 'package:petcode_app/screens/owner_info_screen.dart';
 import 'package:petcode_app/screens/pet_info_screen.dart';
-import 'package:petcode_app/screens/pet_info_screen2.dart';
+import 'package:petcode_app/services/current_pet_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/string_helper.dart';
@@ -22,8 +22,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String name = 'Lucas';
   PetService petService;
+  CurrentPetProvider _currentPetProvider;
 
-  PageController _mainPageController;
+  SwiperController _swiperController;
   PageController _secondPageController;
   ValueNotifier _currentPageNotifier = ValueNotifier<int>(0);
 
@@ -37,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    _mainPageController = PageController(initialPage: 0, viewportFraction: 0.8);
+    _swiperController = new SwiperController();
     _secondPageController = new PageController();
     super.initState();
   }
@@ -48,6 +49,18 @@ class _HomeScreenState extends State<HomeScreen> {
     double height = MediaQuery.of(context).size.height;
 
     petService = Provider.of<PetService>(context);
+    _currentPetProvider = Provider.of<CurrentPetProvider>(context);
+
+    pageIndex = petService.allPets
+        .indexWhere((Pet pet) => pet == _currentPetProvider.currentPet);
+
+    print('new page index: ' + pageIndex.toString());
+    if (pageIndex < 0) {
+      pageIndex = 0;
+      _swiperController.move(0);
+    } else {
+      _swiperController.move(pageIndex, animation: false);
+    }
     if (petService.allPets == null) {
       return Scaffold(
         body: Center(
@@ -56,18 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     } else {
       names = new List<String>();
-      print(petService.allPets.length);
 
       for (int i = 0; i < petService.allPets.length; i++) {
         Pet currentPet = petService.allPets[i];
         names.add(currentPet.name);
       }
-
-      print('namesLength: ' + names.length.toString());
-      print('petImagesLength: ' + petService.petImages.length.toString());
-
       _allPetUpcomingEvents = petService.getAllPetMedication();
-
       return Scaffold(
         /*
         floatingActionButton: FloatingActionButton(
@@ -84,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Container(
-            height: height + _allPetUpcomingEvents.length * 15.0,
+            height: height + (_allPetUpcomingEvents.length - 2) * 68.0,
             width: width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,6 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 290.0,
                   width: width,
                   child: Swiper(
+                    controller: _swiperController,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
                         height: 280.0,
@@ -166,18 +174,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                         width: width * 0.03,
                                       ),
                                       IconButton(
-                                          icon: Icon(
-                                            HeroIcons.icon_edit,
-                                            size: 30.0,
-                                            color:
-                                                StyleConstants.darkPurpleGrey,
+                                        icon: Icon(
+                                          HeroIcons.icon_edit,
+                                          size: 30.0,
+                                          color: StyleConstants.darkPurpleGrey,
+                                        ),
+                                        onPressed: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) => PetInfoScreen(),
                                           ),
-                                          onPressed: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (_) => PetInfoScreen(
-                                                        petIndex: pageIndex,
-                                                      )))),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -197,9 +205,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     loop: false,
                     //index: 0,
                     onIndexChanged: (int index) {
-                      setState(() {
-                        pageIndex = index;
-                      });
+                      if (_currentPetProvider.currentPet !=
+                          petService.allPets[index]) {
+                        _currentPetProvider
+                            .setCurrentPet(petService.allPets[index]);
+                      }
                     },
                     //pagination: new SwiperPagination(),
                     //viewportFraction: 0.9,
@@ -288,11 +298,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            PetInfoScreen(
-                                                              petIndex:
-                                                                  pageIndex,
-                                                            )),
+                                                      builder: (context) =>
+                                                          PetInfoScreen(),
+                                                    ),
                                                   );
                                                 },
                                                 child: Column(
@@ -317,13 +325,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               GestureDetector(
                                                 onTap: () => Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (_) =>
-                                                            OwnerInfoScreen(
-                                                              petIndex:
-                                                                  pageIndex,
-                                                            ))),
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        OwnerInfoScreen(),
+                                                  ),
+                                                ),
                                                 child: Column(
                                                   children: [
                                                     Icon(
@@ -370,15 +377,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               GestureDetector(
                                                 onTap: () => Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (_) =>
-                                                            MedicalInfoScreen(
-                                                              petId: petService
-                                                                  .allPets[
-                                                                      pageIndex]
-                                                                  .pid,
-                                                            ))),
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        MedicalInfoScreen(),
+                                                  ),
+                                                ),
                                                 child: Column(
                                                   children: [
                                                     Icon(
@@ -578,7 +582,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   imageSlider(int index) {
     return AnimatedBuilder(
-      animation: _mainPageController,
       builder: (context, widget) {
         double value = 1;
         /*

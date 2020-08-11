@@ -124,7 +124,6 @@ class _ScansScreenState extends State<ScansScreen> {
       scans.add(recentScanWidget(
           petScans[i].petName,
           petScans[i].date.toDate(),
-          '5 Address Ln. City, State 77494 USA',
           _mapService.markerColors[petScans[i].petIndex],
           petScans[i].location));
       scans.add(
@@ -139,8 +138,8 @@ class _ScansScreenState extends State<ScansScreen> {
     );
   }
 
-  Widget recentScanWidget(String petName, DateTime date, String address,
-      Color markerColor, GeoPoint markerPosition) {
+  Widget recentScanWidget(String petName, DateTime date, Color markerColor,
+      GeoPoint markerPosition) {
     return GestureDetector(
       onTap: () async {
         GoogleMapController controller = await _controller.future;
@@ -222,15 +221,32 @@ class _ScansScreenState extends State<ScansScreen> {
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: _width * 0.01),
-                      child: Text(
-                        address,
-                        style: StyleConstants.greyThinDescriptionTextSmall,
-                        textAlign: TextAlign.center,
-                        maxLines: 4,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: _width * 0.01),
+                        child: FutureBuilder<String>(
+                          future:
+                              _mapService.getLocationAddress(markerPosition),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            if (snapshot.connectionState !=
+                                ConnectionState.done) {
+                              return CircularProgressIndicator();
+                            } else {
+                              if (snapshot.hasError) {
+                                return Text('Error');
+                              } else {
+                                return Text(
+                                  snapshot.data,
+                                  style: StyleConstants
+                                      .greyThinDescriptionTextSmall,
+                                  textAlign: TextAlign.center,
+                                  maxLines: 4,
+                                  overflow: TextOverflow.ellipsis,
+                                );
+                              }
+                            }
+                          },
+                        )),
                   ),
                 ],
               ),

@@ -61,7 +61,7 @@ class PetInfoScreen2 extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (_) => PetInfoEditingScreen(
                                 currentPet: currentPet,
-                                petImage: petService.petImages[petIndex],
+                                petImageUrl: currentPet.profileUrl,
                               ))),
                     ),
                   ],

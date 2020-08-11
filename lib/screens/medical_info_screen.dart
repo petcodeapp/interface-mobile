@@ -4,25 +4,23 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/screens/share_records_screen.dart';
 import 'package:petcode_app/screens/vaccine_history_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/services/pet_service.dart';
+import 'package:petcode_app/services/current_pet_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/changePetAppBar.dart';
 import 'package:provider/provider.dart';
 
 class MedicalInfoScreen extends StatefulWidget {
-  MedicalInfoScreen({Key key, this.petId}) : super(key: key);
-  final String petId;
-
+  MedicalInfoScreen({Key key}) : super(key: key);
   @override
   _MedicalInfoScreenState createState() => _MedicalInfoScreenState();
 }
 
 class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
-  String _petId;
-  PetService _petService;
+  CurrentPetProvider _currentPetProvider;
+  //PetService _petService;
 
   @override
   void initState() {
-    _petId = widget.petId;
     super.initState();
   }
 
@@ -30,73 +28,22 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    _currentPetProvider = Provider.of<CurrentPetProvider>(context);
 
-    _petService = Provider.of<PetService>(context);
-
-    if (_petService.allPets.length == 0) {
+    Pet selectedPet = _currentPetProvider.currentPet;
+    if (selectedPet == null) {
       return Scaffold(
-        backgroundColor: StyleConstants.white,
-      );
-    } else {
-      Pet selectedPet;
-      try {
-        selectedPet = _petService.allPets.singleWhere(
-                (Pet pet) => pet.pid == _petId,
-            orElse: () => null);
-        print('name:' + selectedPet.name);
-      } catch (e) {
-        return Scaffold(
-          body: Center(
-            child: Text(
-              'Error: Duplicate Pets found',
-              style: StyleConstants.blackDescriptionText,
-            ),
-          ),
-        );
-      }
-      if (selectedPet == null) {
-        return Scaffold(
-          body: Center(
-            child: Text(
-              'Error: Pet not found',
-              style: StyleConstants.blackDescriptionText,
-            ),
-          ),
-        );
-      }
-      List<DropdownMenuItem<String>> dropdownMenuItems = new List<DropdownMenuItem<String>>();
-      for (int i = 0; i < _petService.allPets.length; i++) {
-        dropdownMenuItems.add(
-          DropdownMenuItem<String>(
-              child: Text(
-                _petService.allPets[i].name,
-                style: StyleConstants.whiteDescriptionText,
-              ),
-              value: _petService.allPets[i].pid),
-        );
-      }
-      return Scaffold(
-        //backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: StyleConstants.blue,
-          centerTitle: true,
-          title: new Theme(
-            child: new DropdownButtonHideUnderline(
-              child: new DropdownButton<String>(
-                iconEnabledColor: Colors.white,
-                dropdownColor: StyleConstants.blue,
-                value: _petId,
-                items: dropdownMenuItems,
-                onChanged: (String petId) {
-                  setState(() {
-                    _petId = petId;
-                  });
-                },
-              ),
-            ),
-            data: ThemeData.light(),
+        body: Center(
+          child: Text(
+            'Error: Pet not found',
+            style: StyleConstants.blackDescriptionText,
           ),
         ),
+      );
+    } else {
+      return Scaffold(
+        //backgroundColor: Colors.white,
+        appBar: ChangePetAppBar(),
         body: SingleChildScrollView(
           child: Container(
             width: width,
@@ -160,9 +107,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => VaccineHistoryScreen(
-                          petId: selectedPet.pid,
-                        ),
+                        builder: (_) => VaccineHistoryScreen(),
                       ),
                     ),
                     child: Container(
@@ -247,9 +192,9 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => ShareRecordsScreen(
-                              petName: selectedPet.name,
-                              petVaccinations: selectedPet.vaccinations,
-                            )),
+                                  petName: selectedPet.name,
+                                  petVaccinations: selectedPet.vaccinations,
+                                )),
                       );
                     },
                     child: Container(
