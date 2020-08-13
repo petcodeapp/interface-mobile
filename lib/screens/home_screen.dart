@@ -56,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (pageIndex < 0) {
       pageIndex = 0;
     }
+
     if (!ModalRoute.of(context).isCurrent) {
       _carouselController.jumpToPage(pageIndex);
     }
@@ -77,13 +78,15 @@ class _HomeScreenState extends State<HomeScreen> {
         names.add(currentPet.name);
       }
       _allPetUpcomingEvents = petService.getAllPetMedication();
+
       return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Container(
-            height: height + (_allPetUpcomingEvents.length - 2) * 68.0,
+            //height: height + (_allPetUpcomingEvents.length - 2) * 68.0,
             width: width,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
@@ -99,11 +102,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           (int newPage, CarouselPageChangedReason reason) {
                         _currentPetProvider
                             .setCurrentPet(petService.allPets[newPage]);
-                        setState(
-                          () {
-                            pageIndex = newPage;
-                          },
-                        );
+                        pageIndex = newPage;
+                        if (ModalRoute.of(context).isCurrent) {
+                          setState(
+                            () {},
+                          );
+                        }
                       },
                     ),
                     carouselController: _carouselController,
@@ -146,9 +150,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20.0),
                                   child: Row(
-                                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Column(
+                                        mainAxisSize: MainAxisSize.min,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -238,267 +244,253 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: height * 0.001,
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.035),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        /*
-                            Text(
-                              names[index],
-                              style: StyleConstants.blackTitleText,
-                            ),
-                            */
-                        SizedBox(
-                          height: height * 0.03,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.035),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      /*
+                          Text(
+                            names[index],
+                            style: StyleConstants.blackTitleText,
+                          ),
+                          */
+                      SizedBox(
+                        height: height * 0.03,
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 15.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 5.0,
+                                ),
+                                Container(
+                                  width: width - width * 0.07 - 30,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      SizedBox(
-                                        height: 5.0,
+                                      GestureDetector(
+                                        onTap: () {
+                                          print('tapped pet info');
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PetInfoScreen(),
+                                            ),
+                                          );
+                                        },
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              //Icons.pets,
+                                              HeroIcons.icon_heart,
+                                              size: 30.0,
+                                              color:
+                                                  StyleConstants.darkPurpleGrey,
+                                            ),
+                                            Text(
+                                              'Pet Info',
+                                              style: TextStyle(
+                                                  color: StyleConstants
+                                                      .darkPurpleGrey,
+                                                  fontWeight: FontWeight.w400),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                      GestureDetector(
+                                        onTap: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) => OwnerInfoScreen(),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              //Icons.person,
+                                              HeroIcons.icon_call,
+                                              size: 30.0,
+                                              color:
+                                                  StyleConstants.darkPurpleGrey,
+                                            ),
+                                            Text(
+                                              'Owner Info',
+                                              style: TextStyle(
+                                                  color: StyleConstants
+                                                      .darkPurpleGrey,
+                                                  fontWeight: FontWeight.w400),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () =>
+                                            print('schedule meds tapped'),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              //Icons.today,
+                                              HeroIcons.icon_notification,
+                                              size: 30.0,
+                                              color:
+                                                  StyleConstants.darkPurpleGrey,
+                                            ),
+                                            Text(
+                                              'Reminders',
+                                              style: TextStyle(
+                                                  color: StyleConstants
+                                                      .darkPurpleGrey,
+                                                  fontWeight: FontWeight.w400),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) => MedicalInfoScreen(),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              //Icons.assignment,
+                                              HeroIcons.icon_clipboard,
+                                              size: 30.0,
+                                              color:
+                                                  StyleConstants.darkPurpleGrey,
+                                            ),
+                                            Text(
+                                              'Med Info',
+                                              style: TextStyle(
+                                                  color: StyleConstants
+                                                      .darkPurpleGrey,
+                                                  fontWeight: FontWeight.w400),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: height * 0.03,
+                      ),
+                      Divider(
+                        height: 2.0,
+                        thickness: 5.0,
+                        color: StyleConstants.purpleGrey,
+                      ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      Text(
+                        'Upcoming',
+                        style: StyleConstants.greyThinTitleText,
+                      ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: _allPetUpcomingEvents.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        blurRadius: 5,
+                                        offset: Offset(0, 3),
+                                      ),
+                                    ],
+                                    borderRadius: BorderRadius.circular(15.0)),
+                                height: 60.0,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CircularCheckBox(
+                                        value: _value,
+                                        onChanged: (bool value) {
+                                          setState(() {
+                                            _value = value;
+                                          });
+                                        },
+                                        activeColor: StyleConstants.green,
+                                      ),
+                                      Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              print('tapped pet info');
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PetInfoScreen(),
-                                                ),
-                                              );
-                                            },
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  //Icons.pets,
-                                                  HeroIcons.icon_heart,
-                                                  size: 30.0,
-                                                  color: StyleConstants
-                                                      .darkPurpleGrey,
-                                                ),
-                                                Text(
-                                                  'Pet Info',
-                                                  style: TextStyle(
-                                                      color: StyleConstants
-                                                          .darkPurpleGrey,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                                )
-                                              ],
-                                            ),
+                                          Text(
+                                            _allPetUpcomingEvents[index].name,
+                                            overflow: TextOverflow.ellipsis,
+                                            softWrap: false,
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.w400),
                                           ),
-                                          GestureDetector(
-                                            onTap: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (_) =>
-                                                    OwnerInfoScreen(),
-                                              ),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  //Icons.person,
-                                                  HeroIcons.icon_call,
-                                                  size: 30.0,
-                                                  color: StyleConstants
-                                                      .darkPurpleGrey,
-                                                ),
-                                                Text(
-                                                  'Owner Info',
-                                                  style: TextStyle(
-                                                      color: StyleConstants
-                                                          .darkPurpleGrey,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          GestureDetector(
-                                            onTap: () =>
-                                                print('schedule meds tapped'),
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  //Icons.today,
-                                                  HeroIcons.icon_notification,
-                                                  size: 30.0,
-                                                  color: StyleConstants
-                                                      .darkPurpleGrey,
-                                                ),
-                                                Text(
-                                                  'Reminders',
-                                                  style: TextStyle(
-                                                      color: StyleConstants
-                                                          .darkPurpleGrey,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          GestureDetector(
-                                            onTap: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (_) =>
-                                                    MedicalInfoScreen(),
-                                              ),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  //Icons.assignment,
-                                                  HeroIcons.icon_clipboard,
-                                                  size: 30.0,
-                                                  color: StyleConstants
-                                                      .darkPurpleGrey,
-                                                ),
-                                                Text(
-                                                  'Med Info',
-                                                  style: TextStyle(
-                                                      color: StyleConstants
-                                                          .darkPurpleGrey,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                                )
-                                              ],
-                                            ),
+                                          Text(
+                                            _allPetUpcomingEvents[index]
+                                                .petName,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w300),
                                           ),
                                         ],
-                                      )
+                                      ),
+                                      Flexible(
+                                          fit: FlexFit.tight,
+                                          child: SizedBox()),
+                                      _allPetUpcomingEvents[index].date != null
+                                          ? Text(
+                                              StringHelper.getDateString(
+                                                  _allPetUpcomingEvents[index]
+                                                      .date
+                                                      .toDate()),
+                                              overflow: TextOverflow.ellipsis,
+                                            )
+                                          : Text(
+                                              'No date given',
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                     ],
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: height * 0.03,
-                        ),
-                        Divider(
-                          height: 2.0,
-                          thickness: 5.0,
-                          color: StyleConstants.purpleGrey,
-                        ),
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                        Text(
-                          'Upcoming',
-                          style: StyleConstants.greyThinTitleText,
-                        ),
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: _allPetUpcomingEvents.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.2),
-                                            blurRadius: 5,
-                                            offset: Offset(0, 3),
-                                          ),
-                                        ],
-                                        borderRadius:
-                                            BorderRadius.circular(15.0)),
-                                    height: 60.0,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          CircularCheckBox(
-                                            value: _value,
-                                            onChanged: (bool value) {
-                                              setState(() {
-                                                _value = value;
-                                              });
-                                            },
-                                            activeColor: StyleConstants.green,
-                                          ),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  _allPetUpcomingEvents[index]
-                                                      .name,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  softWrap: false,
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                      fontSize: 18.0,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                                ),
-                                                Text(
-                                                  _allPetUpcomingEvents[index]
-                                                      .petName,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                      fontSize: 15.0,
-                                                      fontWeight:
-                                                          FontWeight.w300),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          _allPetUpcomingEvents[index].date !=
-                                                  null
-                                              ? Text(
-                                                  StringHelper.getDateString(
-                                                      _allPetUpcomingEvents[
-                                                              index]
-                                                          .date
-                                                          .toDate()),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                )
-                                              : Text(
-                                                  'No date given',
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }),
-                        )
-                      ],
-                    ),
+                            );
+                          })
+                    ],
                   ),
                 ),
               ],
@@ -520,6 +512,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
@@ -593,6 +586,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.circular(20.0),
               ),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(petService.allPets[index].name),
                   Text(petService.allPets[index].breed),
