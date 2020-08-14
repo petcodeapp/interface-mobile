@@ -69,18 +69,22 @@ class MapService extends ChangeNotifier {
   }
 
   String placemarkToAddressName(Placemark placemark) {
-    return placemark.name +
-        ' ' +
-        placemark.thoroughfare +
-        ' ' +
-        placemark.subLocality +
-        ' ' +
-        placemark.locality +
-        ' ' +
-        placemark.administrativeArea +
-        ' ' +
-        placemark.postalCode +
-        ' ' +
-        placemark.isoCountryCode;
+    print(placemark.thoroughfare.length);
+    return getName(placemark.name) +
+        getName(placemark.thoroughfare) +
+        getName(placemark.subLocality) +
+        getName(placemark.locality) +
+        getName(placemark.administrativeArea) +
+        getName(placemark.postalCode) +
+        getName(placemark.isoCountryCode);
+  }
+
+  String getName(String name) {
+    if (name == null || name.trim().isEmpty) {
+      return '';
+    }
+    else {
+      return name + ' ';
+    }
   }
 }

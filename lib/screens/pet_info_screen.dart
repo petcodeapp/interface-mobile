@@ -18,7 +18,8 @@ class PetInfoScreen extends StatefulWidget {
 class _PetInfoScreenState extends State<PetInfoScreen> {
   @override
   Widget build(BuildContext context) {
-    CurrentPetProvider currentPetProvider = Provider.of<CurrentPetProvider>(context);
+    CurrentPetProvider currentPetProvider =
+        Provider.of<CurrentPetProvider>(context);
     Pet currentPet = currentPetProvider.currentPet;
 
     double height = MediaQuery.of(context).size.height;
@@ -33,12 +34,13 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
             color: Colors.white,
             iconSize: 30.0,
             onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => PetInfoEditingScreen(
-                          currentPet: currentPet,
-                          petImageUrl: currentPet.profileUrl,
-                        ))),
+              context,
+              MaterialPageRoute(
+                builder: (_) => PetInfoEditingScreen(
+                  currentPet: currentPet,
+                ),
+              ),
+            ),
           ),
         ],
       ),
@@ -53,8 +55,9 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                 height: height * 0.03,
               ),
               CircleAvatar(
+                backgroundColor: Colors.transparent,
                 backgroundImage: currentPet.profileUrl != null
-                    ? CachedNetworkImageProvider(currentPet.profileUrl)
+                    ? currentPet.petImage
                     : AssetImage('assets/images/puppyphoto.jpg'),
                 radius: 60.0,
               ),

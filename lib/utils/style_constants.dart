@@ -19,9 +19,9 @@ class StyleConstants {
 
   static Color lightGrey = new Color(0xffB4C1CF);
 
-  static Color purpleGrey = new Color(0xffEEF2F7);
+  static Color purpleGrey = new Color(0xffEDF2F7);
 
-  static Color darkPurpleGrey = new Color(0xffA2B0C0);
+  static Color darkPurpleGrey = new Color(0xffA0AEC0);
 
   //text styles
   static TextStyle whiteButtonText = GoogleFonts.getFont('Lilita One',
@@ -156,13 +156,13 @@ class StyleConstants {
   static TextStyle greyThinTitleTextSmall = new TextStyle(
     color: darkPurpleGrey,
     fontSize: 20.0,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w500,
   );
 
   static TextStyle greyThinDescriptionTextSmall = new TextStyle(
     color: darkPurpleGrey,
     fontSize: 14.0,
-    fontWeight: FontWeight.w100,
+    fontWeight: FontWeight.w400,
   );
 
   //box decorations

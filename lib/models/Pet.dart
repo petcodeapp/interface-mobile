@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/models/Scan.dart';
@@ -28,6 +30,8 @@ class Pet {
   Owner contact_1;
   Owner contact_2;
 
+  ImageProvider petImage;
+
   DocumentReference reference;
 
   Pet(
@@ -53,10 +57,18 @@ class Pet {
       this.scans,
       this.contact_1,
       this.contact_2,
+      this.petImage,
       this.reference});
 
   factory Pet.fromSnapshot(DocumentSnapshot snapshot) {
     Pet newPet = Pet.fromJson(snapshot.data);
+
+    if (newPet.profileUrl == null || newPet.profileUrl.trim().isEmpty) {
+      newPet.petImage = AssetImage('assets/images/puppyphoto.jpg');
+    } else {
+      newPet.petImage = CachedNetworkImageProvider(newPet.profileUrl);
+    }
+
     newPet.reference = snapshot.reference;
     return newPet;
   }

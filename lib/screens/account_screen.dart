@@ -40,9 +40,10 @@ class _AccountScreenState extends State<AccountScreen> {
                 height: height * 0.02,
               ),
               CircleAvatar(
+                backgroundColor: Colors.transparent,
                 radius: 100.0,
-                backgroundImage: petService.petImages.length > 0
-                    ? petService.petImages[0]
+                backgroundImage: petService.allPets.length > 0
+                    ? petService.allPets[0].petImage
                     : null,
               ),
               SizedBox(

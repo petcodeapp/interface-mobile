@@ -63,10 +63,10 @@ class _ScansScreenState extends State<ScansScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            height: _height * 0.4,
+            height: _height * 0.35,
             child: _mapService.currentLocation != null
                 ? GoogleMap(
-                    mapType: MapType.hybrid,
+                    mapType: MapType.normal,
                     initialCameraPosition: CameraPosition(
                       target: LatLng(_mapService.currentLocation.latitude,
                           _mapService.currentLocation.longitude),
