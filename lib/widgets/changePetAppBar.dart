@@ -27,6 +27,7 @@ class _ChangePetAppBarState extends State<ChangePetAppBar> {
     List<DropdownMenuItem<Pet>> dropdownMenuItems =
         new List<DropdownMenuItem<Pet>>();
     for (int i = 0; i < _petService.allPets.length; i++) {
+      print(_petService.allPets[i].pid);
       dropdownMenuItems.add(
         DropdownMenuItem<Pet>(
             child: Text(
@@ -36,6 +37,8 @@ class _ChangePetAppBarState extends State<ChangePetAppBar> {
             value: _petService.allPets[i]),
       );
     }
+
+    print(_currentPetProvider.currentPet.pid);
     return AppBar(
       backgroundColor: StyleConstants.blue,
       centerTitle: true,

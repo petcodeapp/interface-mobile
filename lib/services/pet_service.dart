@@ -11,7 +11,7 @@ import 'package:petcode_app/models/Vaccination.dart';
 class PetService extends ChangeNotifier {
   Firestore _firestore = Firestore.instance;
 
-  List<Pet> _allPets = new List<Pet>();
+  List<Pet> _allPets;
   StreamSubscription _petStream;
 
   List<Pet> get allPets => _allPets;
@@ -22,10 +22,11 @@ class PetService extends ChangeNotifier {
   }
 
   stopPetStream() {
-    _allPets = new List<Pet>();
+    _allPets = null;
     if (_petStream != null) {
       _petStream.cancel();
     }
+    notifyListeners();
   }
 
   List<Pet> petListFromQuery(QuerySnapshot querySnapshot) {
@@ -38,6 +39,7 @@ class PetService extends ChangeNotifier {
   }
 
   void startPetStream(List<String> petIds) {
+    _allPets = new List<Pet>();
     if (petIds != null && petIds.length > 0) {
       _petStream = _firestore
           .collection('pets')
@@ -48,7 +50,6 @@ class PetService extends ChangeNotifier {
         _allPets = petListFromQuery(querySnapshot);
         for (int i = 0; i < _allPets.length; i++) {
         }
-        print('All Pets length : ' + _allPets.length.toString());
         notifyListeners();
       });
     }

@@ -26,6 +26,7 @@ class UserService extends ChangeNotifier {
     if (_userStream != null) {
       _userStream.cancel();
     }
+    notifyListeners();
   }
 
   void startUserStream() {
@@ -36,6 +37,7 @@ class UserService extends ChangeNotifier {
         .listen((DocumentSnapshot snapshot) {
       if (snapshot.data != null) {
         _currentUser = User.fromSnapshot(snapshot);
+        print(_currentUser.firstName);
         notifyListeners();
       }
     });
