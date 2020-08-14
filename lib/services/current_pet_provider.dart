@@ -7,6 +7,11 @@ class CurrentPetProvider extends ChangeNotifier {
 
   Pet get currentPet => _currentPet;
 
+  void clearPet() {
+    _currentPet = null;
+    notifyListeners();
+  }
+
   void setCurrentPet(Pet newPet) {
     _currentPet = newPet;
     notifyListeners();

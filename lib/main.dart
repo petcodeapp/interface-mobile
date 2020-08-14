@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
             if (authService.user == null) {
               return userService..clearUid();
             } else {
+              print(authService.user.uid);
               return userService..setUid(authService.user.uid);
             }
           },
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
             if (userService.currentUser == null) {
               return petService..stopPetStream();
             } else {
+              print(userService.currentUser.firstName);
               return petService..setPetIds(userService.currentUser.petIds);
             }
           },
@@ -67,12 +69,12 @@ class MyApp extends StatelessWidget {
             update: (BuildContext context, PetService petService,
                 CurrentPetProvider currentPetProvider) {
               if (petService.allPets == null ||
-                  petService.allPets.length == 0 ||
-                  currentPetProvider.currentPet != null) {
+                  petService.allPets.length == 0) {
+                return currentPetProvider..clearPet();
+              } else if (currentPetProvider.currentPet != null) {
                 return currentPetProvider;
               } else {
-                return currentPetProvider
-                  ..setCurrentPet(petService.allPets[0]);
+                return currentPetProvider..setCurrentPet(petService.allPets[0]);
               }
             })
       ],
@@ -90,7 +92,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<FirebaseAuthService>(
       builder: (context, FirebaseAuthService auth, _) {
-        print('changed: ' + auth.status.index.toString());
         if (auth.status == Status.Uninitialized) {
           return Scaffold(
             backgroundColor: StyleConstants.blue,
@@ -100,7 +101,6 @@ class HomeScreen extends StatelessWidget {
           );
         } else if (auth.status == Status.Authenticating ||
             auth.status == Status.Unauthenticated) {
-          print('entry screen!');
           return EntryScreen();
         } else {
           return RootScreen();

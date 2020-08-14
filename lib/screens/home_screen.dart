@@ -49,16 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _currentPetProvider = Provider.of<CurrentPetProvider>(context);
 
     petService = Provider.of<PetService>(context);
-    pageIndex = petService.allPets
-        .indexWhere((Pet pet) => pet == _currentPetProvider.currentPet);
 
-    if (pageIndex < 0) {
-      pageIndex = 0;
-    }
-
-    if (!ModalRoute.of(context).isCurrent) {
-      _carouselController.jumpToPage(pageIndex);
-    }
     if (petService.allPets == null) {
       return Scaffold(
         body: Center(
@@ -70,6 +61,18 @@ class _HomeScreenState extends State<HomeScreen> {
         body: noPetsAvailableIndicator(),
       );
     } else {
+
+      pageIndex = petService.allPets
+          .indexWhere((Pet pet) => pet == _currentPetProvider.currentPet);
+
+      if (pageIndex < 0) {
+        pageIndex = 0;
+      }
+
+      if (!ModalRoute.of(context).isCurrent && _carouselController.ready) {
+        _carouselController.jumpToPage(pageIndex);
+      }
+
       names = new List<String>();
 
       for (int i = 0; i < petService.allPets.length; i++) {
