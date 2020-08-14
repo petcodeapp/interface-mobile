@@ -15,11 +15,10 @@ import 'package:petcode_app/widgets/circular_check_box.dart';
 import 'package:provider/provider.dart';
 
 class PetInfoEditingScreen extends StatefulWidget {
-  PetInfoEditingScreen({Key key, this.currentPet, this.petImageUrl})
+  PetInfoEditingScreen({Key key, this.currentPet})
       : super(key: key);
 
   final Pet currentPet;
-  final String petImageUrl;
 
   @override
   _PetInfoEditingScreenState createState() => _PetInfoEditingScreenState();
@@ -63,11 +62,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
     super.initState();
     _isServiceAnimal = widget.currentPet.isServiceAnimal;
     _isAdopted = widget.currentPet.isAdopted;
-    if (widget.petImageUrl == null) {
-      updatedImage = CachedNetworkImageProvider(widget.petImageUrl);
-    } else {
-      updatedImage = AssetImage('assets/images/puppyphoto.jpg');
-    }
+    updatedImage = widget.currentPet.petImage;
     _birthDate = widget.currentPet.birthday.toDate();
     _changedImage = false;
     setUpInputControllers();

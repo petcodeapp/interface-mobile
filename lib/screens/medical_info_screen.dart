@@ -56,10 +56,9 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                     height: height * 0.02,
                   ),
                   CircleAvatar(
+                    backgroundColor: Colors.transparent,
                     radius: 75.0,
-                    backgroundImage: CachedNetworkImageProvider(
-                      selectedPet.profileUrl,
-                    ),
+                    backgroundImage: selectedPet.petImage
                   ),
                   SizedBox(
                     height: height * 0.04,

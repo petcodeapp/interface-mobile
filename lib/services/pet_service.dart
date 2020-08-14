@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
@@ -11,12 +12,10 @@ class PetService extends ChangeNotifier {
   Firestore _firestore = Firestore.instance;
 
   List<Pet> _allPets = new List<Pet>();
-  List<ImageProvider> _petImages = new List<ImageProvider>();
   StreamSubscription _petStream;
 
   List<Pet> get allPets => _allPets;
 
-  List<ImageProvider> get petImages => _petImages;
 
   setPetIds(List<String> petIds) {
     startPetStream(petIds);
@@ -24,7 +23,6 @@ class PetService extends ChangeNotifier {
 
   stopPetStream() {
     _allPets = new List<Pet>();
-    _petImages = new List<ImageProvider>();
     if (_petStream != null) {
       _petStream.cancel();
     }
@@ -47,15 +45,8 @@ class PetService extends ChangeNotifier {
           .snapshots()
           .listen((QuerySnapshot querySnapshot) {
         _allPets.clear();
-        _petImages.clear();
         _allPets = petListFromQuery(querySnapshot);
         for (int i = 0; i < _allPets.length; i++) {
-          if (_allPets[i].profileUrl != null) {
-            _petImages.add(NetworkImage(_allPets[i].profileUrl));
-          }
-          else {
-            _petImages.add(AssetImage('assets/images/puppyphoto.jpg'));
-          }
         }
         print('All Pets length : ' + _allPets.length.toString());
         notifyListeners();

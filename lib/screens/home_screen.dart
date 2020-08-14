@@ -52,7 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
     pageIndex = petService.allPets
         .indexWhere((Pet pet) => pet == _currentPetProvider.currentPet);
 
-    print('new page index: ' + pageIndex.toString());
     if (pageIndex < 0) {
       pageIndex = 0;
     }
@@ -100,13 +99,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       initialPage: pageIndex,
                       onPageChanged:
                           (int newPage, CarouselPageChangedReason reason) {
-                        _currentPetProvider
-                            .setCurrentPet(petService.allPets[newPage]);
-                        pageIndex = newPage;
-                        if (ModalRoute.of(context).isCurrent) {
-                          setState(
-                            () {},
-                          );
+                        if (_currentPetProvider.currentPet !=
+                            petService.allPets[newPage]) {
+                          _currentPetProvider
+                              .setCurrentPet(petService.allPets[newPage]);
+                          pageIndex = newPage;
+                          if (ModalRoute.of(context).isCurrent) {
+                            print('set state');
+                            setState(
+                              () {},
+                            );
+                          }
                         }
                       },
                     ),
@@ -136,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 200.0,
                                 width: width,
                                 child: Image(
-                                  image: petService.petImages[index],
+                                  image: petService.allPets[index].petImage,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -600,7 +603,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 175.0,
               width: 250.0,
               child: Image(
-                image: petService.petImages[index],
+                image: petService.allPets[index].petImage,
                 fit: BoxFit.cover,
               ),
             ),
