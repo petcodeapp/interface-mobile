@@ -10,6 +10,10 @@ class AddressAutocompleteProvider extends ChangeNotifier {
 
   List<Address> get addresses => _addresses;
 
+  AddressAutocompleteProvider() {
+    setUpService();
+  }
+
   setUpService() async {
     String mapsApiKey =
         await FlutterSecureStorage().read(key: 'google_maps_key');

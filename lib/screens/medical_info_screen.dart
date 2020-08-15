@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/screens/share_records_screen.dart';
 import 'package:petcode_app/screens/vaccine_history_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/services/current_pet_provider.dart';
+import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/changePetAppBar.dart';
 import 'package:provider/provider.dart';
