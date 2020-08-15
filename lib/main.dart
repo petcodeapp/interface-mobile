@@ -10,10 +10,12 @@ import 'package:petcode_app/services/map_service.dart';
 import 'package:petcode_app/services/current_pet_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
+import 'package:petcode_app/set_up_keys.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  SetUpKeys().createGoogleMapsKey();
   runApp(MyApp());
 }
 
