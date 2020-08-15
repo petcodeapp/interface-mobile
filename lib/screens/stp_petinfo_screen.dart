@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/stp_petinfo2_screen.dart';
+import 'package:petcode_app/services/breed_autocomplete_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/breed_search_bar.dart';
 
@@ -18,14 +19,14 @@ class StpPetInfoScreen extends StatefulWidget {
 
 class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
   TextEditingController _petNameInputController;
-  TextEditingController _speciesInputController;
   TextEditingController _breedInputController;
   TextEditingController _colorInputController;
+
+  Species _petSpecies;
 
   @override
   void initState() {
     _petNameInputController = new TextEditingController();
-    _speciesInputController = new TextEditingController();
     _breedInputController = new TextEditingController();
     _colorInputController = new TextEditingController();
 
@@ -123,14 +124,33 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Center(
-                          child: TextFormField(
-                            controller: _speciesInputController,
-                            decoration: InputDecoration(
+                            child: DropdownButtonFormField<Species>(
+                              decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: 'Species',
-                                hintStyle: TextStyle(fontSize: 15.0)),
-                          ),
-                        ),
+                                hintStyle: TextStyle(fontSize: 15.0),
+                              ),
+                          onChanged: (Species species) {
+                            setState(() {
+                              _petSpecies = species;
+                            });
+                          },
+                          items: [
+                            DropdownMenuItem(
+                              child: Text('Dog'),
+                              value: Species.Dog,
+                            ),
+                            DropdownMenuItem(
+                              child: Text('Cat'),
+                              value: Species.Cat,
+                            ),
+                            DropdownMenuItem(
+                              child: Text('Other'),
+                              value: Species.Other,
+                            ),
+                          ],
+                          value: _petSpecies,
+                        )),
                       ),
                     ),
                     SizedBox(
@@ -160,6 +180,7 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                               hintText: 'Breed',
                               hintStyle: TextStyle(fontSize: 15.0),
                             ),
+                            species: _petSpecies,
                           ),
                         ),
                       ),
@@ -208,7 +229,6 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                   Pet updatedPet = widget.pet;
 
                   updatedPet.name = _petNameInputController.text;
-                  updatedPet.species = _speciesInputController.text;
                   updatedPet.breed = _breedInputController.text;
                   updatedPet.color = _colorInputController.text;
 

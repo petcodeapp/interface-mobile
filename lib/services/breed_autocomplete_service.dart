@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'
     as SecureStorage;
 
+enum Species{Dog, Cat, Other}
+
 class BreedAutocompleteService {
   String _apiKey;
 
@@ -16,8 +18,18 @@ class BreedAutocompleteService {
     _apiKey = dogApiKey;
   }
 
-  Future<List<String>> searchBreeds(String input) async {
-    String baseUrl = 'https://api.thedogapi.com/v1/breeds/search';
+  Future<List<String>> searchBreeds(String input, Species species) async {
+    if (species == null || species == Species.Other) {
+      return List<String>();
+    }
+    String baseUrl;
+    if (species == Species.Dog) {
+      baseUrl = 'https://api.thedogapi.com/v1/breeds/search';
+    }
+    else {
+      baseUrl = 'https://api.thecatapi.com/v1/breeds/search';
+    }
+
 
     Response response = await Dio().get(
       baseUrl,

@@ -3,10 +3,12 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:petcode_app/services/breed_autocomplete_service.dart';
 
 class BreedSearchBar extends StatefulWidget {
-  BreedSearchBar({Key key, this.breedInputController, this.inputDecoration})
+  BreedSearchBar(
+      {Key key, this.breedInputController, this.inputDecoration, this.species})
       : super(key: key);
   final TextEditingController breedInputController;
   final InputDecoration inputDecoration;
+  final Species species;
   @override
   _BreedSearchBarState createState() => _BreedSearchBarState();
 }
@@ -24,8 +26,8 @@ class _BreedSearchBarState extends State<BreedSearchBar> {
   Widget build(BuildContext context) {
     return TypeAheadFormField<String>(
       textFieldConfiguration: TextFieldConfiguration(
-          controller: widget.breedInputController,
-          decoration: widget.inputDecoration,
+        controller: widget.breedInputController,
+        decoration: widget.inputDecoration,
       ),
       onSuggestionSelected: (String breed) {
         widget.breedInputController.text = breed;
@@ -37,12 +39,13 @@ class _BreedSearchBarState extends State<BreedSearchBar> {
         );
       },
       suggestionsCallback: (String breed) async {
-        return await _autocompleteService.searchBreeds(breed);
+        return await _autocompleteService.searchBreeds(breed, widget.species);
       },
       autoFlipDirection: true,
       hideOnEmpty: true,
       debounceDuration: Duration(milliseconds: 100),
-      transitionBuilder: (BuildContext context, Widget suggestionsBox, AnimationController controller) {
+      transitionBuilder: (BuildContext context, Widget suggestionsBox,
+          AnimationController controller) {
         return suggestionsBox;
       },
     );
