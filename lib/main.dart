@@ -15,6 +15,7 @@ import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SetUpKeys().createGoogleMapsKey();
   runApp(MyApp());
 }

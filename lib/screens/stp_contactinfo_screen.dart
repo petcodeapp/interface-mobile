@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/stp_petinfo_screen.dart';
+import 'package:petcode_app/services/address_autocomplete_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:slimy_card/slimy_card.dart';
 
@@ -28,6 +30,8 @@ class _StpContactScreenState extends State<StpContactScreen> {
   TextEditingController _owner2Email;
   TextEditingController _owner2Address;
 
+  AddressAutocompleteService _autocompleteService;
+
   @override
   void initState() {
     _owner1Name = new TextEditingController();
@@ -39,6 +43,8 @@ class _StpContactScreenState extends State<StpContactScreen> {
     _owner2PhoneNumber = new TextEditingController();
     _owner2Email = new TextEditingController();
     _owner2Address = new TextEditingController();
+
+    _autocompleteService = new AddressAutocompleteService();
 
     super.initState();
   }
@@ -124,8 +130,12 @@ class _StpContactScreenState extends State<StpContactScreen> {
                   } else {
                     updatedPet.contact_2 = null;
                   }
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => StpPetInfoScreen(pet: updatedPet,)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => StpPetInfoScreen(
+                                pet: updatedPet,
+                              )));
                 },
                 child: Container(
                   height: 55.0,
@@ -276,9 +286,10 @@ class _StpContactScreenState extends State<StpContactScreen> {
                 child: TextFormField(
                   controller: _owner1Address,
                   decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Address',
-                      hintStyle: TextStyle(fontSize: 15.0)),
+                    border: InputBorder.none,
+                    hintText: 'Address',
+                    hintStyle: TextStyle(fontSize: 15.0),
+                  ),
                 ),
               ),
             ),
