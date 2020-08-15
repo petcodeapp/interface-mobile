@@ -51,11 +51,11 @@ class _RootScreenState extends State<RootScreen> {
           centerTitle: true,
           backgroundColor: StyleConstants.blue,
           title: Container(
-            height: 175,
+              height: 175,
               child: Image.asset(
-            'assets/images/logoyellow.png',
-            fit: BoxFit.cover,
-          )),
+                'assets/images/logoyellow.png',
+                fit: BoxFit.cover,
+              )),
         ),
         body: SizedBox.expand(
           child: PageView(

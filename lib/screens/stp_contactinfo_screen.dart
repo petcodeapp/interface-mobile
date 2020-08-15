@@ -3,6 +3,7 @@ import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/stp_petinfo_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/address_search_bar.dart';
 import 'package:slimy_card/slimy_card.dart';
 
 class StpContactScreen extends StatefulWidget {
@@ -277,14 +278,14 @@ class _StpContactScreenState extends State<StpContactScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Center(
-                child: TextFormField(
-                  controller: _owner1Address,
-                  decoration: InputDecoration(
+                child: AddressSearchBar(
+                  addressController: _owner1Address,
+                  inputDecoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Address',
                     hintStyle: TextStyle(fontSize: 15.0),
                   ),
-                ),
+                )
               ),
             ),
           ),

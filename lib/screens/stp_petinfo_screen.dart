@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/stp_petinfo2_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/breed_search_bar.dart';
 
 class StpPetInfoScreen extends StatefulWidget {
   StpPetInfoScreen({Key key, this.pet, this.petImage}) : super(key: key);
@@ -152,12 +153,13 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Center(
-                          child: TextFormField(
-                            controller: _breedInputController,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Breed',
-                                hintStyle: TextStyle(fontSize: 15.0)),
+                          child: BreedSearchBar(
+                            breedInputController: _breedInputController,
+                            inputDecoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Breed',
+                              hintStyle: TextStyle(fontSize: 15.0),
+                            ),
                           ),
                         ),
                       ),

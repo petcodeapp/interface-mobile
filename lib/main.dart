@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
               } else {
                 return currentPetProvider..setCurrentPet(petService.allPets[0]);
               }
-            })
+            }),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

@@ -1,11 +1,20 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:petcode_app/models/Address.dart';
+import 'package:uuid/uuid.dart';
 
 class AddressAutocompleteService {
   String apiKey;
   String sessionToken;
 
-  AddressAutocompleteService({this.apiKey, this.sessionToken});
+  AddressAutocompleteService() {
+    setUpService();
+  }
+
+  setUpService() async {
+    apiKey = await FlutterSecureStorage().read(key: 'google_maps_key');
+    sessionToken = Uuid().v4();
+  }
 
   Future<List<Address>> getLocationResults(String input) async {
     if (input.isNotEmpty) {
@@ -20,15 +29,17 @@ class AddressAutocompleteService {
       final predictions = response.data['predictions'];
 
       List<Address> addresses = new List<Address>();
+      print(predictions);
 
       for (int i = 0; i < predictions.length; i++) {
         final structuredFormatting = predictions[i]['structured_formatting'];
-        addresses.add(new Address(
+        addresses.add(new Address(fullName: predictions[i]['description'],
             mainText: structuredFormatting['main_text'],
             secondaryText: structuredFormatting['secondary_text']));
       }
-
+      print(addresses);
       return addresses;
     }
+    return new List<Address>();
   }
 }

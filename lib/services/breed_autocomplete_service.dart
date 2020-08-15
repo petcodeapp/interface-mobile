@@ -1,9 +1,20 @@
 import 'dart:math';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart'
+    as SecureStorage;
 
 class BreedAutocompleteService {
-  String apiKey;
-  BreedAutocompleteService({this.apiKey});
+  String _apiKey;
+
+  BreedAutocompleteService() {
+    setUpService();
+  }
+
+  void setUpService() async {
+    String dogApiKey =
+        await SecureStorage.FlutterSecureStorage().read(key: 'dog_api_key');
+    _apiKey = dogApiKey;
+  }
 
   Future<List<String>> searchBreeds(String input) async {
     String baseUrl = 'https://api.thedogapi.com/v1/breeds/search';
@@ -12,11 +23,9 @@ class BreedAutocompleteService {
       baseUrl,
       queryParameters: {'q': input},
       options: Options(
-        headers: {'x-api-key': apiKey},
+        headers: {'x-api-key': _apiKey},
       ),
     );
-
-    print(response);
 
     final results = response.data;
 
@@ -26,6 +35,7 @@ class BreedAutocompleteService {
       breedResults.add(results[i]['name']);
     }
 
+    print(breedResults);
     return breedResults;
   }
 }

@@ -1,6 +1,7 @@
 class Address {
+  String fullName;
   String mainText;
   String secondaryText;
 
-  Address({this.mainText, this.secondaryText});
+  Address({this.fullName, this.mainText, this.secondaryText});
 }

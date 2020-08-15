@@ -5,7 +5,7 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/widgets/changePetAppBar.dart';
+import 'package:petcode_app/widgets/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class OwnerInfoScreen extends StatefulWidget {
