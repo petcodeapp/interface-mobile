@@ -278,15 +278,14 @@ class _StpContactScreenState extends State<StpContactScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Center(
-                child: AddressSearchBar(
-                  addressController: _owner1Address,
-                  inputDecoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Address',
-                    hintStyle: TextStyle(fontSize: 15.0),
-                  ),
-                )
-              ),
+                  child: AddressSearchBar(
+                addressController: _owner1Address,
+                inputDecoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Address',
+                  hintStyle: TextStyle(fontSize: 15.0),
+                ),
+              )),
             ),
           ),
         ],
@@ -418,14 +417,13 @@ class _StpContactScreenState extends State<StpContactScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Center(
-                child: TextFormField(
-                  controller: _owner2Address,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Address',
-                      hintStyle: TextStyle(fontSize: 15.0)),
-                ),
-              ),
+                  child: AddressSearchBar(
+                addressController: _owner2Address,
+                inputDecoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Address',
+                    hintStyle: TextStyle(fontSize: 15.0)),
+              )),
             ),
           ),
         ],
