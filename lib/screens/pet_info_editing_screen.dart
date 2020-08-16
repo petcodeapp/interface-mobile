@@ -58,10 +58,13 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
   @override
   void initState() {
     super.initState();
-    _isServiceAnimal = widget.currentPet.isServiceAnimal;
-    _isAdopted = widget.currentPet.isAdopted;
+    _isServiceAnimal = widget.currentPet.isServiceAnimal ?? false;
+    _isAdopted = widget.currentPet.isAdopted ?? false;
     updatedImage = widget.currentPet.petImage;
-    _birthDate = widget.currentPet.birthday.toDate();
+    if(widget.currentPet.birthday != null){
+      _birthDate = widget.currentPet.birthday.toDate();
+    }
+
     _changedImage = false;
     setUpInputControllers();
   }
@@ -430,6 +433,8 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                     ),
                   ),
                   SizedBox(height: 20.0,),
+
+
                   Container(
                     width: width* 0.9,
 
@@ -440,6 +445,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                         children: [
                           Text('Adopted', style: StyleConstants.blackThinTitleTextSmall,),
                           CircularCheckBox(
+                            tristate: false,
                               value: _isAdopted,
                               onChanged: (bool value) {
                                 setState(() {
@@ -452,6 +458,9 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                       ),
                     ),
                   ),
+
+
+
                   Container(
                     width: width * 0.9,
                     child: Padding(
@@ -464,6 +473,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                             style: StyleConstants.blackThinTitleTextSmall,
                           ),
                           CircularCheckBox(
+                            tristate: false,
                               value: _isServiceAnimal,
                               onChanged: (bool value) {
                                 setState(() {
@@ -474,6 +484,8 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                       ),
                     ),
                   ),
+
+
                   SizedBox(height: 20.0,),
                   Container(
                     width: width * 0.9,
