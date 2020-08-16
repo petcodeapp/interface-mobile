@@ -260,217 +260,244 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                   Divider(),
                   Container(
                     width: width * 0.9,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Name',
-                            style: StyleConstants.blackThinTitleTextSmall),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.petNameValidator(value),
-                          controller: _nameInputController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Name',
-                            hintStyle: TextStyle(fontSize: 14.0),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Name',
+                              style: StyleConstants.blackThinTitleTextSmall),
+                          SizedBox(
+                            height: 10.0,
                           ),
-                        ),
-                      ],
+                          TextFormField(
+                            validator: (value) =>
+                                ValidatorHelper.petNameValidator(value),
+                            controller: _nameInputController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Name',
+                              hintStyle: TextStyle(fontSize: 14.0),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20.0,),
                   Container(
                     width: width * 0.9,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Species',
-                          style: StyleConstants.blackThinTitleTextSmall,
-                        ),
-                        SizedBox(height: 10.0),
-                        TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.petSpeciesValidator(value),
-                          controller: _speciesInputController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Species',
-                            hintStyle: TextStyle(fontSize: 14.0),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Species',
+                            style: StyleConstants.blackThinTitleTextSmall,
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 10.0),
+                          TextFormField(
+                            validator: (value) =>
+                                ValidatorHelper.petSpeciesValidator(value),
+                            controller: _speciesInputController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Species',
+                              hintStyle: TextStyle(fontSize: 14.0),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20.0,),
                   Container(width: width * 0.9,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Breed', style: StyleConstants.blackThinTitleTextSmall,),
-                        SizedBox(height: 10.0,),
-                        TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.petBreedValidator(value),
-                          controller: _breedInputController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Breed',
-                            hintStyle: TextStyle(fontSize: 14.0),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Breed', style: StyleConstants.blackThinTitleTextSmall,),
+                          SizedBox(height: 10.0,),
+                          TextFormField(
+                            validator: (value) =>
+                                ValidatorHelper.petBreedValidator(value),
+                            controller: _breedInputController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Breed',
+                              hintStyle: TextStyle(fontSize: 14.0),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20.0,),
                   Container(
                     width: width * 0.9,
 
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Birthday', style: StyleConstants.blackThinTitleTextSmall,),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Birthday', style: StyleConstants.blackThinTitleTextSmall,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
 
-                                child: _birthDate == null
-                                    ? Text('Please select a date')
-                                    : Text(
-                                        StringHelper.getDateStringNoYear(_birthDate),
-                                        style: TextStyle(fontSize: 18.0),
-                                      ),
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.calendar_today),
-                                onPressed: () {
-                                  showDatePicker(
-                                          context: context,
-                                          initialDate: DateTime.now(),
-                                          firstDate: DateTime(2019),
-                                          lastDate: DateTime(2021))
-                                      .then((date) {
-                                    setState(() {
-                                      _birthDate = date;
-                                      print(_birthDate.toString());
+                                  child: _birthDate == null
+                                      ? Text('Please select a date')
+                                      : Text(
+                                          StringHelper.getDateStringNoYear(_birthDate),
+                                          style: TextStyle(fontSize: 18.0),
+                                        ),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.calendar_today),
+                                  onPressed: () {
+                                    showDatePicker(
+                                            context: context,
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime(2019),
+                                            lastDate: DateTime(2021))
+                                        .then((date) {
+                                      setState(() {
+                                        _birthDate = date;
+                                        print(_birthDate.toString());
+                                      });
                                     });
-                                  });
-                                },
-                              )
-                            ],
+                                  },
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20.0,),
                   Container(
                     width: width*0.9,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Color', style: StyleConstants.blackThinTitleTextSmall,),
-                        SizedBox(height: 10.0),
-                        TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.petColorValidator(value),
-                          controller: _colorInputController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Color',
-                            hintStyle: TextStyle(fontSize: 14.0),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Color', style: StyleConstants.blackThinTitleTextSmall,),
+                          SizedBox(height: 10.0),
+                          TextFormField(
+                            validator: (value) =>
+                                ValidatorHelper.petColorValidator(value),
+                            controller: _colorInputController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Color',
+                              hintStyle: TextStyle(fontSize: 14.0),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20.0,),
                   Container(
                     width: width * 0.9,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Temperament', style: StyleConstants.blackThinTitleTextSmall,),
-                        SizedBox(height: 10.0),
-                        TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.petBreedValidator(value),
-                          controller: _temperamentInputController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Temperament',
-                            hintStyle: TextStyle(fontSize: 14.0),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Temperament', style: StyleConstants.blackThinTitleTextSmall,),
+                          SizedBox(height: 10.0),
+                          TextFormField(
+                            validator: (value) =>
+                                ValidatorHelper.petBreedValidator(value),
+                            controller: _temperamentInputController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Temperament',
+                              hintStyle: TextStyle(fontSize: 14.0),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20.0,),
                   Container(
                     width: width* 0.9,
 
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Adopted', style: StyleConstants.blackThinTitleTextSmall,),
-                        CircularCheckBox(
-                            value: _isAdopted,
-                            onChanged: (bool value) {
-                              setState(() {
-                                _isAdopted = value;
-                              });
-                            }),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Adopted', style: StyleConstants.blackThinTitleTextSmall,),
+                          CircularCheckBox(
+                              value: _isAdopted,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  _isAdopted = value;
+                                });
+                              }),
 
 
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Container(
                     width: width * 0.9,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Service Animal',
-                          style: StyleConstants.blackThinTitleTextSmall,
-                        ),
-                        CircularCheckBox(
-                            value: _isServiceAnimal,
-                            onChanged: (bool value) {
-                              setState(() {
-                                _isServiceAnimal = value;
-                              });
-                            })
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Service Animal',
+                            style: StyleConstants.blackThinTitleTextSmall,
+                          ),
+                          CircularCheckBox(
+                              value: _isServiceAnimal,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  _isServiceAnimal = value;
+                                });
+                              })
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20.0,),
                   Container(
                     width: width * 0.9,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Additional Info', style: StyleConstants.blackThinTitleTextSmall,),
-                        SizedBox(height: 10.0,),
-                        TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.petAddInfoValidator(value),
-                          controller: _additionalInfoInputController,
-                          maxLines: null,
-                          keyboardType: TextInputType.multiline,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Additional Info',
-                            hintStyle: TextStyle(fontSize: 14.0),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Additional Info', style: StyleConstants.blackThinTitleTextSmall,),
+                          SizedBox(height: 10.0,),
+                          TextFormField(
+                            validator: (value) =>
+                                ValidatorHelper.petAddInfoValidator(value),
+                            controller: _additionalInfoInputController,
+                            maxLines: null,
+                            keyboardType: TextInputType.multiline,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Additional Info',
+                              hintStyle: TextStyle(fontSize: 14.0),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     )
                   ),
                   Divider(),
