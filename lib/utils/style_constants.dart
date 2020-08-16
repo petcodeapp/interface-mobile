@@ -90,6 +90,8 @@ class StyleConstants {
         fontSize: 30.0,
       ));
 
+
+
   static TextStyle blackTitleTextLarge = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.black,
@@ -123,6 +125,12 @@ class StyleConstants {
   static TextStyle blackThinTitleTextLarge = new TextStyle(
     color: Colors.black87.withOpacity(0.8),
     fontSize: 40.0,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle blackThinTitleTextSmall = new TextStyle(
+    color: Colors.black,
+    fontSize: 22.0,
     fontWeight: FontWeight.w400,
   );
 
