@@ -16,4 +16,15 @@ class CurrentPetProvider extends ChangeNotifier {
     _currentPet = newPet;
     notifyListeners();
   }
+
+  void updatePet(List<Pet> allPets) {
+    if (allPets.length == 0) {
+      _currentPet = null;
+    } else {
+      allPets.firstWhere((Pet pet) => pet == _currentPet, orElse: () {
+        return allPets[0];
+      });
+    }
+    notifyListeners();
+  }
 }
