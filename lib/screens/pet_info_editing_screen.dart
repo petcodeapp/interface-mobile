@@ -4,12 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/services/breed_autocomplete_service.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
+import 'package:petcode_app/widgets/breed_search_bar.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
 import 'package:provider/provider.dart';
 
@@ -25,12 +27,12 @@ class PetInfoEditingScreen extends StatefulWidget {
 class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
   DatabaseService _databaseService;
   TextEditingController _nameInputController;
-  TextEditingController _speciesInputController;
   TextEditingController _breedInputController;
   TextEditingController _colorInputController;
   TextEditingController _temperamentInputController;
   TextEditingController _additionalInfoInputController;
 
+  Species _petSpecies;
   /*
   TextEditingController _owner1NameInputController;
   TextEditingController _owner1EmailInputController;
@@ -61,9 +63,15 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
     _isServiceAnimal = widget.currentPet.isServiceAnimal ?? false;
     _isAdopted = widget.currentPet.isAdopted ?? false;
     updatedImage = widget.currentPet.petImage;
-    if(widget.currentPet.birthday != null){
+    if (widget.currentPet.birthday != null) {
       _birthDate = widget.currentPet.birthday.toDate();
     }
+
+    _petSpecies = Species.values.firstWhere(
+        (Species species) =>
+            species.toShortString() == widget.currentPet.species, orElse: () {
+      return Species.Other;
+    });
 
     _changedImage = false;
     setUpInputControllers();
@@ -158,7 +166,6 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                     Pet updatedPet = widget.currentPet;
 
                     updatedPet.name = _nameInputController.text.trim();
-                    updatedPet.species = _speciesInputController.text.trim();
                     updatedPet.breed = _breedInputController.text.trim();
                     updatedPet.birthday = Timestamp.fromDate(_birthDate);
                     updatedPet.color = _colorInputController.text.trim();
@@ -168,6 +175,8 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                     updatedPet.isServiceAnimal = _isServiceAnimal;
                     updatedPet.additionalInfo =
                         _additionalInfoInputController.text.trim();
+
+                    updatedPet.species = _petSpecies.toShortString();
 
                     if (_changedImage) {
                       FirebaseStorageService firebaseStorageService =
@@ -287,7 +296,9 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.0,),
+                  SizedBox(
+                    height: 20.0,
+                  ),
                   Container(
                     width: width * 0.9,
                     child: Padding(
@@ -300,64 +311,93 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                             style: StyleConstants.blackThinTitleTextSmall,
                           ),
                           SizedBox(height: 10.0),
-                          TextFormField(
-                            validator: (value) =>
-                                ValidatorHelper.petSpeciesValidator(value),
-                            controller: _speciesInputController,
+                          DropdownButtonFormField<Species>(
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               hintText: 'Species',
                               hintStyle: TextStyle(fontSize: 14.0),
                             ),
-                          ),
+                            onChanged: (Species species) {
+                              setState(() {
+                                _petSpecies = species;
+                              });
+                            },
+                            items: [
+                              DropdownMenuItem(
+                                child: Text('Dog'),
+                                value: Species.Dog,
+                              ),
+                              DropdownMenuItem(
+                                child: Text('Cat'),
+                                value: Species.Cat,
+                              ),
+                              DropdownMenuItem(
+                                child: Text('Other'),
+                                value: Species.Other,
+                              ),
+                            ],
+                            value: _petSpecies,
+                          )
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.0,),
-                  Container(width: width * 0.9,
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Container(
+                    width: width * 0.9,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Breed', style: StyleConstants.blackThinTitleTextSmall,),
-                          SizedBox(height: 10.0,),
-                          TextFormField(
-                            validator: (value) =>
-                                ValidatorHelper.petBreedValidator(value),
-                            controller: _breedInputController,
-                            decoration: InputDecoration(
+                          Text(
+                            'Breed',
+                            style: StyleConstants.blackThinTitleTextSmall,
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          BreedSearchBar(
+                            breedInputController: _breedInputController,
+                            inputDecoration: InputDecoration(
                               border: OutlineInputBorder(),
                               hintText: 'Breed',
                               hintStyle: TextStyle(fontSize: 14.0),
                             ),
+                            species: _petSpecies,
                           ),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.0,),
+                  SizedBox(
+                    height: 20.0,
+                  ),
                   Container(
                     width: width * 0.9,
-
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Birthday', style: StyleConstants.blackThinTitleTextSmall,),
+                          Text(
+                            'Birthday',
+                            style: StyleConstants.blackThinTitleTextSmall,
+                          ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
-
                                   child: _birthDate == null
                                       ? Text('Please select a date')
                                       : Text(
-                                          StringHelper.getDateStringNoYear(_birthDate),
+                                          StringHelper.getDateStringNoYear(
+                                              _birthDate),
                                           style: TextStyle(fontSize: 18.0),
                                         ),
                                 ),
@@ -384,15 +424,20 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.0,),
+                  SizedBox(
+                    height: 20.0,
+                  ),
                   Container(
-                    width: width*0.9,
+                    width: width * 0.9,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Color', style: StyleConstants.blackThinTitleTextSmall,),
+                          Text(
+                            'Color',
+                            style: StyleConstants.blackThinTitleTextSmall,
+                          ),
                           SizedBox(height: 10.0),
                           TextFormField(
                             validator: (value) =>
@@ -408,7 +453,9 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.0,),
+                  SizedBox(
+                    height: 20.0,
+                  ),
                   Container(
                     width: width * 0.9,
                     child: Padding(
@@ -416,7 +463,10 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Temperament', style: StyleConstants.blackThinTitleTextSmall,),
+                          Text(
+                            'Temperament',
+                            style: StyleConstants.blackThinTitleTextSmall,
+                          ),
                           SizedBox(height: 10.0),
                           TextFormField(
                             validator: (value) =>
@@ -432,35 +482,32 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.0,),
-
-
+                  SizedBox(
+                    height: 20.0,
+                  ),
                   Container(
-                    width: width* 0.9,
-
+                    width: width * 0.9,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Adopted', style: StyleConstants.blackThinTitleTextSmall,),
+                          Text(
+                            'Adopted',
+                            style: StyleConstants.blackThinTitleTextSmall,
+                          ),
                           CircularCheckBox(
-                            tristate: false,
+                              tristate: false,
                               value: _isAdopted,
                               onChanged: (bool value) {
                                 setState(() {
                                   _isAdopted = value;
                                 });
                               }),
-
-
                         ],
                       ),
                     ),
                   ),
-
-
-
                   Container(
                     width: width * 0.9,
                     child: Padding(
@@ -473,7 +520,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                             style: StyleConstants.blackThinTitleTextSmall,
                           ),
                           CircularCheckBox(
-                            tristate: false,
+                              tristate: false,
                               value: _isServiceAnimal,
                               onChanged: (bool value) {
                                 setState(() {
@@ -484,34 +531,38 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                       ),
                     ),
                   ),
-
-
-                  SizedBox(height: 20.0,),
-                  Container(
-                    width: width * 0.9,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Additional Info', style: StyleConstants.blackThinTitleTextSmall,),
-                          SizedBox(height: 10.0,),
-                          TextFormField(
-                            validator: (value) =>
-                                ValidatorHelper.petAddInfoValidator(value),
-                            controller: _additionalInfoInputController,
-                            maxLines: null,
-                            keyboardType: TextInputType.multiline,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: 'Additional Info',
-                              hintStyle: TextStyle(fontSize: 14.0),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
+                  SizedBox(
+                    height: 20.0,
                   ),
+                  Container(
+                      width: width * 0.9,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Additional Info',
+                              style: StyleConstants.blackThinTitleTextSmall,
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            TextFormField(
+                              validator: (value) =>
+                                  ValidatorHelper.petAddInfoValidator(value),
+                              controller: _additionalInfoInputController,
+                              maxLines: null,
+                              keyboardType: TextInputType.multiline,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: 'Additional Info',
+                                hintStyle: TextStyle(fontSize: 14.0),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
                   Divider(),
 
                   /*
@@ -754,9 +805,6 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
         new TextEditingController(text: widget.currentPet.temperament);
     _additionalInfoInputController =
         new TextEditingController(text: widget.currentPet.additionalInfo);
-    _speciesInputController =
-        new TextEditingController(text: widget.currentPet.species);
-
     _colorInputController =
         new TextEditingController(text: widget.currentPet.color);
 

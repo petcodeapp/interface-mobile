@@ -125,11 +125,11 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Center(
                             child: DropdownButtonFormField<Species>(
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Species',
-                                hintStyle: TextStyle(fontSize: 15.0),
-                              ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Species',
+                            hintStyle: TextStyle(fontSize: 15.0),
+                          ),
                           onChanged: (Species species) {
                             setState(() {
                               _petSpecies = species;
@@ -231,6 +231,8 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                   updatedPet.name = _petNameInputController.text;
                   updatedPet.breed = _breedInputController.text;
                   updatedPet.color = _colorInputController.text;
+
+                  updatedPet.species = _petSpecies.toShortString();
 
                   Navigator.push(
                       context,

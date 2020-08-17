@@ -5,6 +5,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart'
 
 enum Species{Dog, Cat, Other}
 
+extension ParseToString on Species {
+  String toShortString() {
+    return this.toString().split('.').last;
+  }
+}
+
 class BreedAutocompleteService {
   String _apiKey;
 
