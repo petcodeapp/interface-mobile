@@ -1,18 +1,12 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/services/database_service.dart';
-import 'package:petcode_app/services/firebase_storage_service.dart';
-import 'package:petcode_app/services/image_picker_service.dart';
-import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
-import 'package:petcode_app/widgets/circular_check_box.dart';
+import 'package:petcode_app/widgets/address_search_bar.dart';
 import 'package:provider/provider.dart';
 
 class OwnerInfoEditingScreen extends StatefulWidget {
@@ -42,13 +36,6 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
   File chosenImageFile;
   ImageProvider updatedImage;
 
-  bool _isServiceAnimal;
-  bool _isAdopted;
-
-  DateTime _birthDate;
-
-  bool _changedImage;
-
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -57,8 +44,6 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
 
     setUpInputControllers();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -189,8 +174,13 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Name', style: StyleConstants.blackThinTitleTextSmall,),
-                        SizedBox(height: 10.0,),
+                        Text(
+                          'Name',
+                          style: StyleConstants.blackThinTitleTextSmall,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
                         TextFormField(
                           validator: (value) =>
                               ValidatorHelper.firstNameValidator(value),
@@ -204,7 +194,9 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20.0,),
+                  SizedBox(
+                    height: 20.0,
+                  ),
                   Container(
                     width: width * 0.9,
                     child: Column(
@@ -214,7 +206,9 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                           'Email',
                           style: StyleConstants.blackThinTitleTextSmall,
                         ),
-                        SizedBox(height: 10.0,),
+                        SizedBox(
+                          height: 10.0,
+                        ),
                         TextFormField(
                           validator: (value) =>
                               ValidatorHelper.emailValidator(value),
@@ -228,14 +222,21 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20.0,),
+                  SizedBox(
+                    height: 20.0,
+                  ),
                   Container(
                     width: width * 0.9,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Phone Number', style: StyleConstants.blackThinTitleTextSmall,),
-                        SizedBox(height: 10.0,),
+                        Text(
+                          'Phone Number',
+                          style: StyleConstants.blackThinTitleTextSmall,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
                         TextFormField(
                           validator: (value) =>
                               ValidatorHelper.phoneNumberValidator(value),
@@ -255,13 +256,16 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Address', style: StyleConstants.blackThinTitleTextSmall,),
-                        SizedBox(height: 10.0,),
-                        TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.addressValidator(value),
-                          controller: _addressInputController,
-                          decoration: InputDecoration(
+                        Text(
+                          'Address',
+                          style: StyleConstants.blackThinTitleTextSmall,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        AddressSearchBar(
+                          addressController: _addressInputController,
+                          inputDecoration: InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'Address',
                             hintStyle: TextStyle(fontSize: 14.0),
@@ -270,8 +274,6 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                       ],
                     ),
                   ),
-
-
                   Divider(),
                   SizedBox(
                     height: height * 0.02,
@@ -288,8 +290,13 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Name', style: StyleConstants.blackThinTitleTextSmall,),
-                        SizedBox(height: 10.0,),
+                        Text(
+                          'Name',
+                          style: StyleConstants.blackThinTitleTextSmall,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
                         TextFormField(
                           validator: (value) =>
                               ValidatorHelper.firstNameValidator(value),
@@ -303,7 +310,9 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20.0,),
+                  SizedBox(
+                    height: 20.0,
+                  ),
                   Container(
                     width: width * 0.9,
                     child: Column(
@@ -313,7 +322,9 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                           'Email',
                           style: StyleConstants.blackThinTitleTextSmall,
                         ),
-                        SizedBox(height: 10.0,),
+                        SizedBox(
+                          height: 10.0,
+                        ),
                         TextFormField(
                           validator: (value) =>
                               ValidatorHelper.emailValidator(value),
@@ -327,14 +338,21 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20.0,),
+                  SizedBox(
+                    height: 20.0,
+                  ),
                   Container(
                     width: width * 0.9,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Phone Number', style: StyleConstants.blackThinTitleTextSmall,),
-                        SizedBox(height: 10.0,),
+                        Text(
+                          'Phone Number',
+                          style: StyleConstants.blackThinTitleTextSmall,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
                         TextFormField(
                           validator: (value) =>
                               ValidatorHelper.phoneNumberValidator(value),
@@ -354,8 +372,13 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Address', style: StyleConstants.blackThinTitleTextSmall,),
-                        SizedBox(height: 10.0,),
+                        Text(
+                          'Address',
+                          style: StyleConstants.blackThinTitleTextSmall,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
                         TextFormField(
                           validator: (value) =>
                               ValidatorHelper.addressValidator(value),
@@ -369,7 +392,9 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10.0,),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                 ],
               ),
             ),
@@ -381,13 +406,13 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
 
   void setUpInputControllers() {
     _nameInputController =
-    new TextEditingController(text: widget.currentPet.contact_1.name);
+        new TextEditingController(text: widget.currentPet.contact_1.name);
     _emailInputController =
-    new TextEditingController(text: widget.currentPet.contact_1.email);
+        new TextEditingController(text: widget.currentPet.contact_1.email);
     _phoneNumberInputController = new TextEditingController(
         text: widget.currentPet.contact_1.phoneNumber);
     _addressInputController =
-    new TextEditingController(text: widget.currentPet.contact_1.address);
+        new TextEditingController(text: widget.currentPet.contact_1.address);
 
     _nameInputController2 = new TextEditingController(
         text: widget.currentPet.contact_2 == null

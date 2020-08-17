@@ -32,20 +32,27 @@ class _AddressSearchBarState extends State<AddressSearchBar> {
         return _autocompleteService.getLocationResults(address);
       },
       itemBuilder: (BuildContext context, Address suggestion) {
-        return ListTile(
-          leading: Icon(Icons.place),
-          title: Text(suggestion.mainText),
-          subtitle: Text(suggestion.secondaryText),
-        );
+        if (suggestion.fullName != 'Powered By Google') {
+          print(suggestion.fullName);
+          return ListTile(
+            leading: Icon(Icons.place),
+            title: Text(suggestion.mainText),
+            subtitle: Text(suggestion.secondaryText),
+          );
+        }
+        return Image.asset('assets/images/powered_by_google_on_white.png');
       },
       onSuggestionSelected: (Address suggestion) {
         widget.addressController.text = suggestion.fullName;
       },
       autoFlipDirection: true,
       hideOnEmpty: true,
+      loadingBuilder: (BuildContext context) {
+        return Padding(padding: EdgeInsets.symmetric(vertical: 10.0), child: Text('loading', style: TextStyle(fontSize: 14.0), textAlign: TextAlign.center,));
+      },
       debounceDuration: Duration(milliseconds: 100),
       transitionBuilder: (BuildContext context, Widget suggestionsBox,
-          AnimationController animationController) {
+          AnimationController animationControllexr) {
         return suggestionsBox;
       },
     );

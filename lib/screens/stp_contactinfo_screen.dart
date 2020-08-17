@@ -84,8 +84,8 @@ class _StpContactScreenState extends State<StpContactScreen> {
                     SlimyCard(
                       color: StyleConstants.yellow,
                       width: 300,
-                      topCardHeight: 350,
-                      bottomCardHeight: 350,
+                      topCardHeight: 375,
+                      bottomCardHeight: 375,
                       borderRadius: 15,
                       topCardWidget: contactWidget1(),
                       bottomCardWidget: contactWidget2(),
@@ -273,7 +273,7 @@ class _StpContactScreenState extends State<StpContactScreen> {
                 ),
               ],
             ),
-            height: 50.0,
+            height: 75.0,
             width: 250.0,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
