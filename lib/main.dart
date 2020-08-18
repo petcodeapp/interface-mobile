@@ -7,13 +7,16 @@ import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/services/map_service.dart';
-import 'package:petcode_app/services/current_pet_provider.dart';
+import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
+import 'package:petcode_app/set_up_keys.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SetUpKeys().createGoogleMapsKey();
   runApp(MyApp());
 }
 
@@ -72,11 +75,11 @@ class MyApp extends StatelessWidget {
                   petService.allPets.length == 0) {
                 return currentPetProvider..clearPet();
               } else if (currentPetProvider.currentPet != null) {
-                return currentPetProvider;
+                return currentPetProvider..updatePet(petService.allPets);
               } else {
                 return currentPetProvider..setCurrentPet(petService.allPets[0]);
               }
-            })
+            }),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

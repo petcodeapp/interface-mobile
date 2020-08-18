@@ -18,18 +18,10 @@ class _RootScreenState extends State<RootScreen> {
   int _currentIndex = 0;
   PageController _pageController = PageController(initialPage: 0);
   var _pageOptions = [
-    Consumer<PetService>(
-      builder: (BuildContext context, PetService petService, _) {
-        return HomeScreen();
-      },
-    ),
+    HomeScreen(),
     ScansScreen(),
     MedicalInfoScreen(),
-    Consumer<UserService>(
-      builder: (BuildContext context, UserService service, _) {
-        return AccountScreen();
-      },
-    ),
+    AccountScreen()
   ];
 
   @override
@@ -51,11 +43,11 @@ class _RootScreenState extends State<RootScreen> {
           centerTitle: true,
           backgroundColor: StyleConstants.blue,
           title: Container(
-            height: 175,
+              height: 175,
               child: Image.asset(
-            'assets/images/logoyellow.png',
-            fit: BoxFit.cover,
-          )),
+                'assets/images/logoyellow.png',
+                fit: BoxFit.cover,
+              )),
         ),
         body: SizedBox.expand(
           child: PageView(

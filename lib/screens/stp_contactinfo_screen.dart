@@ -3,6 +3,7 @@ import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/stp_petinfo_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/address_search_bar.dart';
 import 'package:slimy_card/slimy_card.dart';
 
 class StpContactScreen extends StatefulWidget {
@@ -83,8 +84,8 @@ class _StpContactScreenState extends State<StpContactScreen> {
                     SlimyCard(
                       color: StyleConstants.yellow,
                       width: 300,
-                      topCardHeight: 350,
-                      bottomCardHeight: 350,
+                      topCardHeight: 375,
+                      bottomCardHeight: 375,
                       borderRadius: 15,
                       topCardWidget: contactWidget1(),
                       bottomCardWidget: contactWidget2(),
@@ -106,14 +107,7 @@ class _StpContactScreenState extends State<StpContactScreen> {
                       address: _owner1Address.text);
                   updatedPet.contact_1 = owner1;
 
-                  if (_owner2Name.text != null &&
-                      _owner2Name.text.isNotEmpty &&
-                      _owner2PhoneNumber.text != null &&
-                      _owner2PhoneNumber.text.isNotEmpty &&
-                      _owner2Email.text != null &&
-                      _owner2Email.text.isNotEmpty &&
-                      _owner2Address.text != null &&
-                      _owner2Address.text.isNotEmpty) {
+                  if (!owner2IsEmpty()) {
                     Owner owner2 = new Owner(
                       name: _owner2Name.text,
                       phoneNumber: _owner2PhoneNumber.text,
@@ -124,8 +118,12 @@ class _StpContactScreenState extends State<StpContactScreen> {
                   } else {
                     updatedPet.contact_2 = null;
                   }
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => StpPetInfoScreen(pet: updatedPet,)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => StpPetInfoScreen(
+                                pet: updatedPet,
+                              )));
                 },
                 child: Container(
                   height: 55.0,
@@ -268,19 +266,19 @@ class _StpContactScreenState extends State<StpContactScreen> {
                 ),
               ],
             ),
-            height: 50.0,
+            height: 75.0,
             width: 250.0,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Center(
-                child: TextFormField(
-                  controller: _owner1Address,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Address',
-                      hintStyle: TextStyle(fontSize: 15.0)),
+                  child: AddressSearchBar(
+                addressController: _owner1Address,
+                inputDecoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Address',
+                  hintStyle: TextStyle(fontSize: 15.0),
                 ),
-              ),
+              )),
             ),
           ),
         ],
@@ -412,18 +410,26 @@ class _StpContactScreenState extends State<StpContactScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Center(
-                child: TextFormField(
-                  controller: _owner2Address,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Address',
-                      hintStyle: TextStyle(fontSize: 15.0)),
-                ),
-              ),
+                  child: AddressSearchBar(
+                addressController: _owner2Address,
+                inputDecoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Address',
+                    hintStyle: TextStyle(fontSize: 15.0)),
+              )),
             ),
           ),
         ],
       ),
     );
+  }
+
+  bool owner2IsEmpty() {
+    return ((_owner2Name.text == null || _owner2Name.text.trim().isEmpty) &&
+        (_owner2PhoneNumber.text == null ||
+            _owner2PhoneNumber.text.trim().isEmpty) &&
+        (_owner2Email.text == null || _owner2Email.text.trim().isEmpty) &&
+        (_owner2PhoneNumber.text == null ||
+            _owner2PhoneNumber.text.trim().isEmpty));
   }
 }
