@@ -19,6 +19,8 @@ class StyleConstants {
 
   static Color lightGrey = new Color(0xffB4C1CF);
 
+  static Color veryLightGrey = new Color(0xffEEF2F7);
+
   static Color purpleGrey = new Color(0xffEDF2F7);
 
   static Color darkPurpleGrey = new Color(0xffA0AEC0);

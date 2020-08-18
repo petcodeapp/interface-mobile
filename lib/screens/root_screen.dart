@@ -4,6 +4,7 @@ import 'package:petcode_app/screens/account_screen.dart';
 import 'package:petcode_app/screens/home_screen.dart';
 import 'package:petcode_app/screens/medical_info_screen.dart';
 import 'package:petcode_app/screens/scans_screen.dart';
+import 'package:petcode_app/screens/social_split_screen.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -24,7 +25,7 @@ class _RootScreenState extends State<RootScreen> {
       },
     ),
     ScansScreen(),
-    MedicalInfoScreen(),
+    SocialSplitScreen(),
     Consumer<UserService>(
       builder: (BuildContext context, UserService service, _) {
         return AccountScreen();
@@ -46,14 +47,19 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: StyleConstants.blue,
           title: Container(
-              height: 175,
+            //color: Colors.white,
+              height: 75,
+              //width: 200,
               child: Image.asset(
-                'assets/images/logoyellow.png',
+                'assets/images/appbarlogoyellow.png',
                 fit: BoxFit.cover,
               )),
         ),
