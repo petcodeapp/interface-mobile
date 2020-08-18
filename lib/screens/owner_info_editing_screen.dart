@@ -23,20 +23,22 @@ class OwnerInfoEditingScreen extends StatefulWidget {
 
 class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
   DatabaseService _databaseService;
-  TextEditingController _nameInputController;
-  TextEditingController _emailInputController;
-  TextEditingController _phoneNumberInputController;
-  TextEditingController _addressInputController;
 
-  TextEditingController _nameInputController2;
-  TextEditingController _emailInputController2;
-  TextEditingController _phoneNumberInputController2;
-  TextEditingController _addressInputController2;
+  TextEditingController _owner1Name;
+  TextEditingController _owner1PhoneNumber;
+  TextEditingController _owner1Email;
+  TextEditingController _owner1Address;
+
+  TextEditingController _owner2Name;
+  TextEditingController _owner2PhoneNumber;
+  TextEditingController _owner2Email;
+  TextEditingController _owner2Address;
 
   File chosenImageFile;
   ImageProvider updatedImage;
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _owner1FormKey = new GlobalKey<FormState>();
+  GlobalKey<FormState> _owner2FormKey = new GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -52,92 +54,20 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: StyleConstants.blue,
-        centerTitle: true,
-        title: Text(
-          'Edit Owner Info',
-          style: TextStyle(color: Colors.white),
-        ),
-        leading: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Text(
-                'Cancel',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.0,
-                ),
-              ),
-            ),
+        appBar: AppBar(
+          backgroundColor: StyleConstants.blue,
+          centerTitle: true,
+          title: Text(
+            'Edit Owner Info',
+            style: TextStyle(color: Colors.white),
           ),
-        ),
-        actions: [
-          Center(
+          leading: Center(
             child: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+              padding: const EdgeInsets.only(left: 8.0),
               child: GestureDetector(
-                onTap: () async {
-                  if (_formKey.currentState.validate()) {
-                    Owner updatedOwner1 = widget.currentPet.contact_1;
-                    updatedOwner1.name = _nameInputController.text.trim();
-                    updatedOwner1.email = _emailInputController.text.trim();
-                    updatedOwner1.phoneNumber =
-                        _phoneNumberInputController.text.trim();
-                    updatedOwner1.address = _addressInputController.text.trim();
-
-                    if (widget.currentPet.contact_2 == null) {
-                      widget.currentPet.contact_2 = new Owner(
-                        name: _nameInputController2.text.trim(),
-                        email: _emailInputController2.text.trim(),
-                        phoneNumber: _phoneNumberInputController2.text.trim(),
-                        address: _addressInputController2.text.trim(),
-                      );
-                    } else {
-                      Owner updatedOwner2 =
-                          widget.currentPet.contact_2 ?? new Owner();
-                      updatedOwner2.name = _nameInputController2.text.trim();
-                      updatedOwner2.email = _emailInputController2.text.trim();
-                      updatedOwner2.phoneNumber =
-                          _phoneNumberInputController2.text.trim();
-                      updatedOwner2.address =
-                          _addressInputController2.text.trim();
-                    }
-
-                    _databaseService.updatePet(widget.currentPet);
-
-                    Navigator.pop(context);
-
-                    /*
-                    Owner contact_1 = new Owner(
-                      name: _owner1NameInputController.text.trim(),
-                      email: _owner1EmailInputController.text.trim(),
-                      phoneNumber: _owner1PhoneInputController.text.trim(),
-                      address: _owner1AddressInputController.text.trim(),
-                    );
-
-                    updatedPet.contact_1 = contact_1;
-
-                    if (!owner2IsNull()) {
-                      Owner contact_2 = new Owner(
-                        name: _owner2NameInputController.text.trim(),
-                        email: _owner2EmailInputController.text.trim(),
-                        phoneNumber: _owner2PhoneInputController.text.trim(),
-                        address: _owner2AddressInputController.text.trim(),
-                      );
-
-                      updatedPet.contact_2 = contact_2;
-                    } else {
-                      updatedPet.contact_2 = null;
-                    }
-
-                    */
-                  }
-                },
+                onTap: () => Navigator.pop(context),
                 child: Text(
-                  'Done',
+                  'Cancel',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 15.0,
@@ -146,321 +76,364 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
               ),
             ),
           ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
+          actions: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: GestureDetector(
+                  onTap: () async {
+                    Pet updatedPet = widget.currentPet;
+
+                    if (_owner1FormKey.currentState.validate()) {
+                      if (!owner2IsEmpty()) {
+                        if (_owner2FormKey.currentState.validate()) {
+                          Owner updatedOwner2 = new Owner();
+
+                          updatedOwner2.name = _owner2Name.text.trim();
+                          updatedOwner2.phoneNumber =
+                              _owner2PhoneNumber.text.trim();
+                          updatedOwner2.email = _owner2Email.text.trim();
+                          updatedOwner2.address = _owner2Address.text.trim();
+
+                          updatedPet.contact_2 = updatedOwner2;
+                        } else {
+                          return;
+                        }
+                      } else {
+                        updatedPet.contact_2 = null;
+                      }
+
+                      Owner updatedOwner1 = new Owner();
+
+                      updatedOwner1.name = _owner1Name.text.trim();
+                      updatedOwner1.phoneNumber =
+                          _owner1PhoneNumber.text.trim();
+                      updatedOwner1.email = _owner1Email.text.trim();
+                      updatedOwner1.address = _owner1Address.text.trim();
+
+                      updatedPet.contact_1 = updatedOwner1;
+
+                      _databaseService.updatePet(widget.currentPet);
+
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Text(
+                    'Done',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
           child: Container(
             //height: height,
             width: width,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: height * 0.02,
-                  ),
-                  Text(
-                    'Owner 1:',
-                    style: StyleConstants.blackThinTitleText,
-                  ),
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
-                  Container(
-                    width: width * 0.9,
+                  Form(
+                    key: _owner1FormKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
                         Text(
-                          'Name',
-                          style: StyleConstants.blackThinTitleTextSmall,
+                          'Owner 1:',
+                          style: StyleConstants.blackThinTitleText,
                         ),
                         SizedBox(
-                          height: 10.0,
+                          height: height * 0.01,
                         ),
-                        TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.firstNameValidator(value),
-                          controller: _nameInputController,
-                          decoration: InputDecoration(
-                            hintText: 'Name',
-                            border: OutlineInputBorder(),
-                            hintStyle: TextStyle(fontSize: 14.0),
+                        Container(
+                          width: width * 0.9,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Name',
+                                style: StyleConstants.blackThinTitleTextSmall,
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              TextFormField(
+                                controller: _owner1Name,
+                                validator: (value) =>
+                                    ValidatorHelper.firstNameValidator(value),
+                                decoration: InputDecoration(
+                                  hintText: 'Name',
+                                  border: OutlineInputBorder(),
+                                  hintStyle: TextStyle(fontSize: 14.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Container(
+                          width: width * 0.9,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Phone Number',
+                                style: StyleConstants.blackThinTitleTextSmall,
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              TextFormField(
+                                controller: _owner1PhoneNumber,
+                                validator: (value) =>
+                                    ValidatorHelper.phoneNumberValidator(value),
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Phone Number',
+                                  hintStyle: TextStyle(fontSize: 14.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Container(
+                          width: width * 0.9,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Email',
+                                style: StyleConstants.blackThinTitleTextSmall,
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              TextFormField(
+                                controller: _owner1Email,
+                                validator: (value) =>
+                                    ValidatorHelper.emailValidator(value),
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Email',
+                                  hintStyle: TextStyle(fontSize: 14.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Container(
+                          width: width * 0.9,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Address',
+                                style: StyleConstants.blackThinTitleTextSmall,
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              AddressSearchBar(
+                                addressController: _owner1Address,
+                                addressValidator: (String address) =>
+                                    ValidatorHelper.addressValidator(address),
+                                inputDecoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Address',
+                                  hintStyle: TextStyle(fontSize: 14.0),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Container(
-                    width: width * 0.9,
+                  Form(
+                    key: _owner2FormKey,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Divider(),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
                         Text(
-                          'Email',
-                          style: StyleConstants.blackThinTitleTextSmall,
+                          'Owner 2:',
+                          style: StyleConstants.blackThinTitleText,
+                        ),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
+                        Container(
+                          width: width * 0.9,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Name',
+                                style: StyleConstants.blackThinTitleTextSmall,
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              TextFormField(
+                                controller: _owner2Name,
+                                validator: (value) =>
+                                    ValidatorHelper.firstNameValidator(value),
+                                decoration: InputDecoration(
+                                  hintText: 'Name',
+                                  border: OutlineInputBorder(),
+                                  hintStyle: TextStyle(fontSize: 14.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Container(
+                          width: width * 0.9,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Phone Number',
+                                style: StyleConstants.blackThinTitleTextSmall,
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              TextFormField(
+                                controller: _owner2PhoneNumber,
+                                validator: (value) =>
+                                    ValidatorHelper.phoneNumberValidator(value),
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Phone Number',
+                                  hintStyle: TextStyle(fontSize: 14.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Container(
+                          width: width * 0.9,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Email',
+                                style: StyleConstants.blackThinTitleTextSmall,
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              TextFormField(
+                                controller: _owner2Email,
+                                validator: (value) =>
+                                    ValidatorHelper.emailValidator(value),
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Email',
+                                  hintStyle: TextStyle(fontSize: 14.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Container(
+                          width: width * 0.9,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Address',
+                                style: StyleConstants.blackThinTitleTextSmall,
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              AddressSearchBar(
+                                addressController: _owner2Address,
+                                addressValidator: (String address) =>
+                                    ValidatorHelper.addressValidator(address),
+                                inputDecoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Address',
+                                  hintStyle: TextStyle(fontSize: 14.0),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                         SizedBox(
                           height: 10.0,
                         ),
-                        TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.emailValidator(value),
-                          controller: _emailInputController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Email',
-                            hintStyle: TextStyle(fontSize: 14.0),
-                          ),
-                        ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Container(
-                    width: width * 0.9,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Phone Number',
-                          style: StyleConstants.blackThinTitleTextSmall,
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.phoneNumberValidator(value),
-                          controller: _phoneNumberInputController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Phone Number',
-                            hintStyle: TextStyle(fontSize: 14.0),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20.0),
-                  Container(
-                    width: width * 0.9,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Address',
-                          style: StyleConstants.blackThinTitleTextSmall,
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        AddressSearchBar(
-                          addressController: _addressInputController,
-                          inputDecoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Address',
-                            hintStyle: TextStyle(fontSize: 14.0),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Divider(),
-                  SizedBox(
-                    height: height * 0.02,
-                  ),
-                  Text(
-                    'Owner 2:',
-                    style: StyleConstants.blackThinTitleText,
-                  ),
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
-                  Container(
-                    width: width * 0.9,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Name',
-                          style: StyleConstants.blackThinTitleTextSmall,
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.firstNameValidator(value),
-                          controller: _nameInputController2,
-                          decoration: InputDecoration(
-                            hintText: 'Name',
-                            border: OutlineInputBorder(),
-                            hintStyle: TextStyle(fontSize: 14.0),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Container(
-                    width: width * 0.9,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Email',
-                          style: StyleConstants.blackThinTitleTextSmall,
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.emailValidator(value),
-                          controller: _emailInputController2,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Email',
-                            hintStyle: TextStyle(fontSize: 14.0),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Container(
-                    width: width * 0.9,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Phone Number',
-                          style: StyleConstants.blackThinTitleTextSmall,
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.phoneNumberValidator(value),
-                          controller: _phoneNumberInputController2,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Phone Number',
-                            hintStyle: TextStyle(fontSize: 14.0),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20.0),
-                  Container(
-                    width: width * 0.9,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Address',
-                          style: StyleConstants.blackThinTitleTextSmall,
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        TextFormField(
-                          validator: (value) =>
-                              ValidatorHelper.addressValidator(value),
-                          controller: _addressInputController2,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Address',
-                            hintStyle: TextStyle(fontSize: 14.0),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.0,
                   ),
                 ],
               ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   void setUpInputControllers() {
-    _nameInputController =
+    _owner1Name =
         new TextEditingController(text: widget.currentPet.contact_1.name);
-    _emailInputController =
-        new TextEditingController(text: widget.currentPet.contact_1.email);
-    _phoneNumberInputController = new TextEditingController(
+    _owner1PhoneNumber = new TextEditingController(
         text: widget.currentPet.contact_1.phoneNumber);
-    _addressInputController =
-        new TextEditingController(text: widget.currentPet.contact_1.address);
-
-    _nameInputController2 = new TextEditingController(
-        text: widget.currentPet.contact_2 == null
-            ? ''
-            : widget.currentPet.contact_2.name ?? '');
-    _emailInputController2 = new TextEditingController(
-        text: widget.currentPet.contact_2 == null
-            ? ''
-            : widget.currentPet.contact_2.email ?? '');
-    _phoneNumberInputController2 = new TextEditingController(
-        text: widget.currentPet.contact_2 == null
-            ? ''
-            : widget.currentPet.contact_2.phoneNumber);
-    _addressInputController2 = new TextEditingController(
-        text: widget.currentPet.contact_2 == null
-            ? ''
-            : widget.currentPet.contact_2.address);
-
-    /*
-    _owner1NameInputController =
-        new TextEditingController(text: widget.currentPet.contact_1.name);
-    _owner1EmailInputController =
+    _owner1Email =
         new TextEditingController(text: widget.currentPet.contact_1.email);
-    _owner1PhoneInputController = new TextEditingController(
-        text: widget.currentPet.contact_1.phoneNumber);
-    _owner1AddressInputController =
+    _owner1Address =
         new TextEditingController(text: widget.currentPet.contact_1.address);
-
-    _owner2NameInputController = new TextEditingController();
-    _owner2EmailInputController = new TextEditingController();
-    _owner2PhoneInputController = new TextEditingController();
-    _owner2AddressInputController = new TextEditingController();
 
     if (widget.currentPet.contact_2 != null) {
-      _owner2NameInputController.text = widget.currentPet.contact_2.name;
-      _owner2EmailInputController.text = widget.currentPet.contact_2.email;
-      _owner2PhoneInputController.text =
-          widget.currentPet.contact_2.phoneNumber;
-      _owner2AddressInputController.text = widget.currentPet.contact_2.address;
+      _owner2Name =
+          new TextEditingController(text: widget.currentPet.contact_2.name);
+      _owner2PhoneNumber = new TextEditingController(
+          text: widget.currentPet.contact_2.phoneNumber);
+      _owner2Email =
+          new TextEditingController(text: widget.currentPet.contact_2.email);
+      _owner2Address =
+          new TextEditingController(text: widget.currentPet.contact_2.address);
+    } else {
+      _owner2Name = new TextEditingController();
+      _owner2PhoneNumber = new TextEditingController();
+      _owner2Email = new TextEditingController();
+      _owner2Address = new TextEditingController();
     }
   }
 
-  bool owner2IsNull() {
-    return _owner2NameInputController.text.trim().isEmpty &&
-        _owner2EmailInputController.text.trim().isEmpty &&
-        _owner2PhoneInputController.text.trim().isEmpty &&
-        _owner2AddressInputController.text.trim().isEmpty;
-  }
-  */
+  bool owner2IsEmpty() {
+    return ((_owner2Name.text == null || _owner2Name.text.trim().isEmpty) &&
+        (_owner2PhoneNumber.text == null ||
+            _owner2PhoneNumber.text.trim().isEmpty) &&
+        (_owner2Email.text == null || _owner2Email.text.trim().isEmpty) &&
+        (_owner2Address.text == null || _owner2Address.text.trim().isEmpty));
   }
 }

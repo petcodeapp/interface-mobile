@@ -4,10 +4,11 @@ import 'package:petcode_app/models/Address.dart';
 import 'package:petcode_app/services/address_autocomplete_service.dart';
 
 class AddressSearchBar extends StatefulWidget {
-  AddressSearchBar({Key key, this.addressController, this.inputDecoration})
+  AddressSearchBar({Key key, this.addressController, this.inputDecoration, this.addressValidator})
       : super(key: key);
   final TextEditingController addressController;
   final InputDecoration inputDecoration;
+  final FormFieldValidator<String> addressValidator;
   @override
   _AddressSearchBarState createState() => _AddressSearchBarState();
 }
@@ -28,6 +29,7 @@ class _AddressSearchBarState extends State<AddressSearchBar> {
         controller: widget.addressController,
         decoration: widget.inputDecoration,
       ),
+      validator: widget.addressValidator,
       suggestionsCallback: (String address) async {
         return _autocompleteService.getLocationResults(address);
       },

@@ -107,14 +107,7 @@ class _StpContactScreenState extends State<StpContactScreen> {
                       address: _owner1Address.text);
                   updatedPet.contact_1 = owner1;
 
-                  if (_owner2Name.text != null &&
-                      _owner2Name.text.isNotEmpty &&
-                      _owner2PhoneNumber.text != null &&
-                      _owner2PhoneNumber.text.isNotEmpty &&
-                      _owner2Email.text != null &&
-                      _owner2Email.text.isNotEmpty &&
-                      _owner2Address.text != null &&
-                      _owner2Address.text.isNotEmpty) {
+                  if (!owner2IsEmpty()) {
                     Owner owner2 = new Owner(
                       name: _owner2Name.text,
                       phoneNumber: _owner2PhoneNumber.text,
@@ -429,5 +422,14 @@ class _StpContactScreenState extends State<StpContactScreen> {
         ],
       ),
     );
+  }
+
+  bool owner2IsEmpty() {
+    return ((_owner2Name.text == null || _owner2Name.text.trim().isEmpty) &&
+        (_owner2PhoneNumber.text == null ||
+            _owner2PhoneNumber.text.trim().isEmpty) &&
+        (_owner2Email.text == null || _owner2Email.text.trim().isEmpty) &&
+        (_owner2PhoneNumber.text == null ||
+            _owner2PhoneNumber.text.trim().isEmpty));
   }
 }
