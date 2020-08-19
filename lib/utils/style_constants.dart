@@ -25,6 +25,8 @@ class StyleConstants {
 
   static Color darkPurpleGrey = new Color(0xffA0AEC0);
 
+  static Color lightBlack = new Color(0xff718096);
+
   //text styles
   static TextStyle whiteButtonText = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
@@ -136,6 +138,12 @@ class StyleConstants {
     fontWeight: FontWeight.w400,
   );
 
+  static TextStyle lightBlackThinTitleTextSmall = new TextStyle(
+    color: lightBlack,
+    fontSize: 22.0,
+    fontWeight: FontWeight.w400,
+  );
+
   static TextStyle blackDescriptionText = new TextStyle(
     color: Colors.black,
     fontSize: 20.0,
@@ -160,6 +168,18 @@ class StyleConstants {
     fontWeight: FontWeight.w400,
   );
 
+  static TextStyle blackThinDescriptionTextSmall = new TextStyle(
+    color: Colors.black,
+    fontSize: 14.0,
+    fontWeight: FontWeight.w300,
+  );
+
+  static TextStyle darkGreyThinDescriptionTextSmall = new TextStyle(
+    color: lightBlack,
+    fontSize: 14.0,
+    fontWeight: FontWeight.w400,
+  );
+
   static TextStyle greyedOutText =
       new TextStyle(fontWeight: FontWeight.w400, color: Colors.grey);
 
@@ -171,6 +191,12 @@ class StyleConstants {
 
   static TextStyle greyThinDescriptionTextSmall = new TextStyle(
     color: darkPurpleGrey,
+    fontSize: 14.0,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle lightBlackDescriptionTextSmall = new TextStyle(
+    color: lightBlack,
     fontSize: 14.0,
     fontWeight: FontWeight.w400,
   );

@@ -74,6 +74,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
           'Edit Owner Info',
           style: TextStyle(color: Colors.white),
         ),
+        /*
         leading: Center(
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0),
@@ -89,6 +90,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
             ),
           ),
         ),
+        */
         actions: [
           Center(
             child: Padding(
@@ -152,10 +154,11 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                   }
                 },
                 child: Text(
-                  'Done',
+                  'Save',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 15.0,
+                    fontWeight: FontWeight.w400
                   ),
                 ),
               ),
