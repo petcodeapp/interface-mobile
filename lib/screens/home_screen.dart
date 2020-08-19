@@ -301,10 +301,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Icon(
                                               //Icons.pets,
                                               HeroIcons.icon_heart,
-                                              size: 30.0,
+
+                                              size: 25.0,
                                               color:
                                                   StyleConstants.darkPurpleGrey,
                                             ),
+                                            SizedBox(height: height * 0.005,),
                                             Text(
                                               'Pet Info',
                                               style: TextStyle(
@@ -328,10 +330,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Icon(
                                               //Icons.person,
                                               HeroIcons.icon_call,
-                                              size: 30.0,
+                                              size: 25.0,
                                               color:
                                                   StyleConstants.darkPurpleGrey,
                                             ),
+                                            SizedBox(height: height * 0.005,),
                                             Text(
                                               'Owner Info',
                                               style: TextStyle(
@@ -351,10 +354,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Icon(
                                               //Icons.today,
                                               HeroIcons.icon_notification,
-                                              size: 30.0,
+                                              size: 25.0,
                                               color:
                                                   StyleConstants.darkPurpleGrey,
                                             ),
+                                            SizedBox(height: height * 0.005,),
                                             Text(
                                               'Reminders',
                                               style: TextStyle(
@@ -378,10 +382,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Icon(
                                               //Icons.assignment,
                                               HeroIcons.icon_clipboard,
-                                              size: 30.0,
+                                              size: 25.0,
                                               color:
                                                   StyleConstants.darkPurpleGrey,
                                             ),
+                                            SizedBox(height: height * 0.005,),
                                             Text(
                                               'Med Info',
                                               style: TextStyle(
