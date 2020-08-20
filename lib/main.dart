@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
                   petService.allPets.length == 0) {
                 return currentPetProvider..clearPet();
               } else if (currentPetProvider.currentPet != null) {
-                return currentPetProvider;
+                return currentPetProvider..updatePet(petService.allPets);
               } else {
                 return currentPetProvider..setCurrentPet(petService.allPets[0]);
               }

@@ -44,7 +44,7 @@ class ValidatorHelper {
 
   static String addressValidator(String address) {
     if (address == null || address.trim().length == 0) {
-      return 'Please enter a valid pet name';
+      return 'Please enter a valid address';
     } else {
       return null;
     }

@@ -38,6 +38,7 @@ class AddressAutocompleteService {
             secondaryText: structuredFormatting['secondary_text']));
       }
       print(addresses);
+      addresses.add(new Address(fullName: 'Powered By Google'));
       return addresses;
     }
     return new List<Address>();

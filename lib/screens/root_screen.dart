@@ -19,18 +19,18 @@ class _RootScreenState extends State<RootScreen> {
   int _currentIndex = 0;
   PageController _pageController = PageController(initialPage: 0);
   var _pageOptions = [
-    Consumer<PetService>(
-      builder: (BuildContext context, PetService petService, _) {
-        return HomeScreen();
-      },
-    ),
+    HomeScreen(),
     ScansScreen(),
+
     SocialSplitScreen(),
     Consumer<UserService>(
       builder: (BuildContext context, UserService service, _) {
         return AccountScreen();
       },
     ),
+
+    AccountScreen()
+
   ];
 
   @override
