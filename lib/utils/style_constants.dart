@@ -180,6 +180,18 @@ class StyleConstants {
     fontWeight: FontWeight.w400,
   );
 
+  static TextStyle whiteThinTitleText = new TextStyle(
+    color: Colors.white,
+    fontSize: 30.0,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle whiteThinTitleTextSmall = new TextStyle(
+    color: Colors.white,
+    fontSize: 22.0,
+    fontWeight: FontWeight.w400,
+  );
+
   static TextStyle greyedOutText =
       new TextStyle(fontWeight: FontWeight.w400, color: Colors.grey);
 
