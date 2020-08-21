@@ -140,22 +140,25 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                     width: width * 0.9,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Name', style: StyleConstants.blackThinTitleTextSmall,),
-                          SizedBox(height: 10.0,),
-                          TextFormField(
-                            validator: (value) =>
-                                ValidatorHelper.firstNameValidator(value),
-                            controller: _nameInputController,
-                            decoration: InputDecoration(
-                              hintText: 'Name',
-                              border: OutlineInputBorder(),
-                              hintStyle: TextStyle(fontSize: 14.0),
+                      child: Form(
+                        key: _owner1FormKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Name', style: StyleConstants.blackThinTitleTextSmall,),
+                            SizedBox(height: 10.0,),
+                            TextFormField(
+                              validator: (value) =>
+                                  ValidatorHelper.firstNameValidator(value),
+                              controller: _owner1Name,
+                              decoration: InputDecoration(
+                                hintText: 'Name',
+                                border: OutlineInputBorder(),
+                                hintStyle: TextStyle(fontSize: 14.0),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -175,7 +178,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                           TextFormField(
                             validator: (value) =>
                                 ValidatorHelper.emailValidator(value),
-                            controller: _emailInputController,
+                            controller: _owner1Email,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               hintText: 'Email',
@@ -199,7 +202,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                           TextFormField(
                             validator: (value) =>
                                 ValidatorHelper.phoneNumberValidator(value),
-                            controller: _phoneNumberInputController,
+                            controller: _owner1PhoneNumber,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               hintText: 'Phone Number',
@@ -223,7 +226,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                           TextFormField(
                             validator: (value) =>
                                 ValidatorHelper.addressValidator(value),
-                            controller: _addressInputController,
+                            controller: _owner1Address,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               hintText: 'Address',
@@ -254,23 +257,26 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                     width: width * 0.9,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Name', style: StyleConstants.blackThinTitleTextSmall,),
-                          SizedBox(height: 10.0,),
-                          TextFormField(
-                            validator: (value) =>
-                                ValidatorHelper.firstNameValidator(value),
-                            controller: _nameInputController2,
-                            decoration: InputDecoration(
-                              hintText: 'Name',
-                              border: OutlineInputBorder(),
-                              hintStyle: TextStyle(fontSize: 14.0),
-                            ),
+                      child: Form(
+                        key: _owner2FormKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Name', style: StyleConstants.blackThinTitleTextSmall,),
+                            SizedBox(height: 10.0,),
+                            TextFormField(
+                              validator: (value) =>
+                                  ValidatorHelper.firstNameValidator(value),
+                              controller: _owner2Name,
+                              decoration: InputDecoration(
+                                hintText: 'Name',
+                                border: OutlineInputBorder(),
+                                hintStyle: TextStyle(fontSize: 14.0),
+                              ),
 
-                          ),
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -291,7 +297,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                           TextFormField(
                             validator: (value) =>
                                 ValidatorHelper.emailValidator(value),
-                            controller: _emailInputController2,
+                            controller: _owner2Email,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               hintText: 'Email',
@@ -315,7 +321,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                           TextFormField(
                             validator: (value) =>
                                 ValidatorHelper.phoneNumberValidator(value),
-                            controller: _phoneNumberInputController2,
+                            controller: _owner2PhoneNumber,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               hintText: 'Phone Number',
@@ -339,7 +345,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                           TextFormField(
                             validator: (value) =>
                                 ValidatorHelper.addressValidator(value),
-                            controller: _addressInputController2,
+                            controller: _owner2Address,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               hintText: 'Address',
