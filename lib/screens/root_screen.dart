@@ -23,12 +23,6 @@ class _RootScreenState extends State<RootScreen> {
     ScansScreen(),
 
     SocialSplitScreen(),
-    Consumer<UserService>(
-      builder: (BuildContext context, UserService service, _) {
-        return AccountScreen();
-      },
-    ),
-
     AccountScreen()
 
   ];
