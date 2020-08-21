@@ -126,231 +126,243 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                   SizedBox(
                     height: height * 0.02,
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Owner 1',
-                      style: StyleConstants.blackThinTitleText,
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
-                  Container(
-                    width: width * 0.9,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Name', style: StyleConstants.blackThinTitleTextSmall,),
-                          SizedBox(height: 10.0,),
-                          TextFormField(
-                            validator: (value) =>
-                                ValidatorHelper.firstNameValidator(value),
-                            controller: _nameInputController,
-                            decoration: InputDecoration(
-                              hintText: 'Name',
-                              border: OutlineInputBorder(),
-                              hintStyle: TextStyle(fontSize: 14.0),
+                  Form(
+                    key: _owner1FormKey,
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Owner 1',
+                            style: StyleConstants.blackThinTitleText,
+                          ),
+                        ),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
+                        Container(
+                          width: width * 0.9,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Name', style: StyleConstants.blackThinTitleTextSmall,),
+                                SizedBox(height: 10.0,),
+                                TextFormField(
+                                  validator: (value) =>
+                                      ValidatorHelper.firstNameValidator(value),
+                                  controller: _owner1Name,
+                                  decoration: InputDecoration(
+                                    hintText: 'Name',
+                                    border: OutlineInputBorder(),
+                                    hintStyle: TextStyle(fontSize: 14.0),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20.0,),
-                  Container(
-                    width: width * 0.9,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Email',
-                            style: StyleConstants.blackThinTitleTextSmall,
-                          ),
-                          SizedBox(height: 10.0,),
-                          TextFormField(
-                            validator: (value) =>
-                                ValidatorHelper.emailValidator(value),
-                            controller: _emailInputController,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: 'Email',
-                              hintStyle: TextStyle(fontSize: 14.0),
+                        ),
+                        SizedBox(height: 20.0,),
+                        Container(
+                          width: width * 0.9,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Email',
+                                  style: StyleConstants.blackThinTitleTextSmall,
+                                ),
+                                SizedBox(height: 10.0,),
+                                TextFormField(
+                                  validator: (value) =>
+                                      ValidatorHelper.emailValidator(value),
+                                  controller: _owner1Email,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: 'Email',
+                                    hintStyle: TextStyle(fontSize: 14.0),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20.0,),
-                  Container(
-                    width: width * 0.9,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Phone Number', style: StyleConstants.blackThinTitleTextSmall,),
-                          SizedBox(height: 10.0,),
-                          TextFormField(
-                            validator: (value) =>
-                                ValidatorHelper.phoneNumberValidator(value),
-                            controller: _phoneNumberInputController,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: 'Phone Number',
-                              hintStyle: TextStyle(fontSize: 14.0),
+                        ),
+                        SizedBox(height: 20.0,),
+                        Container(
+                          width: width * 0.9,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Phone Number', style: StyleConstants.blackThinTitleTextSmall,),
+                                SizedBox(height: 10.0,),
+                                TextFormField(
+                                  validator: (value) =>
+                                      ValidatorHelper.phoneNumberValidator(value),
+                                  controller: _owner1PhoneNumber,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: 'Phone Number',
+                                    hintStyle: TextStyle(fontSize: 14.0),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20.0),
-                  Container(
-                    width: width * 0.9,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Address', style: StyleConstants.blackThinTitleTextSmall,),
-                          SizedBox(height: 10.0,),
-                          TextFormField(
-                            validator: (value) =>
-                                ValidatorHelper.addressValidator(value),
-                            controller: _addressInputController,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: 'Address',
-                              hintStyle: TextStyle(fontSize: 14.0),
+                        ),
+                        SizedBox(height: 20.0),
+                        Container(
+                          width: width * 0.9,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Address', style: StyleConstants.blackThinTitleTextSmall,),
+                                SizedBox(height: 10.0,),
+                                TextFormField(
+                                  validator: (value) =>
+                                      ValidatorHelper.addressValidator(value),
+                                  controller: _owner1Address,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: 'Address',
+                                    hintStyle: TextStyle(fontSize: 14.0),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-
-
                   Divider(),
                   SizedBox(
                     height: height * 0.02,
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Owner 2',
-                      style: StyleConstants.blackThinTitleText,
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
-                  Container(
-                    width: width * 0.9,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Name', style: StyleConstants.blackThinTitleTextSmall,),
-                          SizedBox(height: 10.0,),
-                          TextFormField(
-                            validator: (value) =>
-                                ValidatorHelper.firstNameValidator(value),
-                            controller: _nameInputController2,
-                            decoration: InputDecoration(
-                              hintText: 'Name',
-                              border: OutlineInputBorder(),
-                              hintStyle: TextStyle(fontSize: 14.0),
+                  Form(
+                    key: _owner2FormKey,
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Owner 2',
+                            style: StyleConstants.blackThinTitleText,
+                          ),
+                        ),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
+                        Container(
+                          width: width * 0.9,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Name', style: StyleConstants.blackThinTitleTextSmall,),
+                                SizedBox(height: 10.0,),
+                                TextFormField(
+                                  validator: (value) =>
+                                      ValidatorHelper.firstNameValidator(value),
+                                  controller: _owner2Name,
+                                  decoration: InputDecoration(
+                                    hintText: 'Name',
+                                    border: OutlineInputBorder(),
+                                    hintStyle: TextStyle(fontSize: 14.0),
+                                  ),
+
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(height: 20.0,),
+                        Container(
+                          width: width * 0.9,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Email',
+                                  style: StyleConstants.blackThinTitleTextSmall,
+                                ),
+                                SizedBox(height: 10.0,),
+                                TextFormField(
+                                  validator: (value) =>
+                                      ValidatorHelper.emailValidator(value),
+                                  controller: _owner2Email,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: 'Email',
+                                    hintStyle: TextStyle(fontSize: 14.0),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20.0,),
+                        Container(
+                          width: width * 0.9,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Phone Number', style: StyleConstants.blackThinTitleTextSmall,),
+                                SizedBox(height: 10.0,),
+                                TextFormField(
+                                  validator: (value) =>
+                                      ValidatorHelper.phoneNumberValidator(value),
+                                  controller: _owner2PhoneNumber,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: 'Phone Number',
+                                    hintStyle: TextStyle(fontSize: 14.0),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20.0),
+                        Container(
+                          width: width * 0.9,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Address', style: StyleConstants.blackThinTitleTextSmall,),
+                                SizedBox(height: 10.0,),
+                                TextFormField(
+                                  validator: (value) =>
+                                      ValidatorHelper.addressValidator(value),
+                                  controller: _owner2Address,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: 'Address',
+                                    hintStyle: TextStyle(fontSize: 14.0),
+                                  ),
+                                ),
+                              ],
                             ),
 
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ),
-
-                  SizedBox(height: 20.0,),
-                  Container(
-                    width: width * 0.9,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Email',
-                            style: StyleConstants.blackThinTitleTextSmall,
-                          ),
-                          SizedBox(height: 10.0,),
-                          TextFormField(
-                            validator: (value) =>
-                                ValidatorHelper.emailValidator(value),
-                            controller: _emailInputController2,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: 'Email',
-                              hintStyle: TextStyle(fontSize: 14.0),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20.0,),
-                  Container(
-                    width: width * 0.9,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Phone Number', style: StyleConstants.blackThinTitleTextSmall,),
-                          SizedBox(height: 10.0,),
-                          TextFormField(
-                            validator: (value) =>
-                                ValidatorHelper.phoneNumberValidator(value),
-                            controller: _phoneNumberInputController2,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: 'Phone Number',
-                              hintStyle: TextStyle(fontSize: 14.0),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20.0),
-                  Container(
-                    width: width * 0.9,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Address', style: StyleConstants.blackThinTitleTextSmall,),
-                          SizedBox(height: 10.0,),
-                          TextFormField(
-                            validator: (value) =>
-                                ValidatorHelper.addressValidator(value),
-                            controller: _addressInputController2,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: 'Address',
-                              hintStyle: TextStyle(fontSize: 14.0),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                    ),
-                  ),
+                  )
                 ],
               ),
             ),
