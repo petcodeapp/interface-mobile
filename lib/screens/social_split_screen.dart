@@ -10,38 +10,40 @@ class SocialSplitScreen extends StatefulWidget {
 
 class _SocialSplitScreenState extends State<SocialSplitScreen> {
 
+  double _height;
+  double _width;
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+          padding: EdgeInsets.symmetric(horizontal: _width * 0.1),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: height * 0.05,),
+              SizedBox(height: _height * 0.05,),
               Text(
                 'Social',
                 style: StyleConstants.blackThinTitleText,
               ),
-              SizedBox(height: height * 0.02,),
+              SizedBox(height: _height * 0.02,),
               GestureDetector(
                 onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => DiscoverParksScreen())),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15.0),
                   child: Container(
-                    width: width * 0.9,
-                    height: height * 0.2,
+                    width: _width * 0.9,
+                    height: _height * 0.2,
                     child: Stack(
                       children: [
                         Align(alignment: Alignment.center,
                           child: Container(
-                              width: width * 1,
-                              height: height * 0.5,
+                              width: _width * 1,
+                              height: _height * 0.5,
                               child: Image.asset('assets/images/nearbyparkscover.png', fit: BoxFit.cover,)
                           ),
                         ),
@@ -57,20 +59,20 @@ class _SocialSplitScreenState extends State<SocialSplitScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: height * 0.03,),
+              SizedBox(height: _height * 0.03,),
               GestureDetector(
                 onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => PetPerksScreen())),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15.0),
                   child: Container(
-                    width: width * 0.9,
-                    height: height * 0.2,
+                    width: _width * 0.9,
+                    height: _height * 0.2,
                     child: Stack(
                       children: [
                         Align(alignment: Alignment.center,
                           child: Container(
-                              width: width * 1,
-                              height: height * 0.5,
+                              width: _width * 1,
+                              height: _height * 0.5,
                               child: Image.asset('assets/images/petperkscover.png', fit: BoxFit.cover,)
                           ),
                         ),
@@ -86,62 +88,47 @@ class _SocialSplitScreenState extends State<SocialSplitScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: height * 0.03,),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15.0),
-                child: Container(
-                  width: width * 0.9,
-                  height: height * 0.2,
-                  child: Stack(
-                    children: [
-                      Align(alignment: Alignment.center,
-                        child: Container(
-                            width: width * 1,
-                            height: height * 0.5,
-                            color: StyleConstants.lightGrey,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'More Coming Soon!',
-                          style: StyleConstants.whiteThinTitleTextSmall,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: height * 0.03,),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15.0),
-                child: Container(
-                  width: width * 0.9,
-                  height: height * 0.2,
-                  child: Stack(
-                    children: [
-                      Align(alignment: Alignment.center,
-                        child: Container(
-                            width: width * 1,
-                            height: height * 0.5,
-                            color: StyleConstants.lightGrey,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'More Coming Soon!',
-                          style: StyleConstants.whiteThinTitleTextSmall,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              SizedBox(height: _height * 0.03,),
+              comingSoonWidget(),
+              SizedBox(height: _height * 0.03,),
+              comingSoonWidget(),
             ],
           ),
         ),
       ),
     );
   }
+
+  Widget comingSoonWidget(){
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15.0),
+      child: Container(
+        width: _width * 0.9,
+        height: _height * 0.2,
+        child: Stack(
+          children: [
+            Align(alignment: Alignment.center,
+              child: Container(
+                width: _width * 1,
+                height: _height * 0.5,
+                color: StyleConstants.lightGrey,
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                'More Coming Soon!',
+                style: StyleConstants.whiteThinTitleTextSmall,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
 }
+
+
+
+
