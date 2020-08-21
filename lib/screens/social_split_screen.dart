@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petcode_app/screens/discover_parks_screen.dart';
 import 'package:petcode_app/screens/pet_perks_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
@@ -28,28 +29,31 @@ class _SocialSplitScreenState extends State<SocialSplitScreen> {
                 style: StyleConstants.blackThinTitleText,
               ),
               SizedBox(height: height * 0.02,),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15.0),
-                child: Container(
-                  width: width * 0.9,
-                  height: height * 0.2,
-                  child: Stack(
-                    children: [
-                      Align(alignment: Alignment.center,
-                        child: Container(
-                            width: width * 1,
-                            height: height * 0.5,
-                            child: Image.asset('assets/images/nearbyparkscover.png', fit: BoxFit.cover,)
+              GestureDetector(
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => DiscoverParksScreen())),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: Container(
+                    width: width * 0.9,
+                    height: height * 0.2,
+                    child: Stack(
+                      children: [
+                        Align(alignment: Alignment.center,
+                          child: Container(
+                              width: width * 1,
+                              height: height * 0.5,
+                              child: Image.asset('assets/images/nearbyparkscover.png', fit: BoxFit.cover,)
+                          ),
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                            'Nearby Pet Parks',
-                          style: StyleConstants.whiteThinTitleTextSmall,
-                        ),
-                      )
-                    ],
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                              'Nearby Pet Parks',
+                            style: StyleConstants.whiteThinTitleTextSmall,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -73,7 +77,7 @@ class _SocialSplitScreenState extends State<SocialSplitScreen> {
                         Align(
                           alignment: Alignment.center,
                           child: Text(
-                            'Nearby Pet Parks',
+                            'Pet Perks',
                             style: StyleConstants.whiteThinTitleTextSmall,
                           ),
                         )
