@@ -127,7 +127,7 @@ class _PetPerksScreenState extends State<PetPerksScreen> {
                         ),
                       ),
                       child: Center(
-                        child: Text('Supples', style: StyleConstants.whiteThinTitleTextSmall,),
+                        child: Text('Supplies', style: StyleConstants.whiteThinTitleTextSmall,),
                       ),
                     ),
                   ),
