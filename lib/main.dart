@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:petcode_app/providers/map_provider.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
@@ -64,9 +66,6 @@ class MyApp extends StatelessWidget {
             }
           },
         ),
-        ChangeNotifierProvider<MapService>(
-          create: (_) => MapService(),
-        ),
         ChangeNotifierProxyProvider<PetService, CurrentPetProvider>(
             create: (_) => CurrentPetProvider(),
             update: (BuildContext context, PetService petService,
@@ -78,6 +77,17 @@ class MyApp extends StatelessWidget {
                 return currentPetProvider..updatePet(petService.allPets);
               } else {
                 return currentPetProvider..setCurrentPet(petService.allPets[0]);
+              }
+            }),
+        ChangeNotifierProxyProvider<PetService, MapProvider>(
+            create: (_) => MapProvider(),
+            update: (BuildContext context, PetService petService,
+                MapProvider mapProvider) {
+              if (petService.allPets == null ||
+                  petService.allPets.length == 0) {
+                return mapProvider..clear();
+              } else {
+                return mapProvider..setScans(petService.allPets);
               }
             }),
       ],

@@ -2,34 +2,28 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Scan.dart';
+import 'package:petcode_app/utils/map_constants.dart';
 
 class MapService extends ChangeNotifier {
-  Position _currentLocation;
-  final Geolocator _geolocator = Geolocator()..forceAndroidLocationManager;
+  final Geolocator _geolocator = Geolocator();
 
-  List<Color> _markerColors = [
-    Colors.red,
-    Colors.orange,
-    Colors.yellow,
-    Colors.green,
-    Colors.blue,
-    Colors.indigo,
-    Colors.purple
-  ];
-
-  List<double> _bitmapDesciptorHues = [
-    BitmapDescriptor.hueRed,
-    BitmapDescriptor.hueOrange,
-    BitmapDescriptor.hueYellow,
-    BitmapDescriptor.hueGreen,
-    BitmapDescriptor.hueAzure,
-    BitmapDescriptor.hueBlue,
-    BitmapDescriptor.hueViolet,
-  ];
-
-  Position get currentLocation => _currentLocation;
-  List<Color> get markerColors => _markerColors;
+  Future<List<Scan>> getScansFromAllPets(List<Pet> allPets) async {
+    List<Scan> allScans = new List<Scan>();
+    for (int i = 0; i < allPets.length; i++) {
+      if (allPets[i].scans != null) {
+        for (int j = 0; j < allPets[i].scans.length; j++) {
+          Scan currentScan = allPets[i].scans[j];
+          currentScan.petName = allPets[i].name;
+          currentScan.petIndex = i;
+          currentScan.address = await getLocationAddress(currentScan.location);
+          allScans.add(currentScan);
+        }
+      }
+    }
+    return allScans;
+  }
 
   Set<Marker> createMarkers(List<Scan> allScans) {
     List<Marker> allMarkers = new List<Marker>();
@@ -43,7 +37,7 @@ class MapService extends ChangeNotifier {
             position: LatLng(
                 currentScan.location.latitude, currentScan.location.longitude),
             icon: BitmapDescriptor.defaultMarkerWithHue(
-                _bitmapDesciptorHues[currentScan.petIndex]),
+                MapConstants.bitmapDescriptorHues[currentScan.petIndex]),
           ),
         );
       }
@@ -51,11 +45,10 @@ class MapService extends ChangeNotifier {
     return allMarkers.toSet();
   }
 
-  getCurrentLocation() async {
+  Future<Position> getCurrentLocation() async {
     Position currentLocation = await _geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best);
-    _currentLocation = currentLocation;
-    notifyListeners();
+    return currentLocation;
   }
 
   Future<String> getLocationAddress(GeoPoint coordinates) async {
@@ -82,8 +75,7 @@ class MapService extends ChangeNotifier {
   String getName(String name) {
     if (name == null || name.trim().isEmpty) {
       return '';
-    }
-    else {
+    } else {
       return name + ' ';
     }
   }

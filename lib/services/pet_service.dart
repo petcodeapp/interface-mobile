@@ -15,7 +15,6 @@ class PetService extends ChangeNotifier {
 
   List<Pet> get allPets => _allPets;
 
-
   setPetIds(List<String> petIds) {
     startPetStream(petIds);
   }
@@ -47,8 +46,6 @@ class PetService extends ChangeNotifier {
           .listen((QuerySnapshot querySnapshot) {
         _allPets.clear();
         _allPets = petListFromQuery(querySnapshot);
-        for (int i = 0; i < _allPets.length; i++) {
-        }
         notifyListeners();
       });
     }

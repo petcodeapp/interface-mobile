@@ -3,10 +3,9 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Scan.dart';
-import 'package:petcode_app/services/map_service.dart';
-import 'package:petcode_app/services/pet_service.dart';
+import 'package:petcode_app/providers/map_provider.dart';
+import 'package:petcode_app/utils/map_constants.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +20,9 @@ class _ScansScreenState extends State<ScansScreen> {
   double _height;
   double _width;
 
-  PetService _petService;
-  MapService _mapService;
+  MapProvider _mapProvider;
+
+  bool _hasCalledLocation = false;
 
   @override
   void initState() {
@@ -34,29 +34,21 @@ class _ScansScreenState extends State<ScansScreen> {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
 
-    _mapService = Provider.of<MapService>(context);
-    _petService = Provider.of<PetService>(context);
+    _mapProvider = Provider.of<MapProvider>(context);
+    print('build');
 
-    if (_mapService.currentLocation == null) {
-      _mapService.getCurrentLocation();
+    if (_mapProvider.currentLocation == null && !_hasCalledLocation) {
+      _mapProvider.getCurrentLocation();
+      _hasCalledLocation = true;
     }
 
-    List<Scan> petScans = new List<Scan>();
-    List<Pet> allPets = _petService.allPets;
-    for (int i = 0; i < allPets.length; i++) {
-      if (allPets[i].scans != null) {
-        for (int j = 0; j < allPets[i].scans.length; j++) {
-          Scan currentScan = allPets[i].scans[j];
-          currentScan.petName = allPets[i].name;
-          currentScan.petIndex = i;
-          petScans.add(currentScan);
-        }
-      }
-    }
+    List<Scan> petScans = _mapProvider.allScans;
 
-    petScans.sort((Scan scanA, Scan scanB) {
-      return scanB.date.compareTo(scanA.date);
-    });
+    if (petScans != null) {
+      petScans.sort((Scan scanA, Scan scanB) {
+        return scanB.date.compareTo(scanA.date);
+      });
+    }
 
     return Scaffold(
       body: Column(
@@ -64,19 +56,19 @@ class _ScansScreenState extends State<ScansScreen> {
         children: [
           Container(
             height: _height * 0.35,
-            child: _mapService.currentLocation != null
+            child: _mapProvider.currentLocation != null
                 ? GoogleMap(
                     mapType: MapType.normal,
                     initialCameraPosition: CameraPosition(
-                      target: LatLng(_mapService.currentLocation.latitude,
-                          _mapService.currentLocation.longitude),
+                      target: LatLng(_mapProvider.currentLocation.latitude,
+                          _mapProvider.currentLocation.longitude),
                       zoom: 14.0,
                     ),
                     onMapCreated: (GoogleMapController controller) {
                       _controller.complete(controller);
                     },
                     zoomControlsEnabled: true,
-                    markers: _mapService.createMarkers(petScans),
+                    markers: _mapProvider.mapMarkers,
                   )
                 : Center(
                     child: CircularProgressIndicator(),
@@ -120,17 +112,20 @@ class _ScansScreenState extends State<ScansScreen> {
 
   Widget scanLocationsList(List<Scan> petScans) {
     List<Widget> scans = new List<Widget>();
-    for (int i = 0; i < petScans.length; i++) {
-      scans.add(recentScanWidget(
-          petScans[i].petName,
-          petScans[i].date.toDate(),
-          _mapService.markerColors[petScans[i].petIndex],
-          petScans[i].location));
-      scans.add(
-        SizedBox(
-          height: _height * 0.02,
-        ),
-      );
+    if (petScans != null) {
+      for (int i = 0; i < petScans.length; i++) {
+        scans.add(recentScanWidget(
+            petScans[i].petName,
+            petScans[i].date.toDate(),
+            MapConstants.markerColors[petScans[i].petIndex],
+            petScans[i].location,
+            petScans[i].address));
+        scans.add(
+          SizedBox(
+            height: _height * 0.02,
+          ),
+        );
+      }
     }
 
     return Column(
@@ -139,7 +134,7 @@ class _ScansScreenState extends State<ScansScreen> {
   }
 
   Widget recentScanWidget(String petName, DateTime date, Color markerColor,
-      GeoPoint markerPosition) {
+      GeoPoint markerPosition, String address) {
     return GestureDetector(
       onTap: () async {
         GoogleMapController controller = await _controller.future;
@@ -190,7 +185,9 @@ class _ScansScreenState extends State<ScansScreen> {
                             maxLines: 2,
                           ),
                         ),
-                        SizedBox(height: 2.0,),
+                        SizedBox(
+                          height: 2.0,
+                        ),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -223,32 +220,15 @@ class _ScansScreenState extends State<ScansScreen> {
                 children: [
                   Expanded(
                     child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: _width * 0.01),
-                        child: FutureBuilder<String>(
-                          future:
-                              _mapService.getLocationAddress(markerPosition),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<String> snapshot) {
-                            if (snapshot.connectionState !=
-                                ConnectionState.done) {
-                              return CircularProgressIndicator();
-                            } else {
-                              if (snapshot.hasError) {
-                                return Text('Error');
-                              } else {
-                                return Text(
-                                  snapshot.data,
-                                  style: StyleConstants
-                                      .lightBlackDescriptionTextSmall,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 4,
-                                  overflow: TextOverflow.ellipsis,
-                                );
-                              }
-                            }
-                          },
-                        )),
+                      padding: EdgeInsets.symmetric(horizontal: _width * 0.01),
+                      child: Text(
+                        address,
+                        style: StyleConstants.lightBlackDescriptionTextSmall,
+                        textAlign: TextAlign.center,
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ),
                 ],
               ),
