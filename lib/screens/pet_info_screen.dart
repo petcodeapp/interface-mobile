@@ -51,7 +51,13 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: height * 0.03,
+                height: height * 0.02,
+              ),
+              Text('Pet Info',
+                style: StyleConstants.blackThinTitleText,
+              ),
+              SizedBox(
+                height: height * 0.02,
               ),
               CircleAvatar(
                 backgroundColor: Colors.transparent,

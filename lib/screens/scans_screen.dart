@@ -99,7 +99,7 @@ class _ScansScreenState extends State<ScansScreen> {
                         width: _width,
                         child: Text(
                           'Scan Locations',
-                          style: StyleConstants.greyThinTitleText,
+                          style: StyleConstants.blackThinTitleText,
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -184,18 +184,20 @@ class _ScansScreenState extends State<ScansScreen> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             petName,
-                            style: StyleConstants.greyThinTitleTextSmall,
+                            style: StyleConstants.lightBlackThinTitleTextSmall,
                             textAlign: TextAlign.left,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                           ),
                         ),
+                        SizedBox(height: 2.0,),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             StringHelper.getDateString(date) +
                                 ' ' +
                                 StringHelper.getTimeString(date),
+                            //style: StyleConstants.greyThinDescriptionTextSmall,
                             style: StyleConstants.greyThinDescriptionTextSmall,
                             textAlign: TextAlign.left,
                             overflow: TextOverflow.ellipsis,
@@ -238,7 +240,7 @@ class _ScansScreenState extends State<ScansScreen> {
                                 return Text(
                                   snapshot.data,
                                   style: StyleConstants
-                                      .greyThinDescriptionTextSmall,
+                                      .lightBlackDescriptionTextSmall,
                                   textAlign: TextAlign.center,
                                   maxLines: 4,
                                   overflow: TextOverflow.ellipsis,

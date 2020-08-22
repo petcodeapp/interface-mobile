@@ -138,9 +138,10 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
         backgroundColor: StyleConstants.blue,
         centerTitle: true,
         title: Text(
-          'Edit Profile',
+          'Edit Pet Info',
           style: TextStyle(color: Colors.white),
         ),
+        /*
         leading: Center(
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0),
@@ -156,6 +157,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
             ),
           ),
         ),
+        */
         actions: [
           Center(
             child: Padding(

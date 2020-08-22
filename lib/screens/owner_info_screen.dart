@@ -59,7 +59,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
                 radius: 60.0,
               ),*/
               Text(
-                'Owner 1:',
+                'Owner 1',
                 style: StyleConstants.blackThinTitleText,
               ),
               SizedBox(
@@ -71,7 +71,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
               currentPet.contact_2 == null
                   ? SizedBox()
                   : Text(
-                      'Owner 2:',
+                      'Owner 2',
                       style: StyleConstants.blackThinTitleText,
                     ),
               SizedBox(
