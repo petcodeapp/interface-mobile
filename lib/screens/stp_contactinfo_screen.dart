@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/stp_petinfo_screen.dart';
@@ -20,26 +21,31 @@ class _StpContactScreenState extends State<StpContactScreen> {
   double height;
 
   TextEditingController _owner1Name;
-  TextEditingController _owner1PhoneNumber;
   TextEditingController _owner1Email;
   TextEditingController _owner1Address;
 
   TextEditingController _owner2Name;
-  TextEditingController _owner2PhoneNumber;
   TextEditingController _owner2Email;
   TextEditingController _owner2Address;
+
+  PhoneNumber _initialOwner1PhoneNumber;
+  PhoneNumber _initialOwner2PhoneNumber;
+
+  String _owner1FormattedPhoneNumber;
+  String _owner2FormattedPhoneNumber;
 
   @override
   void initState() {
     _owner1Name = new TextEditingController();
-    _owner1PhoneNumber = new TextEditingController();
     _owner1Email = new TextEditingController();
     _owner1Address = new TextEditingController();
 
     _owner2Name = new TextEditingController();
-    _owner2PhoneNumber = new TextEditingController();
     _owner2Email = new TextEditingController();
     _owner2Address = new TextEditingController();
+
+    _initialOwner1PhoneNumber = new PhoneNumber(isoCode: 'US');
+    _initialOwner2PhoneNumber = new PhoneNumber(isoCode: 'US');
 
     super.initState();
   }
@@ -84,8 +90,8 @@ class _StpContactScreenState extends State<StpContactScreen> {
                     SlimyCard(
                       color: StyleConstants.yellow,
                       width: 300,
-                      topCardHeight: 375,
-                      bottomCardHeight: 375,
+                      topCardHeight: 350,
+                      bottomCardHeight: 350,
                       borderRadius: 15,
                       topCardWidget: contactWidget1(),
                       bottomCardWidget: contactWidget2(),
@@ -102,7 +108,7 @@ class _StpContactScreenState extends State<StpContactScreen> {
                   Pet updatedPet = widget.pet;
                   Owner owner1 = new Owner(
                       name: _owner1Name.text,
-                      phoneNumber: _owner1PhoneNumber.text,
+                      phoneNumber: _owner1FormattedPhoneNumber,
                       email: _owner1Email.text,
                       address: _owner1Address.text);
                   updatedPet.contact_1 = owner1;
@@ -110,7 +116,7 @@ class _StpContactScreenState extends State<StpContactScreen> {
                   if (!owner2IsEmpty()) {
                     Owner owner2 = new Owner(
                       name: _owner2Name.text,
-                      phoneNumber: _owner2PhoneNumber.text,
+                      phoneNumber: _owner2FormattedPhoneNumber,
                       email: _owner2Email.text,
                       address: _owner2Address.text,
                     );
@@ -211,14 +217,18 @@ class _StpContactScreenState extends State<StpContactScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Center(
-                child: TextFormField(
-                  controller: _owner1PhoneNumber,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Phone Number',
-                      hintStyle: TextStyle(fontSize: 15.0)),
-                ),
-              ),
+                  child: InternationalPhoneNumberInput(
+                onInputChanged: (PhoneNumber newNumber) {
+                  _owner1FormattedPhoneNumber = newNumber.toString();
+                },
+                inputDecoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Phone Number',
+                    hintStyle: TextStyle(fontSize: 15.0)),
+                selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                formatInput: true,
+                initialValue: _initialOwner1PhoneNumber,
+              )),
             ),
           ),
           SizedBox(
@@ -266,7 +276,7 @@ class _StpContactScreenState extends State<StpContactScreen> {
                 ),
               ],
             ),
-            height: 75.0,
+            height: 50.0,
             width: 250.0,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -350,14 +360,18 @@ class _StpContactScreenState extends State<StpContactScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Center(
-                child: TextFormField(
-                  controller: _owner2PhoneNumber,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Phone Number',
-                      hintStyle: TextStyle(fontSize: 15.0)),
-                ),
-              ),
+                  child: InternationalPhoneNumberInput(
+                inputDecoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Phone Number',
+                    hintStyle: TextStyle(fontSize: 15.0)),
+                selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                onInputChanged: (PhoneNumber newNumber) {
+                  _owner2FormattedPhoneNumber = newNumber.toString();
+                },
+                initialValue: _initialOwner2PhoneNumber,
+                formatInput: true,
+              )),
             ),
           ),
           SizedBox(
@@ -426,10 +440,9 @@ class _StpContactScreenState extends State<StpContactScreen> {
 
   bool owner2IsEmpty() {
     return ((_owner2Name.text == null || _owner2Name.text.trim().isEmpty) &&
-        (_owner2PhoneNumber.text == null ||
-            _owner2PhoneNumber.text.trim().isEmpty) &&
+        (_owner2FormattedPhoneNumber == null ||
+            _owner2FormattedPhoneNumber.trim().isEmpty) &&
         (_owner2Email.text == null || _owner2Email.text.trim().isEmpty) &&
-        (_owner2PhoneNumber.text == null ||
-            _owner2PhoneNumber.text.trim().isEmpty));
+        (_owner2Address.text == null || _owner2Address.text.trim().isEmpty));
   }
 }

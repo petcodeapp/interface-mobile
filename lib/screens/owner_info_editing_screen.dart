@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/services/database_service.dart';
@@ -25,14 +26,18 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
   DatabaseService _databaseService;
 
   TextEditingController _owner1Name;
-  TextEditingController _owner1PhoneNumber;
   TextEditingController _owner1Email;
   TextEditingController _owner1Address;
 
   TextEditingController _owner2Name;
-  TextEditingController _owner2PhoneNumber;
   TextEditingController _owner2Email;
   TextEditingController _owner2Address;
+
+  PhoneNumber _initialOwner1PhoneNumber;
+  PhoneNumber _initialOwner2PhoneNumber;
+
+  String _owner1FormattedNumber;
+  String _owner2FormattedNumber;
 
   File chosenImageFile;
   ImageProvider updatedImage;
@@ -45,6 +50,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
     super.initState();
 
     setUpInputControllers();
+    getPhoneNumbers();
   }
 
   @override
@@ -75,8 +81,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                           Owner updatedOwner2 = new Owner();
 
                           updatedOwner2.name = _owner2Name.text.trim();
-                          updatedOwner2.phoneNumber =
-                              _owner2PhoneNumber.text.trim();
+                          updatedOwner2.phoneNumber = _owner2FormattedNumber;
                           updatedOwner2.email = _owner2Email.text.trim();
                           updatedOwner2.address = _owner2Address.text.trim();
 
@@ -91,8 +96,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                       Owner updatedOwner1 = new Owner();
 
                       updatedOwner1.name = _owner1Name.text.trim();
-                      updatedOwner1.phoneNumber =
-                          _owner1PhoneNumber.text.trim();
+                      updatedOwner1.phoneNumber = _owner1FormattedNumber;
                       updatedOwner1.email = _owner1Email.text.trim();
                       updatedOwner1.address = _owner1Address.text.trim();
 
@@ -143,12 +147,18 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                         Container(
                           width: width * 0.9,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Name', style: StyleConstants.blackThinTitleTextSmall,),
-                                SizedBox(height: 10.0,),
+                                Text(
+                                  'Name',
+                                  style: StyleConstants.blackThinTitleTextSmall,
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
                                 TextFormField(
                                   validator: (value) =>
                                       ValidatorHelper.firstNameValidator(value),
@@ -163,11 +173,53 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20.0,),
+                        SizedBox(
+                          height: 20.0,
+                        ),
                         Container(
                           width: width * 0.9,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Phone Number',
+                                  style: StyleConstants.blackThinTitleTextSmall,
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                InternationalPhoneNumberInput(
+                                  initialValue: _initialOwner1PhoneNumber,
+                                  inputDecoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: 'Phone Number',
+                                    hintStyle: TextStyle(fontSize: 14.0),
+                                  ),
+                                  onInputChanged: (PhoneNumber number) {
+                                    print(number.toString());
+                                    _owner1FormattedNumber = number.toString();
+                                  },
+                                  selectorType:
+                                      PhoneInputSelectorType.BOTTOM_SHEET,
+                                  formatInput: true,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Container(
+                          width: width * 0.9,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -175,11 +227,13 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                   'Email',
                                   style: StyleConstants.blackThinTitleTextSmall,
                                 ),
-                                SizedBox(height: 10.0,),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
                                 TextFormField(
+                                  controller: _owner1Email,
                                   validator: (value) =>
                                       ValidatorHelper.emailValidator(value),
-                                  controller: _owner1Email,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     hintText: 'Email',
@@ -190,40 +244,25 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20.0,),
-                        Container(
-                          width: width * 0.9,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Phone Number', style: StyleConstants.blackThinTitleTextSmall,),
-                                SizedBox(height: 10.0,),
-                                TextFormField(
-                                  validator: (value) =>
-                                      ValidatorHelper.phoneNumberValidator(value),
-                                  controller: _owner1PhoneNumber,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: 'Phone Number',
-                                    hintStyle: TextStyle(fontSize: 14.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        SizedBox(
+                          height: 20.0,
                         ),
                         SizedBox(height: 20.0),
                         Container(
                           width: width * 0.9,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Address', style: StyleConstants.blackThinTitleTextSmall,),
-                                SizedBox(height: 10.0,),
+                                Text(
+                                  'Address',
+                                  style: StyleConstants.blackThinTitleTextSmall,
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
                                 TextFormField(
                                   validator: (value) =>
                                       ValidatorHelper.addressValidator(value),
@@ -262,12 +301,18 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                         Container(
                           width: width * 0.9,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Name', style: StyleConstants.blackThinTitleTextSmall,),
-                                SizedBox(height: 10.0,),
+                                Text(
+                                  'Name',
+                                  style: StyleConstants.blackThinTitleTextSmall,
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
                                 TextFormField(
                                   validator: (value) =>
                                       ValidatorHelper.firstNameValidator(value),
@@ -277,18 +322,57 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                     border: OutlineInputBorder(),
                                     hintStyle: TextStyle(fontSize: 14.0),
                                   ),
-
                                 ),
                               ],
                             ),
                           ),
                         ),
-
-                        SizedBox(height: 20.0,),
+                        SizedBox(
+                          height: 20.0,
+                        ),
                         Container(
                           width: width * 0.9,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Phone Number',
+                                  style: StyleConstants.blackThinTitleTextSmall,
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                InternationalPhoneNumberInput(
+                                  initialValue: _initialOwner2PhoneNumber,
+                                  inputDecoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: 'Phone Number',
+                                    hintStyle: TextStyle(fontSize: 14.0),
+                                  ),
+                                  onInputChanged: (PhoneNumber number) {
+                                    _owner2FormattedNumber = number.phoneNumber;
+                                  },
+                                  formatInput: true,
+                                  selectorType:
+                                      PhoneInputSelectorType.BOTTOM_SHEET,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Container(
+                          width: width * 0.9,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -296,11 +380,13 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                   'Email',
                                   style: StyleConstants.blackThinTitleTextSmall,
                                 ),
-                                SizedBox(height: 10.0,),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
                                 TextFormField(
+                                  controller: _owner2Email,
                                   validator: (value) =>
                                       ValidatorHelper.emailValidator(value),
-                                  controller: _owner2Email,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     hintText: 'Email',
@@ -311,40 +397,24 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20.0,),
-                        Container(
-                          width: width * 0.9,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Phone Number', style: StyleConstants.blackThinTitleTextSmall,),
-                                SizedBox(height: 10.0,),
-                                TextFormField(
-                                  validator: (value) =>
-                                      ValidatorHelper.phoneNumberValidator(value),
-                                  controller: _owner2PhoneNumber,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: 'Phone Number',
-                                    hintStyle: TextStyle(fontSize: 14.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        SizedBox(
+                          height: 20.0,
                         ),
-                        SizedBox(height: 20.0),
                         Container(
                           width: width * 0.9,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Address', style: StyleConstants.blackThinTitleTextSmall,),
-                                SizedBox(height: 10.0,),
+                                Text(
+                                  'Address',
+                                  style: StyleConstants.blackThinTitleTextSmall,
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
                                 TextFormField(
                                   validator: (value) =>
                                       ValidatorHelper.addressValidator(value),
@@ -357,7 +427,6 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                 ),
                               ],
                             ),
-
                           ),
                         ),
                       ],
@@ -373,8 +442,6 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
   void setUpInputControllers() {
     _owner1Name =
         new TextEditingController(text: widget.currentPet.contact_1.name);
-    _owner1PhoneNumber = new TextEditingController(
-        text: widget.currentPet.contact_1.phoneNumber);
     _owner1Email =
         new TextEditingController(text: widget.currentPet.contact_1.email);
     _owner1Address =
@@ -383,24 +450,39 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
     if (widget.currentPet.contact_2 != null) {
       _owner2Name =
           new TextEditingController(text: widget.currentPet.contact_2.name);
-      _owner2PhoneNumber = new TextEditingController(
-          text: widget.currentPet.contact_2.phoneNumber);
       _owner2Email =
           new TextEditingController(text: widget.currentPet.contact_2.email);
       _owner2Address =
           new TextEditingController(text: widget.currentPet.contact_2.address);
     } else {
       _owner2Name = new TextEditingController();
-      _owner2PhoneNumber = new TextEditingController();
       _owner2Email = new TextEditingController();
       _owner2Address = new TextEditingController();
     }
   }
 
+  void getPhoneNumbers() async {
+    _initialOwner1PhoneNumber = await PhoneNumber.getRegionInfoFromPhoneNumber(
+        widget.currentPet.contact_1.phoneNumber);
+    _owner1FormattedNumber = _initialOwner1PhoneNumber.phoneNumber;
+
+    print(_owner1FormattedNumber);
+
+    if (widget.currentPet.contact_2 != null) {
+      _initialOwner2PhoneNumber =
+          await PhoneNumber.getRegionInfoFromPhoneNumber(
+              widget.currentPet.contact_2.phoneNumber);
+      _owner1FormattedNumber = _initialOwner2PhoneNumber.phoneNumber;
+    } else {
+      _initialOwner2PhoneNumber = PhoneNumber(isoCode: 'US');
+    }
+    setState(() {});
+  }
+
   bool owner2IsEmpty() {
     return ((_owner2Name.text == null || _owner2Name.text.trim().isEmpty) &&
-        (_owner2PhoneNumber.text == null ||
-            _owner2PhoneNumber.text.trim().isEmpty) &&
+        (_owner2FormattedNumber == null ||
+            _owner2FormattedNumber.trim().isEmpty) &&
         (_owner2Email.text == null || _owner2Email.text.trim().isEmpty) &&
         (_owner2Address.text == null || _owner2Address.text.trim().isEmpty));
   }
