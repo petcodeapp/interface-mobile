@@ -45,12 +45,6 @@ class MapService extends ChangeNotifier {
     return allMarkers.toSet();
   }
 
-  Future<Position> getCurrentLocation() async {
-    Position currentLocation = await _geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best);
-    return currentLocation;
-  }
-
   Future<String> getLocationAddress(GeoPoint coordinates) async {
     List<Placemark> placemarks = await _geolocator.placemarkFromCoordinates(
         coordinates.latitude, coordinates.longitude);

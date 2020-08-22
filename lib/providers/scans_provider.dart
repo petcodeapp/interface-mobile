@@ -1,40 +1,30 @@
 import 'package:flutter/foundation.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Scan.dart';
-import 'package:petcode_app/services/map_service.dart';
+import 'package:petcode_app/services/scans_service.dart';
 
-class MapProvider extends ChangeNotifier {
-  Position _currentLocation;
+class ScansProvider extends ChangeNotifier {
   List<Scan> _allScans;
   Set<Marker> _mapMarkers;
 
   MapService _mapService;
 
-  Position get currentLocation => _currentLocation;
   List<Scan> get allScans => _allScans;
   Set<Marker> get mapMarkers => _mapMarkers;
 
-  MapProvider() {
+  ScansProvider() {
     _mapService = new MapService();
   }
 
-  getCurrentLocation() async {
-    Position currentLocation = await _mapService.getCurrentLocation();
-    _currentLocation = currentLocation;
-    notifyListeners();
-  }
-
-  setScans(List<Pet> allPets) async {
+  void setScans(List<Pet> allPets) async {
     _allScans = await _mapService.getScansFromAllPets(allPets);
     _mapMarkers = _mapService.createMarkers(_allScans);
     notifyListeners();
   }
 
-  clear() {
+  void clear() {
     _allScans.clear();
     _allScans = null;
-    _currentLocation = null;
   }
 }

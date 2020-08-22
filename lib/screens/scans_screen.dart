@@ -4,7 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/models/Scan.dart';
-import 'package:petcode_app/providers/map_provider.dart';
+import 'package:petcode_app/providers/current_location_provider.dart';
+import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/utils/map_constants.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -20,9 +21,9 @@ class _ScansScreenState extends State<ScansScreen> {
   double _height;
   double _width;
 
-  MapProvider _mapProvider;
+  CurrentLocationProvider _currentLocationProvider;
+  ScansProvider _scansProvider;
 
-  bool _hasCalledLocation = false;
 
   @override
   void initState() {
@@ -34,15 +35,10 @@ class _ScansScreenState extends State<ScansScreen> {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
 
-    _mapProvider = Provider.of<MapProvider>(context);
-    print('build');
+    _currentLocationProvider = Provider.of<CurrentLocationProvider>(context);
+    _scansProvider = Provider.of<ScansProvider>(context);
 
-    if (_mapProvider.currentLocation == null && !_hasCalledLocation) {
-      _mapProvider.getCurrentLocation();
-      _hasCalledLocation = true;
-    }
-
-    List<Scan> petScans = _mapProvider.allScans;
+    List<Scan> petScans = _scansProvider.allScans;
 
     if (petScans != null) {
       petScans.sort((Scan scanA, Scan scanB) {
@@ -56,19 +52,19 @@ class _ScansScreenState extends State<ScansScreen> {
         children: [
           Container(
             height: _height * 0.35,
-            child: _mapProvider.currentLocation != null
+            child: _currentLocationProvider.currentLocation != null
                 ? GoogleMap(
                     mapType: MapType.normal,
                     initialCameraPosition: CameraPosition(
-                      target: LatLng(_mapProvider.currentLocation.latitude,
-                          _mapProvider.currentLocation.longitude),
+                      target: LatLng(_currentLocationProvider.currentLocation.latitude,
+                          _currentLocationProvider.currentLocation.longitude),
                       zoom: 14.0,
                     ),
                     onMapCreated: (GoogleMapController controller) {
                       _controller.complete(controller);
                     },
                     zoomControlsEnabled: true,
-                    markers: _mapProvider.mapMarkers,
+                    markers: _scansProvider.mapMarkers,
                   )
                 : Center(
                     child: CircularProgressIndicator(),
