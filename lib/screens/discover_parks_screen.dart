@@ -58,32 +58,35 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
             )),
       ),
       body: SlidingUpPanel(
-          collapsed: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 150.0),
-                    child: Divider(
-                      thickness: 5.0,
+          header: Center(
+            child: Container(
+              width: _width,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 150.0),
+                      child: Divider(
+                        thickness: 5.0,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: _height * 0.01,
-                  ),
-                  Text(
-                    'Pet Parks Near You',
-                    style: StyleConstants.blackThinTitleTextSmall,
-                  ),
-                ],
+                    SizedBox(
+                      height: _height * 0.01,
+                    ),
+                    Text(
+                      'Pet Parks Near You',
+                      style: StyleConstants.blackThinTitleTextSmall,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
           body: _currentLocationProvider.currentLocation != null
               ? GoogleMap(
-            padding: EdgeInsets.only(bottom: 180.0),
+                  padding: EdgeInsets.only(bottom: 180.0),
                   initialCameraPosition: CameraPosition(
                       target: LatLng(
                           _currentLocationProvider.currentLocation.latitude,
@@ -93,7 +96,6 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                     _controller.complete(controller);
                   },
                   markers: _nearbyParksProvider.nearbyParkMarkers,
-
                 )
               : Container(
                   height: _height * 0.01,
@@ -109,27 +111,25 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: ListView(
-                      children: [
-                        parkLocationWidget('Pet Park Name',
-                            '123 Main Street, Main Street, CA 11111'),
-                        SizedBox(
-                          height: _height * 0.03,
-                        ),
-                        parkLocationWidget('Pet Park Name',
-                            '123 Main Street, Main Street, CA 11111'),
-                        SizedBox(
-                          height: _height * 0.03,
-                        ),
-                        parkLocationWidget('Pet Park Name',
-                            '123 Main Street, Main Street, CA 11111'),
-                        SizedBox(
-                          height: _height * 0.03,
-                        ),
-                        parkLocationWidget('Pet Park Name',
-                            '123 Main Street, Main Street, CA 11111'),
-                      ],
-                    ),
+                    child: _nearbyParksProvider.nearbyParks != null
+                        ? ListView.builder(
+                            itemCount: _nearbyParksProvider.nearbyParks.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Column(
+                                children: [
+                                  SizedBox(
+                                    height: _height * 0.03,
+                                  ),
+                                  parkLocationWidget(
+                                      _nearbyParksProvider
+                                          .nearbyParks[index].name,
+                                      _nearbyParksProvider
+                                          .nearbyParks[index].address),
+                                ],
+                              );
+                            },
+                          )
+                        : SizedBox.shrink(),
                   ),
                 ),
               ),
@@ -149,30 +149,42 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Container(
-            //color: Colors.blue,
-            //width: _width * 0.443,
-            child: Center(
-              child: Icon(
-                Icons.place,
-                color: StyleConstants.red,
-                size: _width * 0.1,
+          Expanded(
+            flex: 3,
+            child: Container(
+              //color: Colors.blue,
+              //width: _width * 0.443,
+              child: Center(
+                child: Icon(
+                  Icons.place,
+                  color: StyleConstants.red,
+                  size: _width * 0.1,
+                ),
               ),
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                parkName,
-                style: StyleConstants.lightBlackThinTitleTextSmall,
-              ),
-              Text(
-                address,
-                style: StyleConstants.greyThinDescriptionTextSmall,
-              ),
-            ],
+          Expanded(
+            flex: 7,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(
+                  child: Text(
+                    parkName,
+                    style: StyleConstants.lightBlackThinTitleTextSmall,
+                    maxLines: 2,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    address,
+                    style: StyleConstants.greyThinDescriptionTextSmall,
+                    maxLines: 2,
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),

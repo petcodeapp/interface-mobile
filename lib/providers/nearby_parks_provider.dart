@@ -9,6 +9,8 @@ class NearbyParksProvider extends ChangeNotifier {
   List<NearbyPark> _nearbyParks;
   Set<Marker> _nearbyParkMarkers;
 
+  List<NearbyPark> get nearbyParks => _nearbyParks;
+
   Set<Marker> get nearbyParkMarkers => _nearbyParkMarkers;
 
   setUpProvider() {

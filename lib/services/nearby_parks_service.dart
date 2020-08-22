@@ -33,11 +33,10 @@ class NearbyParksService {
     for (int i = 0; i < results.length; i++) {
       final parkLocation = results[i]['geometry']['location'];
       nearbyParks.add(new NearbyPark(
-          name: results[i]['name'],
-          location: LatLng(parkLocation['lat'], parkLocation['lng'])));
-
-      print(
-          'Park ${i.toString()}: ${nearbyParks[i].name} at: ${nearbyParks[i].location.latitude},${nearbyParks[i].location.longitude}');
+        name: results[i]['name'],
+        address: results[i]['vicinity'],
+        location: LatLng(parkLocation['lat'], parkLocation['lng']),
+      ));
     }
 
     return nearbyParks;
