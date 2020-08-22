@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
+import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
@@ -98,11 +99,20 @@ class MyApp extends StatelessWidget {
                 CurrentLocationProvider currentLocationProvider) {
               if (authService.user == null) {
                 return currentLocationProvider..clear();
-              }
-              else {
+              } else {
                 return currentLocationProvider..getCurrentLocation();
               }
-            })
+            }),
+        ChangeNotifierProxyProvider<FirebaseAuthService, NearbyParksProvider>(
+            create: (_) => NearbyParksProvider(),
+            update: (BuildContext context, FirebaseAuthService authService,
+                NearbyParksProvider nearbyParksProvider) {
+              if (authService.user == null) {
+                return nearbyParksProvider..clear();
+              } else {
+                return nearbyParksProvider..setUpProvider();
+              }
+            }),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
