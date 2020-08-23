@@ -126,6 +126,12 @@ class StyleConstants {
     fontWeight: FontWeight.w600,
   );
 
+  static TextStyle lightBlackThinTitleText = new TextStyle(
+    color: lightBlack,
+    fontSize: 30.0,
+    fontWeight: FontWeight.w600,
+  );
+
   static TextStyle blackThinTitleTextLarge = new TextStyle(
     color: Colors.black87.withOpacity(0.8),
     fontSize: 40.0,
@@ -211,6 +217,12 @@ class StyleConstants {
     color: lightBlack,
     fontSize: 14.0,
     fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle greySubText = new TextStyle(
+    color: lightGrey,
+    fontSize: 12.0,
+    fontWeight: FontWeight.w300
   );
 
   //box decorations

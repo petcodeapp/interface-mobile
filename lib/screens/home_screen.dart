@@ -8,6 +8,8 @@ import 'package:petcode_app/screens/medical_info_screen.dart';
 import 'package:petcode_app/screens/owner_info_screen.dart';
 import 'package:petcode_app/screens/pet_info_screen.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
+import 'package:petcode_app/screens/reminders_screen.dart';
+import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/string_helper.dart';
@@ -345,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       GestureDetector(
                                         onTap: () =>
-                                            print('schedule meds tapped'),
+                                            Navigator.push(context, MaterialPageRoute(builder: (_) => RemindersScreen())),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
@@ -508,45 +510,54 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   noPetsAvailableIndicator() {
-    return Container(
-      decoration: BoxDecoration(
-        color: StyleConstants.yellow,
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      width: 300,
-      height: 200.0,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'You currently have no',
-              style: StyleConstants.whiteTitleTextSmall,
-            ),
-            Text(
-              'registered pets',
-              style: StyleConstants.whiteTitleTextSmall,
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Container(
-              width: 150.0,
-              height: 45.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
-                color: StyleConstants.blue,
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(
+          color: StyleConstants.yellow,
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        width: 300,
+        height: 200.0,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'You currently have no',
+                style: StyleConstants.whiteTitleTextSmall,
               ),
-              child: Center(
-                child: Text(
-                  'Register a Tag',
-                  style: StyleConstants.whiteTitleTextXS,
+              Text(
+                'registered pets',
+                style: StyleConstants.whiteTitleTextSmall,
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => StpStartScreen()),
                 ),
-              ),
-            )
-          ],
+                child: Container(
+                  width: 150.0,
+                  height: 45.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: StyleConstants.blue,
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Register a Tag',
+                      style: StyleConstants.whiteTitleTextXS,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
