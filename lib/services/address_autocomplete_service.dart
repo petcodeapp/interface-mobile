@@ -29,7 +29,6 @@ class AddressAutocompleteService {
       final predictions = response.data['predictions'];
 
       List<Address> addresses = new List<Address>();
-      print(predictions);
 
       for (int i = 0; i < predictions.length; i++) {
         final structuredFormatting = predictions[i]['structured_formatting'];

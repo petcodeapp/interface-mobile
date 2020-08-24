@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:petcode_app/providers/current_location_provider.dart';
+import 'package:petcode_app/providers/nearby_parks_provider.dart';
+import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
@@ -6,7 +10,7 @@ import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
-import 'package:petcode_app/services/map_service.dart';
+import 'package:petcode_app/services/scans_service.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
@@ -64,9 +68,6 @@ class MyApp extends StatelessWidget {
             }
           },
         ),
-        ChangeNotifierProvider<MapService>(
-          create: (_) => MapService(),
-        ),
         ChangeNotifierProxyProvider<PetService, CurrentPetProvider>(
             create: (_) => CurrentPetProvider(),
             update: (BuildContext context, PetService petService,
@@ -78,6 +79,38 @@ class MyApp extends StatelessWidget {
                 return currentPetProvider..updatePet(petService.allPets);
               } else {
                 return currentPetProvider..setCurrentPet(petService.allPets[0]);
+              }
+            }),
+        ChangeNotifierProxyProvider<PetService, ScansProvider>(
+            create: (_) => ScansProvider(),
+            update: (BuildContext context, PetService petService,
+                ScansProvider scansProvider) {
+              if (petService.allPets == null ||
+                  petService.allPets.length == 0) {
+                return scansProvider..clear();
+              } else {
+                return scansProvider..setScans(petService.allPets);
+              }
+            }),
+        ChangeNotifierProxyProvider<FirebaseAuthService,
+                CurrentLocationProvider>(
+            create: (_) => CurrentLocationProvider(),
+            update: (BuildContext context, FirebaseAuthService authService,
+                CurrentLocationProvider currentLocationProvider) {
+              if (authService.user == null) {
+                return currentLocationProvider..clear();
+              } else {
+                return currentLocationProvider..getCurrentLocation();
+              }
+            }),
+        ChangeNotifierProxyProvider<FirebaseAuthService, NearbyParksProvider>(
+            create: (_) => NearbyParksProvider(),
+            update: (BuildContext context, FirebaseAuthService authService,
+                NearbyParksProvider nearbyParksProvider) {
+              if (authService.user == null) {
+                return nearbyParksProvider..clear();
+              } else {
+                return nearbyParksProvider..setUpProvider();
               }
             }),
       ],
