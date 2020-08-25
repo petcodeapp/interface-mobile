@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Vaccination.dart';
@@ -17,6 +18,9 @@ class VaccineHistoryScreen extends StatefulWidget {
 class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
   List<Vaccination> _vaccinations;
 
+  double _height;
+  double _width;
+
   @override
   void initState() {
     super.initState();
@@ -27,8 +31,8 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
     CurrentPetProvider currentPetProvider =
         Provider.of<CurrentPetProvider>(context);
 
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
     Pet selectedPet = currentPetProvider.currentPet;
 
     if (selectedPet == null) {
@@ -44,93 +48,180 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
       return Scaffold(
         appBar: ChangePetAppBar(),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: StyleConstants.blue,
           child: Icon(Icons.add),
           onPressed: () {},
         ),
-        body: Column(
-          children: [
-            SizedBox(
-              height: 20.0,
-            ),
-            Text(
-              'Vaccine History',
-              style: StyleConstants.blackTitleTextLarge,
-            ),
-            Container(
-              height: 500.0,
-              child: ListView.separated(
-                separatorBuilder: (context, index) {
-                  return Divider(
-                    thickness: 1.0,
-                  );
-                },
-                itemCount: _vaccinations.length,
-                itemBuilder: (context, index) {
-                  bool hasDate = _vaccinations[index].date != null;
+        body: Container(
+          height: _height,
+          width: _width,
+          child: Padding(
+            padding:  EdgeInsets.symmetric(horizontal: _width * 0.1),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20.0,
+                ),
+                Text(
+                  'Vaccine History',
+                  style: StyleConstants.greyThinTitleText,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: _height * 0.02),
+                    child: ListView.builder(
+                      itemCount: _vaccinations.length,
+                      itemBuilder: (context, index) {
+                        bool hasDate = _vaccinations[index].date != null;
 
-                  return ListTile(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditVaccinationScreen(
-                                  pet: selectedPet,
-                                  vaccinationIndex: index,
-                                )),
-                      );
-                    },
-                    title: Text(
-                      _vaccinations[index].name,
-                      style: TextStyle(color: StyleConstants.blue),
-                    ),
-                    subtitle: Text(hasDate
-                        ? StringHelper.getDateString(
-                            _vaccinations[index].date.toDate())
-                        : 'No Date Given'),
-                    trailing: Container(
-                      width: 100.0,
-                      child: hasDate &&
-                              _vaccinations[index]
-                                  .date
-                                  .toDate()
-                                  .isBefore(DateTime.now())
-                          ? Row(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: StyleConstants.red,
-                                  ),
-                                  height: 20.0,
-                                  width: 60.0,
-                                  child: Center(
-                                    child: Text(
-                                      'Expired',
-                                      style: TextStyle(
-                                        fontSize: 10.0,
-                                        color: Colors.white,
+                        return vaccinationWidget(index, _vaccinations[index].name,_vaccinations[index].date);
+                        /*
+                        return ListTile(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditVaccinationScreen(
+                                        pet: selectedPet,
+                                        vaccinationIndex: index,
+                                      )),
+                            );
+                          },
+                          title: Text(
+                            _vaccinations[index].name,
+                            style: TextStyle(color: StyleConstants.blue),
+                          ),
+                          subtitle: Text(hasDate
+                              ? StringHelper.getDateString(
+                                  _vaccinations[index].date.toDate())
+                              : 'No Date Given'),
+                          trailing: Container(
+                            width: 100.0,
+                            child: hasDate &&
+                                    _vaccinations[index]
+                                        .date
+                                        .toDate()
+                                        .isBefore(DateTime.now())
+                                ? Row(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(5.0),
+                                          color: StyleConstants.red,
+                                        ),
+                                        height: 20.0,
+                                        width: 60.0,
+                                        child: Center(
+                                          child: Text(
+                                            'Expired',
+                                            style: TextStyle(
+                                              fontSize: 10.0,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      Spacer(),
+                                      Icon(Icons.arrow_forward_ios),
+                                    ],
+                                  )
+                                : Row(
+                                    children: [
+                                      Spacer(),
+                                      Icon(Icons.arrow_forward_ios),
+                                    ],
                                   ),
-                                ),
-                                Spacer(),
-                                Icon(Icons.arrow_forward_ios),
-                              ],
-                            )
-                          : Row(
-                              children: [
-                                Spacer(),
-                                Icon(Icons.arrow_forward_ios),
-                              ],
-                            ),
+                          ),
+                        );
+                        */
+                      },
                     ),
-                  );
-                },
-              ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       );
     }
+  }
+
+  Widget vaccinationWidget(int index, String vaccineName, Timestamp date){
+    bool hasDate = _vaccinations[index].date != null;
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: StyleConstants.purpleGrey,
+      ),
+      width: _width * 0.8,
+      height: _height * 0.1,
+
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: _width * 0.05),
+            child: Row(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      vaccineName,
+                      style: StyleConstants.lightBlackThinTitleTextSmall,
+                    ),
+                    Text(hasDate
+                        ? StringHelper.getDateString(
+                        _vaccinations[index].date.toDate())
+                        : 'No Date Given'),
+                  ],
+                ),
+                Spacer(),
+                Container(
+                  width: 100.0,
+                  child: hasDate &&
+                      _vaccinations[index]
+                          .date
+                          .toDate()
+                          .isBefore(DateTime.now())
+                      ? Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: StyleConstants.red,
+                        ),
+                        height: 20.0,
+                        width: 60.0,
+                        child: Center(
+                          child: Text(
+                            'Expired',
+                            style: TextStyle(
+                              fontSize: 10.0,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Icon(Icons.arrow_forward_ios),
+                    ],
+                  )
+                      : Row(
+                    children: [
+                      Spacer(),
+                      Icon(
+                          Icons.arrow_forward_ios,
+                        color: StyleConstants.lightBlack,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+
+    );
   }
 }
