@@ -1,12 +1,16 @@
 import 'dart:async';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:petcode_app/models/PlacePhoto.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DiscoverParksScreen extends StatefulWidget {
   @override
@@ -20,9 +24,12 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
   NearbyParksProvider _nearbyParksProvider;
   CurrentLocationProvider _currentLocationProvider;
 
+  CameraPosition _cameraPosition;
+
   Completer<GoogleMapController> _controller = Completer();
 
   bool firstLoad = true;
+  bool _cameraMoved = false;
 
   @override
   void initState() {
@@ -38,9 +45,16 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
     _nearbyParksProvider = Provider.of<NearbyParksProvider>(context);
 
     if (_currentLocationProvider.currentLocation != null && firstLoad) {
-      _nearbyParksProvider.getNearbyParks(LatLng(
-          _currentLocationProvider.currentLocation.latitude,
-          _currentLocationProvider.currentLocation.longitude));
+      _cameraPosition = CameraPosition(
+          target: LatLng(
+            _currentLocationProvider.currentLocation.latitude,
+            _currentLocationProvider.currentLocation.longitude,
+          ),
+          zoom: 5.0);
+      _nearbyParksProvider.getNearbyParks(
+          LatLng(_currentLocationProvider.currentLocation.latitude,
+              _currentLocationProvider.currentLocation.longitude),
+          5.0);
       firstLoad = false;
     }
 
@@ -87,20 +101,18 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
           body: _currentLocationProvider.currentLocation != null
               ? GoogleMap(
                   padding: EdgeInsets.only(bottom: 180.0),
-                  initialCameraPosition: CameraPosition(
-                      target: LatLng(
-                          _currentLocationProvider.currentLocation.latitude,
-                          _currentLocationProvider.currentLocation.longitude),
-                      zoom: 14.0),
+                  initialCameraPosition: _cameraPosition,
                   onMapCreated: (GoogleMapController controller) {
                     _controller.complete(controller);
                   },
                   markers: _nearbyParksProvider.nearbyParkMarkers,
+                  onCameraMove: (CameraPosition position) {
+                    //_nearbyParksProvider.getNearbyParks(position.target);
+                    _cameraPosition = position;
+                    _cameraMoved = true;
+                  },
                 )
-              : Container(
-                  height: _height * 0.01,
-                  width: _width * 0.01,
-                  child: CircularProgressIndicator()),
+              : Center(child: CircularProgressIndicator()),
           panel: Column(
             children: [
               SizedBox(
@@ -117,14 +129,16 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 children: [
-                                  SizedBox(
-                                    height: _height * 0.03,
-                                  ),
                                   parkLocationWidget(
                                       _nearbyParksProvider
                                           .nearbyParks[index].name,
                                       _nearbyParksProvider
-                                          .nearbyParks[index].address),
+                                          .nearbyParks[index].address,
+                                      _nearbyParksProvider
+                                          .nearbyParks[index].placePhotos),
+                                  SizedBox(
+                                    height: _height * 0.03,
+                                  ),
                                 ],
                               );
                             },
@@ -138,54 +152,110 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
     );
   }
 
-  Widget parkLocationWidget(String parkName, String address) {
+  Widget parkLocationWidget(
+      String parkName, String address, List<PlacePhoto> placePhotos) {
     return Container(
-      height: _height * 0.13,
+      height: _height * 0.3,
       width: _width * 0.9,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
         color: StyleConstants.purpleGrey,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
-            flex: 3,
-            child: Container(
-              //color: Colors.blue,
-              //width: _width * 0.443,
-              child: Center(
-                child: Icon(
-                  Icons.place,
-                  color: StyleConstants.red,
-                  size: _width * 0.1,
+          Container(
+            height: _height * 0.2,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: placePhotos.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: EdgeInsets.fromLTRB(10.0, 10.0, 5.0, 10.0),
+                    child: Container(
+                      child: Stack(children: [
+                        Container(child: Image(image: placePhotos[index].photo,height: _height * 0.2, width: _width * 0.5, fit: BoxFit.cover,)),
+                        Positioned(
+                          left: 10.0,
+                          bottom: 10.0,
+                          child: Container(
+                            width: _width * 0.3,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount:
+                                  placePhotos[index].attributionNames.length,
+                              itemBuilder: (BuildContext context, int index2) {
+                                return RichText(
+                                  text: TextSpan(
+                                    style: TextStyle(backgroundColor: Colors.black38),
+                                      text: placePhotos[index]
+                                          .attributionNames[index2],
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () async {
+                                          String attributionUrl =
+                                              placePhotos[index]
+                                                  .attributionLinks[index2];
+                                          print('hello');
+                                          print(attributionUrl);
+                                          if (await canLaunch(attributionUrl)) {
+                                            await launch(attributionUrl);
+                                          } else {
+                                            print('Can\'t launch');
+                                          }
+                                        }),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ]),
+                    ),
+                  );
+                }),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                flex: 3,
+                child: Container(
+                  //color: Colors.blue,
+                  //width: _width * 0.443,
+                  child: Center(
+                    child: Icon(
+                      Icons.place,
+                      color: StyleConstants.red,
+                      size: _width * 0.1,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              Expanded(
+                flex: 7,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        parkName,
+                        style: StyleConstants.lightBlackThinTitleTextSmall,
+                        maxLines: 2,
+                      ),
+                    ),
+                    Flexible(
+                      child: Text(
+                        address,
+                        style: StyleConstants.greyThinDescriptionTextSmall,
+                        maxLines: 2,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
-          Expanded(
-            flex: 7,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Flexible(
-                  child: Text(
-                    parkName,
-                    style: StyleConstants.lightBlackThinTitleTextSmall,
-                    maxLines: 2,
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    address,
-                    style: StyleConstants.greyThinDescriptionTextSmall,
-                    maxLines: 2,
-                  ),
-                ),
-              ],
-            ),
-          )
         ],
       ),
     );
