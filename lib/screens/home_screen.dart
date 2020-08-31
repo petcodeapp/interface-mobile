@@ -15,6 +15,7 @@ import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -63,7 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
         body: noPetsAvailableIndicator(),
       );
     } else {
-
       pageIndex = petService.allPets
           .indexWhere((Pet pet) => pet == _currentPetProvider.currentPet);
 
@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _allPetUpcomingEvents = petService.getAllPetMedication();
 
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: StyleConstants.pageBackgroundColor,
         body: SingleChildScrollView(
           child: Container(
             //height: height + (_allPetUpcomingEvents.length - 2) * 68.0,
@@ -93,14 +93,17 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: height * 0.02,
+                ),
                 Container(
-                  height: 290.0,
+                  height: 200.0,
                   width: width,
                   child: CarouselSlider.builder(
                     options: CarouselOptions(
                       enableInfiniteScroll: false,
                       viewportFraction: 1.0,
-                      height: 300.0,
+                      height: 200.0,
                       initialPage: pageIndex,
                       onPageChanged:
                           (int newPage, CarouselPageChangedReason reason) {
@@ -120,99 +123,196 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     carouselController: _carouselController,
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        height: 280.0,
-                        //width: width,
-                        //color: Colors.blue,
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Container(
-                                height: 300.0,
-                                width: width,
-                                decoration: BoxDecoration(
-                                  //color: StyleConstants.lightGrey,
-                                  color: StyleConstants.purpleGrey,
-                                  //borderRadius: BorderRadius.circular(15.0),
+                      return Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                            height: 200.0,
+                            width: width * 0.9,
+                            //color: Colors.red,
+                            //color: Colors.blue,
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(20.0),
+                                        bottomRight: Radius.circular(20.0)),
+                                    child: Container(
+                                      height: height * 0.3,
+                                      width: width * 0.9,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(20.0),
+                                            bottomRight: Radius.circular(20.0)),
+                                      ),
+                                      child: Image(
+                                        image: petService.allPets[index].petImage,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Container(
-                                height: 200.0,
-                                width: width,
-                                child: Image(
-                                  image: petService.allPets[index].petImage,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              bottom: 12.0,
-                              //left: width * 0.04,
-                              child: Container(
-                                width: width,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            petService.allPets[index].name,
-                                            style: StyleConstants
-                                                .blackThinTitleTextLarge,
-                                          ),
-                                          SizedBox(
-                                            height: 2.0,
-                                          ),
-                                          Text(
-                                            petService.allPets[index].breed,
-                                            style: StyleConstants
-                                                .greyThinDescriptionText,
-                                          ),
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      IconButton(
-                                          icon: Icon(
-                                            HeroIcons.icon_globe,
-                                            size: 28.0,
-                                            color:
-                                                StyleConstants.darkPurpleGrey,
-                                          ),
-                                          onPressed: () {}),
-                                      SizedBox(
-                                        width: width * 0.03,
-                                      ),
-                                      IconButton(
-                                        icon: Icon(
-                                          HeroIcons.icon_edit,
-                                          size: 28.0,
-                                          color: StyleConstants.darkPurpleGrey,
+                                Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Container(
+                                    width: width * 0.9,
+                                    height: height * 0.12,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(20.0),
+                                          bottomRight: Radius.circular(20.0)),
+                                      color: Colors.black.withOpacity(0.2),
+                                    ),
+                                    child: Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: width * 0.05,
+                                          right: width * 0.1
                                         ),
-                                        onPressed: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) => PetInfoScreen(),
-                                          ),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  petService.allPets[index].name,
+                                                  style: StyleConstants
+                                                      .whiteThinTitleTextLarge,
+                                                ),
+                                                SizedBox(
+                                                  height: 2.0,
+                                                ),
+                                                Text(
+                                                  petService.allPets[index].breed,
+                                                  style: StyleConstants
+                                                      .whiteThinTitleTextSmall,
+                                                ),
+                                              ],
+                                            ),
+
+                                            Container(
+                                              //color: Colors.blue,
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  IconButton(
+                                                      icon: Icon(
+                                                        HeroIcons.icon_globe,
+                                                        size: 50.0,
+                                                        color: Colors.white,
+                                                      ),
+                                                      onPressed: () {}),
+                                                  SizedBox(height: 18.0,),
+                                                ],
+                                              ),
+                                            ),
+
+                                          ],
                                         ),
                                       ),
-                                    ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )
+                            /*
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  height: 300.0,
+                                  width: width,
+                                  decoration: BoxDecoration(
+                                    //color: StyleConstants.lightGrey,
+                                    color: StyleConstants.purpleGrey,
+                                    //borderRadius: BorderRadius.circular(15.0),
                                   ),
                                 ),
                               ),
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: Container(
+                                  height: 200.0,
+                                  width: width,
+                                  child: Image(
+                                    image: petService.allPets[index].petImage,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 12.0,
+                                //left: width * 0.04,
+                                child: Container(
+                                  width: width,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              petService.allPets[index].name,
+                                              style: StyleConstants
+                                                  .blackThinTitleTextLarge,
+                                            ),
+                                            SizedBox(
+                                              height: 2.0,
+                                            ),
+                                            Text(
+                                              petService.allPets[index].breed,
+                                              style: StyleConstants
+                                                  .greyThinDescriptionText,
+                                            ),
+                                          ],
+                                        ),
+                                        Spacer(),
+                                        IconButton(
+                                            icon: Icon(
+                                              HeroIcons.icon_globe,
+                                              size: 28.0,
+                                              color:
+                                                  StyleConstants.darkPurpleGrey,
+                                            ),
+                                            onPressed: () {}),
+                                        SizedBox(
+                                          width: width * 0.03,
+                                        ),
+                                        IconButton(
+                                          icon: Icon(
+                                            HeroIcons.icon_edit,
+                                            size: 28.0,
+                                            color: StyleConstants.darkPurpleGrey,
+                                          ),
+                                          onPressed: () => Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) => PetInfoScreen(),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          */
                             ),
-                          ],
-                        ),
                       );
                     },
                     itemCount: petService.allPets.length,
@@ -252,6 +352,165 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: height * 0.001,
                 ),
+                SizedBox(
+                  height: height * 0.03,
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: StyleConstants.blue,
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), bottomLeft: Radius.circular(20.0)),
+                    ),
+                    width: width * 0.9,
+                    child: Row(
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 5.0,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10.0, top: 10.0, bottom: 10.0),
+                              child: Container(
+                                width: width - width * 0.07 - 30,
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        print('tapped pet info');
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                PetInfoScreen(),
+                                          ),
+                                        );
+                                      },
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            //Icons.pets,
+                                            HeroIcons.icon_heart,
+
+                                            size: 25.0,
+                                            color:
+                                            Colors.white,
+                                          ),
+                                          SizedBox(
+                                            height: height * 0.005,
+                                          ),
+                                          Text(
+                                            'Pet Info',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => OwnerInfoScreen(),
+                                        ),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            //Icons.person,
+                                            HeroIcons.icon_call,
+                                            size: 25.0,
+                                            color:
+                                            Colors.white,
+                                          ),
+                                          SizedBox(
+                                            height: height * 0.005,
+                                          ),
+                                          Text(
+                                            'Owner Info',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  RemindersScreen())),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            //Icons.today,
+                                            HeroIcons.icon_notification,
+                                            size: 25.0,
+                                            color:
+                                            Colors.white,
+                                          ),
+                                          SizedBox(
+                                            height: height * 0.005,
+                                          ),
+                                          Text(
+                                            'Reminders',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => MedicalInfoScreen(),
+                                        ),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            //Icons.assignment,
+                                            HeroIcons.icon_clipboard,
+                                            size: 25.0,
+                                            color:
+                                            Colors.white,
+                                          ),
+                                          SizedBox(
+                                            height: height * 0.005,
+                                          ),
+                                          Text(
+                                            'Med Info',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: width * 0.035),
                   child: Column(
@@ -264,158 +523,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: StyleConstants.blackTitleText,
                           ),
                           */
-                      SizedBox(
-                        height: height * 0.03,
-                      ),
-                      Row(
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 15.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 5.0,
-                                ),
-                                Container(
-                                  width: width - width * 0.07 - 30,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          print('tapped pet info');
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PetInfoScreen(),
-                                            ),
-                                          );
-                                        },
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Icon(
-                                              //Icons.pets,
-                                              HeroIcons.icon_heart,
 
-                                              size: 25.0,
-                                              color:
-                                                  StyleConstants.darkPurpleGrey,
-                                            ),
-                                            SizedBox(height: height * 0.005,),
-                                            Text(
-                                              'Pet Info',
-                                              style: TextStyle(
-                                                  color: StyleConstants.darkPurpleGrey,
-                                                  fontWeight: FontWeight.w400),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) => OwnerInfoScreen(),
-                                          ),
-                                        ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Icon(
-                                              //Icons.person,
-                                              HeroIcons.icon_call,
-                                              size: 25.0,
-                                              color:
-                                                  StyleConstants.darkPurpleGrey,
-                                            ),
-                                            SizedBox(height: height * 0.005,),
-                                            Text(
-                                              'Owner Info',
-                                              style: TextStyle(
-                                                  color: StyleConstants.darkPurpleGrey,
-                                                  fontWeight: FontWeight.w400),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () =>
-                                            Navigator.push(context, MaterialPageRoute(builder: (_) => RemindersScreen())),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Icon(
-                                              //Icons.today,
-                                              HeroIcons.icon_notification,
-                                              size: 25.0,
-                                              color: StyleConstants.darkPurpleGrey,
-                                            ),
-                                            SizedBox(height: height * 0.005,),
-                                            Text(
-                                              'Reminders',
-                                              style: TextStyle(
-                                                  color: StyleConstants.darkPurpleGrey,
-                                                  fontWeight: FontWeight.w400),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) => MedicalInfoScreen(),
-                                          ),
-                                        ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Icon(
-                                              //Icons.assignment,
-                                              HeroIcons.icon_clipboard,
-                                              size: 25.0,
-                                              color: StyleConstants.darkPurpleGrey,
-                                            ),
-                                            SizedBox(height: height * 0.005,),
-                                            Text(
-                                              'Med Info',
-                                              style: TextStyle(
-                                                  color: StyleConstants.darkPurpleGrey,
-                                                  fontWeight: FontWeight.w400),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
                       SizedBox(
-                        height: height * 0.03,
+                        height: height * 0.01,
                       ),
+                      /*
                       Divider(
                         height: 2.0,
                         thickness: 3.0,
                         color: StyleConstants.purpleGrey,
                       ),
+                      */
                       SizedBox(
                         height: height * 0.02,
                       ),
                       Text(
                         'Upcoming',
                         style: StyleConstants.blackThinTitleText,
-
                       ),
                       SizedBox(
                         height: height * 0.02,
@@ -438,7 +562,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ],
                                     borderRadius: BorderRadius.circular(15.0)),
-                                height: 60.0,
+                                height: height * 0.1,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
@@ -451,7 +575,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             _value = value;
                                           });
                                         },
-                                        activeColor: StyleConstants.green,
+                                        activeColor: StyleConstants.yellow,
                                       ),
                                       Column(
                                         mainAxisSize: MainAxisSize.min,
@@ -464,19 +588,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                             softWrap: false,
                                             maxLines: 1,
                                             style: TextStyle(
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.w400),
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.w600),
                                           ),
+                                          _allPetUpcomingEvents[index].date != null
+                                              ? Text(
+                                            StringHelper.getDateString(
+                                                _allPetUpcomingEvents[index]
+                                                    .date
+                                                    .toDate()
+                                            ) + ' at ' + DateFormat.jm().format(_allPetUpcomingEvents[index].date.toDate())
+                                            ,
+                                            overflow: TextOverflow.ellipsis,
+                                          )
+                                              : Text(
+                                            'No date given',
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          /*
                                           Text(
                                             _allPetUpcomingEvents[index]
                                                 .petName,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                                 fontSize: 15.0,
-                                                fontWeight: FontWeight.w300),
+                                                fontWeight: FontWeight.w400),
                                           ),
+                                          */
                                         ],
                                       ),
+                                      /*
                                       Flexible(
                                           fit: FlexFit.tight,
                                           child: SizedBox()),
@@ -492,6 +633,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               'No date given',
                                               overflow: TextOverflow.ellipsis,
                                             ),
+                                      */
                                     ],
                                   ),
                                 ),
@@ -538,8 +680,7 @@ class _HomeScreenState extends State<HomeScreen> {
               GestureDetector(
                 onTap: () => Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => StpStartScreen()),
+                  MaterialPageRoute(builder: (context) => StpStartScreen()),
                 ),
                 child: Container(
                   width: 150.0,

@@ -27,6 +27,8 @@ class StyleConstants {
 
   static Color lightBlack = new Color(0xff718096);
 
+  static Color pageBackgroundColor = new Color(0xffEEF2F6);
+
   //text styles
   static TextStyle whiteButtonText = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
@@ -85,6 +87,12 @@ class StyleConstants {
   static TextStyle whiteDescriptionTextXS = new TextStyle(
     color: Colors.white,
     fontSize: 10.0,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle whiteThinTitleTextLarge = new TextStyle(
+    color: Colors.white,
+    fontSize: 40.0,
     fontWeight: FontWeight.w400,
   );
 
