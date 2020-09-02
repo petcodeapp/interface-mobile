@@ -7,6 +7,7 @@ import 'package:petcode_app/screens/owner_info_editing_screen.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/change_pet_app_bar.dart';
+import 'package:petcode_app/widgets/owner_change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class OwnerInfoScreen extends StatefulWidget {
@@ -27,21 +28,24 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: ChangePetAppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.edit),
-            color: Colors.white,
-            iconSize: 30.0,
-            onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => OwnerInfoEditingScreen(
-                      currentPet: currentPet,
-                    ))),
-          ),
-        ],
+      backgroundColor: StyleConstants.pageBackgroundColor,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70.0),
+        child: OwnerChangePetAppBar(
+          actions: [
+            IconButton(
+              icon: Icon(Icons.edit),
+              color: Colors.white,
+              iconSize: 30.0,
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => OwnerInfoEditingScreen(
+                        currentPet: currentPet,
+                      ))),
+            ),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
