@@ -154,7 +154,6 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                                   'General Information',
                                   style: StyleConstants.blackThinTitleTextMedium,
                                 ),
-
                               ],
                             ),
                           ),
