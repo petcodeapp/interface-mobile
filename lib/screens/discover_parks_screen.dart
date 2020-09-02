@@ -85,18 +85,48 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
             ),
           ),
           body: _currentLocationProvider.currentLocation != null
-              ? GoogleMap(
-                  padding: EdgeInsets.only(bottom: 180.0),
-                  initialCameraPosition: CameraPosition(
-                      target: LatLng(
-                          _currentLocationProvider.currentLocation.latitude,
-                          _currentLocationProvider.currentLocation.longitude),
-                      zoom: 14.0),
-                  onMapCreated: (GoogleMapController controller) {
-                    _controller.complete(controller);
-                  },
-                  markers: _nearbyParksProvider.nearbyParkMarkers,
-                )
+              ? Container(
+                child: Stack(
+                  children: [
+                    GoogleMap(
+                        padding: EdgeInsets.only(bottom: 180.0),
+                        initialCameraPosition: CameraPosition(
+                            target: LatLng(
+                                _currentLocationProvider.currentLocation.latitude,
+                                _currentLocationProvider.currentLocation.longitude),
+                            zoom: 14.0),
+                        onMapCreated: (GoogleMapController controller) {
+                          _controller.complete(controller);
+                        },
+                        markers: _nearbyParksProvider.nearbyParkMarkers,
+                      ),
+                    Align(
+                      alignment: Alignment.topCenter,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(height: _height * 0.02,),
+                            Container(
+                              height: 40.0,
+                              width: 125.0,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Center(
+                                child: Text('Search this Area', style: TextStyle(
+                                  color: StyleConstants.red,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12.0,
+                                ),),
+                              ),
+                            ),
+                          ],
+                        ),
+                    ),
+                  ],
+                ),
+              )
               : Container(
                   height: _height * 0.01,
                   width: _width * 0.01,
