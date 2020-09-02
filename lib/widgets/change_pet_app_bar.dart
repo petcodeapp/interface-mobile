@@ -42,6 +42,14 @@ class _ChangePetAppBarState extends State<ChangePetAppBar> {
     return AppBar(
       backgroundColor: StyleConstants.blue,
       centerTitle: true,
+      elevation: 0.0,
+      /*
+      shape: ContinuousRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0),
+        )
+      ),
+      */
       title: new Theme(
         child: new DropdownButtonHideUnderline(
           child: new DropdownButton<Pet>(
