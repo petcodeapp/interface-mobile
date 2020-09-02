@@ -140,6 +140,12 @@ class StyleConstants {
     fontWeight: FontWeight.w600,
   );
 
+  static TextStyle darkBlackDescriptionText = new TextStyle(
+      fontSize: 18.0,
+      fontWeight: FontWeight.w500,
+      color: Colors.black.withOpacity(0.8)
+  );
+
   static TextStyle lightBlackThinTitleText = new TextStyle(
     color: lightBlack,
     fontSize: 30.0,

@@ -52,7 +52,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
           height: height,
           width: width,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: height * 0.04,
@@ -62,9 +62,12 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
                 backgroundImage:  petService.petImages[widget.petIndex],
                 radius: 60.0,
               ),*/
-              Text(
-                'Owner 1',
-                style: StyleConstants.blackThinTitleText,
+              Padding(
+                padding: EdgeInsets.only(left: width * 0.03),
+                child: Text(
+                  'Owner 1',
+                  style: StyleConstants.blackThinTitleText,
+                ),
               ),
               SizedBox(
                 height: height * 0.01,
@@ -107,7 +110,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
             ),
             title: Row(
               children: [
-                Text(owner.name) ??
+                Text(owner.name,style: StyleConstants.darkBlackDescriptionText) ??
                     Text(
                       'Name',
                       style: StyleConstants.greyedOutText,
@@ -122,7 +125,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Divider(
-              thickness: 1,
+              thickness: 2,
             ),
           ),
           ListTile(
@@ -130,7 +133,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
               HeroIcons.icon_mail,
               size: 30.0,
             ),
-            title: Text(owner.email) ??
+            title: Text(owner.email,style: StyleConstants.darkBlackDescriptionText) ??
                 Text(
                   'Email',
                   style: StyleConstants.greyedOutText,
@@ -143,7 +146,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Divider(
-              thickness: 1,
+              thickness: 2,
             ),
           ),
           ListTile(
@@ -151,7 +154,8 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
               HeroIcons.icon_call,
               size: 30.0,
             ),
-            title: Text(owner.phoneNumber) ??
+            title: Text(owner.phoneNumber, style: StyleConstants.darkBlackDescriptionText
+            ) ??
                 Text(
                   'Phone Number',
                   style: StyleConstants.greyedOutText,
@@ -164,7 +168,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Divider(
-              thickness: 1,
+              thickness: 2,
             ),
           ),
           ListTile(
@@ -172,7 +176,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
               HeroIcons.icon_home,
               size: 30.0,
             ),
-            title: Text(owner.address) ??
+            title: Text(owner.address,style: StyleConstants.darkBlackDescriptionText) ??
                 Text(
                   'Address',
                   style: StyleConstants.greyedOutText,
