@@ -85,6 +85,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
       return Scaffold(
         backgroundColor: StyleConstants.pageBackgroundColor,
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: StyleConstants.blue,
+          title: Container(
+            //color: Colors.white,
+              height: 75,
+              //width: 200,
+              child: Image.asset(
+                'assets/images/appbarlogoyellow.png',
+                fit: BoxFit.cover,
+              )),
+        ),
         body: SingleChildScrollView(
           child: Container(
             //height: height + (_allPetUpcomingEvents.length - 2) * 68.0,
