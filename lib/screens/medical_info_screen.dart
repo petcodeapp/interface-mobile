@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:petcode_app/screens/general_med_info_screen.dart';
 import 'package:petcode_app/screens/share_records_screen.dart';
 import 'package:petcode_app/screens/vaccine_history_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
@@ -118,7 +119,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                         height: height * 0.04,
                       ),
                       GestureDetector(
-                        onTap: () => print('Pressed contact'),
+                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => GeneralMedicalInfoScreen())),
                         child: Container(
                           height: height * 0.12,
                           width: width - 50,

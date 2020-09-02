@@ -48,48 +48,48 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Container(
-          height: height,
-          width: width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: height * 0.04,
-              ),
-              /*
+      child: Container(
+        height: height,
+        width: width,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: height * 0.04,
+            ),
+            /*
               CircleAvatar(
                 backgroundImage:  petService.petImages[widget.petIndex],
                 radius: 60.0,
               ),*/
-              Padding(
-                padding: EdgeInsets.only(left: width * 0.03),
-                child: Text(
-                  'Owner 1',
-                  style: StyleConstants.blackThinTitleText,
-                ),
+            Padding(
+              padding: EdgeInsets.only(left: width * 0.03),
+              child: Text(
+                'Owner 1',
+                style: StyleConstants.blackThinTitleText,
               ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              createOwnerWidget(
-                  currentPet.contact_1, height, width),
-              SizedBox(height: height * 0.01),
-              currentPet.contact_2 == null
-                  ? SizedBox()
-                  : Text(
-                      'Owner 2',
-                      style: StyleConstants.blackThinTitleText,
-                    ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              createOwnerWidget(
-                  currentPet.contact_2, height, width)
-            ],
-          ),
+            ),
+            SizedBox(
+              height: height * 0.01,
+            ),
+            createOwnerWidget(
+                currentPet.contact_1, height, width),
+            SizedBox(height: height * 0.01),
+            currentPet.contact_2 == null
+                ? SizedBox()
+                : Text(
+              'Owner 2',
+              style: StyleConstants.blackThinTitleText,
+            ),
+            SizedBox(
+              height: height * 0.01,
+            ),
+            createOwnerWidget(
+                currentPet.contact_2, height, width)
+          ],
         ),
       ),
+    ),
     );
   }
 
