@@ -134,6 +134,24 @@ class StyleConstants {
     fontWeight: FontWeight.w600,
   );
 
+  static TextStyle blackThinTitleTextMedium = new TextStyle(
+    color: Colors.black,
+    fontSize: 25.0,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle darkBlackDescriptionText = new TextStyle(
+      fontSize: 18.0,
+      fontWeight: FontWeight.w500,
+      color: Colors.black.withOpacity(0.8)
+  );
+
+  static TextStyle tinyGreyDescriptionText = new TextStyle(
+      fontSize: 14.0,
+      fontWeight: FontWeight.w400,
+      color: darkPurpleGrey,
+  );
+
   static TextStyle lightBlackThinTitleText = new TextStyle(
     color: lightBlack,
     fontSize: 30.0,

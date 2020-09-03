@@ -29,113 +29,127 @@ class _AccountScreenState extends State<AccountScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: StyleConstants.pageBackgroundColor,
       body: SingleChildScrollView(
         child: Container(
-          height: height * 1.1,
+          height: height * 1.3,
           width: width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: Stack(
             children: [
-              SizedBox(
-                height: height * 0.02,
-              ),
-              CircleAvatar(
-                backgroundColor: Colors.transparent,
-                radius: 100.0,
-                backgroundImage: petService.allPets.length > 0
-                    ? petService.allPets[0].petImage
-                    : null,
-              ),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              Text(
-                user.firstName + ' ' + user.lastName,
-                style: StyleConstants.blackTitleTextLarge,
-              ),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        user.petIds.length.toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 25.0),
-                      ),
-                      Text(
-                        'Pets',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300, fontSize: 16.0),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        numScans.toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 25.0),
-                      ),
-                      Text(
-                        'Scans',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300, fontSize: 16.0),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.03,
-              ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
+              SizedBox(height: height, width: width,),
+              Container(
+                height: height * 0.6,
+                width: width,
+                decoration: BoxDecoration(
+                    color: StyleConstants.blue,
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30.0),
-                        topRight: Radius.circular(30.0)),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 5,
-                        offset: Offset(0, -3),
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Column(
+                      bottomLeft: Radius.circular(20.0),
+                      bottomRight: Radius.circular(20.0),
+                    )),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: height * 0.03,
+                    ),
+                    Text(
+                      'Account',
+                      style: StyleConstants.whiteThinTitleText,
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),
+                    CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      radius: 75.0,
+                      backgroundImage: petService.allPets.length > 0
+                          ? petService.allPets[0].petImage
+                          : null,
+                    ),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    Text(
+                      user.firstName + ' ' + user.lastName,
+                      style: StyleConstants.whiteThinTitleTextLarge,
+                    ),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        SizedBox(
-                          height: height * 0.03,
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              user.petIds.length.toString(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 25.0),
+                            ),
+                            Text(
+                              'Pets',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 16.0),
+                            ),
+                          ],
                         ),
-                        GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => UpdateAccountInfoScreen(
-                                        currentUser: user,
-                                      )),
-                            );
-                          },
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              numScans.toString(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 25.0),
+                            ),
+                            Text(
+                              'Scans',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 16.0),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                top: height * 0.5,
+                left: width * 0.5 - (width-50)/2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => UpdateAccountInfoScreen())),
+                      child: Container(
+                        height: height * 0.1,
+                        width: width - 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.20),
+                                blurRadius: 6,
+                                offset: Offset(0, 3),
+                              )
+                            ]
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: width* 0.05),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                width: 50.0,
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: StyleConstants.green.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
+                                width: 25.0,
                                 child: Icon(
                                   Icons.account_circle,
                                   color: StyleConstants.green,
@@ -143,38 +157,41 @@ class _AccountScreenState extends State<AccountScreen> {
                                 ),
                               ),
                               SizedBox(
-                                width: width * 0.03,
+                                width: width * 0.1,
                               ),
                               Text(
-                                'Update Account Info',
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Spacer(),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 25.0,
+                                'General Information',
+                                style: StyleConstants.blackThinTitleTextMedium,
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: height * 0.02,
+                      ),
+                    ),
+                    SizedBox(height: height * 0.02,),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: height * 0.1,
+                        width: width - 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.20),
+                                blurRadius: 6,
+                                offset: Offset(0, 3),
+                              )
+                            ]
                         ),
-                        GestureDetector(
-                          onTap: () => print('pressed app settings'),
-                          behavior: HitTestBehavior.translucent,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: width* 0.05),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                width: 50.0,
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: StyleConstants.green.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
+                                width: 25.0,
                                 child: Icon(
                                   Icons.settings,
                                   color: StyleConstants.green,
@@ -182,48 +199,45 @@ class _AccountScreenState extends State<AccountScreen> {
                                 ),
                               ),
                               SizedBox(
-                                width: width * 0.03,
+                                width: width * 0.1,
                               ),
                               Text(
                                 'App Settings',
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Spacer(),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 25.0,
+                                style: StyleConstants.blackThinTitleTextMedium,
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: height * 0.01,
+                      ),
+                    ),
+                    SizedBox(height: height * 0.02,),
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => StpStartScreen()),
+                      ),
+                      child: Container(
+                        height: height * 0.1,
+                        width: width - 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.20),
+                                blurRadius: 6,
+                                offset: Offset(0, 3),
+                              )
+                            ]
                         ),
-                        Divider(
-                          thickness: 1.0,
-                        ),
-                        SizedBox(
-                          height: height * 0.01,
-                        ),
-                        GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => StpStartScreen()),
-                          ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: width* 0.05),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                width: 50.0,
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: StyleConstants.yellow.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
+                                width: 25.0,
                                 child: Icon(
                                   Icons.turned_in,
                                   color: StyleConstants.yellow,
@@ -231,154 +245,149 @@ class _AccountScreenState extends State<AccountScreen> {
                                 ),
                               ),
                               SizedBox(
-                                width: width * 0.03,
+                                width: width * 0.1,
                               ),
                               Text(
-                                'Register a Tag',
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Spacer(),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 25.0,
+                                'Register Tag',
+                                style: StyleConstants.blackThinTitleTextMedium,
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: height * 0.02,
+                      ),
+                    ),
+                    SizedBox(height: height * 0.02,),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: height * 0.1,
+                        width: width - 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.20),
+                                blurRadius: 6,
+                                offset: Offset(0, 3),
+                              )
+                            ]
                         ),
-                        GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: () => print('pressed lost pet settings'),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: width* 0.05),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                width: 50.0,
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: StyleConstants.yellow.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
+                                width: 25.0,
                                 child: Icon(
-                                  Icons.place,
+                                  Icons.turned_in,
                                   color: StyleConstants.yellow,
                                   size: 50.0,
                                 ),
                               ),
                               SizedBox(
-                                width: width * 0.03,
+                                width: width * 0.1,
                               ),
                               Text(
                                 'Lost Pet Settings',
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Spacer(),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 25.0,
+                                style: StyleConstants.blackThinTitleTextMedium,
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: height * 0.01,
+                      ),
+                    ),
+                    SizedBox(height: height * 0.02,),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: height * 0.1,
+                        width: width - 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.20),
+                                blurRadius: 6,
+                                offset: Offset(0, 3),
+                              )
+                            ]
                         ),
-                        Divider(
-                          thickness: 1.0,
-                        ),
-                        SizedBox(
-                          height: height * 0.01,
-                        ),
-                        GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: () {
-                            final auth = Provider.of<FirebaseAuthService>(
-                                context,
-                                listen: false);
-                            auth.signOut();
-                          },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: width* 0.05),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                width: 50.0,
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: StyleConstants.red.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
+                                width: 25.0,
                                 child: Icon(
-                                  Icons.exit_to_app,
-                                  color: StyleConstants.red,
+                                  Icons.location_on,
+                                  color: StyleConstants.yellow,
                                   size: 50.0,
                                 ),
                               ),
                               SizedBox(
-                                width: width * 0.03,
-                              ),
-                              Text(
-                                'Log Out',
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Spacer(),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 25.0,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                        GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: () => print('lost pet'),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 50.0,
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: StyleConstants.red.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Icon(
-                                  Icons.account_circle,
-                                  color: StyleConstants.red,
-                                  size: 50.0,
-                                ),
-                              ),
-                              SizedBox(
-                                width: width * 0.03,
+                                width: width * 0.1,
                               ),
                               Text(
                                 'Lost Pet',
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Spacer(),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 25.0,
+                                style: StyleConstants.blackThinTitleTextMedium,
                               ),
                             ],
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                    SizedBox(height: height * 0.02,),
+                    GestureDetector(
+                      onTap: () {
+                        final auth = Provider.of<FirebaseAuthService>(
+                            context,
+                            listen: false);
+                        auth.signOut();
+                      },
+                      child: Container(
+                        height: height * 0.1,
+                        width: width - 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.20),
+                                blurRadius: 6,
+                                offset: Offset(0, 3),
+                              )
+                            ]
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: width* 0.05),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 25.0,
+                                child: Icon(
+                                  Icons.exit_to_app,
+                                  color: StyleConstants.yellow,
+                                  size: 50.0,
+                                ),
+                              ),
+                              SizedBox(
+                                width: width * 0.1,
+                              ),
+                              Text(
+                                'Log Out',
+                                style: StyleConstants.blackThinTitleTextMedium,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
