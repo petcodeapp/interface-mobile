@@ -88,13 +88,10 @@ class StyleConstants {
     fontWeight: FontWeight.w400,
   );
 
-  static TextStyle blackTitleText = GoogleFonts.getFont('Lilita One',
-      textStyle: TextStyle(
-        color: Colors.black,
-        fontSize: 30.0,
-      ));
-
-
+  static TextStyle blackTitleText = TextStyle(
+    color: Colors.black,
+    fontSize: 26.0,
+  );
 
   static TextStyle blackTitleTextLarge = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
@@ -211,6 +208,16 @@ class StyleConstants {
     color: lightBlack,
     fontSize: 14.0,
     fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle blueTitleText = new TextStyle(
+    color: blue,
+    fontSize: 20.0,
+  );
+
+  static TextStyle yellowDescriptionText = new TextStyle(
+    color: yellow,
+    fontSize: 16.0,
   );
 
   //box decorations

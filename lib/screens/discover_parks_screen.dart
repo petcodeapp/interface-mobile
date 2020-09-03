@@ -58,6 +58,11 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
       firstLoad = false;
     }
 
+    BorderRadiusGeometry topRoundedRadius = BorderRadius.only(
+      topLeft: Radius.circular(24.0),
+      topRight: Radius.circular(24.0),
+    );
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -72,83 +77,87 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
             )),
       ),
       body: SlidingUpPanel(
-          header: Center(
-            child: Container(
-              width: _width,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 150.0),
-                      child: Divider(
-                        thickness: 5.0,
-                      ),
+        borderRadius: topRoundedRadius,
+        header: Center(
+          child: Container(
+            width: _width,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 150.0),
+                    child: Divider(
+                      thickness: 3.0,
+                      color: StyleConstants.darkGrey,
                     ),
-                    SizedBox(
-                      height: _height * 0.01,
-                    ),
-                    Text(
-                      'Pet Parks Near You',
-                      style: StyleConstants.blackThinTitleTextSmall,
-                    ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: _height * 0.01,
+                  ),
+                  Text(
+                    'Nearby Pet Parks',
+                    style: StyleConstants.blackTitleText,
+                  ),
+                ],
               ),
             ),
           ),
-          body: _currentLocationProvider.currentLocation != null
-              ? GoogleMap(
-                  padding: EdgeInsets.only(bottom: 180.0),
-                  initialCameraPosition: _cameraPosition,
-                  onMapCreated: (GoogleMapController controller) {
-                    _controller.complete(controller);
-                  },
-                  markers: _nearbyParksProvider.nearbyParkMarkers,
-                  onCameraMove: (CameraPosition position) {
-                    //_nearbyParksProvider.getNearbyParks(position.target);
-                    _cameraPosition = position;
-                    _cameraMoved = true;
-                  },
-                )
-              : Center(child: CircularProgressIndicator()),
-          panel: Column(
-            children: [
-              SizedBox(
-                height: _height * 0.1,
-              ),
-              Expanded(
+        ),
+        body: _currentLocationProvider.currentLocation != null
+            ? GoogleMap(
+                padding: EdgeInsets.only(bottom: 180.0),
+                initialCameraPosition: _cameraPosition,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+                markers: _nearbyParksProvider.nearbyParkMarkers,
+                onCameraMove: (CameraPosition position) {
+                  //_nearbyParksProvider.getNearbyParks(position.target);
+                  _cameraPosition = position;
+                  _cameraMoved = true;
+                },
+              )
+            : Center(child: CircularProgressIndicator()),
+        panel: Column(
+          children: [
+            SizedBox(
+              height: _height * 0.1,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10.0),
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: _nearbyParksProvider.nearbyParks != null
-                        ? ListView.builder(
-                            itemCount: _nearbyParksProvider.nearbyParks.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Column(
-                                children: [
-                                  parkLocationWidget(
-                                      _nearbyParksProvider
-                                          .nearbyParks[index].name,
-                                      _nearbyParksProvider
-                                          .nearbyParks[index].address,
-                                      _nearbyParksProvider
-                                          .nearbyParks[index].placePhotos),
-                                  SizedBox(
-                                    height: _height * 0.03,
-                                  ),
-                                ],
-                              );
-                            },
-                          )
-                        : SizedBox.shrink(),
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: _nearbyParksProvider.nearbyParks != null
+                      ? ListView.builder(
+                          itemCount: _nearbyParksProvider.nearbyParks.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              children: [
+                                parkLocationWidget(
+                                    _nearbyParksProvider
+                                        .nearbyParks[index].name,
+                                    _nearbyParksProvider
+                                        .nearbyParks[index].address,
+                                    _nearbyParksProvider
+                                        .nearbyParks[index].placePhotos),
+                                SizedBox(
+                                  height: _height * 0.03,
+                                ),
+                              ],
+                            );
+                          },
+                        )
+                      : SizedBox.shrink(),
                 ),
               ),
-            ],
-          )),
+            ),
+          ],
+        ),
+        color: StyleConstants.veryLightGrey,
+      ),
     );
   }
 
@@ -158,9 +167,15 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
       height: _height * 0.3,
       width: _width * 0.9,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        color: StyleConstants.purpleGrey,
-      ),
+          borderRadius: BorderRadius.circular(16.0),
+          color: StyleConstants.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 0.6,
+              offset: Offset(0, 3),
+            )
+          ]),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -174,7 +189,15 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                     padding: EdgeInsets.fromLTRB(10.0, 10.0, 5.0, 10.0),
                     child: Container(
                       child: Stack(children: [
-                        Container(child: Image(image: placePhotos[index].photo,height: _height * 0.2, width: _width * 0.5, fit: BoxFit.cover,)),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(16.0),
+                          child: Image(
+                            image: placePhotos[index].photo,
+                            height: _height * 0.2,
+                            width: _width * 0.5,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                         Positioned(
                           left: 10.0,
                           bottom: 10.0,
@@ -187,7 +210,8 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                               itemBuilder: (BuildContext context, int index2) {
                                 return RichText(
                                   text: TextSpan(
-                                    style: TextStyle(backgroundColor: Colors.black38),
+                                      style: TextStyle(
+                                          backgroundColor: Colors.black38),
                                       text: placePhotos[index]
                                           .attributionNames[index2],
                                       recognizer: TapGestureRecognizer()
@@ -217,21 +241,6 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Expanded(
-                flex: 3,
-                child: Container(
-                  //color: Colors.blue,
-                  //width: _width * 0.443,
-                  child: Center(
-                    child: Icon(
-                      Icons.place,
-                      color: StyleConstants.red,
-                      size: _width * 0.1,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 7,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -240,14 +249,14 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                     Flexible(
                       child: Text(
                         parkName,
-                        style: StyleConstants.lightBlackThinTitleTextSmall,
+                        style: StyleConstants.blueTitleText,
                         maxLines: 2,
                       ),
                     ),
                     Flexible(
                       child: Text(
                         address,
-                        style: StyleConstants.greyThinDescriptionTextSmall,
+                        style: StyleConstants.yellowDescriptionText,
                         maxLines: 2,
                       ),
                     ),
