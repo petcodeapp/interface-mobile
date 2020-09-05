@@ -15,6 +15,7 @@ import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/set_up_keys.dart';
+import 'package:petcode_app/utils/no_glow_behavior.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
@@ -115,6 +116,9 @@ class MyApp extends StatelessWidget {
             }),
       ],
       child: MaterialApp(
+        builder: (context, child) {
+          return ScrollConfiguration(behavior: NoGlowBehavior(), child: child);
+        },
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         home: HomeScreen(),
@@ -130,7 +134,6 @@ class HomeScreen extends StatelessWidget {
       builder: (context, FirebaseAuthService auth, _) {
         if (auth.status == Status.Uninitialized) {
           return Scaffold(
-            backgroundColor: StyleConstants.blue,
             body: Center(
               child: Text('loading'),
             ),
