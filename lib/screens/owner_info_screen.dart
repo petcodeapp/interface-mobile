@@ -7,6 +7,7 @@ import 'package:petcode_app/screens/owner_info_editing_screen.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/change_pet_app_bar.dart';
+import 'package:petcode_app/widgets/owner_change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class OwnerInfoScreen extends StatefulWidget {
@@ -27,62 +28,68 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: ChangePetAppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.edit),
-            color: Colors.white,
-            iconSize: 30.0,
-            onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => OwnerInfoEditingScreen(
-                      currentPet: currentPet,
-                    ))),
-          ),
-        ],
+      backgroundColor: StyleConstants.pageBackgroundColor,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70.0),
+        child: OwnerChangePetAppBar(
+          actions: [
+            IconButton(
+              icon: Icon(Icons.edit),
+              color: Colors.white,
+              iconSize: 30.0,
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => OwnerInfoEditingScreen(
+                        currentPet: currentPet,
+                      ))),
+            ),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
-        child: Container(
-          height: height,
-          width: width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: height * 0.04,
-              ),
-              /*
+      child: Container(
+        height: height,
+        width: width,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: height * 0.04,
+            ),
+            /*
               CircleAvatar(
                 backgroundImage:  petService.petImages[widget.petIndex],
                 radius: 60.0,
               ),*/
-              Text(
+            Padding(
+              padding: EdgeInsets.only(left: width * 0.03),
+              child: Text(
                 'Owner 1',
                 style: StyleConstants.blackThinTitleText,
               ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              createOwnerWidget(
-                  currentPet.contact_1, height, width),
-              SizedBox(height: height * 0.01),
-              currentPet.contact_2 == null
-                  ? SizedBox()
-                  : Text(
-                      'Owner 2',
-                      style: StyleConstants.blackThinTitleText,
-                    ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              createOwnerWidget(
-                  currentPet.contact_2, height, width)
-            ],
-          ),
+            ),
+            SizedBox(
+              height: height * 0.01,
+            ),
+            createOwnerWidget(
+                currentPet.contact_1, height, width),
+            SizedBox(height: height * 0.01),
+            currentPet.contact_2 == null
+                ? SizedBox()
+                : Text(
+              'Owner 2',
+              style: StyleConstants.blackThinTitleText,
+            ),
+            SizedBox(
+              height: height * 0.01,
+            ),
+            createOwnerWidget(
+                currentPet.contact_2, height, width)
+          ],
         ),
       ),
+    ),
     );
   }
 
@@ -103,7 +110,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
             ),
             title: Row(
               children: [
-                Text(owner.name) ??
+                Text(owner.name,style: StyleConstants.darkBlackDescriptionText) ??
                     Text(
                       'Name',
                       style: StyleConstants.greyedOutText,
@@ -118,7 +125,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Divider(
-              thickness: 1,
+              thickness: 2,
             ),
           ),
           ListTile(
@@ -126,7 +133,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
               HeroIcons.icon_mail,
               size: 30.0,
             ),
-            title: Text(owner.email) ??
+            title: Text(owner.email,style: StyleConstants.darkBlackDescriptionText) ??
                 Text(
                   'Email',
                   style: StyleConstants.greyedOutText,
@@ -139,7 +146,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Divider(
-              thickness: 1,
+              thickness: 2,
             ),
           ),
           ListTile(
@@ -147,7 +154,8 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
               HeroIcons.icon_call,
               size: 30.0,
             ),
-            title: Text(owner.phoneNumber) ??
+            title: Text(owner.phoneNumber, style: StyleConstants.darkBlackDescriptionText
+            ) ??
                 Text(
                   'Phone Number',
                   style: StyleConstants.greyedOutText,
@@ -160,7 +168,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Divider(
-              thickness: 1,
+              thickness: 2,
             ),
           ),
           ListTile(
@@ -168,7 +176,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
               HeroIcons.icon_home,
               size: 30.0,
             ),
-            title: Text(owner.address) ??
+            title: Text(owner.address,style: StyleConstants.darkBlackDescriptionText) ??
                 Text(
                   'Address',
                   style: StyleConstants.greyedOutText,

@@ -8,6 +8,7 @@ import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:petcode_app/widgets/pet_info_app_bar.dart';
 
 class PetInfoScreen extends StatefulWidget {
   @override
@@ -25,23 +26,26 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: ChangePetAppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.edit),
-            color: Colors.white,
-            iconSize: 30.0,
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => PetInfoEditingScreen(
-                  currentPet: currentPet,
+      backgroundColor: StyleConstants.pageBackgroundColor,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(180.0),
+        child: PetInfoAppBar(
+          actions: [
+            IconButton(
+              icon: Icon(Icons.edit),
+              color: Colors.white,
+              iconSize: 30.0,
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => PetInfoEditingScreen(
+                    currentPet: currentPet,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -53,22 +57,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
               SizedBox(
                 height: height * 0.02,
               ),
-              Text('Pet Info',
-                style: StyleConstants.blackThinTitleText,
-              ),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              CircleAvatar(
-                backgroundColor: Colors.transparent,
-                backgroundImage: currentPet.profileUrl != null
-                    ? currentPet.petImage
-                    : AssetImage('assets/images/puppyphoto.jpg'),
-                radius: 60.0,
-              ),
-              SizedBox(
-                height: height * 0.03,
-              ),
+
               Expanded(
                 child: ListView(
                   physics: NeverScrollableScrollPhysics(),

@@ -27,6 +27,8 @@ class StyleConstants {
 
   static Color lightBlack = new Color(0xff718096);
 
+  static Color pageBackgroundColor = new Color(0xffEEF2F6);
+
   //text styles
   static TextStyle whiteButtonText = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
@@ -88,6 +90,12 @@ class StyleConstants {
     fontWeight: FontWeight.w400,
   );
 
+  static TextStyle whiteThinTitleTextLarge = new TextStyle(
+    color: Colors.white,
+    fontSize: 40.0,
+    fontWeight: FontWeight.w400,
+  );
+
   static TextStyle blackTitleText = TextStyle(
     color: Colors.black,
     fontSize: 26.0,
@@ -120,6 +128,30 @@ class StyleConstants {
 
   static TextStyle blackThinTitleText = new TextStyle(
     color: Colors.black,
+    fontSize: 30.0,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle blackThinTitleTextMedium = new TextStyle(
+    color: Colors.black,
+    fontSize: 25.0,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle darkBlackDescriptionText = new TextStyle(
+      fontSize: 18.0,
+      fontWeight: FontWeight.w500,
+      color: Colors.black.withOpacity(0.8)
+  );
+
+  static TextStyle tinyGreyDescriptionText = new TextStyle(
+      fontSize: 14.0,
+      fontWeight: FontWeight.w400,
+      color: darkPurpleGrey,
+  );
+
+  static TextStyle lightBlackThinTitleText = new TextStyle(
+    color: lightBlack,
     fontSize: 30.0,
     fontWeight: FontWeight.w600,
   );
@@ -209,6 +241,12 @@ class StyleConstants {
     color: lightBlack,
     fontSize: 14.0,
     fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle greySubText = new TextStyle(
+    color: lightGrey,
+    fontSize: 12.0,
+    fontWeight: FontWeight.w300
   );
 
   static TextStyle blueTitleText = new TextStyle(

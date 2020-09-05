@@ -45,18 +45,7 @@ class _RootScreenState extends State<RootScreen> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: StyleConstants.blue,
-          title: Container(
-            //color: Colors.white,
-              height: 75,
-              //width: 200,
-              child: Image.asset(
-                'assets/images/appbarlogoyellow.png',
-                fit: BoxFit.cover,
-              )),
-        ),
+
         body: SizedBox.expand(
           child: PageView(
             physics: NeverScrollableScrollPhysics(),

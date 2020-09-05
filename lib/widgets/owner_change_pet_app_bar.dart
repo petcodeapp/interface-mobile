@@ -5,18 +5,18 @@ import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
-class ChangePetAppBar extends StatefulWidget implements PreferredSizeWidget {
-  ChangePetAppBar({Key key, this.actions}) : super(key: key);
+class OwnerChangePetAppBar extends StatefulWidget implements PreferredSizeWidget {
+  OwnerChangePetAppBar({Key key, this.actions}) : super(key: key);
   final List<Widget> actions;
 
   @override
-  _ChangePetAppBarState createState() => _ChangePetAppBarState();
+  _OwnerChangePetAppBarState createState() => _OwnerChangePetAppBarState();
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-class _ChangePetAppBarState extends State<ChangePetAppBar> {
+class _OwnerChangePetAppBarState extends State<OwnerChangePetAppBar> {
   CurrentPetProvider _currentPetProvider;
   PetService _petService;
 
@@ -25,7 +25,7 @@ class _ChangePetAppBarState extends State<ChangePetAppBar> {
     _currentPetProvider = Provider.of<CurrentPetProvider>(context);
     _petService = Provider.of<PetService>(context);
     List<DropdownMenuItem<Pet>> dropdownMenuItems =
-        new List<DropdownMenuItem<Pet>>();
+    new List<DropdownMenuItem<Pet>>();
     for (int i = 0; i < _petService.allPets.length; i++) {
       print(_petService.allPets[i].pid);
       dropdownMenuItems.add(
@@ -42,7 +42,12 @@ class _ChangePetAppBarState extends State<ChangePetAppBar> {
     return AppBar(
       backgroundColor: StyleConstants.blue,
       centerTitle: true,
-      elevation: 0.0,
+      elevation: 6.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(20),
+        ),
+      ),
       /*
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.only(

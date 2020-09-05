@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:petcode_app/screens/general_med_info_screen.dart';
 import 'package:petcode_app/screens/share_records_screen.dart';
 import 'package:petcode_app/screens/vaccine_history_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
@@ -7,6 +8,7 @@ import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:petcode_app/services/pet_service.dart';
 
 class MedicalInfoScreen extends StatefulWidget {
   MedicalInfoScreen({Key key}) : super(key: key);
@@ -16,7 +18,6 @@ class MedicalInfoScreen extends StatefulWidget {
 
 class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
   CurrentPetProvider _currentPetProvider;
-  //PetService _petService;
 
   @override
   void initState() {
@@ -41,252 +42,241 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
       );
     } else {
       return Scaffold(
-        //backgroundColor: Colors.white,
+        backgroundColor: StyleConstants.pageBackgroundColor,
         appBar: ChangePetAppBar(),
-        body: SingleChildScrollView(
-          child: Container(
-            width: width,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: height * 0.02,
+        body: Container(
+          width: width,
+          height: height,
+          child: Stack(
+            children: [
+              Container(
+                width: width,
+                height: height * 0.25,
+                decoration: BoxDecoration(
+                  color: StyleConstants.blue,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20.0),
+                    bottomRight: Radius.circular(20.0),
                   ),
-                  CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    radius: 75.0,
-                    backgroundImage: selectedPet.petImage
-                  ),
-                  SizedBox(
-                    height: height * 0.04,
-                  ),
-                  GestureDetector(
-                    onTap: () => print('Pressed contact'),
-                    child: Container(
-                      height: 55.0,
-                      width: width - 50,
-                      decoration: StyleConstants.lightBlueItemBoxDeco,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 25.0,
-                              child: FaIcon(
-                                FontAwesomeIcons.infoCircle,
-                                color: StyleConstants.yellow,
-                                size: 30.0,
-                              ),
-                            ),
-                            SizedBox(
-                              width: width * 0.03,
-                            ),
-                            Text(
-                              'General Information',
-                              style: StyleConstants.whiteTitleText,
-                            ),
-                            Spacer(),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.03,
-                  ),
-                  GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => VaccineHistoryScreen(),
-                      ),
-                    ),
-                    child: Container(
-                      height: 55.0,
-                      width: width - 50,
-                      decoration: StyleConstants.lightBlueItemBoxDeco,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 25.0,
-                              child: FaIcon(
-                                FontAwesomeIcons.syringe,
-                                color: StyleConstants.yellow,
-                                size: 30.0,
-                              ),
-                            ),
-                            SizedBox(
-                              width: width * 0.03,
-                            ),
-                            Text(
-                              'Vaccination History',
-                              style: StyleConstants.whiteTitleText,
-                            ),
-                            Spacer(),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.03,
-                  ),
-                  GestureDetector(
-                    onTap: () => print('Pressed contact'),
-                    child: Container(
-                      height: 55.0,
-                      width: width - 50,
-                      decoration: StyleConstants.lightBlueItemBoxDeco,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 25.0,
-                              child: FaIcon(
-                                FontAwesomeIcons.fileMedical,
-                                color: StyleConstants.yellow,
-                                size: 30.0,
-                              ),
-                            ),
-                            SizedBox(
-                              width: width * 0.03,
-                            ),
-                            Text(
-                              'Documents',
-                              style: StyleConstants.whiteTitleText,
-                            ),
-                            Spacer(),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.03,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ShareRecordsScreen(
-                                  petName: selectedPet.name,
-                                  petVaccinations: selectedPet.vaccinations,
-                                )),
-                      );
-                    },
-                    child: Container(
-                      height: 55.0,
-                      width: width - 50,
-                      decoration: StyleConstants.lightBlueItemBoxDeco,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            /*
-                          Icon(
-                            Icons.settings,
-                            color: StyleConstants.yellow,
-                            size: 30.0,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 6.0,
+                      offset: Offset(0,3),
+                    )
+                  ]
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(height: height * 0.01,),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              radius: 50.0,
+                              backgroundImage: selectedPet.petImage
                           ),
-                          */
-                            Container(
-                              width: 25.0,
-                              child: FaIcon(
-                                FontAwesomeIcons.share,
-                                color: StyleConstants.yellow,
-                                size: 30.0,
+                          SizedBox(
+                            width: width * 0.05,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                selectedPet.name,
+                                style: StyleConstants.whiteThinTitleText,
                               ),
-                            ),
-                            SizedBox(
-                              width: width * 0.03,
-                            ),
-                            Text(
-                              'Share Records',
-                              style: StyleConstants.whiteTitleText,
-                            ),
-                            Spacer(),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
+                              Text(
+                                selectedPet.breed,
+                                style: StyleConstants.whiteDescriptionText,
+                              ),
+                            ],
+                          ),
+                          Spacer()
+                        ],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: height * 0.03,
-                  ),
-                  GestureDetector(
-                    onTap: () => print('Pressed contact'),
-                    child: Container(
-                      height: 55.0,
-                      width: width - 50,
-                      decoration: StyleConstants.lightBlueItemBoxDeco,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            /*
-                          Icon(
-                            Icons.settings,
-                            color: StyleConstants.yellow,
-                            size: 30.0,
-                          ),*/
-                            Container(
-                              width: 25.0,
-                              child: FaIcon(
-                                FontAwesomeIcons.weight,
-                                color: StyleConstants.yellow,
-                                size: 30.0,
-                              ),
-                            ),
-                            SizedBox(
-                              width: width * 0.03,
-                            ),
-                            Text(
-                              'Weight Tracker',
-                              style: StyleConstants.whiteTitleText,
-                            ),
-                            Spacer(),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+              Positioned(
+                top: height * 0.12,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      SizedBox(
+                        height: height * 0.04,
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => GeneralMedicalInfoScreen())),
+                        child: Container(
+                          height: height * 0.12,
+                          width: width - 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.20),
+                                  blurRadius: 6,
+                                  offset: Offset(0, 3),
+                                )
+                              ]
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: width* 0.05),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 25.0,
+                                  child: FaIcon(
+                                    FontAwesomeIcons.infoCircle,
+                                    color: StyleConstants.yellow,
+                                    size: 30.0,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: width * 0.05,
+                                ),
+                                Text(
+                                  'General Information',
+                                  style: StyleConstants.blackThinTitleTextMedium,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * 0.03,
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => VaccineHistoryScreen(),
+                          ),
+                        ),
+                        child: Container(
+                          height: height * 0.12,
+                          width: width - 50,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.20),
+                                  blurRadius: 6,
+                                  offset: Offset(0, 3),
+                                )
+                              ]
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: width* 0.05),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 25.0,
+                                  child: FaIcon(
+                                    FontAwesomeIcons.syringe,
+                                    color: StyleConstants.yellow,
+                                    size: 30.0,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: width * 0.05,
+                                ),
+                                Text(
+                                  'Vaccinations',
+                                  style: StyleConstants.blackThinTitleTextMedium,
+                                ),
+
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * 0.03,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ShareRecordsScreen(
+                                      petName: selectedPet.name,
+                                      petVaccinations: selectedPet.vaccinations,
+                                    )),
+                          );
+                        },
+                        child: Container(
+                          height: height * 0.12,
+                          width: width - 50,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.20),
+                                  blurRadius: 6,
+                                  offset: Offset(0, 3),
+                                )
+                              ]
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: width* 0.05),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                /*
+                              Icon(
+                                Icons.settings,
+                                color: StyleConstants.yellow,
+                                size: 30.0,
+                              ),
+                              */
+                                Container(
+                                  width: 25.0,
+                                  child: FaIcon(
+                                    FontAwesomeIcons.share,
+                                    color: StyleConstants.yellow,
+                                    size: 30.0,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: width * 0.05,
+                                ),
+                                Text(
+                                  'Share Records',
+                                  style: StyleConstants.blackThinTitleTextMedium,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * 0.01,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       );

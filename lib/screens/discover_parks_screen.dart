@@ -153,6 +153,30 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                           ),
                         )
                       : SizedBox.shrink(),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(height: _height * 0.02,),
+                        Container(
+                          height: 40.0,
+                          width: 125.0,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: Center(
+                            child: Text('Search this Area', style: TextStyle(
+                              color: StyleConstants.red,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12.0,
+                            ),),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               )
             : Center(child: CircularProgressIndicator()),
