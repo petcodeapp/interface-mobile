@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:html/parser.dart';
 import 'package:petcode_app/models/NearbyPark.dart';
 import 'package:petcode_app/models/PlacePhoto.dart';
+import 'package:petcode_app/utils/style_constants.dart';
 
 class NearbyParksService {
   String apiKey;
@@ -101,6 +102,7 @@ class NearbyParksService {
         new Marker(
           markerId: MarkerId(nearbyParks[i].name + i.toString() + 'ID'),
           position: nearbyParks[i].location,
+          icon: BitmapDescriptor.defaultMarkerWithHue(42.0),
         ),
       );
     }

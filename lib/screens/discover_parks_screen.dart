@@ -50,11 +50,11 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
             _currentLocationProvider.currentLocation.latitude,
             _currentLocationProvider.currentLocation.longitude,
           ),
-          zoom: 5.0);
+          zoom: 14.0);
       _nearbyParksProvider.getNearbyParks(
           LatLng(_currentLocationProvider.currentLocation.latitude,
               _currentLocationProvider.currentLocation.longitude),
-          5.0);
+          14.0);
       firstLoad = false;
     }
 
@@ -77,6 +77,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
             )),
       ),
       body: SlidingUpPanel(
+        minHeight: _height * 0.11,
         borderRadius: topRoundedRadius,
         header: Center(
           child: Container(
@@ -142,7 +143,9 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                                     _nearbyParksProvider
                                         .nearbyParks[index].address,
                                     _nearbyParksProvider
-                                        .nearbyParks[index].placePhotos),
+                                        .nearbyParks[index].placePhotos,
+                                    _nearbyParksProvider
+                                        .nearbyParks[index].location),
                                 SizedBox(
                                   height: _height * 0.03,
                                 ),
@@ -161,10 +164,10 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
     );
   }
 
-  Widget parkLocationWidget(
-      String parkName, String address, List<PlacePhoto> placePhotos) {
+  Widget parkLocationWidget(String parkName, String address,
+      List<PlacePhoto> placePhotos, LatLng location) {
     return Container(
-      height: _height * 0.3,
+      height: _height * 0.29,
       width: _width * 0.9,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
@@ -180,27 +183,28 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            height: _height * 0.2,
+            height: _height * 0.19,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: placePhotos.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
-                    padding: EdgeInsets.fromLTRB(10.0, 10.0, 5.0, 10.0),
+                    padding: EdgeInsets.fromLTRB(
+                        _width * 0.03, 10.0, _width * 0.015, 10.0),
                     child: Container(
                       child: Stack(children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(16.0),
                           child: Image(
                             image: placePhotos[index].photo,
-                            height: _height * 0.2,
-                            width: _width * 0.5,
+                            height: _height * 0.15,
+                            width: _width * 0.4,
                             fit: BoxFit.cover,
                           ),
                         ),
                         Positioned(
                           left: 10.0,
-                          bottom: 10.0,
+                          bottom: _height * 0.03,
                           child: Container(
                             width: _width * 0.3,
                             child: ListView.builder(
@@ -240,27 +244,71 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        parkName,
-                        style: StyleConstants.blueTitleText,
-                        maxLines: 2,
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 14.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                parkName,
+                                style: StyleConstants.blueTitleText,
+                                maxLines: 2,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5.0,
+                            ),
+                            Flexible(
+                              child: Text(
+                                address,
+                                style: StyleConstants.yellowDescriptionText,
+                                maxLines: 2,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Flexible(
-                      child: Text(
-                        address,
-                        style: StyleConstants.yellowDescriptionText,
-                        maxLines: 2,
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 15.0),
+                          child: GestureDetector(
+                            onTap: () async {
+                              GoogleMapController controller =
+                                  await _controller.future;
+                              controller.animateCamera(
+                                  CameraUpdate.newLatLng(location));
+                              _cameraPosition = CameraPosition(
+                                  target: location,
+                                  zoom: _cameraPosition.zoom,
+                                  bearing: _cameraPosition.bearing,
+                                  tilt: _cameraPosition.tilt);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: StyleConstants.blue,
+                                border: Border.all(width: 1.3),
+                              ),
+                              padding: EdgeInsets.all(5.0),
+                              child: Icon(
+                                Icons.near_me,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               )
             ],

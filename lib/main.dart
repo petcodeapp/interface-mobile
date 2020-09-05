@@ -134,7 +134,6 @@ class HomeScreen extends StatelessWidget {
       builder: (context, FirebaseAuthService auth, _) {
         if (auth.status == Status.Uninitialized) {
           return Scaffold(
-            backgroundColor: StyleConstants.blue,
             body: Center(
               child: Text('loading'),
             ),
