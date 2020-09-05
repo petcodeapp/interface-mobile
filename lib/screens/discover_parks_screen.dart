@@ -20,6 +20,8 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
   double _height;
   double _width;
 
+  double _mapBottomPadding;
+
   NearbyParksProvider _nearbyParksProvider;
   CurrentLocationProvider _currentLocationProvider;
 
@@ -35,6 +37,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
 
   @override
   void initState() {
+    _mapBottomPadding = 170.0;
     _panelController = new PanelController();
     super.initState();
   }
@@ -81,6 +84,12 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
       ),
       body: SlidingUpPanel(
         controller: _panelController,
+        onPanelSlide: (double position) {
+          setState(() {
+            _mapBottomPadding =
+                position * (500.0 - _height * 0.11) + _height * 0.22;
+          });
+        },
         minHeight: _height * 0.11,
         borderRadius: topRoundedRadius,
         header: Center(
@@ -114,7 +123,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
             ? Stack(
                 children: [
                   GoogleMap(
-                    padding: EdgeInsets.only(bottom: 180.0),
+                    padding: EdgeInsets.only(bottom: _mapBottomPadding),
                     initialCameraPosition: _cameraPosition,
                     onMapCreated: (GoogleMapController controller) {
                       _controller.complete(controller);
@@ -129,6 +138,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                       await _panelController.show();
                       setState(() {
                         _selectedPark = null;
+                        _mapBottomPadding = _height * 0.22;
                       });
                     },
                   ),
@@ -200,12 +210,12 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
               await _panelController.hide();
               setState(() {
                 _selectedPark = nearbyParks[i];
+                _mapBottomPadding = _height * 0.43;
               });
             },
           ),
         );
       }
-
       return allMarkers.toSet();
     }
   }
