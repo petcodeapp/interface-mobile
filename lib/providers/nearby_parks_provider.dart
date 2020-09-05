@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/models/NearbyPark.dart';
 import 'package:petcode_app/services/nearby_parks_service.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class NearbyParksProvider extends ChangeNotifier {
   NearbyParksService _nearbyParksService;
@@ -11,15 +12,12 @@ class NearbyParksProvider extends ChangeNotifier {
 
   List<NearbyPark> get nearbyParks => _nearbyParks;
 
-  Set<Marker> get nearbyParkMarkers => _nearbyParkMarkers;
-
   setUpProvider() {
     _nearbyParksService = new NearbyParksService();
   }
 
   void getNearbyParks(LatLng location, double zoom) async {
     _nearbyParks = await _nearbyParksService.getNearbyParks(location, zoom);
-    _nearbyParkMarkers = _nearbyParksService.nearbyParksToMarkers(_nearbyParks);
     notifyListeners();
   }
 

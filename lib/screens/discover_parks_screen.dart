@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:petcode_app/models/NearbyPark.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -25,13 +26,16 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
   CameraPosition _cameraPosition;
 
   Completer<GoogleMapController> _controller = Completer();
-  PanelController _panelController = new PanelController();
+  PanelController _panelController;
 
   bool firstLoad = true;
   bool _cameraMoved = false;
 
+  NearbyPark _selectedPark;
+
   @override
   void initState() {
+    _panelController = new PanelController();
     super.initState();
   }
 
@@ -107,18 +111,39 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
           ),
         ),
         body: _currentLocationProvider.currentLocation != null
-            ? GoogleMap(
-                padding: EdgeInsets.only(bottom: 180.0),
-                initialCameraPosition: _cameraPosition,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                },
-                markers: _nearbyParksProvider.nearbyParkMarkers,
-                onCameraMove: (CameraPosition position) {
-                  //_nearbyParksProvider.getNearbyParks(position.target);
-                  _cameraPosition = position;
-                  _cameraMoved = true;
-                },
+            ? Stack(
+                children: [
+                  GoogleMap(
+                    padding: EdgeInsets.only(bottom: 180.0),
+                    initialCameraPosition: _cameraPosition,
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
+                    markers: createMarkers(_nearbyParksProvider.nearbyParks),
+                    onCameraMove: (CameraPosition position) {
+                      //_nearbyParksProvider.getNearbyParks(position.target);
+                      _cameraPosition = position;
+                      _cameraMoved = true;
+                    },
+                    onTap: (LatLng tappedPosition) async {
+                      await _panelController.show();
+                      setState(() {
+                        _selectedPark = null;
+                      });
+                    },
+                  ),
+                  !_panelController.isPanelShown
+                      ? Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: _height * 0.14),
+                            child: ShowNearbyParkWidget(
+                              shownPark: _selectedPark,
+                            ),
+                          ),
+                        )
+                      : SizedBox.shrink(),
+                ],
               )
             : Center(child: CircularProgressIndicator()),
         panel: Column(
@@ -157,5 +182,31 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
         color: StyleConstants.veryLightGrey,
       ),
     );
+  }
+
+  Set<Marker> createMarkers(List<NearbyPark> nearbyParks) {
+    if (nearbyParks == null) {
+      return null;
+    } else {
+      List<Marker> allMarkers = new List<Marker>();
+
+      for (int i = 0; i < nearbyParks.length; i++) {
+        allMarkers.add(
+          new Marker(
+            markerId: MarkerId(nearbyParks[i].name + i.toString() + 'ID'),
+            position: nearbyParks[i].location,
+            icon: BitmapDescriptor.defaultMarkerWithHue(42.0),
+            onTap: () async {
+              await _panelController.hide();
+              setState(() {
+                _selectedPark = nearbyParks[i];
+              });
+            },
+          ),
+        );
+      }
+
+      return allMarkers.toSet();
+    }
   }
 }

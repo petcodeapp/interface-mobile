@@ -8,6 +8,7 @@ import 'package:html/parser.dart';
 import 'package:petcode_app/models/NearbyPark.dart';
 import 'package:petcode_app/models/PlacePhoto.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class NearbyParksService {
   String apiKey;
@@ -92,21 +93,5 @@ class NearbyParksService {
     }
 
     return photos;
-  }
-
-  Set<Marker> nearbyParksToMarkers(List<NearbyPark> nearbyParks) {
-    List<Marker> allMarkers = new List<Marker>();
-
-    for (int i = 0; i < nearbyParks.length; i++) {
-      allMarkers.add(
-        new Marker(
-          markerId: MarkerId(nearbyParks[i].name + i.toString() + 'ID'),
-          position: nearbyParks[i].location,
-          icon: BitmapDescriptor.defaultMarkerWithHue(42.0),
-        ),
-      );
-    }
-
-    return allMarkers.toSet();
   }
 }
