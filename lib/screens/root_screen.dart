@@ -21,10 +21,8 @@ class _RootScreenState extends State<RootScreen> {
   var _pageOptions = [
     HomeScreen(),
     ScansScreen(),
-
     SocialSplitScreen(),
     AccountScreen()
-
   ];
 
   @override
@@ -45,54 +43,54 @@ class _RootScreenState extends State<RootScreen> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-
-        body: SizedBox.expand(
-          child: PageView(
-            physics: NeverScrollableScrollPhysics(),
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-            children: _pageOptions,
-          ),
+      body: SizedBox.expand(
+        child: PageView(
+          physics: NeverScrollableScrollPhysics(),
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          children: _pageOptions,
         ),
-        bottomNavigationBar: BottomNavyBar(
-          selectedIndex: _currentIndex,
-          showElevation: true,
-          itemCornerRadius: 20,
-          curve: Curves.decelerate,
-          onItemSelected: (index) => setState(() {
-            _currentIndex = index;
-            _pageController.jumpToPage(index);
-          }),
-          items: [
-            BottomNavyBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Home'),
-              activeColor: StyleConstants.blue,
-              inactiveColor: Colors.grey.withOpacity(0.6),
-            ),
-            BottomNavyBarItem(
-              icon: Icon(Icons.location_on),
-              title: Text('Scans'),
-              activeColor: StyleConstants.blue,
-              inactiveColor: Colors.grey.withOpacity(0.6),
-            ),
-            BottomNavyBarItem(
-              icon: Icon(Icons.assignment),
-              title: Text('Social'),
-              activeColor: StyleConstants.blue,
-              inactiveColor: Colors.grey.withOpacity(0.6),
-            ),
-            BottomNavyBarItem(
-              icon: Icon(Icons.account_circle),
-              title: Text('Account'),
-              activeColor: StyleConstants.blue,
-              inactiveColor: Colors.grey.withOpacity(0.6),
-            ),
-          ],
-        ));
+      ),
+      bottomNavigationBar: BottomNavyBar(
+        selectedIndex: _currentIndex,
+        showElevation: true,
+        itemCornerRadius: 20,
+        curve: Curves.decelerate,
+        onItemSelected: (index) => setState(() {
+          _currentIndex = index;
+          _pageController.jumpToPage(index);
+        }),
+        items: [
+          BottomNavyBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Home'),
+            activeColor: StyleConstants.blue,
+            inactiveColor: Colors.grey.withOpacity(0.6),
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.location_on),
+            title: Text('Scans'),
+            activeColor: StyleConstants.blue,
+            inactiveColor: Colors.grey.withOpacity(0.6),
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.assignment),
+            title: Text('Social'),
+            activeColor: StyleConstants.blue,
+            inactiveColor: Colors.grey.withOpacity(0.6),
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.account_circle),
+            title: Text('Account'),
+            activeColor: StyleConstants.blue,
+            inactiveColor: Colors.grey.withOpacity(0.6),
+          ),
+        ],
+      ),
+    );
   }
 }

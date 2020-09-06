@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
@@ -10,22 +9,26 @@ import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
-import 'package:petcode_app/services/scans_service.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
+import 'package:petcode_app/services/notifications_service.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/set_up_keys.dart';
 import 'package:petcode_app/utils/no_glow_behavior.dart';
-import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SetUpKeys().createGoogleMapsKey();
+  await NotificationsService().initializeNotifications();
+  NotificationsService().scheduleNotification();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  static final GlobalKey<NavigatorState> navigatorKey =
+      new GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -116,6 +119,7 @@ class MyApp extends StatelessWidget {
             }),
       ],
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         builder: (context, child) {
           return ScrollConfiguration(behavior: NoGlowBehavior(), child: child);
         },
