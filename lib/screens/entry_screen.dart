@@ -10,6 +10,16 @@ class EntryScreen extends StatefulWidget {
 
 class _EntryScreenState extends State<EntryScreen> {
 
+  static PageController _controller;
+
+  @override
+  void initState() {
+    _controller = PageController(
+      initialPage: 0,
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -40,39 +50,86 @@ class _EntryScreenState extends State<EntryScreen> {
                   width:  width,
                 ),
               ),
-              Container(
-                width: width * 0.8,
-                height: height * 0.2,
-                child: Image.asset('assets/images/logoyellow.png', fit: BoxFit.cover,),
+              Positioned(
+                top: height * 0.1,
+                child: Container(
+                  width: width * 0.7,
+                  height: height * 0.15,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset('assets/images/onboarding/pawlogo.png', fit: BoxFit.cover),
+                      SizedBox(width: width * 0.05,),
+                      Image.asset('assets/images/onboarding/textlogo.png', fit: BoxFit.cover),
+                    ],
+                  ),
+                  //child: Image.asset('assets/images/logoyellow.png', fit: BoxFit.cover,),
+                ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                  height: height * 0.3,
+                  child: PageView(
+                    controller: _controller,
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[
+                      Container(
+                        child: Center(
+                            child: Image.asset('assets/images/onboarding/onboarding1.png')
+                          //child: Text('Text Description of the app 1'),
+                        ),
+                      ),
+                      Container(
+                        child: Center(
+                          //child: Text('Text Description of the app 2'),
+                            child: Image.asset('assets/images/onboarding/onboarding2.png')
+                        ),
+                      ),
+                      Container(
+                        child: Center(
+                          //child: Text('Text Description of the app 3'),
+                            child: Image.asset('assets/images/onboarding/onboarding3.png')
+                        ),
+                      ),
+                      Container(
+                        child: Center(
+                          //child: Text('Text Description of the app 3'),
+                            child: Image.asset('assets/images/onboarding/onboarding4.png')
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               Positioned(
-                bottom: height * 0.25,
+                bottom: height * 0.22,
                 child: GestureDetector(
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen())),
 
                   child: Container(
                     decoration: StyleConstants.roundYellowButtonDeco,
-                    width: 220.0,
-                    height: 60.0,
+                    width: width * 0.55,
+                    height: height * 0.07,
                     child: Center(
                       child: Text('Login',
-                        style: StyleConstants.whiteTitleText,
+                        style: StyleConstants.whiteThinTitleText,
                       ),
                     ),
                   ),
                 ),
               ),
               Positioned(
-                bottom: height * 0.15,
+                bottom: height * 0.12,
                 child: GestureDetector(
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SignupScreen())),
                   child: Container(
                     decoration: StyleConstants.roundWhiteButtonDeco.copyWith(color: StyleConstants.blue),
-                    width: 220.0,
-                    height: 60.0,
+                    width: width * 0.55,
+                    height: height * 0.07,
                     child: Center(
                       child: Text('Activate',
-                        style: StyleConstants.whiteTitleText,
+                        style: StyleConstants.whiteThinTitleText,
                       ),
                     ),
                   ),
