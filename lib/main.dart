@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
@@ -20,8 +21,12 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SetUpKeys().createGoogleMapsKey();
+
+  Firebase.initializeApp();
+
   await NotificationsService().initializeNotifications();
   NotificationsService().scheduleNotification();
+
   runApp(MyApp());
 }
 
