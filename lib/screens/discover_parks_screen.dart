@@ -132,7 +132,11 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                     onCameraMove: (CameraPosition position) {
                       //_nearbyParksProvider.getNearbyParks(position.target);
                       _cameraPosition = position;
-                      _cameraMoved = true;
+                      if (_cameraMoved == false) {
+                        setState(() {
+                          _cameraMoved = true;
+                        });
+                      }
                     },
                     onTap: (LatLng tappedPosition) async {
                       await _panelController.show();
@@ -153,30 +157,49 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                           ),
                         )
                       : SizedBox.shrink(),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(height: _height * 0.02,),
-                        Container(
-                          height: 40.0,
-                          width: 125.0,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20.0),
+                  _cameraMoved
+                      ? Align(
+                          alignment: Alignment.topCenter,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: _height * 0.02,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  _cameraMoved = false;
+                                  _nearbyParksProvider.getNearbyParks(
+                                      LatLng(
+                                          _currentLocationProvider
+                                              .currentLocation.latitude,
+                                          _currentLocationProvider
+                                              .currentLocation.longitude),
+                                      _cameraPosition.zoom);
+                                },
+                                child: Container(
+                                  height: 40.0,
+                                  width: 125.0,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'Search this Area',
+                                      style: TextStyle(
+                                        color: StyleConstants.red,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          child: Center(
-                            child: Text('Search this Area', style: TextStyle(
-                              color: StyleConstants.red,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12.0,
-                            ),),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                        )
+                      : SizedBox.shrink(),
                 ],
               )
             : Center(child: CircularProgressIndicator()),
@@ -233,6 +256,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
             onTap: () async {
               await _panelController.hide();
               setState(() {
+                _cameraMoved = true;
                 _selectedPark = nearbyParks[i];
                 _mapBottomPadding = _height * 0.43;
               });

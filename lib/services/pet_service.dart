@@ -8,7 +8,7 @@ import 'package:petcode_app/models/UpcomingEvent.dart';
 import 'package:petcode_app/models/Vaccination.dart';
 
 class PetService extends ChangeNotifier {
-  Firestore _firestore = Firestore.instance;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   List<Pet> _allPets;
   StreamSubscription _petStream;
@@ -29,7 +29,7 @@ class PetService extends ChangeNotifier {
 
   List<Pet> petListFromQuery(QuerySnapshot querySnapshot) {
     List<Pet> returnedList = new List<Pet>();
-    List<DocumentSnapshot> petSnapshots = querySnapshot.documents;
+    List<DocumentSnapshot> petSnapshots = querySnapshot.docs;
     for (int i = 0; i < petSnapshots.length; i++) {
       returnedList.add(Pet.fromSnapshot(petSnapshots[i]));
     }

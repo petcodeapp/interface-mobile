@@ -4,24 +4,24 @@ import 'package:petcode_app/models/User.dart';
 import 'package:petcode_app/models/Vaccination.dart';
 
 class DatabaseService {
-  Firestore _firestore = Firestore.instance;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> createPet(Pet pet) async {
-    await _firestore.collection('pets').document(pet.pid).setData(pet.toJson());
+    await _firestore.collection('pets').doc(pet.pid).set(pet.toJson());
   }
 
   Future<void> updatePet(Pet pet) async {
     await _firestore
         .collection('pets')
-        .document(pet.pid)
-        .updateData(pet.toJson());
+        .doc(pet.pid)
+        .update(pet.toJson());
   }
 
   Future<void> updateUser(User user) async {
     await _firestore
         .collection('users')
-        .document(user.uid)
-        .updateData(user.toJson());
+        .doc(user.uid)
+        .update(user.toJson());
   }
 
   Future<User> createUser(String email, String firstName, String lastName,
@@ -36,8 +36,8 @@ class DatabaseService {
     );
     await _firestore
         .collection('users')
-        .document(uid)
-        .setData(newUser.toJson());
+        .doc(uid)
+        .set(newUser.toJson());
     return newUser;
   }
 
@@ -46,8 +46,8 @@ class DatabaseService {
     petIds.add(pid);
     await _firestore
         .collection('users')
-        .document(uid)
-        .updateData({'petIds': petIds});
+        .doc(uid)
+        .update({'petIds': petIds});
   }
 
   Future<void> addToUserPetList(
@@ -55,15 +55,15 @@ class DatabaseService {
     previousPets.add(pid);
     await _firestore
         .collection('users')
-        .document(uid)
-        .updateData({'petIds': previousPets});
+        .doc(uid)
+        .update({'petIds': previousPets});
   }
 
   Future<void> updateVaccination(
       Vaccination updatedVaccination, int index, Pet pet) async {
     List<Vaccination> updatedList = pet.vaccinations;
     updatedList[index] = updatedVaccination;
-    await _firestore.collection('pets').document(pet.pid).updateData({
+    await _firestore.collection('pets').doc(pet.pid).update({
       'vaccinations':
           updatedList.map((vaccination) => vaccination.toJson()).toList()
     });

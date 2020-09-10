@@ -1,13 +1,15 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:petcode_app/main.dart';
+import 'package:petcode_app/models/ReceivedNotification.dart';
 import 'package:petcode_app/screens/discover_parks_screen.dart';
 import 'package:petcode_app/screens/pet_perks_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:rxdart/subjects.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:petcode_app/models/ReceivedNotification.dart';
+import 'package:rxdart/subjects.dart';
 
 class NotificationsService {
   final BehaviorSubject<ReceivedNotification>
@@ -18,6 +20,8 @@ class NotificationsService {
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+
+  final FirebaseMessaging _fcm = FirebaseMessaging();
 
   Future<void> initializeNotifications() async {
     // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
@@ -45,13 +49,28 @@ class NotificationsService {
         MyApp.navigatorKey.currentState.push(
           MaterialPageRoute(builder: (context) => DiscoverParksScreen()),
         );
-      }
-      else if (payload == 'open pet perks') {
+      } else if (payload == 'open pet perks') {
         MyApp.navigatorKey.currentState.push(
           MaterialPageRoute(builder: (context) => PetPerksScreen()),
         );
       }
     });
+
+    if (Platform.isIOS) {
+      _fcm.requestNotificationPermissions(IosNotificationSettings());
+    }
+
+    _fcm.configure(
+      onMessage: (Map<String, dynamic> message) {
+        print('onMessage: $message');
+      },
+      onLaunch: (Map<String, dynamic> message) {
+        print('onLaunch: $message');
+      },
+      onResume: (Map<String, dynamic> message) {
+        print('OnResume: $message');
+      },
+    );
   }
 
   scheduleNotification() async {
@@ -76,8 +95,7 @@ class NotificationsService {
           scheduledNotificationDateTime,
           platformChannelSpecifics,
           payload: 'open pet parks');
-    }
-    else {
+    } else {
       await flutterLocalNotificationsPlugin.schedule(
           0,
           'Need something new for your pet?',
