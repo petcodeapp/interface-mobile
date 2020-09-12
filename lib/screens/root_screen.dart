@@ -39,22 +39,6 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Widget build(BuildContext context) {
-    NotificationsProvider notificationsProvider =
-        Provider.of<NotificationsProvider>(context);
-
-    if (notificationsProvider.currentPayload == 'open pet parks') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => DiscoverParksScreen()),
-      );
-    }
-    else if (notificationsProvider.currentPayload == 'open pet perks') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => PetPerksScreen()),
-      );
-    }
-
     return Scaffold(
       body: SizedBox.expand(
         child: PageView(

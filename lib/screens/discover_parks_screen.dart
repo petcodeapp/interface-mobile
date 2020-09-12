@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/models/NearbyPark.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
+import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/show_nearby_park_widget.dart';
 import 'package:provider/provider.dart';
@@ -81,6 +82,20 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
               'assets/images/appbarlogoyellow.png',
               fit: BoxFit.cover,
             )),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+          ),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            }
+            else {
+              Provider.of<NotificationsProvider>(context, listen: false).clear();
+              Navigator.popAndPushNamed(context, '/');
+            }
+          },
+        ),
       ),
       body: SlidingUpPanel(
         controller: _panelController,
@@ -146,7 +161,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                       });
                     },
                   ),
-                  !_panelController.isPanelShown
+                  _panelController.isAttached && !_panelController.isPanelShown
                       ? Align(
                           alignment: Alignment.bottomCenter,
                           child: Padding(

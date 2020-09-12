@@ -4,7 +4,9 @@ import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
+import 'package:petcode_app/screens/discover_parks_screen.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
+import 'package:petcode_app/screens/pet_perks_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
@@ -28,7 +30,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -136,21 +137,27 @@ class MyApp extends StatelessWidget {
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<FirebaseAuthService>(
-      builder: (context, FirebaseAuthService auth, _) {
-        if (auth.status == Status.Uninitialized) {
-          return Scaffold(
-            body: Center(
-              child: Text('loading'),
-            ),
-          );
-        } else if (auth.status == Status.Authenticating ||
-            auth.status == Status.Unauthenticated) {
-          return EntryScreen();
-        } else {
-          return RootScreen();
-        }
-      },
-    );
+    FirebaseAuthService auth = Provider.of<FirebaseAuthService>(context);
+    NotificationsProvider notificationsProvider =
+        Provider.of<NotificationsProvider>(context);
+    if (auth.status == Status.Uninitialized) {
+      return Scaffold(
+        body: Center(
+          child: Text('loading'),
+        ),
+      );
+    } else if (auth.status == Status.Authenticating ||
+        auth.status == Status.Unauthenticated) {
+      return EntryScreen();
+    } else {
+      print('reload');
+      if (notificationsProvider.currentPayload == 'open pet parks') {
+        return DiscoverParksScreen();
+      } else if (notificationsProvider.currentPayload == 'open pet perks') {
+        return PetPerksScreen();
+      } else {
+        return RootScreen();
+      }
+    }
   }
 }

@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
@@ -14,10 +13,7 @@ import 'package:petcode_app/screens/reminders_screen.dart';
 import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
-import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/widgets/circular_check_box.dart';
-import 'package:intl/intl.dart';
 import 'package:petcode_app/widgets/glowing_reminder_widget.dart';
 import 'package:petcode_app/widgets/reminder_widget.dart';
 import 'package:provider/provider.dart';
@@ -38,8 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   CarouselController _carouselController;
 
-  bool _value = false;
-
   int pageIndex = 0;
 
   @override
@@ -57,6 +51,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
     NotificationsProvider notificationsProvider =
         Provider.of<NotificationsProvider>(context);
+
+    int reminderIndex = -1;
+    if (notificationsProvider.currentPayload == 'reminder expired') {
+      reminderIndex = notificationsProvider.index;
+    }
 
     petService = Provider.of<PetService>(context);
 
@@ -589,13 +588,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: _allPetUpcomingEvents.length,
                         itemBuilder: (context, index) {
-                          if (index == 0) {
+                          if (index == reminderIndex) {
                             return Padding(
                               padding: EdgeInsets.all(8.0),
                               child: GlowingReminderWidget(
                                 completed: false,
                                 name: _allPetUpcomingEvents[index].name,
-                                date: _allPetUpcomingEvents[index].date.toDate(),
+                                date:
+                                    _allPetUpcomingEvents[index].date.toDate(),
                               ),
                             );
                           } else {
@@ -604,7 +604,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: ReminderWidget(
                                 completed: false,
                                 name: _allPetUpcomingEvents[index].name,
-                                date: _allPetUpcomingEvents[index].date.toDate(),
+                                date:
+                                    _allPetUpcomingEvents[index].date.toDate(),
                               ),
                             );
                           }
@@ -670,70 +671,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  imageSlider(int index) {
-    return AnimatedBuilder(
-      builder: (context, widget) {
-        double value = 1;
-        /*
-        if (_mainPageController.position.haveDimensions) {
-          value = _mainPageController.page - index;
-          value = (1 - (value.abs() * 0.3)).clamp(0.0, 1.0);
-        }*/
-
-        return Center(
-          child: SizedBox(
-            height: 500.0,
-            width: 400.0,
-            //height: Curves.easeInOut.transform(value) * 200.0,
-            //width: Curves.easeInOut.transform(value) * 350.0,
-            child: widget,
-          ),
-        );
-      },
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Positioned(
-            child: Container(
-              height: 500.0,
-              width: 300.0,
-              color: Colors.blue,
-            ),
-          ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: Container(
-              width: 300.0,
-              height: 400.0,
-              decoration: BoxDecoration(
-                color: StyleConstants.lightGrey,
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(petService.allPets[index].name),
-                  Text(petService.allPets[index].breed),
-                ],
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              height: 175.0,
-              width: 250.0,
-              child: Image(
-                image: petService.allPets[index].petImage,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
