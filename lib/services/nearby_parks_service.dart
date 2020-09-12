@@ -7,8 +7,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:html/parser.dart';
 import 'package:petcode_app/models/NearbyPark.dart';
 import 'package:petcode_app/models/PlacePhoto.dart';
-import 'package:petcode_app/utils/style_constants.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class NearbyParksService {
   String apiKey;

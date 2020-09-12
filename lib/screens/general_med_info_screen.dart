@@ -3,8 +3,6 @@ import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/owner_change_pet_app_bar.dart';
 
-import 'owner_info_editing_screen.dart';
-
 class GeneralMedicalInfoScreen extends StatefulWidget {
   @override
   _GeneralMedicalInfoScreenState createState() => _GeneralMedicalInfoScreenState();

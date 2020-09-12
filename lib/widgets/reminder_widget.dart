@@ -73,6 +73,5 @@ class _ReminderWidgetState extends State<ReminderWidget> {
         ),
       ),
     );
-    ;
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/widgets/circular_check_box.dart';
 import 'package:petcode_app/widgets/owner_change_pet_app_bar.dart';
 
 class RemindersScreen extends StatefulWidget {

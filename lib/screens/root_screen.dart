@@ -1,14 +1,10 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/screens/account_screen.dart';
-import 'package:petcode_app/screens/discover_parks_screen.dart';
 import 'package:petcode_app/screens/home_screen.dart';
-import 'package:petcode_app/screens/pet_perks_screen.dart';
 import 'package:petcode_app/screens/scans_screen.dart';
 import 'package:petcode_app/screens/social_split_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:provider/provider.dart';
 
 class RootScreen extends StatefulWidget {
   @override
