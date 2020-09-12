@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:petcode_app/models/PetPerk.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/widgets/reminder_widget.dart';
+import 'package:petcode_app/widgets/pet_perk_widget.dart';
 
-class GlowingReminderWidget extends StatefulWidget {
-  GlowingReminderWidget({Key key, this.completed, this.name, this.date})
-      : super(key: key);
+class GlowingPetPerkWidget extends StatefulWidget {
+  GlowingPetPerkWidget({Key key, this.petPerk}) : super(key: key);
 
-  final bool completed;
-  final String name;
-  final DateTime date;
+  final PetPerk petPerk;
 
   @override
-  _GlowingReminderWidgetState createState() => _GlowingReminderWidgetState();
+  _GlowingPetPerkWidgetState createState() => _GlowingPetPerkWidgetState();
 }
 
-class _GlowingReminderWidgetState extends State<GlowingReminderWidget>
+class _GlowingPetPerkWidgetState extends State<GlowingPetPerkWidget>
     with SingleTickerProviderStateMixin {
   AnimationController _animationController;
   Animation _animation;
@@ -34,10 +32,9 @@ class _GlowingReminderWidgetState extends State<GlowingReminderWidget>
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: ReminderWidget(
-        completed: widget.completed,
-        name: widget.name,
-        date: widget.date,
+      child: PetPerkWidget(
+        petPerk: widget.petPerk,
+        updateProvider: true,
       ),
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(

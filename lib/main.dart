@@ -153,8 +153,9 @@ class HomeScreen extends StatelessWidget {
       print('reload');
       if (notificationsProvider.currentPayload == 'open pet parks') {
         return DiscoverParksScreen();
-      } else if (notificationsProvider.currentPayload == 'open pet perks') {
-        return PetPerksScreen();
+      } else if (notificationsProvider.currentPayload == 'open pet perks' || notificationsProvider.currentPayload == 'new pet perk') {
+        print('rebuild');
+        return PetPerksScreen(customBack: true,);
       } else {
         return RootScreen();
       }

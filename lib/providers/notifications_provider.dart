@@ -36,8 +36,14 @@ class NotificationsProvider extends ChangeNotifier {
     );
   }
 
-  clear() {
+  void clear() {
     currentPayload = null;
     index = null;
+    notifyListeners();
+  }
+
+  void clearIndex() {
+    index = null;
+    notifyListeners();
   }
 }
