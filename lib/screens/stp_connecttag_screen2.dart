@@ -108,79 +108,25 @@ class _ConnectTagScreen2State extends State<ConnectTagScreen2> {
                       ],
                     )),
                 Positioned(
-                  bottom: height * 0.035,
+                  bottom: height * 0.25,
                   child: Container(
                     width: width * 0.7,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          width: 250.0,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Full Name',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12.0,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: height * 0.01,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                height: 50.0,
-                                width: 250.0,
-                                child: Center(
-                                  child: TextFormField(
-                                    controller: _emailInputController,
-                                    decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(15.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color:
-                                              StyleConstants.darkPurpleGrey,
-                                              width: 2.0),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color:
-                                              StyleConstants.darkPurpleGrey,
-                                              width: 1.5),
-                                        ),
-                                        hintText: 'Full Name',
-                                        hintStyle: TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w600,
-                                            color:
-                                            StyleConstants.darkPurpleGrey)),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                         SizedBox(height: height * 0.02,),
                         Container(
                           width: 250.0,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+                              Text("Let's get started by getting", style: StyleConstants.blackThinTitleTextSmall.copyWith(color: StyleConstants.darkPurpleGrey, fontSize: 18.0),),
+                              Text("your 6 Digit PetCode ID", style: StyleConstants.blackThinTitleTextSmall.copyWith(color: StyleConstants.darkPurpleGrey, fontSize: 18.0),),
+                              SizedBox(height: height * 0.04,),
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Email Address',
+                                  'PetCode ID',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 12.0,
@@ -217,7 +163,7 @@ class _ConnectTagScreen2State extends State<ConnectTagScreen2> {
                                               StyleConstants.darkPurpleGrey,
                                               width: 1.5),
                                         ),
-                                        hintText: 'Email Address',
+                                        hintText: 'PetCode ID',
                                         hintStyle: TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w600,
@@ -230,68 +176,21 @@ class _ConnectTagScreen2State extends State<ConnectTagScreen2> {
                           ),
                         ),
                         SizedBox(
-                          height: height * 0.02,
+                          height: height * 0.01,
                         ),
                         Container(
                           width: 250.0,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Password',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12.0,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: height * 0.01,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                height: 50.0,
-                                width: 250.0,
-                                child: Center(
-                                  child: TextFormField(
-                                    controller: _passwordInputController,
-                                    decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(15.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color:
-                                              StyleConstants.darkPurpleGrey,
-                                              width: 2.0),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color:
-                                              StyleConstants.darkPurpleGrey,
-                                              width: 1.5),
-                                        ),
-                                        hintText: 'Password',
-                                        hintStyle: TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w600,
-                                            color:
-                                            StyleConstants.darkPurpleGrey)),
-                                    obscureText: true,
-                                  ),
-                                ),
-                              ),
+                              Text('I don\'t have an ID', style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600, color: StyleConstants.blue),),
+                              Text('What\'s this?',style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600, color: StyleConstants.blue),),
                             ],
                           ),
                         ),
+
                         SizedBox(
-                          height: height * 0.02,
+                          height: height * 0.05,
                         ),
                         GestureDetector(
 
@@ -313,134 +212,6 @@ class _ConnectTagScreen2State extends State<ConnectTagScreen2> {
                             ),
                           )
                               : CircularProgressIndicator(),
-                        ),
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                        Container(
-                          width: 250,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 2.0,
-                                width: width * 0.25,
-                                color: StyleConstants.lightGrey,
-                              ),
-                              Spacer(),
-                              Container(
-                                height: 40.0,
-                                width: 40.0,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 2.0,
-                                        color: StyleConstants.lightGrey),
-                                    shape: BoxShape.circle),
-                                child: Center(
-                                  child: Text(
-                                    'OR',
-                                    style: TextStyle(
-                                        color: StyleConstants.lightGrey,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12.0),
-                                  ),
-                                ),
-                              ),
-                              Spacer(),
-                              Container(
-                                height: 2.0,
-                                width: width * 0.25,
-                                color: StyleConstants.lightGrey,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                        Container(
-                          height: height * 0.05,
-                          width: width * 0.6,
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(20.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  offset: Offset(0, 3),
-                                  blurRadius: 6.0,
-                                ),
-                              ]
-                          ),
-                          child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 25.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    FaIcon(
-                                      FontAwesomeIcons.apple,
-                                      color: Colors.white,
-                                      size: 20.0,
-                                    ),
-                                    Text(
-                                      'Continue with Apple',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
-                                ),
-                              )),
-                        ),
-                        SizedBox(
-                          height: height * 0.01,
-                        ),
-                        GestureDetector(
-                          onTap: () async {
-                            signInWithGoogle();
-                          },
-                          child: Container(
-                            height: height * 0.05,
-                            width: width * 0.6,
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(20.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    offset: Offset(0, 3),
-                                    blurRadius: 6.0,
-                                  ),
-                                ]
-                            ),
-                            child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      FaIcon(
-                                        FontAwesomeIcons.google,
-                                        color: Colors.white,
-                                        size: 20.0,
-                                      ),
-                                      Text(
-                                        'Continue with Google',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                          ),
                         ),
 
                         /*

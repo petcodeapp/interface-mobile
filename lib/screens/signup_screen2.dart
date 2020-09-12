@@ -292,6 +292,19 @@ class _SignupScreen2State extends State<SignupScreen2> {
                           ),
                         ),
                         SizedBox(
+                          height: height * 0.01,
+                        ),
+                        Container(
+                          width: 250.0,
+                          child: Row(
+
+                            children: [
+                              Spacer(),
+                              Text('I need help',style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600, color: StyleConstants.blue),),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
                           height: height * 0.02,
                         ),
                         GestureDetector(

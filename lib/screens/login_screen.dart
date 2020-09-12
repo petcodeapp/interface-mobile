@@ -222,6 +222,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         SizedBox(
+                          height: height * 0.01,
+                        ),
+                        Container(
+                          width: 250.0,
+                          child: Row(
+
+                            children: [
+                              Spacer(),
+                              Text('Forgot Password',style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600, color: StyleConstants.blue),),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
                           height: height * 0.02,
                         ),
                         GestureDetector(
