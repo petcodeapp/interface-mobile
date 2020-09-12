@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
+import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/screens/medical_info_screen.dart';
 import 'package:petcode_app/screens/owner_info_screen.dart';
 import 'package:petcode_app/screens/pet_info_screen.dart';
@@ -51,6 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
     double height = MediaQuery.of(context).size.height;
 
     _currentPetProvider = Provider.of<CurrentPetProvider>(context);
+
+    NotificationsProvider notificationsProvider = Provider.of<NotificationsProvider>(context);
 
     petService = Provider.of<PetService>(context);
 

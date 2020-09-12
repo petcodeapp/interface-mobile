@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
+import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
@@ -11,7 +12,6 @@ import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
-import 'package:petcode_app/services/notifications_service.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/set_up_keys.dart';
@@ -22,10 +22,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SetUpKeys().createGoogleMapsKey();
 
-  Firebase.initializeApp();
-
-  await NotificationsService().initializeNotifications();
-  NotificationsService().scheduleNotification();
+  await Firebase.initializeApp();
 
   runApp(MyApp());
 }
@@ -52,6 +49,9 @@ class MyApp extends StatelessWidget {
         ),
         Provider<CheckRegistrationService>(
           create: (_) => CheckRegistrationService(),
+        ),
+        ChangeNotifierProvider<NotificationsProvider>(
+          create: (_) => NotificationsProvider(),
         ),
         ChangeNotifierProxyProvider<FirebaseAuthService, UserService>(
           create: (_) => UserService(),
