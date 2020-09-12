@@ -2,6 +2,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/login_screen.dart';
 import 'package:petcode_app/screens/signup_screen.dart';
+import 'package:petcode_app/screens/signup_screen2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class EntryScreen extends StatefulWidget {
@@ -232,7 +233,7 @@ class _EntryScreenState extends State<EntryScreen> {
               Positioned(
                 bottom: height * 0.12,
                 child: GestureDetector(
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SignupScreen())),
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SignupScreen2())),
                   child: Container(
                     decoration: StyleConstants.roundWhiteButtonDeco.copyWith(color: StyleConstants.blue),
                     width: width * 0.55,

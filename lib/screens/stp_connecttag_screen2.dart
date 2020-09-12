@@ -8,12 +8,12 @@ import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
+class ConnectTagScreen2 extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _ConnectTagScreen2State createState() => _ConnectTagScreen2State();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ConnectTagScreen2State extends State<ConnectTagScreen2> {
   TextEditingController _emailInputController;
   TextEditingController _passwordInputController;
 
@@ -87,17 +87,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Positioned(
-                    top: height * 0.3,
-                    left: width * 0.4,
-                    child: Text(
-                      'Welcome Back',
+                    top: height * 0.25,
+                    left: width * 0.35,
+                    child: Column(
+                      children: [
+                      Text(
+                      'Welcome to the',
                       style: TextStyle(
                           color: StyleConstants.blue,
-                          fontSize: 30.0,
+                          fontSize: 25.0,
                           fontWeight: FontWeight.bold),
+                    ),
+                        Text(
+                          'PetCode Network',
+                          style: TextStyle(
+                              color: StyleConstants.blue,
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     )),
                 Positioned(
-                  bottom: height * 0.12,
+                  bottom: height * 0.035,
                   child: Container(
                     width: width * 0.7,
                     child: Column(
@@ -111,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Email Address / Username',
+                                  'Full Name',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 12.0,
@@ -134,26 +145,84 @@ class _LoginScreenState extends State<LoginScreen> {
                                     decoration: InputDecoration(
                                         border: OutlineInputBorder(
                                           borderRadius:
-                                              BorderRadius.circular(15.0),
+                                          BorderRadius.circular(15.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
-                                                  StyleConstants.darkPurpleGrey,
+                                              StyleConstants.darkPurpleGrey,
                                               width: 2.0),
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
-                                                  StyleConstants.darkPurpleGrey,
+                                              StyleConstants.darkPurpleGrey,
                                               width: 1.5),
                                         ),
-                                        hintText: 'Email Address / Username',
+                                        hintText: 'Full Name',
                                         hintStyle: TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w600,
                                             color:
-                                                StyleConstants.darkPurpleGrey)),
+                                            StyleConstants.darkPurpleGrey)),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: height * 0.02,),
+                        Container(
+                          width: 250.0,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Email Address',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: height * 0.01,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                height: 50.0,
+                                width: 250.0,
+                                child: Center(
+                                  child: TextFormField(
+                                    controller: _emailInputController,
+                                    decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(15.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color:
+                                              StyleConstants.darkPurpleGrey,
+                                              width: 2.0),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color:
+                                              StyleConstants.darkPurpleGrey,
+                                              width: 1.5),
+                                        ),
+                                        hintText: 'Email Address',
+                                        hintStyle: TextStyle(
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.w600,
+                                            color:
+                                            StyleConstants.darkPurpleGrey)),
                                   ),
                                 ),
                               ),
@@ -194,18 +263,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                     decoration: InputDecoration(
                                         border: OutlineInputBorder(
                                           borderRadius:
-                                              BorderRadius.circular(15.0),
+                                          BorderRadius.circular(15.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
-                                                  StyleConstants.darkPurpleGrey,
+                                              StyleConstants.darkPurpleGrey,
                                               width: 2.0),
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
-                                                  StyleConstants.darkPurpleGrey,
+                                              StyleConstants.darkPurpleGrey,
                                               width: 1.5),
                                         ),
                                         hintText: 'Password',
@@ -213,7 +282,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w600,
                                             color:
-                                                StyleConstants.darkPurpleGrey)),
+                                            StyleConstants.darkPurpleGrey)),
                                     obscureText: true,
                                   ),
                                 ),
@@ -225,42 +294,43 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: height * 0.02,
                         ),
                         GestureDetector(
-                          onTap: () async {
+
+                          /*onTap: () async {
                             signInWithForm();
-                          },
+                          },*/
                           child: authService.status == Status.Unauthenticated
                               ? Container(
-                                  decoration:
-                                      StyleConstants.roundYellowButtonDeco,
-                                  width: 250,
-                                  height: height * 0.06,
-                                  child: Center(
-                                    child: Text(
-                                      'Login',
-                                      style: StyleConstants.whiteThinTitleText
-                                          .copyWith(fontSize: 25.0),
-                                    ),
-                                  ),
-                                )
+                            decoration:
+                            StyleConstants.roundYellowButtonDeco,
+                            width: 250,
+                            height: height * 0.06,
+                            child: Center(
+                              child: Text(
+                                'Next',
+                                style: StyleConstants.whiteThinTitleText
+                                    .copyWith(fontSize: 25.0),
+                              ),
+                            ),
+                          )
                               : CircularProgressIndicator(),
                         ),
                         SizedBox(
                           height: height * 0.02,
                         ),
                         Container(
-                          width: 300,
+                          width: 250,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                 height: 2.0,
-                                width: width * 0.2,
+                                width: width * 0.25,
                                 color: StyleConstants.lightGrey,
                               ),
                               Spacer(),
                               Container(
-                                height: 45.0,
-                                width: 45.0,
+                                height: 40.0,
+                                width: 40.0,
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                         width: 2.0,
@@ -272,57 +342,96 @@ class _LoginScreenState extends State<LoginScreen> {
                                     style: TextStyle(
                                         color: StyleConstants.lightGrey,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 15.0),
+                                        fontSize: 12.0),
                                   ),
                                 ),
                               ),
                               Spacer(),
                               Container(
                                 height: 2.0,
-                                width: width * 0.2,
+                                width: width * 0.25,
                                 color: StyleConstants.lightGrey,
                               ),
                             ],
                           ),
                         ),
                         SizedBox(
-                          height: height * 0.05,
+                          height: height * 0.02,
                         ),
                         Container(
-                          width: 250.0,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-
-                                height: height * 0.05,
-                                width: width * 0.3,
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(20.0),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
-                                        offset: Offset(0, 3),
-                                        blurRadius: 6.0,
-                                      ),
-                                    ]
+                          height: height * 0.05,
+                          width: width * 0.6,
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(20.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  offset: Offset(0, 3),
+                                  blurRadius: 6.0,
                                 ),
-                                child: Center(
-                                    child: Padding(
+                              ]
+                          ),
+                          child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 25.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    FaIcon(
+                                      FontAwesomeIcons.apple,
+                                      color: Colors.white,
+                                      size: 20.0,
+                                    ),
+                                    Text(
+                                      'Continue with Apple',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
+                              )),
+                        ),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            signInWithGoogle();
+                          },
+                          child: Container(
+                            height: height * 0.05,
+                            width: width * 0.6,
+                            decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(20.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    offset: Offset(0, 3),
+                                    blurRadius: 6.0,
+                                  ),
+                                ]
+                            ),
+                            child: Center(
+                                child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 25.0),
+                                      horizontal: 20.0),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       FaIcon(
-                                        FontAwesomeIcons.apple,
+                                        FontAwesomeIcons.google,
                                         color: Colors.white,
                                         size: 20.0,
                                       ),
                                       Text(
-                                        'Apple',
+                                        'Continue with Google',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 15.0,
@@ -331,54 +440,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ],
                                   ),
                                 )),
-                              ),
-                              Spacer(),
-                              GestureDetector(
-                                onTap: () async {
-                                  signInWithGoogle();
-                                },
-                                child: Container(
-                                  height: height * 0.05,
-                                  width: width * 0.3,
-                                  decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(20.0),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.2),
-                                          offset: Offset(0, 3),
-                                          blurRadius: 6.0,
-                                        ),
-                                      ]
-                                  ),
-                                  child: Center(
-                                      child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        FaIcon(
-                                          FontAwesomeIcons.google,
-                                          color: Colors.white,
-                                          size: 20.0,
-                                        ),
-                                        Text(
-                                          'Google',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ],
-                                    ),
-                                  )),
-                                ),
-                              ),
-                            ],
                           ),
                         ),
+
                         /*
                         Row(
                           children: [
@@ -453,14 +517,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
         if (successful) {
           bool hasAccount =
-              await checkRegistrationService.hasAccount(authService.user.uid);
+          await checkRegistrationService.hasAccount(authService.user.uid);
           if (!hasAccount) {
             Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => StpNameAndPhoneScreen(
-                        registerPet: true,
-                      )),
+                    registerPet: true,
+                  )),
             );
           } else {
             Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
@@ -480,14 +544,14 @@ class _LoginScreenState extends State<LoginScreen> {
       bool successful = await authService.signInWithGoogle();
       if (successful) {
         bool hasAccount =
-            await checkRegistrationService.hasAccount(authService.user.uid);
+        await checkRegistrationService.hasAccount(authService.user.uid);
         if (!hasAccount) {
           Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => StpNameAndPhoneScreen(
-                      registerPet: true,
-                    )),
+                  registerPet: true,
+                )),
           );
         } else {
           Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
