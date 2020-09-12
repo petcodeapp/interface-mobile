@@ -1,12 +1,12 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/screens/account_screen.dart';
+import 'package:petcode_app/screens/discover_parks_screen.dart';
 import 'package:petcode_app/screens/home_screen.dart';
-import 'package:petcode_app/screens/medical_info_screen.dart';
+import 'package:petcode_app/screens/pet_perks_screen.dart';
 import 'package:petcode_app/screens/scans_screen.dart';
 import 'package:petcode_app/screens/social_split_screen.dart';
-import 'package:petcode_app/services/pet_service.dart';
-import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
@@ -39,8 +39,21 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    NotificationsProvider notificationsProvider =
+        Provider.of<NotificationsProvider>(context);
+
+    if (notificationsProvider.currentPayload == 'open pet parks') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DiscoverParksScreen()),
+      );
+    }
+    else if (notificationsProvider.currentPayload == 'open pet perks') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PetPerksScreen()),
+      );
+    }
 
     return Scaffold(
       body: SizedBox.expand(

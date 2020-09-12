@@ -28,8 +28,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  static final GlobalKey<NavigatorState> navigatorKey =
-      new GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +122,6 @@ class MyApp extends StatelessWidget {
             }),
       ],
       child: MaterialApp(
-        navigatorKey: navigatorKey,
         builder: (context, child) {
           return ScrollConfiguration(behavior: NoGlowBehavior(), child: child);
         },
