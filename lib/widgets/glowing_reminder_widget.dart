@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/reminder_widget.dart';
+import 'package:provider/provider.dart';
 
 class GlowingReminderWidget extends StatefulWidget {
   GlowingReminderWidget({Key key, this.completed, this.name, this.date})
@@ -33,19 +35,24 @@ class _GlowingReminderWidgetState extends State<GlowingReminderWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ReminderWidget(
-        completed: widget.completed,
-        name: widget.name,
-        date: widget.date,
-      ),
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-          color: StyleConstants.yellow,
-          blurRadius: _animation.value,
-          spreadRadius: _animation.value,
+    return GestureDetector(
+      onTap: () {
+        Provider.of<NotificationsProvider>(context, listen: false).clearIndex();
+      },
+      child: Container(
+        child: ReminderWidget(
+          completed: widget.completed,
+          name: widget.name,
+          date: widget.date,
         ),
-      ], borderRadius: BorderRadius.circular(15.0)),
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+            color: StyleConstants.yellow,
+            blurRadius: _animation.value,
+            spreadRadius: _animation.value,
+          ),
+        ], borderRadius: BorderRadius.circular(15.0)),
+      ),
     );
   }
 
