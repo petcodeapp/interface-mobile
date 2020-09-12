@@ -418,7 +418,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                       });
                                     });
                                   },
-                                )
+                                ),
                               ],
                             ),
                           ),
