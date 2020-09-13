@@ -8,6 +8,7 @@ import 'package:petcode_app/screens/discover_parks_screen.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
 import 'package:petcode_app/screens/pet_perks_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
+import 'package:petcode_app/screens/vaccine_history_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
@@ -153,9 +154,14 @@ class HomeScreen extends StatelessWidget {
       print('reload');
       if (notificationsProvider.currentPayload == 'open pet parks') {
         return DiscoverParksScreen();
-      } else if (notificationsProvider.currentPayload == 'open pet perks' || notificationsProvider.currentPayload == 'new pet perk') {
-        print('rebuild');
-        return PetPerksScreen(customBack: true,);
+      } else if (notificationsProvider.currentPayload == 'open pet perks' ||
+          notificationsProvider.currentPayload == 'new pet perk') {
+        return PetPerksScreen(
+          customBack: true,
+        );
+      } else if (notificationsProvider.currentPayload ==
+          'vaccination expired') {
+        return VaccineHistoryScreen(customBack: true,);
       } else {
         return RootScreen();
       }
