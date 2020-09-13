@@ -50,6 +50,9 @@ class NearbyParksService {
         new Marker(
           markerId: MarkerId(nearbyParks[i].name + i.toString() + 'ID'),
           position: nearbyParks[i].location,
+          infoWindow: InfoWindow(
+            title: nearbyParks[i].name,
+          ),
         ),
       );
     }

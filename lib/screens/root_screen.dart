@@ -4,6 +4,7 @@ import 'package:petcode_app/screens/account_screen.dart';
 import 'package:petcode_app/screens/home_screen.dart';
 import 'package:petcode_app/screens/medical_info_screen.dart';
 import 'package:petcode_app/screens/scans_screen.dart';
+import 'package:petcode_app/screens/scans_screen2.dart';
 import 'package:petcode_app/screens/social_split_screen.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
@@ -20,8 +21,7 @@ class _RootScreenState extends State<RootScreen> {
   PageController _pageController = PageController(initialPage: 0);
   var _pageOptions = [
     HomeScreen(),
-    ScansScreen(),
-
+    ScansScreen2(),
     SocialSplitScreen(),
     AccountScreen()
 
