@@ -33,12 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
   List<UpcomingEvent> _allPetUpcomingEvents;
 
   CarouselController _carouselController;
+  ScrollController _scrollController;
 
   int pageIndex = 0;
 
   @override
   void initState() {
     _carouselController = new CarouselController();
+    _scrollController = new ScrollController();
     super.initState();
   }
 
@@ -55,6 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
     int reminderIndex = -1;
     if (notificationsProvider.currentPayload == 'reminder expired') {
       reminderIndex = notificationsProvider.index;
+      if (notificationsProvider.index != null &&
+          notificationsProvider.index > 0 && _scrollController.hasClients) {
+        _scrollController.animateTo(
+            height * 0.02 + 200 + height * 0.1 * reminderIndex,
+            duration: Duration(seconds: 1),
+            curve: Curves.easeOut);
+      }
     }
 
     petService = Provider.of<PetService>(context);
@@ -104,6 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
               )),
         ),
         body: SingleChildScrollView(
+          controller: _scrollController,
           child: Container(
             //height: height + (_allPetUpcomingEvents.length - 2) * 68.0,
             width: width,
@@ -259,97 +269,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )
                                 ],
                               )
-                              /*
-                            child: Stack(
-                              children: [
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Container(
-                                    height: 300.0,
-                                    width: width,
-                                    decoration: BoxDecoration(
-                                      //color: StyleConstants.lightGrey,
-                                      color: StyleConstants.purpleGrey,
-                                      //borderRadius: BorderRadius.circular(15.0),
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Container(
-                                    height: 200.0,
-                                    width: width,
-                                    child: Image(
-                                      image: petService.allPets[index].petImage,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: 12.0,
-                                  //left: width * 0.04,
-                                  child: Container(
-                                    width: width,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                petService.allPets[index].name,
-                                                style: StyleConstants
-                                                    .blackThinTitleTextLarge,
-                                              ),
-                                              SizedBox(
-                                                height: 2.0,
-                                              ),
-                                              Text(
-                                                petService.allPets[index].breed,
-                                                style: StyleConstants
-                                                    .greyThinDescriptionText,
-                                              ),
-                                            ],
-                                          ),
-                                          Spacer(),
-                                          IconButton(
-                                              icon: Icon(
-                                                HeroIcons.icon_globe,
-                                                size: 28.0,
-                                                color:
-                                                    StyleConstants.darkPurpleGrey,
-                                              ),
-                                              onPressed: () {}),
-                                          SizedBox(
-                                            width: width * 0.03,
-                                          ),
-                                          IconButton(
-                                            icon: Icon(
-                                              HeroIcons.icon_edit,
-                                              size: 28.0,
-                                              color: StyleConstants.darkPurpleGrey,
-                                            ),
-                                            onPressed: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (_) => PetInfoScreen(),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            */
                               ),
                         ),
                       );
@@ -363,31 +282,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       : 1,
                   position: 0.0 + pageIndex,
                 ),
-                /*
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    height: 200.0,
-                    child: PageView.builder(
-                      itemCount: petService.petImages.length,
-                      controller: _mainPageController,
-                      onPageChanged: (int index) {
-                        _currentPageNotifier.value = index;
-                        _secondPageController.jumpToPage(index);
-                      },
-                      itemBuilder: (context, position) {
-                        return imageSlider(position);
-                      },
-                    ),
-                  ),
-                ),
-                */
-                /*
-                CirclePageIndicator(
-                  selectedDotColor: Colors.white,
-                  itemCount: petService.petImages.length,
-                  currentPageNotifier: _currentPageNotifier,
-                ),*/
                 SizedBox(
                   height: height * 0.001,
                 ),

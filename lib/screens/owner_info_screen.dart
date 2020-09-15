@@ -6,7 +6,7 @@ import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/screens/owner_info_editing_screen.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/widgets/owner_change_pet_app_bar.dart';
+import 'package:petcode_app/widgets/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class OwnerInfoScreen extends StatefulWidget {
@@ -30,7 +30,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
       backgroundColor: StyleConstants.pageBackgroundColor,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70.0),
-        child: OwnerChangePetAppBar(
+        child: ChangePetAppBar(
           actions: [
             IconButton(
               icon: Icon(Icons.edit),

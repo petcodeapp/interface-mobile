@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
+import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
 class ChangePetAppBar extends StatefulWidget implements PreferredSizeWidget {
-  ChangePetAppBar({Key key, this.actions}) : super(key: key);
+  ChangePetAppBar({Key key, this.customBack, this.shape, this.actions})
+      : super(key: key);
+  final bool customBack;
+  final ShapeBorder shape;
   final List<Widget> actions;
 
   @override
@@ -37,19 +41,29 @@ class _ChangePetAppBarState extends State<ChangePetAppBar> {
             value: _petService.allPets[i]),
       );
     }
-
-    print(_currentPetProvider.currentPet.pid);
     return AppBar(
       backgroundColor: StyleConstants.blue,
       centerTitle: true,
-      elevation: 0.0,
-      /*
-      shape: ContinuousRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0),
-        )
-      ),
-      */
+      elevation: 6.0,
+      shape: widget.shape ??
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(20),
+            ),
+          ),
+      leading: widget.customBack != null && widget.customBack
+          ? IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                } else {
+                  Provider.of<NotificationsProvider>(context, listen: false)
+                      .clear();
+                  Navigator.popAndPushNamed(context, '/');
+                }
+              })
+          : null,
       title: new Theme(
         child: new DropdownButtonHideUnderline(
           child: new DropdownButton<Pet>(

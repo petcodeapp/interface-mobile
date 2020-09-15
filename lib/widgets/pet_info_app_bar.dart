@@ -43,13 +43,6 @@ class _PetInfoAppBarState extends State<PetInfoAppBar> {
       backgroundColor: StyleConstants.blue,
       centerTitle: true,
       elevation: 0.0,
-      /*
-      shape: ContinuousRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0),
-        )
-      ),
-      */
       bottom: PreferredSize(
         child: Container(
           width: MediaQuery.of(context).size.width,

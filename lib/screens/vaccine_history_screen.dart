@@ -5,8 +5,8 @@ import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/change_pet_app_bar.dart';
 import 'package:petcode_app/widgets/glowing_vaccination_widget.dart';
-import 'package:petcode_app/widgets/owner_change_pet_app_bar.dart';
 import 'package:petcode_app/widgets/vaccination_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -219,7 +219,7 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
       }
 
       return Scaffold(
-        appBar: OwnerChangePetAppBar(customBack: widget.customBack,),
+        appBar: ChangePetAppBar(customBack: widget.customBack,),
         floatingActionButton: FloatingActionButton(
           backgroundColor: StyleConstants.blue,
           child: Icon(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/widgets/owner_change_pet_app_bar.dart';
+import 'package:petcode_app/widgets/change_pet_app_bar.dart';
 
 class RemindersScreen extends StatefulWidget {
   @override
@@ -513,7 +513,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
 
 
     return Scaffold(
-      appBar: OwnerChangePetAppBar(),
+      appBar: ChangePetAppBar(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: StyleConstants.blue,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/widgets/owner_change_pet_app_bar.dart';
+import 'package:petcode_app/widgets/change_pet_app_bar.dart';
 
 class GeneralMedicalInfoScreen extends StatefulWidget {
   @override
@@ -17,7 +17,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70.0),
-        child: OwnerChangePetAppBar(
+        child: ChangePetAppBar(
           actions: [
             IconButton(
               icon: Icon(Icons.edit),
