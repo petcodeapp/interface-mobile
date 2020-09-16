@@ -74,7 +74,6 @@ class NearbyParksService {
       for (int j = 0; j < attributions.length; j++) {
         var doc = parseFragment(attributions[j]);
         var child = doc.firstChild;
-        print('text: ' + doc.text);
 
         try {
           photoAttributionNames.add(doc.text);
