@@ -1,4 +1,3 @@
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/providers/provider_state.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/navigation_row.dart';
@@ -18,8 +17,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   PetService petService;
 
   ScrollController _scrollController;
-
-  int pageIndex = 0;
 
   @override
   void initState() {
@@ -70,38 +67,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   height: height * 0.02,
                 ),
                 PetsCarouselWidget(),
-                DotsIndicator(
-                  dotsCount: petService.allPets.length > 0
-                      ? petService.allPets.length
-                      : 1,
-                  position: 0.0 + pageIndex,
-                ),
-                SizedBox(
-                  height: height * 0.001,
-                ),
                 SizedBox(
                   height: height * 0.03,
                 ),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: StyleConstants.blue,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20.0),
-                            bottomLeft: Radius.circular(20.0)),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 6,
-                              offset: Offset(0, 3)),
-                        ]),
-                    width: width * 0.95,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: NavigationRow(),
-                    ),
-                  ),
+                  child: NavigationRow(),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: width * 0.035),

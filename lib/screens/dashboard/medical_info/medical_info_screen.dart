@@ -42,7 +42,7 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
     } else {
       return Scaffold(
         backgroundColor: StyleConstants.pageBackgroundColor,
-        appBar: ChangePetAppBar(),
+        appBar: ChangePetAppBar(shape: ContinuousRectangleBorder(),),
         body: Container(
           width: width,
           height: height,

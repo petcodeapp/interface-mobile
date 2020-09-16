@@ -8,7 +8,8 @@ import 'package:provider/provider.dart';
 
 class GeneralMedicalInfoScreen extends StatefulWidget {
   @override
-  _GeneralMedicalInfoScreenState createState() => _GeneralMedicalInfoScreenState();
+  _GeneralMedicalInfoScreenState createState() =>
+      _GeneralMedicalInfoScreenState();
 }
 
 class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
@@ -17,7 +18,8 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    CurrentPetProvider currentPetProvider = Provider.of<CurrentPetProvider>(context);
+    CurrentPetProvider currentPetProvider =
+        Provider.of<CurrentPetProvider>(context);
     Pet currentPet = currentPetProvider.currentPet;
 
     return Scaffold(
@@ -26,11 +28,10 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
         child: ChangePetAppBar(
           actions: [
             IconButton(
-              icon: Icon(Icons.edit),
-              color: Colors.white,
-              iconSize: 30.0,
-              onPressed: () {}
-            ),
+                icon: Icon(Icons.edit),
+                color: Colors.white,
+                iconSize: 30.0,
+                onPressed: () {}),
           ],
         ),
       ),
@@ -44,17 +45,16 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
               SizedBox(
                 height: height * 0.04,
               ),
-              /*
-              CircleAvatar(
-                backgroundImage:  petService.petImages[widget.petIndex],
-                radius: 60.0,
-              ),*/
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text('Special Needs', style: StyleConstants.tinyGreyDescriptionText,),
+                child: Text(
+                  'Special Needs',
+                  style: StyleConstants.tinyGreyDescriptionText,
+                ),
               ),
-              SizedBox(height: 10.0,),
+              SizedBox(
+                height: 10.0,
+              ),
               ListTile(
                 leading: Icon(
                   HeroIcons.icon_user,
@@ -62,7 +62,8 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 ),
                 title: Row(
                   children: [
-                    Text(currentPet.specialNeeds,style: StyleConstants.darkBlackDescriptionText) ??
+                    Text(currentPet.specialNeeds,
+                            style: StyleConstants.darkBlackDescriptionText) ??
                         Text(
                           'Special Needs',
                           style: StyleConstants.greyedOutText,
@@ -80,14 +81,19 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                   thickness: 2,
                 ),
               ),
-
-              SizedBox(height: 15.0,),
-
+              SizedBox(
+                height: 15.0,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text('Allergies', style: StyleConstants.tinyGreyDescriptionText,),
+                child: Text(
+                  'Allergies',
+                  style: StyleConstants.tinyGreyDescriptionText,
+                ),
               ),
-              SizedBox(height: 10.0,),
+              SizedBox(
+                height: 10.0,
+              ),
               ListTile(
                 leading: Icon(
                   HeroIcons.icon_user,
@@ -95,7 +101,8 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 ),
                 title: Row(
                   children: [
-                    Text(currentPet.allergies,style: StyleConstants.darkBlackDescriptionText) ??
+                    Text(currentPet.allergies,
+                            style: StyleConstants.darkBlackDescriptionText) ??
                         Text(
                           'Allergies',
                           style: StyleConstants.greyedOutText,
@@ -113,14 +120,19 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                   thickness: 2,
                 ),
               ),
-
-              SizedBox(height: 15.0,),
-
+              SizedBox(
+                height: 15.0,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text('Veterinarian Name', style: StyleConstants.tinyGreyDescriptionText,),
+                child: Text(
+                  'Veterinarian Name',
+                  style: StyleConstants.tinyGreyDescriptionText,
+                ),
               ),
-              SizedBox(height: 10.0,),
+              SizedBox(
+                height: 10.0,
+              ),
               ListTile(
                 leading: Icon(
                   HeroIcons.icon_user,
@@ -128,7 +140,8 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 ),
                 title: Row(
                   children: [
-                    Text(currentPet.vetName,style: StyleConstants.darkBlackDescriptionText) ??
+                    Text(currentPet.vetName,
+                            style: StyleConstants.darkBlackDescriptionText) ??
                         Text(
                           'Veterinarian Name',
                           style: StyleConstants.greyedOutText,
@@ -146,14 +159,19 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                   thickness: 2,
                 ),
               ),
-
-              SizedBox(height: 15.0,),
-
+              SizedBox(
+                height: 15.0,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text('Veterinarian Phone Number', style: StyleConstants.tinyGreyDescriptionText,),
+                child: Text(
+                  'Veterinarian Phone Number',
+                  style: StyleConstants.tinyGreyDescriptionText,
+                ),
               ),
-              SizedBox(height: 10.0,),
+              SizedBox(
+                height: 10.0,
+              ),
               ListTile(
                 leading: Icon(
                   HeroIcons.icon_user,
@@ -161,7 +179,8 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 ),
                 title: Row(
                   children: [
-                    Text(currentPet.vetPhoneNumber,style: StyleConstants.darkBlackDescriptionText) ??
+                    Text(currentPet.vetPhoneNumber,
+                            style: StyleConstants.darkBlackDescriptionText) ??
                         Text(
                           'Veterinarian Phone Number',
                           style: StyleConstants.greyedOutText,
@@ -179,7 +198,6 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                   thickness: 2,
                 ),
               ),
-
             ],
           ),
         ),
