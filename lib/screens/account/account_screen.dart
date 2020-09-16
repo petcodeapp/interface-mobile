@@ -8,17 +8,13 @@ import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
-class AccountScreen extends StatefulWidget {
-  @override
-  _AccountScreenState createState() => _AccountScreenState();
-}
-
-class _AccountScreenState extends State<AccountScreen> {
+class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final userService = Provider.of<UserService>(context);
+    UserService userService = Provider.of<UserService>(context);
     User user = userService.currentUser;
-    final petService = Provider.of<PetService>(context);
+
+    PetService petService = Provider.of<PetService>(context);
     int numScans = 0;
     for (int i = 0; i < petService.allPets.length; i++) {
       if (petService.allPets[i].scans != null) {

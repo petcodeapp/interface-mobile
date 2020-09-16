@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/account/account_screen.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/dashboard_screen.dart';
 import 'package:petcode_app/screens/scans/scans_screen.dart';
-import 'package:petcode_app/screens/social/social_split_screen.dart';
+import 'package:petcode_app/screens/social/social_split/social_split_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class RootScreen extends StatefulWidget {

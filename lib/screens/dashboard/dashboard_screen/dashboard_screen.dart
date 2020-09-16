@@ -8,26 +8,13 @@ import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
-class DashboardScreen extends StatefulWidget {
-  @override
-  _DashboardScreenState createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
-  PetService petService;
-
-  ScrollController _scrollController;
-
-  @override
-  void initState() {
-    _scrollController = new ScrollController();
-    super.initState();
-  }
-
+class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
+    PetService petService = Provider.of<PetService>(context);
 
     petService = Provider.of<PetService>(context);
 
@@ -56,7 +43,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               )),
         ),
         body: SingleChildScrollView(
-          controller: _scrollController,
           child: Container(
             width: width,
             child: Column(
