@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/screens/register_tag/stp_medinfo_screen.dart';
+import 'package:petcode_app/screens/setup_tag/stp_medinfo_screen.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';

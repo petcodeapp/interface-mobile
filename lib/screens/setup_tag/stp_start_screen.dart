@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/screens/register_tag/stp_connecttag_screen.dart';
+import 'package:petcode_app/screens/setup_tag/stp_connecttag_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class StpStartScreen extends StatefulWidget {

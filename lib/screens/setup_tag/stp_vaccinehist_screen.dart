@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:petcode_app/models/Vaccination.dart';
-import 'package:petcode_app/screens/register_tag/stp_reminders_screen.dart';
+import 'package:petcode_app/screens/setup_tag/stp_reminders_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/utils/string_helper.dart';

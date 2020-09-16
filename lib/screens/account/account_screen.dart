@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/User.dart';
-import 'package:petcode_app/screens/register_tag/stp_start_screen.dart';
+import 'package:petcode_app/screens/setup_tag/stp_start_screen.dart';
 import 'package:petcode_app/screens/account/account_info/account_editing_screen.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/pet_service.dart';

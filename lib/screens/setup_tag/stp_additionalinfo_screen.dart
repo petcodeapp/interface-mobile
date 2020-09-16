@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/screens/register_tag//stp_complete_screen.dart';
+import 'package:petcode_app/screens/setup_tag//stp_complete_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class StpAdditionalInfoScreen extends StatefulWidget {

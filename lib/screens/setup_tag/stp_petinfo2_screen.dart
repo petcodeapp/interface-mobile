@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/screens/register_tag/stp_addphoto_screen.dart';
+import 'package:petcode_app/screens/setup_tag/stp_addphoto_screen.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 

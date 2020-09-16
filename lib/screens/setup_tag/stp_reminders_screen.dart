@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:petcode_app/screens/register_tag/stp_additionalinfo_screen.dart';
+import 'package:petcode_app/screens/setup_tag/stp_additionalinfo_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/utils/string_helper.dart';

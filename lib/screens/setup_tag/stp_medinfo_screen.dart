@@ -1,34 +1,32 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/screens/register_tag/stp_petinfo2_screen.dart';
-import 'package:petcode_app/services/breed_autocomplete_service.dart';
+import 'package:petcode_app/screens/setup_tag/stp_vaccinehist_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/widgets/breed_search_bar.dart';
+import 'package:petcode_app/models/Pet.dart';
 
-class StpPetInfoScreen extends StatefulWidget {
-  StpPetInfoScreen({Key key, this.pet, this.petImage}) : super(key: key);
+class StpMedicalInfoScreen extends StatefulWidget {
+  StpMedicalInfoScreen({Key key, this.pet, this.petImage}) : super(key: key);
 
   final Pet pet;
   final File petImage;
 
   @override
-  _StpPetInfoScreenState createState() => _StpPetInfoScreenState();
+  _StpMedicalInfoScreenState createState() => _StpMedicalInfoScreenState();
 }
 
-class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
-  TextEditingController _petNameInputController;
-  TextEditingController _breedInputController;
-  TextEditingController _colorInputController;
-
-  Species _petSpecies;
+class _StpMedicalInfoScreenState extends State<StpMedicalInfoScreen> {
+  TextEditingController _petAllergiesInputController;
+  TextEditingController _specialNeedsInputController;
+  TextEditingController _vetNameInputController;
+  TextEditingController _vetPhoneNumberInputController;
 
   @override
   void initState() {
-    _petNameInputController = new TextEditingController();
-    _breedInputController = new TextEditingController();
-    _colorInputController = new TextEditingController();
+    _petAllergiesInputController = new TextEditingController();
+    _specialNeedsInputController = new TextEditingController();
+    _vetNameInputController = new TextEditingController();
+    _vetPhoneNumberInputController = new TextEditingController();
 
     super.initState();
   }
@@ -62,7 +60,7 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                 height: height * 0.05,
               ),
               Text(
-                'Step 3: Pet Information',
+                'Step 6: Medical Information',
                 style: StyleConstants.whiteTitleText,
               ),
               SizedBox(
@@ -78,6 +76,9 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -95,92 +96,11 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Center(
                           child: TextFormField(
-                            controller: _petNameInputController,
+                            controller: _petAllergiesInputController,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'Pet Name',
+                                hintText: 'Pet Allergies',
                                 hintStyle: TextStyle(fontSize: 15.0)),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 10.0,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      height: 50.0,
-                      width: 250.0,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Center(
-                            child: DropdownButtonFormField<Species>(
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Species',
-                            hintStyle: TextStyle(fontSize: 15.0),
-                          ),
-                          onChanged: (Species species) {
-                            setState(() {
-                              _petSpecies = species;
-                            });
-                          },
-                          items: [
-                            DropdownMenuItem(
-                              child: Text('Dog'),
-                              value: Species.Dog,
-                            ),
-                            DropdownMenuItem(
-                              child: Text('Cat'),
-                              value: Species.Cat,
-                            ),
-                            DropdownMenuItem(
-                              child: Text('Other'),
-                              value: Species.Other,
-                            ),
-                          ],
-                          value: _petSpecies,
-                        )),
-                      ),
-                    ),
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 10.0,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      height: 50.0,
-                      width: 250.0,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Center(
-                          child: BreedSearchBar(
-                            breedInputController: _breedInputController,
-                            inputDecoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Breed',
-                              hintStyle: TextStyle(fontSize: 15.0),
-                            ),
-                            species: _petSpecies,
                           ),
                         ),
                       ),
@@ -206,10 +126,70 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Center(
                           child: TextFormField(
-                            controller: _colorInputController,
+                            controller: _specialNeedsInputController,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'Color',
+                                hintText: 'Special Needs',
+                                hintStyle: TextStyle(fontSize: 15.0)),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 10.0,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      height: 50.0,
+                      width: 250.0,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Center(
+                          child: TextFormField(
+                            controller: _vetNameInputController,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'Vet Name',
+                                hintStyle: TextStyle(fontSize: 15.0)),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 10.0,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      height: 50.0,
+                      width: 250.0,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Center(
+                          child: TextFormField(
+                            controller: _vetPhoneNumberInputController,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'Vet Phone Number',
                                 hintStyle: TextStyle(fontSize: 15.0)),
                           ),
                         ),
@@ -222,23 +202,23 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                 ),
               ),
               SizedBox(
-                height: height * 0.05,
+                height: height * 0.1,
               ),
               GestureDetector(
                 onTap: () {
                   Pet updatedPet = widget.pet;
-
-                  updatedPet.name = _petNameInputController.text;
-                  updatedPet.breed = _breedInputController.text;
-                  updatedPet.color = _colorInputController.text;
-
-                  updatedPet.species = _petSpecies.toShortString();
+                  updatedPet.allergies = _petAllergiesInputController.text;
+                  updatedPet.specialNeeds = _specialNeedsInputController.text;
+                  updatedPet.vetName = _vetNameInputController.text;
+                  updatedPet.vetPhoneNumber =
+                      _vetPhoneNumberInputController.text;
 
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => StpPetInfo2Screen(
+                          builder: (_) => StpVaccineScreen(
                                 pet: updatedPet,
+                                petImage: widget.petImage,
                               )));
                 },
                 child: Container(

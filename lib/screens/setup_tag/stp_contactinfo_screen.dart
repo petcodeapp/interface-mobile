@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/screens/register_tag/stp_petinfo_screen.dart';
+import 'package:petcode_app/screens/setup_tag/stp_petinfo_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/address_search_bar.dart';
 import 'package:slimy_card/slimy_card.dart';
