@@ -7,7 +7,7 @@ import 'package:petcode_app/models/Scan.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/utils/map_constants.dart';
-import 'package:petcode_app/utils/no_glow_behavior.dart';
+import 'package:petcode_app/widgets/no_glow_behavior.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';

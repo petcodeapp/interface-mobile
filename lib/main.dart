@@ -18,12 +18,12 @@ import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/set_up_keys.dart';
-import 'package:petcode_app/utils/no_glow_behavior.dart';
+import 'package:petcode_app/widgets/no_glow_behavior.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SetUpKeys().createGoogleMapsKey();
+  SetUpKeys().createKeys();
 
   await Firebase.initializeApp();
 
@@ -161,7 +161,9 @@ class HomeScreen extends StatelessWidget {
         );
       } else if (notificationsProvider.currentPayload ==
           'vaccination expired') {
-        return VaccineHistoryScreen(customBack: true,);
+        return VaccineHistoryScreen(
+          customBack: true,
+        );
       } else {
         return RootScreen();
       }
