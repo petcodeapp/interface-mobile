@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/custom_app_bars/change_pet_app_bar.dart';
+import 'package:provider/provider.dart';
 
 class GeneralMedicalInfoScreen extends StatefulWidget {
   @override
@@ -13,6 +16,9 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+
+    CurrentPetProvider currentPetProvider = Provider.of<CurrentPetProvider>(context);
+    Pet currentPet = currentPetProvider.currentPet;
 
     return Scaffold(
       appBar: PreferredSize(
@@ -56,7 +62,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 ),
                 title: Row(
                   children: [
-                    Text('Heat Sensitivity, Depressed',style: StyleConstants.darkBlackDescriptionText) ??
+                    Text(currentPet.specialNeeds,style: StyleConstants.darkBlackDescriptionText) ??
                         Text(
                           'Special Needs',
                           style: StyleConstants.greyedOutText,
@@ -89,7 +95,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 ),
                 title: Row(
                   children: [
-                    Text('Wheat',style: StyleConstants.darkBlackDescriptionText) ??
+                    Text(currentPet.allergies,style: StyleConstants.darkBlackDescriptionText) ??
                         Text(
                           'Allergies',
                           style: StyleConstants.greyedOutText,
@@ -122,7 +128,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 ),
                 title: Row(
                   children: [
-                    Text('Dr. Vet',style: StyleConstants.darkBlackDescriptionText) ??
+                    Text(currentPet.vetName,style: StyleConstants.darkBlackDescriptionText) ??
                         Text(
                           'Veterinarian Name',
                           style: StyleConstants.greyedOutText,
@@ -155,7 +161,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 ),
                 title: Row(
                   children: [
-                    Text('650-772-9745',style: StyleConstants.darkBlackDescriptionText) ??
+                    Text(currentPet.vetPhoneNumber,style: StyleConstants.darkBlackDescriptionText) ??
                         Text(
                           'Veterinarian Phone Number',
                           style: StyleConstants.greyedOutText,

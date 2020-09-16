@@ -56,11 +56,6 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
             SizedBox(
               height: height * 0.04,
             ),
-            /*
-              CircleAvatar(
-                backgroundImage:  petService.petImages[widget.petIndex],
-                radius: 60.0,
-              ),*/
             Padding(
               padding: EdgeInsets.only(left: width * 0.03),
               child: Text(
@@ -73,13 +68,16 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
             ),
             createOwnerWidget(
                 currentPet.contact_1, height, width),
-            SizedBox(height: height * 0.01),
+            SizedBox(height: height * 0.03),
             currentPet.contact_2 == null
                 ? SizedBox()
-                : Text(
+                : Padding(
+                  padding: EdgeInsets.only(left: width * 0.03),
+                  child: Text(
               'Owner 2',
               style: StyleConstants.blackThinTitleText,
             ),
+                ),
             SizedBox(
               height: height * 0.01,
             ),

@@ -1,7 +1,7 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/account/account_screen.dart';
-import 'package:petcode_app/screens/dashboard/dashboard_screen.dart';
+import 'package:petcode_app/screens/dashboard/dashboard_screen/dashboard_screen.dart';
 import 'package:petcode_app/screens/scans/scans_screen.dart';
 import 'package:petcode_app/screens/social/social_split_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -15,7 +15,7 @@ class _RootScreenState extends State<RootScreen> {
   int _currentIndex = 0;
   PageController _pageController = PageController(initialPage: 0);
   var _pageOptions = [
-    HomeScreen(),
+    DashboardScreen(),
     ScansScreen(),
     SocialSplitScreen(),
     AccountScreen()

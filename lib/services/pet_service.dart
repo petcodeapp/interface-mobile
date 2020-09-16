@@ -6,14 +6,18 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
 import 'package:petcode_app/models/Vaccination.dart';
+import 'package:petcode_app/providers/provider_state.dart';
 
 class PetService extends ChangeNotifier {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   List<Pet> _allPets;
   StreamSubscription _petStream;
+  ProviderState _providerState = ProviderState.Idle;
 
   List<Pet> get allPets => _allPets;
+
+  ProviderState get providerState => _providerState;
 
   setPetIds(List<String> petIds) {
     startPetStream(petIds);
@@ -37,6 +41,8 @@ class PetService extends ChangeNotifier {
   }
 
   void startPetStream(List<String> petIds) {
+    _providerState = ProviderState.Busy;
+    notifyListeners();
     _allPets = new List<Pet>();
     if (petIds != null && petIds.length > 0) {
       _petStream = _firestore
@@ -46,6 +52,7 @@ class PetService extends ChangeNotifier {
           .listen((QuerySnapshot querySnapshot) {
         _allPets.clear();
         _allPets = petListFromQuery(querySnapshot);
+        _providerState = ProviderState.Idle;
         notifyListeners();
       });
     }

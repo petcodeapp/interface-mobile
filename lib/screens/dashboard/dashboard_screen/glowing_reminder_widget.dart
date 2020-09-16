@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/screens/dashboard/reminders/reminder_widget.dart';
+import 'package:petcode_app/screens/dashboard/dashboard_screen/reminder_widget.dart';
 import 'package:provider/provider.dart';
 
 class GlowingReminderWidget extends StatefulWidget {
