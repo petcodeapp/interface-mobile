@@ -32,6 +32,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
   PanelController _panelController;
 
   bool _cameraMoved = false;
+  bool firstLoad = true;
 
   NearbyPark _selectedPark;
 
@@ -52,13 +53,20 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
 
     _nearbyParksProvider = Provider.of<NearbyParksProvider>(context);
 
-    if (currentLocationProvider.currentLocation != null) {
+    if (currentLocationProvider.currentLocation != null && firstLoad) {
+      _nearbyParksProvider.getNearbyParks(
+          LatLng(
+            currentLocationProvider.currentLocation.latitude,
+            currentLocationProvider.currentLocation.longitude,
+          ),
+          14.0);
       _cameraPosition = CameraPosition(
           target: LatLng(
             currentLocationProvider.currentLocation.latitude,
             currentLocationProvider.currentLocation.longitude,
           ),
           zoom: 14.0);
+      firstLoad = false;
     }
 
     BorderRadiusGeometry topRoundedRadius = BorderRadius.only(
@@ -78,7 +86,6 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
               'assets/images/appbarlogoyellow.png',
               fit: BoxFit.cover,
             )),
-
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -94,7 +101,6 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
           },
         ),
       ),
-
       body: SlidingUpPanel(
         controller: _panelController,
         onPanelSlide: (double position) {
@@ -105,7 +111,6 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
         },
         minHeight: _height * 0.11,
         borderRadius: topRoundedRadius,
-
         header: Center(
           child: Container(
             width: _width,
@@ -133,7 +138,6 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
             ),
           ),
         ),
-
         body: currentLocationProvider.currentLocation != null
             ? Stack(
                 children: [
@@ -159,6 +163,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                         _mapBottomPadding = _height * 0.22;
                       });
                     },
+                    mapToolbarEnabled: false,
                   ),
                   _panelController.isAttached && !_panelController.isPanelShown
                       ? Align(
@@ -175,7 +180,6 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                 ],
               )
             : Center(child: CircularProgressIndicator()),
-
         panel: Column(
           children: [
             SizedBox(

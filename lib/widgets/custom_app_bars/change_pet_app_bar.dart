@@ -73,7 +73,6 @@ class _ChangePetAppBarState extends State<ChangePetAppBar> {
             value: _currentPetProvider.currentPet,
             items: dropdownMenuItems,
             onChanged: (Pet pet) {
-              print(pet.name);
               _currentPetProvider.setCurrentPet(pet);
             },
           ),

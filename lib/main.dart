@@ -114,25 +114,14 @@ class MyApp extends StatelessWidget {
                 return currentLocationProvider..getCurrentLocation();
               }
             }),
-        ChangeNotifierProxyProvider2<FirebaseAuthService,
-                CurrentLocationProvider, NearbyParksProvider>(
+        ChangeNotifierProxyProvider<FirebaseAuthService, NearbyParksProvider>(
             create: (_) => NearbyParksProvider(),
-            update: (BuildContext context,
-                FirebaseAuthService authService,
-                CurrentLocationProvider currentLocationProvider,
+            update: (BuildContext context, FirebaseAuthService authService,
                 NearbyParksProvider nearbyParksProvider) {
               if (authService.user == null) {
                 return nearbyParksProvider..clear();
-              } else if (currentLocationProvider.currentLocation != null) {
-                print('set up new provider');
-                return nearbyParksProvider
-                  ..setUpProvider()
-                  ..getNearbyParks(
-                      LatLng(currentLocationProvider.currentLocation.latitude,
-                          currentLocationProvider.currentLocation.longitude),
-                      14.0);
               } else {
-                return nearbyParksProvider;
+                return nearbyParksProvider..setUpProvider();
               }
             }),
       ],

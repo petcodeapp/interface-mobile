@@ -129,7 +129,16 @@ class ShowNearbyParkWidget extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.only(right: 15.0),
                           child: GestureDetector(
-                            onTap: () async {},
+                            onTap: () async {
+                              String mapsUrl =
+                                  'https://www.google.com/maps/dir/?api=1&destination=${shownPark.location.latitude},${shownPark.location.longitude}';
+                              if (await canLaunch(mapsUrl)) {
+                                launch(mapsUrl);
+                              }
+                              else {
+                                print('Can\'t launch');
+                              }
+                            },
                             child: Container(
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
