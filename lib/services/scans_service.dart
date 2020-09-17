@@ -38,6 +38,9 @@ class MapService extends ChangeNotifier {
                 currentScan.location.latitude, currentScan.location.longitude),
             icon: BitmapDescriptor.defaultMarkerWithHue(
                 MapConstants.bitmapDescriptorHues[currentScan.petIndex]),
+            infoWindow: InfoWindow(
+
+            ),
           ),
         );
       }

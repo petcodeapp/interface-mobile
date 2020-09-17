@@ -24,7 +24,7 @@ class NearbyParksService {
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
     String locationString = '${location.latitude},${location.longitude}';
     String radius =
-        (min(6081740800 / (256 * pow(2, zoom).toDouble()), 50000)).toString();
+    (min(6081740800 / (256 * pow(2, zoom).toDouble()), 50000)).toString();
 
     print('radius: ' + radius);
     String keyword = 'dog park';
@@ -74,7 +74,6 @@ class NearbyParksService {
       for (int j = 0; j < attributions.length; j++) {
         var doc = parseFragment(attributions[j]);
         var child = doc.firstChild;
-        print('text: ' + doc.text);
 
         try {
           photoAttributionNames.add(doc.text);

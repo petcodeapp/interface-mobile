@@ -7,10 +7,11 @@ import 'package:petcode_app/models/Scan.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/utils/map_constants.dart';
-import 'package:petcode_app/utils/no_glow_behavior.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/owner_change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ScansScreen extends StatefulWidget {
   @override
@@ -48,13 +49,45 @@ class _ScansScreenState extends State<ScansScreen> {
     }
 
     return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: _height * 0.35,
-            child: _currentLocationProvider.currentLocation != null
-                ? GoogleMap(
+      appBar: OwnerChangePetAppBar(),
+      body: SlidingUpPanel(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
+          backdropColor: StyleConstants.pageBackgroundColor,
+          header: Center(
+            child: Container(
+              width: _width,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 150.0),
+                      child: Divider(
+                        thickness: 5.0,
+                      ),
+                    ),
+                    SizedBox(
+                      height: _height * 0.01,
+                    ),
+                    Text(
+                      'Teddy\'s Scan Locations',
+                      style: StyleConstants.blackThinTitleTextSmall,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          body: Container(
+            height: _height,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+
+                  child: _currentLocationProvider.currentLocation != null
+                      ? GoogleMap(
                     mapType: MapType.normal,
                     initialCameraPosition: CameraPosition(
                       target: LatLng(_currentLocationProvider.currentLocation.latitude,
@@ -67,42 +100,33 @@ class _ScansScreenState extends State<ScansScreen> {
                     zoomControlsEnabled: true,
                     markers: _scansProvider.mapMarkers,
                   )
-                : Center(
+                      : Center(
                     child: CircularProgressIndicator(),
                   ),
-          ),
-          Flexible(
-            fit: FlexFit.loose,
-            child: ScrollConfiguration(
-              behavior: NoGlowBehavior(),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      height: _height * 0.02,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: _width * 0.05),
-                      child: Container(
-                        width: _width,
-                        child: Text(
-                          'Scan Locations',
-                          style: StyleConstants.blackThinTitleText,
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: _height * 0.02,
-                    ),
-                    scanLocationsList(petScans),
-                  ],
                 ),
-              ),
+
+              ],
+            ),
+          ),
+          panel: Container(
+            decoration: BoxDecoration(
+              color: StyleConstants.pageBackgroundColor,
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
+            ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: _height * 0.1,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: scanLocationsList(petScans),
+                  ),
+                ),
+              ],
             ),
           )
-        ],
       ),
     );
   }
@@ -136,7 +160,7 @@ class _ScansScreenState extends State<ScansScreen> {
       onTap: () async {
         GoogleMapController controller = await _controller.future;
         LatLng mapPosition =
-            LatLng(markerPosition.latitude, markerPosition.longitude);
+        LatLng(markerPosition.latitude, markerPosition.longitude);
         controller.animateCamera(
           CameraUpdate.newLatLng(
             mapPosition,
@@ -147,8 +171,15 @@ class _ScansScreenState extends State<ScansScreen> {
         height: _height * 0.13,
         width: _width * 0.9,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
-          color: StyleConstants.purpleGrey,
+            borderRadius: BorderRadius.circular(8.0),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                offset: Offset(0,3),
+                blurRadius: 6.0,
+              ),
+            ]
         ),
         child: Row(
           children: [
@@ -158,21 +189,13 @@ class _ScansScreenState extends State<ScansScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Expanded(
-                    flex: 3,
-                    child: Center(
-                      child: Icon(
-                        Icons.place,
-                        color: markerColor,
-                        size: _width * 0.1,
-                      ),
-                    ),
-                  ),
-                  Expanded(
                     flex: 7,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Align(
+                        Text(StringHelper.getDateString(date), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.0, color: StyleConstants.blue),),
+                        Text(StringHelper.getTimeString(date), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.0, color: StyleConstants.yellow),),
+                        /*Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             petName,
@@ -182,6 +205,7 @@ class _ScansScreenState extends State<ScansScreen> {
                             maxLines: 2,
                           ),
                         ),
+
                         SizedBox(
                           height: 2.0,
                         ),
@@ -198,6 +222,7 @@ class _ScansScreenState extends State<ScansScreen> {
                             maxLines: 2,
                           ),
                         ),
+                        */
                       ],
                     ),
                   ),
