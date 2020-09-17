@@ -19,7 +19,7 @@ class User {
       this.petIds});
 
   factory User.fromSnapshot(DocumentSnapshot snapshot) {
-    User newUser = User.fromJson(snapshot.data);
+    User newUser = User.fromJson(snapshot.data());
     newUser.reference = snapshot.reference;
     return newUser;
   }

@@ -61,7 +61,7 @@ class Pet {
       this.reference});
 
   factory Pet.fromSnapshot(DocumentSnapshot snapshot) {
-    Pet newPet = Pet.fromJson(snapshot.data);
+    Pet newPet = Pet.fromJson(snapshot.data());
 
     if (newPet.profileUrl == null || newPet.profileUrl.trim().isEmpty) {
       newPet.petImage = AssetImage('assets/images/puppyphoto.jpg');

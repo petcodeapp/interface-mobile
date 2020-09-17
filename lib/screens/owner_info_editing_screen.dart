@@ -7,7 +7,6 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
-import 'package:petcode_app/widgets/address_search_bar.dart';
 import 'package:provider/provider.dart';
 
 class OwnerInfoEditingScreen extends StatefulWidget {

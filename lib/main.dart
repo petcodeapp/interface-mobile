@@ -1,27 +1,32 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
+import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
+import 'package:petcode_app/screens/discover_parks_screen.dart';
 import 'package:petcode_app/screens/entry_screen.dart';
+import 'package:petcode_app/screens/pet_perks_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
+import 'package:petcode_app/screens/vaccine_history_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
-import 'package:petcode_app/services/scans_service.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/set_up_keys.dart';
 import 'package:petcode_app/utils/no_glow_behavior.dart';
-import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SetUpKeys().createGoogleMapsKey();
+
+  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -44,6 +49,9 @@ class MyApp extends StatelessWidget {
         ),
         Provider<CheckRegistrationService>(
           create: (_) => CheckRegistrationService(),
+        ),
+        ChangeNotifierProvider<NotificationsProvider>(
+          create: (_) => NotificationsProvider(),
         ),
         ChangeNotifierProxyProvider<FirebaseAuthService, UserService>(
           create: (_) => UserService(),
@@ -130,21 +138,33 @@ class MyApp extends StatelessWidget {
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<FirebaseAuthService>(
-      builder: (context, FirebaseAuthService auth, _) {
-        if (auth.status == Status.Uninitialized) {
-          return Scaffold(
-            body: Center(
-              child: Text('loading'),
-            ),
-          );
-        } else if (auth.status == Status.Authenticating ||
-            auth.status == Status.Unauthenticated) {
-          return EntryScreen();
-        } else {
-          return RootScreen();
-        }
-      },
-    );
+    FirebaseAuthService auth = Provider.of<FirebaseAuthService>(context);
+    NotificationsProvider notificationsProvider =
+        Provider.of<NotificationsProvider>(context);
+    if (auth.status == Status.Uninitialized) {
+      return Scaffold(
+        body: Center(
+          child: Text('loading'),
+        ),
+      );
+    } else if (auth.status == Status.Authenticating ||
+        auth.status == Status.Unauthenticated) {
+      return EntryScreen();
+    } else {
+      print('reload');
+      if (notificationsProvider.currentPayload == 'open pet parks') {
+        return DiscoverParksScreen();
+      } else if (notificationsProvider.currentPayload == 'open pet perks' ||
+          notificationsProvider.currentPayload == 'new pet perk') {
+        return PetPerksScreen(
+          customBack: true,
+        );
+      } else if (notificationsProvider.currentPayload ==
+          'vaccination expired') {
+        return VaccineHistoryScreen(customBack: true,);
+      } else {
+        return RootScreen();
+      }
+    }
   }
 }

@@ -8,7 +8,6 @@ import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:petcode_app/services/pet_service.dart';
 
 class MedicalInfoScreen extends StatefulWidget {
   MedicalInfoScreen({Key key}) : super(key: key);

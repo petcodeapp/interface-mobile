@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/models/NearbyPark.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
+import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/show_nearby_park_widget.dart';
 import 'package:provider/provider.dart';
@@ -81,6 +82,20 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
               'assets/images/appbarlogoyellow.png',
               fit: BoxFit.cover,
             )),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+          ),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            }
+            else {
+              Provider.of<NotificationsProvider>(context, listen: false).clear();
+              Navigator.popAndPushNamed(context, '/');
+            }
+          },
+        ),
       ),
       body: SlidingUpPanel(
         controller: _panelController,
@@ -132,7 +147,11 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                     onCameraMove: (CameraPosition position) {
                       //_nearbyParksProvider.getNearbyParks(position.target);
                       _cameraPosition = position;
-                      _cameraMoved = true;
+                      if (_cameraMoved == false) {
+                        setState(() {
+                          _cameraMoved = true;
+                        });
+                      }
                     },
                     onTap: (LatLng tappedPosition) async {
                       await _panelController.show();
@@ -142,7 +161,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                       });
                     },
                   ),
-                  !_panelController.isPanelShown
+                  _panelController.isAttached && !_panelController.isPanelShown
                       ? Align(
                           alignment: Alignment.bottomCenter,
                           child: Padding(
@@ -153,30 +172,49 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                           ),
                         )
                       : SizedBox.shrink(),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(height: _height * 0.02,),
-                        Container(
-                          height: 40.0,
-                          width: 125.0,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20.0),
+                  _cameraMoved
+                      ? Align(
+                          alignment: Alignment.topCenter,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: _height * 0.02,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  _cameraMoved = false;
+                                  _nearbyParksProvider.getNearbyParks(
+                                      LatLng(
+                                          _currentLocationProvider
+                                              .currentLocation.latitude,
+                                          _currentLocationProvider
+                                              .currentLocation.longitude),
+                                      _cameraPosition.zoom);
+                                },
+                                child: Container(
+                                  height: 40.0,
+                                  width: 125.0,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'Search this Area',
+                                      style: TextStyle(
+                                        color: StyleConstants.red,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          child: Center(
-                            child: Text('Search this Area', style: TextStyle(
-                              color: StyleConstants.red,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12.0,
-                            ),),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                        )
+                      : SizedBox.shrink(),
                 ],
               )
             : Center(child: CircularProgressIndicator()),
@@ -233,6 +271,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
             onTap: () async {
               await _panelController.hide();
               setState(() {
+                _cameraMoved = true;
                 _selectedPark = nearbyParks[i];
                 _mapBottomPadding = _height * 0.43;
               });

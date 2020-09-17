@@ -18,6 +18,9 @@ import GoogleMaps
         let googleMapsAPIKey = dict["google_maps_api_key"] as? String
         GMSServices.provideAPIKey(googleMapsAPIKey!)
     }
+    if #available(iOS 10.0, *) {
+      UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
+    }
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
