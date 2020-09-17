@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:petcode_app/models/User.dart';
 import 'package:petcode_app/screens/stp_connecttag_screen2.dart';
 import 'package:petcode_app/screens/stp_nameandphone_screen.dart';
+import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
+import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
@@ -17,32 +20,49 @@ class SignupScreen2 extends StatefulWidget {
 class _SignupScreen2State extends State<SignupScreen2> {
   TextEditingController _emailInputController;
   TextEditingController _passwordInputController;
+  TextEditingController _confirmPasswordInputController;
+  TextEditingController _nameInputController;
+  TextEditingController _phoneNumberInputController;
 
   FirebaseAuthService authService;
   CheckRegistrationService checkRegistrationService;
 
-  GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     _emailInputController = new TextEditingController();
     _passwordInputController = new TextEditingController();
+    _confirmPasswordInputController = new TextEditingController();
+    _nameInputController = new TextEditingController();
+
+    _phoneNumberInputController = new TextEditingController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    authService = Provider.of<FirebaseAuthService>(context);
+    authService = Provider.of<FirebaseAuthService>(context
+    );
     checkRegistrationService =
-        Provider.of<CheckRegistrationService>(context, listen: false);
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+        Provider.of<CheckRegistrationService>(context, listen: false
+        );
+    double height = MediaQuery
+        .of(context
+    )
+        .size
+        .height;
+    double width = MediaQuery
+        .of(context
+    )
+        .size
+        .width;
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Form(
-          key: _loginFormKey,
+          key: _signupFormKey,
           child: Container(
             height: height,
             width: width,
@@ -82,11 +102,13 @@ class _SignupScreen2State extends State<SignupScreen2> {
                           width: width * 0.02,
                         ),
                         Image.asset('assets/images/onboarding/textlogo.png',
-                            fit: BoxFit.cover),
+                            fit: BoxFit.cover
+                        ),
                       ],
                     ),
                   ),
                 ),
+                /*
                 Positioned(
                     top: height * 0.25,
                     left: width * 0.4,
@@ -108,6 +130,7 @@ class _SignupScreen2State extends State<SignupScreen2> {
                         ),
                       ],
                     )),
+                */
                 Positioned(
                   bottom: height * 0.035,
                   child: Container(
@@ -136,43 +159,51 @@ class _SignupScreen2State extends State<SignupScreen2> {
                               Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15.0),
+                                  borderRadius: BorderRadius.circular(15.0
+                                  ),
                                 ),
                                 height: 50.0,
                                 width: 250.0,
                                 child: Center(
                                   child: TextFormField(
-                                    controller: _emailInputController,
+                                    controller: _nameInputController,
                                     decoration: InputDecoration(
                                         border: OutlineInputBorder(
                                           borderRadius:
-                                          BorderRadius.circular(15.0),
+                                          BorderRadius.circular(15.0
+                                          ),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
                                               StyleConstants.darkPurpleGrey,
-                                              width: 2.0),
+                                              width: 2.0
+                                          ),
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
                                               StyleConstants.darkPurpleGrey,
-                                              width: 1.5),
+                                              width: 1.5
+                                          ),
                                         ),
                                         hintText: 'Full Name',
                                         hintStyle: TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w600,
                                             color:
-                                            StyleConstants.darkPurpleGrey)),
+                                            StyleConstants.darkPurpleGrey
+                                        )
+                                    ),
                                   ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(height: height * 0.02,),
+
+                        SizedBox(height: height * 0.02,
+                        ),
                         Container(
                           width: 250.0,
                           child: Column(
@@ -194,7 +225,8 @@ class _SignupScreen2State extends State<SignupScreen2> {
                               Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15.0),
+                                  borderRadius: BorderRadius.circular(15.0
+                                  ),
                                 ),
                                 height: 50.0,
                                 width: 250.0,
@@ -204,26 +236,97 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                     decoration: InputDecoration(
                                         border: OutlineInputBorder(
                                           borderRadius:
-                                          BorderRadius.circular(15.0),
+                                          BorderRadius.circular(15.0
+                                          ),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
                                               StyleConstants.darkPurpleGrey,
-                                              width: 2.0),
+                                              width: 2.0
+                                          ),
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
                                               StyleConstants.darkPurpleGrey,
-                                              width: 1.5),
+                                              width: 1.5
+                                          ),
                                         ),
                                         hintText: 'Email Address',
                                         hintStyle: TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w600,
                                             color:
-                                            StyleConstants.darkPurpleGrey)),
+                                            StyleConstants.darkPurpleGrey
+                                        )
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: height * 0.02,
+                        ),
+                        Container(
+                          width: 250.0,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Phone Number',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: height * 0.01,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15.0
+                                  ),
+                                ),
+                                height: 50.0,
+                                width: 250.0,
+                                child: Center(
+                                  child: TextFormField(
+                                    controller: _phoneNumberInputController,
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(15.0
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color:
+                                              StyleConstants.darkPurpleGrey,
+                                              width: 2.0
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color:
+                                              StyleConstants.darkPurpleGrey,
+                                              width: 1.5
+                                          ),
+                                        ),
+                                        hintText: 'Phone Number',
+                                        hintStyle: TextStyle(
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.w600,
+                                            color:
+                                            StyleConstants.darkPurpleGrey
+                                        )
+                                    ),
                                   ),
                                 ),
                               ),
@@ -254,7 +357,8 @@ class _SignupScreen2State extends State<SignupScreen2> {
                               Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15.0),
+                                  borderRadius: BorderRadius.circular(15.0
+                                  ),
                                 ),
                                 height: 50.0,
                                 width: 250.0,
@@ -264,26 +368,31 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                     decoration: InputDecoration(
                                         border: OutlineInputBorder(
                                           borderRadius:
-                                          BorderRadius.circular(15.0),
+                                          BorderRadius.circular(15.0
+                                          ),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
                                               StyleConstants.darkPurpleGrey,
-                                              width: 2.0),
+                                              width: 2.0
+                                          ),
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color:
                                               StyleConstants.darkPurpleGrey,
-                                              width: 1.5),
+                                              width: 1.5
+                                          ),
                                         ),
                                         hintText: 'Password',
                                         hintStyle: TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w600,
                                             color:
-                                            StyleConstants.darkPurpleGrey)),
+                                            StyleConstants.darkPurpleGrey
+                                        )
+                                    ),
                                     obscureText: true,
                                   ),
                                 ),
@@ -291,6 +400,7 @@ class _SignupScreen2State extends State<SignupScreen2> {
                             ],
                           ),
                         ),
+
                         SizedBox(
                           height: height * 0.01,
                         ),
@@ -300,7 +410,12 @@ class _SignupScreen2State extends State<SignupScreen2> {
 
                             children: [
                               Spacer(),
-                              Text('I need help',style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600, color: StyleConstants.blue),),
+                              Text('I need help', style: TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w600,
+                                  color: StyleConstants.blue
+                              ),
+                              ),
                             ],
                           ),
                         ),
@@ -308,10 +423,9 @@ class _SignupScreen2State extends State<SignupScreen2> {
                           height: height * 0.02,
                         ),
                         GestureDetector(
-                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ConnectTagScreen2())),
-                          /*onTap: () async {
-                            signInWithForm();
-                          },*/
+                          onTap: () async {
+                            signUpWithForm();
+                          },
                           child: authService.status == Status.Unauthenticated
                               ? Container(
                             decoration:
@@ -322,7 +436,8 @@ class _SignupScreen2State extends State<SignupScreen2> {
                               child: Text(
                                 'Next',
                                 style: StyleConstants.whiteThinTitleText
-                                    .copyWith(fontSize: 25.0),
+                                    .copyWith(fontSize: 25.0
+                                ),
                               ),
                             ),
                           )
@@ -348,15 +463,18 @@ class _SignupScreen2State extends State<SignupScreen2> {
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                         width: 2.0,
-                                        color: StyleConstants.lightGrey),
-                                    shape: BoxShape.circle),
+                                        color: StyleConstants.lightGrey
+                                    ),
+                                    shape: BoxShape.circle
+                                ),
                                 child: Center(
                                   child: Text(
                                     'OR',
                                     style: TextStyle(
                                         color: StyleConstants.lightGrey,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 12.0),
+                                        fontSize: 12.0
+                                    ),
                                   ),
                                 ),
                               ),
@@ -373,144 +491,109 @@ class _SignupScreen2State extends State<SignupScreen2> {
                           height: height * 0.02,
                         ),
                         Container(
-                          height: height * 0.05,
-                          width: width * 0.6,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(20.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  offset: Offset(0, 3),
-                                  blurRadius: 6.0,
-                                ),
-                              ]
-                          ),
-                          child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 25.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    FaIcon(
-                                      FontAwesomeIcons.apple,
-                                      color: Colors.white,
-                                      size: 20.0,
+                          width: 250.0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+
+                                height: height * 0.05,
+                                width: width * 0.3,
+                                decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(20.0
                                     ),
-                                    Text(
-                                      'Continue with Apple',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
-                                ),
-                              )),
-                        ),
-                        SizedBox(
-                          height: height * 0.01,
-                        ),
-                        GestureDetector(
-                          onTap: () async {
-                            signInWithGoogle();
-                          },
-                          child: Container(
-                            height: height * 0.05,
-                            width: width * 0.6,
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(20.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  offset: Offset(0, 3),
-                                  blurRadius: 6.0,
-                                ),
-                              ]
-                            ),
-                            child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      FaIcon(
-                                        FontAwesomeIcons.google,
-                                        color: Colors.white,
-                                        size: 20.0,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2
+                                        ),
+                                        offset: Offset(0, 3
+                                        ),
+                                        blurRadius: 6.0,
                                       ),
-                                      Text(
-                                        'Continue with Google',
-                                        style: TextStyle(
+                                    ]
+                                ),
+                                child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 25.0
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          FaIcon(
+                                            FontAwesomeIcons.apple,
                                             color: Colors.white,
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w600),
+                                            size: 20.0,
+                                          ),
+                                          Text(
+                                            'Apple',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w600
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
+                                    )
+                                ),
+                              ),
+                              Spacer(),
+                              GestureDetector(
+                                onTap: () async {
+                                  signUpWithGoogle();
+                                },
+                                child: Container(
+                                  height: height * 0.05,
+                                  width: width * 0.3,
+                                  decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(20.0
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.2
+                                          ),
+                                          offset: Offset(0, 3
+                                          ),
+                                          blurRadius: 6.0,
+                                        ),
+                                      ]
                                   ),
-                                )),
+                                  child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20.0
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            FaIcon(
+                                              FontAwesomeIcons.google,
+                                              color: Colors.white,
+                                              size: 20.0,
+                                            ),
+                                            Text(
+                                              'Google',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.w600
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
 
-                        /*
-                        Row(
-                          children: [
-                            IconButton(
-                              icon: FaIcon(FontAwesomeIcons.google),
-                              color: Colors.blue,
-                              iconSize: 30.0,
-                              onPressed: () async {
-                                bool successful =
-                                await auth.signInWithGoogle();
-                                if (successful) {
-                                  bool hasAccount = await checkRegistration
-                                      .hasAccount(auth.user.uid);
-                                  if (!hasAccount) {
-                                    auth.setNeedsAccount();
-                                  }
-
-                                  _emailInputController.clear();
-                                  _passwordInputController.clear();
-                                  Navigator.pushNamedAndRemoveUntil(
-                                      context, '/', (_) => false);
-                                }
-                              },
-                            ),
-                            IconButton(
-                              icon: FaIcon(FontAwesomeIcons.apple),
-                              color: Colors.blue,
-                              iconSize: 30.0,
-                              onPressed: () => print('clicked apple'),
-                            ),
-                          ],
-                        ),*/
-
-                        /*
-                        FlatButton(
-                          child: Text('Sign in with Google'),
-                          onPressed: () async {
-                            bool successful =
-                                await auth.signInWithGoogle();
-                            if (successful) {
-                              bool hasAccount = await checkRegistration
-                                  .hasAccount(auth.user.uid);
-                              if (!hasAccount) {
-                                auth.setNeedsAccount();
-                              }
-
-                              _emailInputController.clear();
-                              _passwordInputController.clear();
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, '/', (_) => false);
-                            }
-                          },
-                        )
-                        */
                       ],
                     ),
                   ),
@@ -523,58 +606,84 @@ class _SignupScreen2State extends State<SignupScreen2> {
     );
   }
 
-  void signInWithForm() async {
-    if (_loginFormKey.currentState.validate()) {
+  void signUpWithForm() async {
+    if (_signupFormKey.currentState.validate()) {
       try {
-        final successful = await authService.signInWithEmailAndPassword(
-            _emailInputController.text, _passwordInputController.text);
+        final databaseService =
+        Provider.of<DatabaseService>(context, listen: false
+        );
 
-        if (successful) {
+        bool success = await authService.createUserWithEmailAndPassword(
+            _emailInputController.text.trim(),
+            _passwordInputController.text.trim()
+        );
+
+        if (success) {
           bool hasAccount =
-          await checkRegistrationService.hasAccount(authService.user.uid);
-          if (!hasAccount) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => StpNameAndPhoneScreen(
-                    registerPet: true,
-                  )),
+          await checkRegistrationService.hasAccount(authService.user.uid
+          );
+          if (hasAccount) {
+            Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false
             );
           } else {
-            Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ConnectTagScreen2()
+              ),
+            );
+            List nameSplit = _nameInputController.text.trim().split(" ");
+            User createdUser = await databaseService.createUser(
+                _emailInputController.text.trim(),
+                nameSplit[0],
+                nameSplit.length > 1 ? nameSplit[1] : '',
+                _phoneNumberInputController.text.trim(),
+                authService.user.uid
+            );
           }
-
-          _emailInputController.clear();
-          _passwordInputController.clear();
+          clearAllControllers();
         }
       } catch (e) {
-        print(e);
+        print(e
+        );
       }
     }
   }
 
-  void signInWithGoogle() async {
+  void signUpWithGoogle() async {
     try {
-      bool successful = await authService.signInWithGoogle();
-      if (successful) {
+      bool success = await authService.signInWithGoogle();
+
+      if (success) {
         bool hasAccount =
-        await checkRegistrationService.hasAccount(authService.user.uid);
-        if (!hasAccount) {
+        await checkRegistrationService.hasAccount(authService.user.uid
+        );
+        if (hasAccount) {
+          Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false
+          );
+        }
+        else {
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => StpNameAndPhoneScreen(
-                  registerPet: true,
-                )),
+            MaterialPageRoute(builder: (context) =>
+                StpNameAndPhoneScreen(registerPet: true,
+                )
+            ),
           );
-        } else {
-          Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
         }
-        _emailInputController.clear();
-        _passwordInputController.clear();
+        clearAllControllers();
       }
     } catch (e) {
-      print(e);
+      print(e
+      );
     }
+  }
+
+
+  void clearAllControllers() {
+    _emailInputController.clear();
+    _passwordInputController.clear();
+    _confirmPasswordInputController.clear();
+    _nameInputController.clear();
+    _phoneNumberInputController.clear();
   }
 }
