@@ -20,6 +20,10 @@ class NearbyParksService {
   }
 
   Future<List<NearbyPark>> getNearbyParks(LatLng location, double zoom) async {
+    if (apiKey == null) {
+      apiKey = await FlutterSecureStorage().read(key: 'google_maps_key');
+    }
+
     String baseUrl =
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
     String locationString = '${location.latitude},${location.longitude}';
@@ -35,6 +39,13 @@ class NearbyParksService {
     Response response = await Dio().get(request);
 
     final results = response.data['results'];
+
+    print(request);
+    print(results);
+    print('latitude: ' +
+        location.latitude.toString() +
+        ' longitude: ' +
+        location.longitude.toString());
 
     List<NearbyPark> nearbyParks = new List<NearbyPark>();
 

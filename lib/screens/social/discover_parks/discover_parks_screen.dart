@@ -31,7 +31,6 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
   Completer<GoogleMapController> _controller = Completer();
   PanelController _panelController;
 
-  bool firstLoad = true;
   bool _cameraMoved = false;
 
   NearbyPark _selectedPark;
@@ -53,18 +52,13 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
 
     _nearbyParksProvider = Provider.of<NearbyParksProvider>(context);
 
-    if (currentLocationProvider.currentLocation != null && firstLoad) {
+    if (currentLocationProvider.currentLocation != null) {
       _cameraPosition = CameraPosition(
           target: LatLng(
             currentLocationProvider.currentLocation.latitude,
             currentLocationProvider.currentLocation.longitude,
           ),
           zoom: 14.0);
-      _nearbyParksProvider.getNearbyParks(
-          LatLng(currentLocationProvider.currentLocation.latitude,
-              currentLocationProvider.currentLocation.longitude),
-          14.0);
-      firstLoad = false;
     }
 
     BorderRadiusGeometry topRoundedRadius = BorderRadius.only(

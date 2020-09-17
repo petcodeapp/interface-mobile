@@ -84,28 +84,28 @@ class PetService extends ChangeNotifier {
           }
         }
       }
-      if (_allPets[i].vaccinations != null) {
-        for (int j = 0; j < _allPets[i].vaccinations.length; j++) {
-          Vaccination currentVaccination = _allPets[i].vaccinations[j];
-          if (currentVaccination.name == null ||
-              currentVaccination.name.trim().isEmpty) {
-            currentVaccination.name = 'Untitled';
-          }
-          if (currentVaccination.date != null) {
-            UpcomingEvent upcomingEvent = UpcomingEvent(
-                name: currentVaccination.name,
-                petName: _allPets[i].name,
-                date: currentVaccination.date);
-            allUpcomingEvents.add(upcomingEvent);
-          } else {
-            UpcomingEvent upcomingEvent = UpcomingEvent(
-              name: currentVaccination.name,
-              petName: _allPets[i].name,
-            );
-            allUpcomingEventsNoDate.add(upcomingEvent);
-          }
-        }
-      }
+      // if (_allPets[i].vaccinations != null) {
+      //   for (int j = 0; j < _allPets[i].vaccinations.length; j++) {
+      //     Vaccination currentVaccination = _allPets[i].vaccinations[j];
+      //     if (currentVaccination.name == null ||
+      //         currentVaccination.name.trim().isEmpty) {
+      //       currentVaccination.name = 'Untitled';
+      //     }
+      //     if (currentVaccination.date != null) {
+      //       UpcomingEvent upcomingEvent = UpcomingEvent(
+      //           name: currentVaccination.name,
+      //           petName: _allPets[i].name,
+      //           date: currentVaccination.date);
+      //       allUpcomingEvents.add(upcomingEvent);
+      //     } else {
+      //       UpcomingEvent upcomingEvent = UpcomingEvent(
+      //         name: currentVaccination.name,
+      //         petName: _allPets[i].name,
+      //       );
+      //       allUpcomingEventsNoDate.add(upcomingEvent);
+      //     }
+      //   }
+      // }
     }
     allUpcomingEvents
         .sort((UpcomingEvent upcomingEventA, UpcomingEvent upcomingEventB) {

@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
@@ -112,14 +113,25 @@ class MyApp extends StatelessWidget {
                 return currentLocationProvider..getCurrentLocation();
               }
             }),
-        ChangeNotifierProxyProvider<FirebaseAuthService, NearbyParksProvider>(
+        ChangeNotifierProxyProvider2<FirebaseAuthService,
+                CurrentLocationProvider, NearbyParksProvider>(
             create: (_) => NearbyParksProvider(),
-            update: (BuildContext context, FirebaseAuthService authService,
+            update: (BuildContext context,
+                FirebaseAuthService authService,
+                CurrentLocationProvider currentLocationProvider,
                 NearbyParksProvider nearbyParksProvider) {
               if (authService.user == null) {
                 return nearbyParksProvider..clear();
+              } else if (currentLocationProvider.currentLocation != null) {
+                print('set up new provider');
+                return nearbyParksProvider
+                  ..setUpProvider()
+                  ..getNearbyParks(
+                      LatLng(currentLocationProvider.currentLocation.latitude,
+                          currentLocationProvider.currentLocation.longitude),
+                      14.0);
               } else {
-                return nearbyParksProvider..setUpProvider();
+                return nearbyParksProvider;
               }
             }),
       ],
