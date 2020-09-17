@@ -1,11 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/screens/setup_tag/stp_contactinfo_screen.dart';
+import 'package:petcode_app/screens/stp_contactinfo_screen.dart';
+import 'package:petcode_app/screens/stp_nameandphone_screen.dart';
+import 'package:petcode_app/services/check_registration_service.dart';
+import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
 
 class StpConnectTagScreen extends StatefulWidget {
   @override
@@ -14,7 +21,7 @@ class StpConnectTagScreen extends StatefulWidget {
 
 class _StpConnectTagScreenState extends State<StpConnectTagScreen> {
   StreamController<ErrorAnimationType> errorController =
-      StreamController<ErrorAnimationType>();
+  StreamController<ErrorAnimationType>();
   TextEditingController textEditingController = TextEditingController();
   String currentText = "";
   final formKey = GlobalKey<FormState>();
@@ -25,147 +32,227 @@ class _StpConnectTagScreenState extends State<StpConnectTagScreen> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: StyleConstants.blue,
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Container(
-          width: width,
-          height: height,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: height * 0.05,
-              ),
-              Container(
-                height: 70.0,
-                width: 200.0,
-                child: Image.asset(
-                  'assets/images/logoyellow.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(
-                height: height * 0.05,
-              ),
-              Text(
-                'Step 1: Connect Tag',
-                style: StyleConstants.whiteTitleText,
-              ),
-              SizedBox(
-                height: height * 0.07,
-              ),
-              Text(
-                'Enter your 6 digit PetCode',
-                style: StyleConstants.whiteTitleTextSmall,
-              ),
-              SizedBox(
-                height: height * 0.05,
-              ),
-              Form(
-                key: formKey,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: PinCodeTextField(
-                    length: 6,
-                    obsecureText: false,
-                    animationType: AnimationType.fade,
-                    pinTheme: PinTheme(
-                      shape: PinCodeFieldShape.box,
-                      borderRadius: BorderRadius.circular(5),
-                      //borderWidth: 0,
-                      fieldHeight: 50,
-                      fieldWidth: 40,
-                      activeFillColor: Colors.white,
-                      inactiveFillColor: Colors.white,
-                      selectedFillColor: StyleConstants.yellow,
-
-                      activeColor: Colors.white,
-                      selectedColor: StyleConstants.yellow,
-                      inactiveColor: Colors.white,
-                      disabledColor: Colors.white,
-                    ),
-                    animationDuration: Duration(milliseconds: 300),
-                    backgroundColor: Colors.transparent,
-                    enableActiveFill: true,
-                    errorAnimationController: errorController,
-                    controller: textEditingController,
-                    onCompleted: (v) {
-                      print("Completed");
-                      setState(() {
-                        currentText = v;
-                      });
-                    },
-                    onChanged: (value) {
-                      print(value);
-                      setState(() {
-                        currentText = value;
-                      });
-                    },
-                    beforeTextPaste: (text) {
-                      print("Allowing to paste $text");
-                      return true;
-                    },
-                    validator: (value) => ValidatorHelper.petIdValidator(value),
+        child: Form(
+          key: formKey,
+          child: Container(
+            height: height,
+            width: width,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Image.asset(
+                    'assets/images/onboarding/topleftcircles.png',
+                    width: width,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: height * 0.03,
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: width * 0.23,
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Image.asset(
+                    'assets/images/onboarding/bottomrightcircles.png',
+                    width: width,
                   ),
-                  Container(
-                    height: 175.0,
-                    width: 250.0,
-                    child: Image.asset('assets/images/tagwpointer.png'),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.03,
-              ),
-              Text(
-                'Need Help?',
-                style: StyleConstants.whiteTitleTextSmall,
-              ),
-              SizedBox(
-                height: height * 0.05,
-              ),
-              GestureDetector(
-                onTap: () {
-                  print('TAPPED: ' + currentText);
-                  if (formKey.currentState.validate()) {
-                    errorController.close();
-                    Pet createdPet = new Pet(pid: currentText);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => StpContactScreen(
-                                  pet: createdPet,
-                                )));
-                  } else {
-                    errorController.add(ErrorAnimationType.shake);
-                  }
-                },
-                child: Container(
-                  height: 55.0,
-                  width: 250.0,
-                  decoration: StyleConstants.roundYellowButtonDeco,
-                  child: Center(
-                    child: Text(
-                      'Next Step',
-                      style: StyleConstants.whiteButtonText,
+                ),
+                Positioned(
+                  top: height * 0.1,
+                  child: Container(
+                    width: width * 0.7,
+                    height: height * 0.15,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/onboarding/pawlogohighres.png',
+                          fit: BoxFit.cover,
+                          width: width * 0.15,
+                        ),
+                        SizedBox(
+                          width: width * 0.02,
+                        ),
+                        Image.asset('assets/images/onboarding/textlogo.png',
+                            fit: BoxFit.cover),
+                      ],
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-            ],
+                Positioned(
+                    top: height * 0.25,
+                    left: width * 0.35,
+                    child: Column(
+                      children: [
+                        Text(
+                          'Welcome to the',
+                          style: TextStyle(
+                              color: StyleConstants.blue,
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'PetCode Network',
+                          style: TextStyle(
+                              color: StyleConstants.blue,
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    )),
+                Positioned(
+                  bottom: height * 0.25,
+                  child: Container(
+                    width: width * 0.7,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
+                        Container(
+                          width: 250.0,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Let's get started by getting",
+                                style: StyleConstants.blackThinTitleTextSmall
+                                    .copyWith(
+                                    color: StyleConstants.darkPurpleGrey,
+                                    fontSize: 18.0),
+                              ),
+                              Text(
+                                "your 6 Digit PetCode ID",
+                                style: StyleConstants.blackThinTitleTextSmall
+                                    .copyWith(
+                                    color: StyleConstants.darkPurpleGrey,
+                                    fontSize: 18.0),
+                              ),
+                              SizedBox(
+                                height: height * 0.04,
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'PetCode ID',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: height * 0.01,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                height: 50.0,
+                                width: 250.0,
+                                child: Center(
+                                  child: TextFormField(
+                                    controller: textEditingController,
+                                    onChanged: (value) {
+                                      print(value);
+                                      setState(() {
+                                        currentText = value;
+                                      });
+                                    },
+                                    validator: (value) =>
+                                        ValidatorHelper.petIdValidator(value),
+                                    decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(15.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color:
+                                              StyleConstants.darkPurpleGrey,
+                                              width: 2.0),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color:
+                                              StyleConstants.darkPurpleGrey,
+                                              width: 1.5),
+                                        ),
+                                        hintText: 'PetCode ID',
+                                        hintStyle: TextStyle(
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.w600,
+                                            color:
+                                            StyleConstants.darkPurpleGrey)),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
+                        Container(
+                          width: 250.0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'I don\'t have an ID',
+                                style: TextStyle(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w600,
+                                    color: StyleConstants.blue),
+                              ),
+                              Text(
+                                'What\'s this?',
+                                style: TextStyle(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w600,
+                                    color: StyleConstants.blue),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: height * 0.05,
+                        ),
+                        GestureDetector(
+                            onTap: () {
+                              print('TAPPED: ' + currentText);
+                              if (formKey.currentState.validate()) {
+                                errorController.close();
+                                Pet createdPet = new Pet(pid: currentText);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => StpContactScreen(
+                                          pet: createdPet,
+                                        )));
+                              }
+                            },
+                            child: Container(
+                              decoration: StyleConstants.roundYellowButtonDeco,
+                              width: 250,
+                              height: height * 0.06,
+                              child: Center(
+                                child: Text(
+                                  'Next',
+                                  style: StyleConstants.whiteThinTitleText
+                                      .copyWith(fontSize: 25.0),
+                                ),
+                              ),
+                            )),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

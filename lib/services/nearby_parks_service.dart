@@ -28,7 +28,7 @@ class NearbyParksService {
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
     String locationString = '${location.latitude},${location.longitude}';
     String radius =
-        (min(6081740800 / (256 * pow(2, zoom).toDouble()), 50000)).toString();
+    (min(6081740800 / (256 * pow(2, zoom).toDouble()), 50000)).toString();
 
     print('radius: ' + radius);
     String keyword = 'dog park';
