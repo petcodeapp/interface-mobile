@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -12,21 +12,21 @@ class UserId {
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
 class FirebaseAuthService extends ChangeNotifier {
-  FirebaseAuth _firebaseAuth;
-  FirebaseUser _firebaseUser;
+  auth.FirebaseAuth _firebaseAuth;
+  auth.User  _firebaseUser;
   GoogleSignIn _googleSignIn;
 
   Status _status = Status.Uninitialized;
 
   FirebaseAuthService() {
-    _firebaseAuth = FirebaseAuth.instance;
-    _firebaseAuth.onAuthStateChanged.listen(_onAuthStateChanged);
+    _firebaseAuth = auth.FirebaseAuth.instance;
+    _firebaseAuth.authStateChanges().listen(_onAuthStateChanged);
     _googleSignIn = new GoogleSignIn();
   }
 
   Status get status => _status;
 
-  FirebaseUser get user => _firebaseUser;
+  auth.User get user => _firebaseUser;
 
   Future<bool> signInWithEmailAndPassword(String email, String password) async {
     try {
@@ -64,12 +64,12 @@ class FirebaseAuthService extends ChangeNotifier {
     try {
       GoogleSignInAccount account = await _googleSignIn.signIn();
       GoogleSignInAuthentication authentication = await account.authentication;
-      AuthCredential credential = GoogleAuthProvider.getCredential(
+      auth.AuthCredential credential = auth.GoogleAuthProvider.credential(
           idToken: authentication.idToken,
           accessToken: authentication.accessToken);
 
       print(account.displayName);
-      AuthResult authResult =
+      auth.UserCredential authResult =
           await _firebaseAuth.signInWithCredential(credential);
       return true;
     } catch (e) {
@@ -78,7 +78,7 @@ class FirebaseAuthService extends ChangeNotifier {
     }
   }
 
-  Future<void> _onAuthStateChanged(FirebaseUser firebaseUser) async {
+  Future<void> _onAuthStateChanged(auth.User firebaseUser) async {
     if (firebaseUser == null) {
       _status = Status.Unauthenticated;
     } else {

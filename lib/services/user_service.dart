@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:petcode_app/models/User.dart';
 
 class UserService extends ChangeNotifier {
-  Firestore _firestore = Firestore.instance;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   String _uid;
   User _currentUser;
@@ -32,7 +32,7 @@ class UserService extends ChangeNotifier {
   void startUserStream() {
     _userStream = _firestore
         .collection('users')
-        .document(_uid)
+        .doc(_uid)
         .snapshots()
         .listen((DocumentSnapshot snapshot) {
       if (snapshot.data != null) {

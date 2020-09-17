@@ -11,15 +11,12 @@ class NearbyParksProvider extends ChangeNotifier {
 
   List<NearbyPark> get nearbyParks => _nearbyParks;
 
-  Set<Marker> get nearbyParkMarkers => _nearbyParkMarkers;
-
   setUpProvider() {
     _nearbyParksService = new NearbyParksService();
   }
 
-  void getNearbyParks(LatLng location) async {
-    _nearbyParks = await _nearbyParksService.getNearbyParks(location);
-    _nearbyParkMarkers = _nearbyParksService.nearbyParksToMarkers(_nearbyParks);
+  void getNearbyParks(LatLng location, double zoom) async {
+    _nearbyParks = await _nearbyParksService.getNearbyParks(location, zoom);
     notifyListeners();
   }
 

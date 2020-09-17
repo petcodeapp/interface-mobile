@@ -24,7 +24,7 @@ class ScansProvider extends ChangeNotifier {
   }
 
   void clear() {
-    _allScans.clear();
     _allScans = null;
+    _mapMarkers = null;
   }
 }

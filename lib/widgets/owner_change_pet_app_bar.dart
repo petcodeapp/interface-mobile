@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
+import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
-class OwnerChangePetAppBar extends StatefulWidget implements PreferredSizeWidget {
-  OwnerChangePetAppBar({Key key, this.actions}) : super(key: key);
+class OwnerChangePetAppBar extends StatefulWidget
+    implements PreferredSizeWidget {
+  OwnerChangePetAppBar({Key key, this.customBack, this.actions})
+      : super(key: key);
+  final bool customBack;
   final List<Widget> actions;
 
   @override
@@ -25,7 +29,7 @@ class _OwnerChangePetAppBarState extends State<OwnerChangePetAppBar> {
     _currentPetProvider = Provider.of<CurrentPetProvider>(context);
     _petService = Provider.of<PetService>(context);
     List<DropdownMenuItem<Pet>> dropdownMenuItems =
-    new List<DropdownMenuItem<Pet>>();
+        new List<DropdownMenuItem<Pet>>();
     for (int i = 0; i < _petService.allPets.length; i++) {
       print(_petService.allPets[i].pid);
       dropdownMenuItems.add(
@@ -48,13 +52,19 @@ class _OwnerChangePetAppBarState extends State<OwnerChangePetAppBar> {
           bottom: Radius.circular(20),
         ),
       ),
-      /*
-      shape: ContinuousRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0),
-        )
-      ),
-      */
+      leading: widget.customBack != null && widget.customBack
+          ? IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                } else {
+                  Provider.of<NotificationsProvider>(context, listen: false)
+                      .clear();
+                  Navigator.popAndPushNamed(context, '/');
+                }
+              })
+          : null,
       title: new Theme(
         child: new DropdownButtonHideUnderline(
           child: new DropdownButton<Pet>(

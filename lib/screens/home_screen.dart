@@ -4,6 +4,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
+import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/screens/medical_info_screen.dart';
 import 'package:petcode_app/screens/owner_info_screen.dart';
 import 'package:petcode_app/screens/pet_info_screen.dart';
@@ -12,10 +13,9 @@ import 'package:petcode_app/screens/reminders_screen.dart';
 import 'package:petcode_app/screens/stp_start_screen.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
-import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/widgets/circular_check_box.dart';
-import 'package:intl/intl.dart';
+import 'package:petcode_app/widgets/glowing_reminder_widget.dart';
+import 'package:petcode_app/widgets/reminder_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -34,8 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   CarouselController _carouselController;
 
-  bool _value = false;
-
   int pageIndex = 0;
 
   @override
@@ -50,6 +48,14 @@ class _HomeScreenState extends State<HomeScreen> {
     double height = MediaQuery.of(context).size.height;
 
     _currentPetProvider = Provider.of<CurrentPetProvider>(context);
+
+    NotificationsProvider notificationsProvider =
+        Provider.of<NotificationsProvider>(context);
+
+    int reminderIndex = -1;
+    if (notificationsProvider.currentPayload == 'reminder expired') {
+      reminderIndex = notificationsProvider.index;
+    }
 
     petService = Provider.of<PetService>(context);
 
@@ -89,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
           centerTitle: true,
           backgroundColor: StyleConstants.blue,
           title: Container(
-            //color: Colors.white,
+              //color: Colors.white,
               height: 75,
               //width: 200,
               child: Image.asset(
@@ -138,24 +144,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 8.0, right: 8.0, bottom: 8.0),
+                          padding: const EdgeInsets.only(
+                              top: 8.0, right: 8.0, bottom: 8.0),
                           child: Container(
                               height: 200.0,
                               width: width * 0.9,
-
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(20.0),
-                                    bottomRight: Radius.circular(20.0)),
-                                boxShadow: [
-                                  BoxShadow(
-                                    //color: StyleConstants.blue.withOpacity(0.3),
-                                    color: Colors.black.withOpacity(0.3),
-                                    blurRadius: 4,
-                                    offset: Offset(0,3),
-                                  ),
-                                ]
-                              ),
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(20.0),
+                                      bottomRight: Radius.circular(20.0)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      //color: StyleConstants.blue.withOpacity(0.3),
+                                      color: Colors.black.withOpacity(0.3),
+                                      blurRadius: 4,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ]),
                               //color: Colors.blue,
                               child: Stack(
                                 children: [
@@ -171,10 +176,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(20.0),
-                                              bottomRight: Radius.circular(20.0)),
+                                              bottomRight:
+                                                  Radius.circular(20.0)),
                                         ),
                                         child: Image(
-                                          image: petService.allPets[index].petImage,
+                                          image: petService
+                                              .allPets[index].petImage,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -195,20 +202,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: Padding(
                                           padding: EdgeInsets.only(
                                               left: width * 0.05,
-                                            right: width * 0.1
-                                          ),
+                                              right: width * 0.1),
                                           child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    petService.allPets[index].name,
+                                                    petService
+                                                        .allPets[index].name,
                                                     style: StyleConstants
                                                         .whiteThinTitleTextLarge,
                                                   ),
@@ -216,17 +225,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     height: 2.0,
                                                   ),
                                                   Text(
-                                                    petService.allPets[index].breed,
+                                                    petService
+                                                        .allPets[index].breed,
                                                     style: StyleConstants
                                                         .whiteThinTitleTextSmall,
                                                   ),
                                                 ],
                                               ),
-
                                               Container(
                                                 //color: Colors.blue,
                                                 child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
                                                   children: [
                                                     IconButton(
                                                         icon: Icon(
@@ -235,11 +245,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           color: Colors.white,
                                                         ),
                                                         onPressed: () {}),
-                                                    SizedBox(height: 18.0,),
+                                                    SizedBox(
+                                                      height: 18.0,
+                                                    ),
                                                   ],
                                                 ),
                                               ),
-
                                             ],
                                           ),
                                         ),
@@ -387,19 +398,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignment: Alignment.centerRight,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: StyleConstants.blue,
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), bottomLeft: Radius.circular(20.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 6,
-                          offset: Offset(0,3)
-                        ),
-                      ]
-                    ),
+                        color: StyleConstants.blue,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20.0),
+                            bottomLeft: Radius.circular(20.0)),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 6,
+                              offset: Offset(0, 3)),
+                        ]),
                     width: width * 0.95,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal:10.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Row(
                         children: [
                           Column(
@@ -410,13 +421,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               SizedBox(
                                 height: 5.0,
                               ),
-                                Padding(
-                                padding: const EdgeInsets.only(left: 10.0, top: 10.0, bottom: 10.0),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 10.0, top: 10.0, bottom: 10.0),
                                 child: Container(
                                   width: width - width * 0.07 - 30,
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       GestureDetector(
                                         onTap: () {
@@ -437,8 +449,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               HeroIcons.icon_heart,
 
                                               size: 25.0,
-                                              color:
-                                              Colors.white,
+                                              color: Colors.white,
                                             ),
                                             SizedBox(
                                               height: height * 0.005,
@@ -466,8 +477,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               //Icons.person,
                                               HeroIcons.icon_call,
                                               size: 25.0,
-                                              color:
-                                              Colors.white,
+                                              color: Colors.white,
                                             ),
                                             SizedBox(
                                               height: height * 0.005,
@@ -494,8 +504,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               //Icons.today,
                                               HeroIcons.icon_notification,
                                               size: 25.0,
-                                              color:
-                                              Colors.white,
+                                              color: Colors.white,
                                             ),
                                             SizedBox(
                                               height: height * 0.005,
@@ -523,8 +532,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               //Icons.assignment,
                                               HeroIcons.icon_clipboard,
                                               size: 25.0,
-                                              color:
-                                              Colors.white,
+                                              color: Colors.white,
                                             ),
                                             SizedBox(
                                               height: height * 0.005,
@@ -565,7 +573,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         height: height * 0.04,
                       ),
-
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Text(
@@ -577,101 +584,33 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: height * 0.02,
                       ),
                       ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: _allPetUpcomingEvents.length,
-                          itemBuilder: (context, index) {
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: _allPetUpcomingEvents.length,
+                        itemBuilder: (context, index) {
+                          if (index == reminderIndex) {
                             return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
-                                        blurRadius: 5,
-                                        offset: Offset(0, 3),
-                                      ),
-                                    ],
-                                    borderRadius: BorderRadius.circular(15.0)),
-                                height: height * 0.1,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      CircularCheckBox(
-                                        value: _value,
-                                        onChanged: (bool value) {
-                                          setState(() {
-                                            _value = value;
-                                          });
-                                        },
-                                        activeColor: StyleConstants.yellow,
-                                      ),
-                                      Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            _allPetUpcomingEvents[index].name,
-                                            overflow: TextOverflow.ellipsis,
-                                            softWrap: false,
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          _allPetUpcomingEvents[index].date != null
-                                              ? Text(
-                                            StringHelper.getDateString(
-                                                _allPetUpcomingEvents[index]
-                                                    .date
-                                                    .toDate()
-                                            ) + ' at ' + DateFormat.jm().format(_allPetUpcomingEvents[index].date.toDate())
-                                            ,
-                                            overflow: TextOverflow.ellipsis,
-                                          )
-                                              : Text(
-                                            'No date given',
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          /*
-                                          Text(
-                                            _allPetUpcomingEvents[index]
-                                                .petName,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                          */
-                                        ],
-                                      ),
-                                      /*
-                                      Flexible(
-                                          fit: FlexFit.tight,
-                                          child: SizedBox()),
-                                      _allPetUpcomingEvents[index].date != null
-                                          ? Text(
-                                              StringHelper.getDateString(
-                                                  _allPetUpcomingEvents[index]
-                                                      .date
-                                                      .toDate()),
-                                              overflow: TextOverflow.ellipsis,
-                                            )
-                                          : Text(
-                                              'No date given',
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                      */
-                                    ],
-                                  ),
-                                ),
+                              padding: EdgeInsets.all(8.0),
+                              child: GlowingReminderWidget(
+                                completed: false,
+                                name: _allPetUpcomingEvents[index].name,
+                                date:
+                                    _allPetUpcomingEvents[index].date.toDate(),
                               ),
                             );
-                          })
+                          } else {
+                            return Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: ReminderWidget(
+                                completed: false,
+                                name: _allPetUpcomingEvents[index].name,
+                                date:
+                                    _allPetUpcomingEvents[index].date.toDate(),
+                              ),
+                            );
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -732,70 +671,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  imageSlider(int index) {
-    return AnimatedBuilder(
-      builder: (context, widget) {
-        double value = 1;
-        /*
-        if (_mainPageController.position.haveDimensions) {
-          value = _mainPageController.page - index;
-          value = (1 - (value.abs() * 0.3)).clamp(0.0, 1.0);
-        }*/
-
-        return Center(
-          child: SizedBox(
-            height: 500.0,
-            width: 400.0,
-            //height: Curves.easeInOut.transform(value) * 200.0,
-            //width: Curves.easeInOut.transform(value) * 350.0,
-            child: widget,
-          ),
-        );
-      },
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Positioned(
-            child: Container(
-              height: 500.0,
-              width: 300.0,
-              color: Colors.blue,
-            ),
-          ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: Container(
-              width: 300.0,
-              height: 400.0,
-              decoration: BoxDecoration(
-                color: StyleConstants.lightGrey,
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(petService.allPets[index].name),
-                  Text(petService.allPets[index].breed),
-                ],
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              height: 175.0,
-              width: 250.0,
-              child: Image(
-                image: petService.allPets[index].petImage,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
