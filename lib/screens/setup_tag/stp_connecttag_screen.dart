@@ -1,18 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/button_list.dart';
-import 'package:flutter_signin_button/button_view.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/screens/stp_contactinfo_screen.dart';
-import 'package:petcode_app/screens/stp_nameandphone_screen.dart';
-import 'package:petcode_app/services/check_registration_service.dart';
-import 'package:petcode_app/services/firebase_auth_service.dart';
+import 'package:petcode_app/screens/setup_tag/stp_contactinfo_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:provider/provider.dart';
 
 class StpConnectTagScreen extends StatefulWidget {
   @override

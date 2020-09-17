@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -28,7 +27,6 @@ void main() async {
   SetUpKeys().createKeys();
 
   await Firebase.initializeApp();
-  FirebaseAuth.instance.signOut();
 
   runApp(MyApp());
 }
@@ -61,9 +59,10 @@ class MyApp extends StatelessWidget {
           update: (BuildContext context, FirebaseAuthService authService,
               UserService userService) {
             if (authService.user == null) {
+              print('clear');
               return userService..clearUid();
             } else {
-              print(authService.user.uid);
+              print('set up user service');
               return userService..setUid(authService.user.uid);
             }
           },

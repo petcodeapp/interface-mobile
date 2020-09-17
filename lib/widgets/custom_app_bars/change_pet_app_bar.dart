@@ -47,8 +47,9 @@ class _ChangePetAppBarState extends State<ChangePetAppBar> {
       elevation: 6.0,
       shape: widget.shape ??
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(20),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(16.0),
+              bottomRight: Radius.circular(16.0),
             ),
           ),
       leading: widget.customBack != null && widget.customBack

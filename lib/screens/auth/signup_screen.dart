@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/button_list.dart';
-import 'package:flutter_signin_button/button_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/models/User.dart';
-import 'package:petcode_app/screens/stp_connecttag_screen.dart';
-import 'package:petcode_app/screens/stp_nameandphone_screen.dart';
-import 'package:petcode_app/screens/stp_start_screen.dart';
+import 'package:petcode_app/screens/setup_tag/stp_connecttag_screen.dart';
+import 'package:petcode_app/screens/setup_tag/stp_nameandphone_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';

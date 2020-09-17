@@ -9,7 +9,7 @@ import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/utils/map_constants.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/widgets/owner_change_pet_app_bar.dart';
+import 'package:petcode_app/widgets/custom_app_bars/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -49,7 +49,7 @@ class _ScansScreenState extends State<ScansScreen> {
     }
 
     return Scaffold(
-      appBar: OwnerChangePetAppBar(),
+      appBar: ChangePetAppBar(),
       body: SlidingUpPanel(
           borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
           backdropColor: StyleConstants.pageBackgroundColor,
@@ -71,7 +71,7 @@ class _ScansScreenState extends State<ScansScreen> {
                       height: _height * 0.01,
                     ),
                     Text(
-                      'Teddy\'s Scan Locations',
+                      'Scan Locations',
                       style: StyleConstants.blackThinTitleTextSmall,
                     ),
                   ],
