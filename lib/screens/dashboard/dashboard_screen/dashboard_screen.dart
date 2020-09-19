@@ -17,6 +17,7 @@ class DashboardScreen extends StatelessWidget {
     PetService petService = Provider.of<PetService>(context);
 
     petService = Provider.of<PetService>(context);
+    print(petService.providerState);
 
     if (petService.allPets == null) {
       return Scaffold(

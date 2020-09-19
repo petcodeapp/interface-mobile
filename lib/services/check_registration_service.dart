@@ -6,7 +6,7 @@ class CheckRegistrationService {
   Future<bool> hasAccount(String uid) async {
     DocumentSnapshot userSnapshot =
         await _firestore.collection('users').doc(uid).get();
-
+    print(userSnapshot);
     if (userSnapshot.data == null) {
       print('hasAccount: false ' + userSnapshot.data.toString());
       return false;

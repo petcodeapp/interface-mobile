@@ -225,10 +225,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         Container(
                           width: 250.0,
                           child: Row(
-
                             children: [
                               Spacer(),
-                              Text('Forgot Password',style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600, color: StyleConstants.blue),),
+                              Text(
+                                'Forgot Password',
+                                style: TextStyle(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w600,
+                                    color: StyleConstants.blue),
+                              ),
                             ],
                           ),
                         ),
@@ -305,20 +310,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-
                                 height: height * 0.05,
                                 width: width * 0.3,
                                 decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(20.0),
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(20.0),
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black.withOpacity(0.2),
                                         offset: Offset(0, 3),
                                         blurRadius: 6.0,
                                       ),
-                                    ]
-                                ),
+                                    ]),
                                 child: Center(
                                     child: Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -352,16 +355,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                   height: height * 0.05,
                                   width: width * 0.3,
                                   decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(20.0),
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(20.0),
                                       boxShadow: [
                                         BoxShadow(
                                           color: Colors.black.withOpacity(0.2),
                                           offset: Offset(0, 3),
                                           blurRadius: 6.0,
                                         ),
-                                      ]
-                                  ),
+                                      ]),
                                   child: Center(
                                       child: Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -390,60 +392,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                         ),
-                        /*
-                        Row(
-                          children: [
-                            IconButton(
-                              icon: FaIcon(FontAwesomeIcons.google),
-                              color: Colors.blue,
-                              iconSize: 30.0,
-                              onPressed: () async {
-                                bool successful =
-                                await auth.signInWithGoogle();
-                                if (successful) {
-                                  bool hasAccount = await checkRegistration
-                                      .hasAccount(auth.user.uid);
-                                  if (!hasAccount) {
-                                    auth.setNeedsAccount();
-                                  }
-
-                                  _emailInputController.clear();
-                                  _passwordInputController.clear();
-                                  Navigator.pushNamedAndRemoveUntil(
-                                      context, '/', (_) => false);
-                                }
-                              },
-                            ),
-                            IconButton(
-                              icon: FaIcon(FontAwesomeIcons.apple),
-                              color: Colors.blue,
-                              iconSize: 30.0,
-                              onPressed: () => print('clicked apple'),
-                            ),
-                          ],
-                        ),*/
-
-                        /*
-                        FlatButton(
-                          child: Text('Sign in with Google'),
-                          onPressed: () async {
-                            bool successful =
-                                await auth.signInWithGoogle();
-                            if (successful) {
-                              bool hasAccount = await checkRegistration
-                                  .hasAccount(auth.user.uid);
-                              if (!hasAccount) {
-                                auth.setNeedsAccount();
-                              }
-
-                              _emailInputController.clear();
-                              _passwordInputController.clear();
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, '/', (_) => false);
-                            }
-                          },
-                        )
-                        */
                       ],
                     ),
                   ),

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
-import 'package:petcode_app/models/Vaccination.dart';
 import 'package:petcode_app/providers/provider_state.dart';
 
 class PetService extends ChangeNotifier {
@@ -55,6 +54,10 @@ class PetService extends ChangeNotifier {
         _providerState = ProviderState.Idle;
         notifyListeners();
       });
+    }
+    else {
+      _providerState = ProviderState.Idle;
+      notifyListeners();
     }
   }
 

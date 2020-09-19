@@ -16,9 +16,11 @@ class AccountScreen extends StatelessWidget {
 
     PetService petService = Provider.of<PetService>(context);
     int numScans = 0;
-    for (int i = 0; i < petService.allPets.length; i++) {
-      if (petService.allPets[i].scans != null) {
-        numScans += petService.allPets[i].scans.length;
+    if (petService.allPets != null) {
+      for (int i = 0; i < petService.allPets.length; i++) {
+        if (petService.allPets[i].scans != null) {
+          numScans += petService.allPets[i].scans.length;
+        }
       }
     }
 
@@ -59,7 +61,7 @@ class AccountScreen extends StatelessWidget {
                       radius: 75.0,
                       backgroundImage: petService.allPets.length > 0
                           ? petService.allPets[0].petImage
-                          : null,
+                          : AssetImage('assets/images/puppyphoto.jpg'),
                     ),
                     SizedBox(
                       height: height * 0.02,
