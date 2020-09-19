@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/User.dart';
+import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/screens/setup_tag/stp_start_screen.dart';
 import 'package:petcode_app/screens/account/account_info/account_editing_screen.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
@@ -14,12 +15,12 @@ class AccountScreen extends StatelessWidget {
     UserService userService = Provider.of<UserService>(context);
     User user = userService.currentUser;
 
-    PetService petService = Provider.of<PetService>(context);
+    AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
     int numScans = 0;
-    if (petService.allPets != null) {
-      for (int i = 0; i < petService.allPets.length; i++) {
-        if (petService.allPets[i].scans != null) {
-          numScans += petService.allPets[i].scans.length;
+    if (allPetsProvider.allPets != null) {
+      for (int i = 0; i < allPetsProvider.allPets.length; i++) {
+        if (allPetsProvider.allPets[i].scans != null) {
+          numScans += allPetsProvider.allPets[i].scans.length;
         }
       }
     }
@@ -62,8 +63,8 @@ class AccountScreen extends StatelessWidget {
                     CircleAvatar(
                       backgroundColor: Colors.transparent,
                       radius: 75.0,
-                      backgroundImage: petService.allPets.length > 0
-                          ? petService.allPets[0].petImage
+                      backgroundImage: allPetsProvider.allPets.length > 0
+                          ? allPetsProvider.allPets[0].petImage
                           : AssetImage('assets/images/puppyphoto.jpg'),
                     ),
                     SizedBox(

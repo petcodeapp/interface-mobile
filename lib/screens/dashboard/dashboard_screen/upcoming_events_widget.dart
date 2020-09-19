@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
+import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/glowing_reminder_widget.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/reminder_widget.dart';
@@ -12,10 +13,8 @@ class UpcomingEventsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
 
-
-    PetService petService = Provider.of<PetService>(context);
-
-    List<UpcomingEvent> allPetUpcomingEvents = petService.getAllPetMedication();
+    AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
+    List<UpcomingEvent> allPetUpcomingEvents = allPetsProvider.getAllPetReminders();
 
     NotificationsProvider notificationsProvider =
         Provider.of<NotificationsProvider>(context);

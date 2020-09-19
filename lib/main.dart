@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:petcode_app/providers/all_pets_provider.dart';
+import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
@@ -11,8 +13,6 @@ import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
-import 'package:petcode_app/providers/current_pet_provider.dart';
-import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/set_up_keys.dart';
 import 'package:petcode_app/widgets/no_glow_behavior.dart';
@@ -63,40 +63,40 @@ class MyApp extends StatelessWidget {
             }
           },
         ),
-        ChangeNotifierProxyProvider<UserService, PetService>(
-          create: (_) => PetService(),
+        ChangeNotifierProxyProvider<UserService, AllPetsProvider>(
+          create: (_) => AllPetsProvider(),
           update: (BuildContext context, UserService userService,
-              PetService petService) {
+              AllPetsProvider allPetsProvider) {
             if (userService.currentUser == null) {
-              return petService..stopPetStream();
+              return allPetsProvider..clear();
             } else {
               print(userService.currentUser.firstName);
-              return petService..setPetIds(userService.currentUser.petIds);
+              return allPetsProvider..setPetIds(userService.currentUser.petIds);
             }
           },
         ),
-        ChangeNotifierProxyProvider<PetService, CurrentPetProvider>(
+        ChangeNotifierProxyProvider<AllPetsProvider, CurrentPetProvider>(
             create: (_) => CurrentPetProvider(),
-            update: (BuildContext context, PetService petService,
+            update: (BuildContext context, AllPetsProvider allPetsProvider,
                 CurrentPetProvider currentPetProvider) {
-              if (petService.allPets == null ||
-                  petService.allPets.length == 0) {
+              if (allPetsProvider.allPets == null ||
+                  allPetsProvider.allPets.length == 0) {
                 return currentPetProvider..clearPet();
               } else if (currentPetProvider.currentPet != null) {
-                return currentPetProvider..updatePet(petService.allPets);
+                return currentPetProvider..updatePet(allPetsProvider.allPets);
               } else {
-                return currentPetProvider..setCurrentPet(petService.allPets[0]);
+                return currentPetProvider..setCurrentPet(allPetsProvider.allPets[0]);
               }
             }),
-        ChangeNotifierProxyProvider<PetService, ScansProvider>(
+        ChangeNotifierProxyProvider<AllPetsProvider, ScansProvider>(
             create: (_) => ScansProvider(),
-            update: (BuildContext context, PetService petService,
+            update: (BuildContext context, AllPetsProvider allPetsProvider,
                 ScansProvider scansProvider) {
-              if (petService.allPets == null ||
-                  petService.allPets.length == 0) {
+              if (allPetsProvider.allPets == null ||
+                  allPetsProvider.allPets.length == 0) {
                 return scansProvider..clear();
               } else {
-                return scansProvider..setScans(petService.allPets);
+                return scansProvider..setScans(allPetsProvider.allPets);
               }
             }),
         ChangeNotifierProxyProvider<FirebaseAuthService,

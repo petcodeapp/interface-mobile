@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/provider_state.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/navigation_row.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/no_pets_indicator.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/pets_carousel_widget.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/upcoming_events_widget.dart';
-import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
@@ -14,19 +14,16 @@ class DashboardScreen extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    PetService petService = Provider.of<PetService>(context);
+    AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
 
-    petService = Provider.of<PetService>(context);
-    print(petService.providerState);
-
-    if (petService.allPets == null) {
+    if (allPetsProvider.allPets == null) {
       return Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
         ),
       );
-    } else if (petService.allPets.length == 0 &&
-        petService.providerState == ProviderState.Idle) {
+    } else if (allPetsProvider.allPets.length == 0 &&
+        allPetsProvider.providerState == ProviderState.Idle) {
       return Scaffold(
         body: NoPetsAvailableIndicator(),
       );

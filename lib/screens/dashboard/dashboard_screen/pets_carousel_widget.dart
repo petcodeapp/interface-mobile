@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
@@ -14,7 +15,6 @@ class PetsCarouselWidget extends StatefulWidget {
 }
 
 class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
-
   CarouselController _carouselController;
 
   @override
@@ -28,10 +28,11 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    PetService petService = Provider.of<PetService>(context);
-    CurrentPetProvider currentPetProvider = Provider.of<CurrentPetProvider>(context);
+    AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
+    CurrentPetProvider currentPetProvider =
+        Provider.of<CurrentPetProvider>(context);
 
-    int pageIndex = petService.allPets
+    int pageIndex = allPetsProvider.allPets
         .indexWhere((Pet pet) => pet == currentPetProvider.currentPet);
 
     if (pageIndex < 0) {
@@ -53,17 +54,15 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
               viewportFraction: 1.0,
               height: 200.0,
               initialPage: pageIndex,
-              onPageChanged:
-                  (int newPage, CarouselPageChangedReason reason) {
+              onPageChanged: (int newPage, CarouselPageChangedReason reason) {
                 if (currentPetProvider.currentPet !=
-                    petService.allPets[newPage]) {
-                  currentPetProvider
-                      .setCurrentPet(petService.allPets[newPage]);
+                    allPetsProvider.allPets[newPage]) {
+                  currentPetProvider.setCurrentPet(allPetsProvider.allPets[newPage]);
                   pageIndex = newPage;
                   if (ModalRoute.of(context).isCurrent) {
                     print('set state');
                     setState(
-                          () {},
+                      () {},
                     );
                   }
                 }
@@ -74,8 +73,8 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
               return Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 8.0, right: 8.0, bottom: 8.0),
+                  padding:
+                      const EdgeInsets.only(top: 8.0, right: 8.0, bottom: 8.0),
                   child: Container(
                       height: 200.0,
                       width: width * 0.9,
@@ -106,12 +105,10 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.only(
                                       topRight: Radius.circular(20.0),
-                                      bottomRight:
-                                      Radius.circular(20.0)),
+                                      bottomRight: Radius.circular(20.0)),
                                 ),
                                 child: Image(
-                                  image: petService
-                                      .allPets[index].petImage,
+                                  image: allPetsProvider.allPets[index].petImage,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -131,23 +128,21 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                               child: Center(
                                 child: Padding(
                                   padding: EdgeInsets.only(
-                                      left: width * 0.05,
-                                      right: width * 0.1),
+                                      left: width * 0.05, right: width * 0.1),
                                   child: Row(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            petService
-                                                .allPets[index].name,
+                                            allPetsProvider.allPets[index].name,
                                             style: StyleConstants
                                                 .whiteThinTitleTextLarge,
                                           ),
@@ -155,8 +150,7 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                                             height: 2.0,
                                           ),
                                           Text(
-                                            petService
-                                                .allPets[index].breed,
+                                            allPetsProvider.allPets[index].breed,
                                             style: StyleConstants
                                                 .whiteThinTitleTextSmall,
                                           ),
@@ -166,7 +160,7 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                                         //color: Colors.blue,
                                         child: Column(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           children: [
                                             IconButton(
                                                 icon: Icon(
@@ -188,24 +182,19 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                             ),
                           )
                         ],
-                      )
-                  ),
+                      )),
                 ),
               );
             },
-            itemCount: petService.allPets.length,
+            itemCount: allPetsProvider.allPets.length,
           ),
         ),
         DotsIndicator(
-          dotsCount: petService.allPets.length > 0
-              ? petService.allPets.length
-              : 1,
+          dotsCount:
+              allPetsProvider.allPets.length > 0 ? allPetsProvider.allPets.length : 1,
           position: 0.0 + pageIndex,
         ),
       ],
     );
   }
 }
-
-
-

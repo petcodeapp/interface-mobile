@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -19,24 +20,22 @@ class ChangePetAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _ChangePetAppBarState extends State<ChangePetAppBar> {
-  CurrentPetProvider _currentPetProvider;
-  PetService _petService;
 
   @override
   Widget build(BuildContext context) {
-    _currentPetProvider = Provider.of<CurrentPetProvider>(context);
-    _petService = Provider.of<PetService>(context);
+    AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
+    CurrentPetProvider currentPetProvider = Provider.of<CurrentPetProvider>(context);
     List<DropdownMenuItem<Pet>> dropdownMenuItems =
         new List<DropdownMenuItem<Pet>>();
-    for (int i = 0; i < _petService.allPets.length; i++) {
-      print(_petService.allPets[i].pid);
+    for (int i = 0; i < allPetsProvider.allPets.length; i++) {
+      print(allPetsProvider.allPets[i].pid);
       dropdownMenuItems.add(
         DropdownMenuItem<Pet>(
             child: Text(
-              _petService.allPets[i].name,
+              allPetsProvider.allPets[i].name,
               style: StyleConstants.whiteDescriptionText,
             ),
-            value: _petService.allPets[i]),
+            value: allPetsProvider.allPets[i]),
       );
     }
     return AppBar(
@@ -55,10 +54,10 @@ class _ChangePetAppBarState extends State<ChangePetAppBar> {
           child: new DropdownButton<Pet>(
             iconEnabledColor: Colors.white,
             dropdownColor: StyleConstants.blue,
-            value: _currentPetProvider.currentPet,
+            value: currentPetProvider.currentPet,
             items: dropdownMenuItems,
             onChanged: (Pet pet) {
-              _currentPetProvider.setCurrentPet(pet);
+              currentPetProvider.setCurrentPet(pet);
             },
           ),
         ),

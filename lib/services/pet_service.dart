@@ -5,30 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
-import 'package:petcode_app/providers/provider_state.dart';
 
 class PetService extends ChangeNotifier {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  List<Pet> _allPets;
-  StreamSubscription _petStream;
-  ProviderState _providerState = ProviderState.Idle;
-
-  List<Pet> get allPets => _allPets;
-
-  ProviderState get providerState => _providerState;
-
-  setPetIds(List<String> petIds) {
-    startPetStream(petIds);
-  }
-
-  stopPetStream() {
-    _allPets = null;
-    if (_petStream != null) {
-      _petStream.cancel();
-    }
-    notifyListeners();
-  }
 
   List<Pet> petListFromQuery(QuerySnapshot querySnapshot) {
     List<Pet> returnedList = new List<Pet>();
@@ -39,49 +18,35 @@ class PetService extends ChangeNotifier {
     return returnedList;
   }
 
-  void startPetStream(List<String> petIds) {
-    _providerState = ProviderState.Busy;
-    notifyListeners();
-    _allPets = new List<Pet>();
-    if (petIds != null && petIds.length > 0) {
-      _petStream = _firestore
-          .collection('pets')
-          .where('pid', whereIn: petIds)
-          .snapshots()
-          .listen((QuerySnapshot querySnapshot) {
-        _allPets.clear();
-        _allPets = petListFromQuery(querySnapshot);
-        _providerState = ProviderState.Idle;
-        notifyListeners();
-      });
-    }
-    else {
-      _providerState = ProviderState.Idle;
-      notifyListeners();
-    }
+  Stream<List<Pet>> createPetStream(List<String> petIds) {
+    return _firestore
+        .collection('pets')
+        .where('pid', whereIn: petIds)
+        .snapshots()
+        .map((QuerySnapshot querySnapshot) => petListFromQuery(querySnapshot));
   }
 
-  List<UpcomingEvent> getAllPetMedication() {
+  List<UpcomingEvent> getAllPetMedication(List<Pet> allPets) {
     List<UpcomingEvent> allUpcomingEvents = new List<UpcomingEvent>();
     List<UpcomingEvent> allUpcomingEventsNoDate = new List<UpcomingEvent>();
-    for (int i = 0; i < _allPets.length; i++) {
-      if (_allPets[i].reminders != null) {
-        for (int j = 0; j < _allPets[i].reminders.length; j++) {
-          Reminder currentMedication = _allPets[i].reminders[j];
-          if (currentMedication.name == null ||
-              currentMedication.name.trim().isEmpty) {
-            currentMedication.name = 'Untitled';
+    for (int i = 0; i < allPets.length; i++) {
+      if (allPets[i].reminders != null) {
+        for (int j = 0; j < allPets[i].reminders.length; j++) {
+          Reminder currentReminder = allPets[i].reminders[j];
+          if (currentReminder.name == null ||
+              currentReminder.name.trim().isEmpty) {
+            currentReminder.name = 'Untitled';
           }
-          if (currentMedication.date != null) {
+          if (currentReminder.date != null) {
             UpcomingEvent upcomingEvent = UpcomingEvent(
-                name: currentMedication.name,
-                petName: _allPets[i].name,
-                date: currentMedication.date);
+                name: currentReminder.name,
+                petName: allPets[i].name,
+                date: currentReminder.date);
             allUpcomingEvents.add(upcomingEvent);
           } else {
             UpcomingEvent upcomingEvent = UpcomingEvent(
-              name: currentMedication.name,
-              petName: _allPets[i].name,
+              name: currentReminder.name,
+              petName: allPets[i].name,
             );
             allUpcomingEventsNoDate.add(upcomingEvent);
           }
