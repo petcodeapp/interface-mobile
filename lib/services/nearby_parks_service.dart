@@ -40,13 +40,6 @@ class NearbyParksService {
 
     final results = response.data['results'];
 
-    print(request);
-    print(results);
-    print('latitude: ' +
-        location.latitude.toString() +
-        ' longitude: ' +
-        location.longitude.toString());
-
     List<NearbyPark> nearbyParks = new List<NearbyPark>();
 
     for (int i = 0; i < results.length; i++) {

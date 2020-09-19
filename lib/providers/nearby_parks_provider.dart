@@ -29,6 +29,7 @@ class NearbyParksProvider extends ChangeNotifier {
   }
 
   clear() {
+    _nearbyParks = null;
     _nearbyParksService = null;
   }
 }
