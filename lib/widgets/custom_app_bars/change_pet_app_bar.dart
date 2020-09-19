@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
-import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
 class ChangePetAppBar extends StatefulWidget implements PreferredSizeWidget {
-  ChangePetAppBar({Key key, this.customBack, this.shape, this.actions})
+  ChangePetAppBar({Key key, this.shape, this.actions})
       : super(key: key);
-  final bool customBack;
   final ShapeBorder shape;
   final List<Widget> actions;
 
@@ -52,19 +50,6 @@ class _ChangePetAppBarState extends State<ChangePetAppBar> {
               bottomRight: Radius.circular(16.0),
             ),
           ),
-      leading: widget.customBack != null && widget.customBack
-          ? IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                if (Navigator.canPop(context)) {
-                  Navigator.pop(context);
-                } else {
-                  Provider.of<NotificationsProvider>(context, listen: false)
-                      .clear();
-                  Navigator.popAndPushNamed(context, '/');
-                }
-              })
-          : null,
       title: new Theme(
         child: new DropdownButtonHideUnderline(
           child: new DropdownButton<Pet>(

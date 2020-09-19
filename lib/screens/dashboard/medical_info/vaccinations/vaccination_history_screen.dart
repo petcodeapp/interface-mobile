@@ -11,9 +11,7 @@ import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/vaccinat
 import 'package:provider/provider.dart';
 
 class VaccineHistoryScreen extends StatefulWidget {
-  VaccineHistoryScreen({Key key, this.customBack}) : super(key: key);
-
-  final bool customBack;
+  VaccineHistoryScreen({Key key}) : super(key: key);
 
   @override
   _VaccineHistoryScreenState createState() => _VaccineHistoryScreenState();
@@ -219,7 +217,7 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
       }
 
       return Scaffold(
-        appBar: ChangePetAppBar(customBack: widget.customBack,),
+        appBar: ChangePetAppBar(),
         floatingActionButton: FloatingActionButton(
           backgroundColor: StyleConstants.blue,
           child: Icon(

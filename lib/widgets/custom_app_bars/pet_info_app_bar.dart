@@ -44,6 +44,7 @@ class _PetInfoAppBarState extends State<PetInfoAppBar> {
       centerTitle: true,
       elevation: 0.0,
       bottom: PreferredSize(
+        preferredSize: widget.preferredSize,
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: 140.0,

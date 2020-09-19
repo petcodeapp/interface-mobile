@@ -8,8 +8,7 @@ import 'package:petcode_app/widgets/custom_app_bars/text_only_curved_app_bar.dar
 import 'package:provider/provider.dart';
 
 class PetPerksScreen extends StatefulWidget {
-  PetPerksScreen({Key key, this.customBack}) : super(key: key);
-  final bool customBack;
+  PetPerksScreen({Key key}) : super(key: key);
 
   @override
   _PetPerksScreenState createState() => _PetPerksScreenState();
@@ -49,7 +48,7 @@ class _PetPerksScreenState extends State<PetPerksScreen> {
 
     return Scaffold(
       backgroundColor: StyleConstants.pageBackgroundColor,
-      appBar: TextOnlyCurvedAppBar(customBack: widget.customBack,),
+      appBar: TextOnlyCurvedAppBar(),
       body: Container(
         height: height,
         width: width,

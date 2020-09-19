@@ -1,15 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
-import 'package:petcode_app/screens/social/discover_parks/discover_parks_screen.dart';
 import 'package:petcode_app/screens/auth/entry_screen.dart';
-import 'package:petcode_app/screens/social/pet_perks/pet_perks_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/vaccination_history_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
@@ -32,6 +28,9 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -50,9 +49,6 @@ class MyApp extends StatelessWidget {
         ),
         Provider<CheckRegistrationService>(
           create: (_) => CheckRegistrationService(),
-        ),
-        ChangeNotifierProvider<NotificationsProvider>(
-          create: (_) => NotificationsProvider(),
         ),
         ChangeNotifierProxyProvider<FirebaseAuthService, UserService>(
           create: (_) => UserService(),
@@ -124,6 +120,12 @@ class MyApp extends StatelessWidget {
                 return nearbyParksProvider..setUpProvider();
               }
             }),
+        ChangeNotifierProxyProvider<FirebaseAuthService, NotificationsProvider>(
+            create: (_) => NotificationsProvider(),
+            update: (BuildContext context, FirebaseAuthService authService,
+                NotificationsProvider notificationsProvider) {
+              return notificationsProvider..loggedIn = authService.user != null;
+            })
       ],
       child: MaterialApp(
         builder: (context, child) {
@@ -131,6 +133,7 @@ class MyApp extends StatelessWidget {
         },
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
+        navigatorKey: navigatorKey,
         home: HomeScreen(),
       ),
     );
@@ -141,8 +144,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FirebaseAuthService auth = Provider.of<FirebaseAuthService>(context);
-    NotificationsProvider notificationsProvider =
-        Provider.of<NotificationsProvider>(context);
     if (auth.status == Status.Uninitialized) {
       return Scaffold(
         body: Center(
@@ -153,22 +154,7 @@ class HomeScreen extends StatelessWidget {
         auth.status == Status.Unauthenticated) {
       return EntryScreen();
     } else {
-      print('reload');
-      if (notificationsProvider.currentPayload == 'open pet parks') {
-        return DiscoverParksScreen();
-      } else if (notificationsProvider.currentPayload == 'open pet perks' ||
-          notificationsProvider.currentPayload == 'new pet perk') {
-        return PetPerksScreen(
-          customBack: true,
-        );
-      } else if (notificationsProvider.currentPayload ==
-          'vaccination expired') {
-        return VaccineHistoryScreen(
-          customBack: true,
-        );
-      } else {
-        return RootScreen();
-      }
+      return RootScreen();
     }
   }
 }
