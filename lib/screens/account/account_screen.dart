@@ -34,7 +34,10 @@ class AccountScreen extends StatelessWidget {
           width: width,
           child: Stack(
             children: [
-              SizedBox(height: height, width: width,),
+              SizedBox(
+                height: height,
+                width: width,
+              ),
               Container(
                 height: height * 0.6,
                 width: width,
@@ -121,12 +124,15 @@ class AccountScreen extends StatelessWidget {
               ),
               Positioned(
                 top: height * 0.5,
-                left: width * 0.5 - (width-50)/2,
+                left: width * 0.5 - (width - 50) / 2,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => AccountInfoEditingScreen())),
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => AccountInfoEditingScreen())),
                       child: Container(
                         height: height * 0.1,
                         width: width - 50,
@@ -139,10 +145,10 @@ class AccountScreen extends StatelessWidget {
                                 blurRadius: 6,
                                 offset: Offset(0, 3),
                               )
-                            ]
-                        ),
+                            ]),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: width* 0.05),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: width * 0.05),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -166,7 +172,9 @@ class AccountScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: height * 0.02,),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
                     GestureDetector(
                       onTap: () {},
                       child: Container(
@@ -181,10 +189,10 @@ class AccountScreen extends StatelessWidget {
                                 blurRadius: 6,
                                 offset: Offset(0, 3),
                               )
-                            ]
-                        ),
+                            ]),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: width* 0.05),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: width * 0.05),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -208,7 +216,9 @@ class AccountScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: height * 0.02,),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
                     GestureDetector(
                       onTap: () => Navigator.push(
                         context,
@@ -227,10 +237,10 @@ class AccountScreen extends StatelessWidget {
                                 blurRadius: 6,
                                 offset: Offset(0, 3),
                               )
-                            ]
-                        ),
+                            ]),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: width* 0.05),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: width * 0.05),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -254,7 +264,9 @@ class AccountScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: height * 0.02,),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
                     GestureDetector(
                       onTap: () {},
                       child: Container(
@@ -269,10 +281,10 @@ class AccountScreen extends StatelessWidget {
                                 blurRadius: 6,
                                 offset: Offset(0, 3),
                               )
-                            ]
-                        ),
+                            ]),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: width* 0.05),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: width * 0.05),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -296,7 +308,9 @@ class AccountScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: height * 0.02,),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
                     GestureDetector(
                       onTap: () {},
                       child: Container(
@@ -311,10 +325,10 @@ class AccountScreen extends StatelessWidget {
                                 blurRadius: 6,
                                 offset: Offset(0, 3),
                               )
-                            ]
-                        ),
+                            ]),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: width* 0.05),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: width * 0.05),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -338,11 +352,12 @@ class AccountScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: height * 0.02,),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
                     GestureDetector(
                       onTap: () {
-                        final auth = Provider.of<FirebaseAuthService>(
-                            context,
+                        final auth = Provider.of<FirebaseAuthService>(context,
                             listen: false);
                         auth.signOut();
                       },
@@ -358,10 +373,10 @@ class AccountScreen extends StatelessWidget {
                                 blurRadius: 6,
                                 offset: Offset(0, 3),
                               )
-                            ]
-                        ),
+                            ]),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: width* 0.05),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: width * 0.05),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
