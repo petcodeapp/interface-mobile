@@ -20,11 +20,15 @@ class NearbyParksService {
   }
 
   Future<List<NearbyPark>> getNearbyParks(LatLng location, double zoom) async {
+    if (apiKey == null) {
+      apiKey = await FlutterSecureStorage().read(key: 'google_maps_key');
+    }
+
     String baseUrl =
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
     String locationString = '${location.latitude},${location.longitude}';
     String radius =
-    (min(6081740800 / (256 * pow(2, zoom).toDouble()), 50000)).toString();
+        (min(6081740800 / (256 * pow(2, zoom).toDouble()), 50000)).toString();
 
     print('radius: ' + radius);
     String keyword = 'dog park';
@@ -38,16 +42,24 @@ class NearbyParksService {
 
     List<NearbyPark> nearbyParks = new List<NearbyPark>();
 
+    List<Future<List<PlacePhoto>>> placePhotoFutures =
+        new List<Future<List<PlacePhoto>>>();
+
+    for (int i = 0; i < results.length; i++) {
+      placePhotoFutures.add(getPhotos(results[i]['place_id']));
+    }
+
+    List<List<PlacePhoto>> allPlacePhotos =
+        await Future.wait(placePhotoFutures);
+
     for (int i = 0; i < results.length; i++) {
       final parkLocation = results[i]['geometry']['location'];
-
-      List<PlacePhoto> placePhotos = await getPhotos(results[i]['place_id']);
 
       nearbyParks.add(new NearbyPark(
         name: results[i]['name'],
         address: results[i]['vicinity'],
         location: LatLng(parkLocation['lat'], parkLocation['lng']),
-        placePhotos: placePhotos,
+        placePhotos: allPlacePhotos[i],
       ));
     }
 

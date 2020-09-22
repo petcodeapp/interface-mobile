@@ -1,0 +1,36 @@
+import 'package:flutter/material.dart';
+import 'package:petcode_app/utils/style_constants.dart';
+
+class ComingSoonWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15.0),
+      child: Container(
+        width: width * 0.9,
+        height: height * 0.2,
+        child: Stack(
+          children: [
+            Align(alignment: Alignment.center,
+              child: Container(
+                width: width * 1,
+                height: height * 0.5,
+                color: StyleConstants.lightGrey,
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                'More Coming Soon!',
+                style: StyleConstants.whiteThinTitleTextSmall,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

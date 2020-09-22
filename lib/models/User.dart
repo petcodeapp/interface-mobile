@@ -26,21 +26,33 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     List<String> convertPetIds = new List<String>();
-    List petIds = json['petIds'] as List;
-    if (petIds != null) {
-      petIds.forEach((petId) {
-        convertPetIds.add(petId.toString());
-      });
-    }
+    if (json != null) {
+      List petIds = json['petIds'] as List;
+      if (petIds != null) {
+        petIds.forEach((petId) {
+          convertPetIds.add(petId.toString());
+        });
+      }
 
-    return User(
-      uid: json['uid'] as String,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      phoneNumber: json['phoneNumber'] as String,
-      email: json['email'] as String,
-      petIds: convertPetIds,
-    );
+      return User(
+        uid: json['uid'] as String,
+        firstName: json['firstName'] as String,
+        lastName: json['lastName'] as String,
+        phoneNumber: json['phoneNumber'] as String,
+        email: json['email'] as String,
+        petIds: convertPetIds,
+      );
+    }
+    else {
+      return User(
+        uid: '',
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
+        email: '',
+        petIds: new List<String>(),
+      );
+    }
   }
 
   Map<String, dynamic> toJson() => _UserToJson(this);
