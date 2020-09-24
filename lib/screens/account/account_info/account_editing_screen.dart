@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/User.dart';
 import 'package:petcode_app/services/database_service.dart';
+import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:provider/provider.dart';
 
 class AccountInfoEditingScreen extends StatefulWidget {
-  AccountInfoEditingScreen({Key key, this.currentUser}) : super(key: key);
-  final User currentUser;
+  AccountInfoEditingScreen({Key key}) : super(key: key);
 
   @override
   _AccountInfoEditingScreenState createState() =>
@@ -20,18 +20,23 @@ class _AccountInfoEditingScreenState extends State<AccountInfoEditingScreen> {
   TextEditingController _emailInputController;
   TextEditingController _phoneNumberInputController;
 
+  UserService _userService;
+
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
   @override
   void initState() {
+
+    _userService = Provider.of<UserService>(context, listen: false);
+
     _firstNameInputController =
-        new TextEditingController(text: widget.currentUser.firstName);
+        new TextEditingController(text: _userService.currentUser.firstName ?? '');
     _lastNameInputController =
-        new TextEditingController(text: widget.currentUser.lastName);
+        new TextEditingController(text: _userService.currentUser.lastName ?? '');
     _emailInputController =
-        new TextEditingController(text: widget.currentUser.email);
+        new TextEditingController(text: _userService.currentUser.email ?? '');
     _phoneNumberInputController =
-        new TextEditingController(text: widget.currentUser.phoneNumber);
+        new TextEditingController(text: _userService.currentUser.phoneNumber ?? '');
 
     super.initState();
   }
@@ -84,7 +89,7 @@ class _AccountInfoEditingScreenState extends State<AccountInfoEditingScreen> {
   }
 
   User updateUser() {
-    User updatedUser = widget.currentUser;
+    User updatedUser = _userService.currentUser;
 
     updatedUser.firstName = _firstNameInputController.text;
     updatedUser.lastName = _lastNameInputController.text;
