@@ -4,7 +4,6 @@ import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/glowing_reminder_widget.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/reminder_widget.dart';
-import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 

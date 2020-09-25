@@ -12,6 +12,7 @@ import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:petcode_app/widgets/breed_search_bar.dart';
+import 'package:petcode_app/widgets/choose_image_source_dialog.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
 import 'package:provider/provider.dart';
 
@@ -75,56 +76,6 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
 
     _changedImage = false;
     setUpInputControllers();
-  }
-
-  _handleImage(ImageSource source) async {
-    final imagePickerService =
-        Provider.of<ImagePickerService>(context, listen: false);
-
-    File imageFile = await imagePickerService.pickImage(source);
-    Navigator.pop(context);
-    if (imageFile != null) {
-      setState(() {
-        //TODO: Have a better way to check if image is changed
-        _changedImage = true;
-        chosenImageFile = imageFile;
-        updatedImage = FileImage(imageFile);
-      });
-    }
-  }
-
-  _androidDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          title: Text('Add Photo'),
-          children: <Widget>[
-            SimpleDialogOption(
-              child: Text('Take Photo'),
-              onPressed: () => _handleImage(ImageSource.camera),
-            ),
-            SimpleDialogOption(
-              child: Text('Choose From Gallery'),
-              onPressed: () => _handleImage(ImageSource.gallery),
-            ),
-            SimpleDialogOption(
-              child: Text(
-                'Cancel',
-                style: TextStyle(
-                  color: Colors.redAccent,
-                ),
-              ),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  _showSelectImageDialog() {
-    return _androidDialog();
   }
 
   @override
@@ -262,7 +213,17 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                     height: height * 0.01,
                   ),
                   GestureDetector(
-                    onTap: _showSelectImageDialog,
+                    onTap: () async {
+                      ImageSource returnedSource = await showDialog(context: context, builder: (BuildContext context) {
+                        return ChooseImageSourceDialog();
+                      });
+                      File returnedFile = await Provider.of<ImagePickerService>(context, listen: false).pickImage(returnedSource);
+                      setState(() {
+                        _changedImage = true;
+                        chosenImageFile = returnedFile;
+                        updatedImage = FileImage(chosenImageFile);
+                      });
+                    },
                     child: Text(
                       'Change Pet Photo',
                       style: TextStyle(
