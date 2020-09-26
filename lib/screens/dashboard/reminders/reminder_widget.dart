@@ -44,7 +44,7 @@ class ReminderWidget extends StatelessWidget {
                     height: 8.0,
                   ),
                   Text(
-                    'Recurring : Add Freq',
+                    'Recurring ' + currentReminder.frequency,
                     style: StyleConstants.blackThinDescriptionTextSmall,
                   ),
                 ],

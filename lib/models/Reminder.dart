@@ -5,15 +5,25 @@ class Reminder {
   int index;
 
   String name;
-  bool done;
+  String notificationMethod;
+  String frequency;
+  bool enabled;
   Timestamp date;
 
-  Reminder({this.index, this.name, this.done, this.date});
+  Reminder(
+      {this.index,
+      this.name,
+      this.notificationMethod,
+      this.frequency,
+      this.enabled,
+      this.date});
 
   factory Reminder.fromJson(Map<String, dynamic> json) {
     return Reminder(
       name: json['name'] as String,
-      done: json['done'] as bool,
+      notificationMethod: json['notificationMethod'] as String,
+      frequency: json['frequency'] as String,
+      enabled: json['enabled'] as bool,
       date: json['date'] as Timestamp,
     );
   }
@@ -22,7 +32,9 @@ class Reminder {
 
   Map<String, dynamic> _ReminderToJson(Reminder instance) => <String, dynamic>{
         'name': instance.name,
-        'done': instance.done,
+        'notificationMethod': instance.notificationMethod,
+        'frequency': instance.frequency,
+        'enabled': instance.enabled,
         'date': instance.date,
       };
 }

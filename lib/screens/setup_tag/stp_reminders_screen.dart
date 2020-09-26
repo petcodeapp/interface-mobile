@@ -118,7 +118,9 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                       updatedPet.reminders.add(
                         new Reminder(
                             name: _reminderNameInputControllers[i].text.trim(),
-                            done: false,
+                            notificationMethod: 'email',
+                            frequency: 'weekly',
+                            enabled: true,
                             date: _dates[i] != null
                                 ? Timestamp.fromDate(_dates[i])
                                 : null),
