@@ -1,38 +1,36 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:petcode_app/providers/all_pets_provider.dart';
+import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
-import 'package:petcode_app/screens/discover_parks_screen.dart';
-import 'package:petcode_app/screens/entry_screen.dart';
-import 'package:petcode_app/screens/pet_perks_screen.dart';
+import 'package:petcode_app/screens/auth/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
-import 'package:petcode_app/screens/vaccine_history_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
-import 'package:petcode_app/providers/current_pet_provider.dart';
-import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/set_up_keys.dart';
-import 'package:petcode_app/utils/no_glow_behavior.dart';
+import 'package:petcode_app/widgets/no_glow_behavior.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SetUpKeys().createGoogleMapsKey();
+  SetUpKeys().createKeys();
 
   await Firebase.initializeApp();
-  FirebaseAuth.instance.signOut();
 
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -52,55 +50,53 @@ class MyApp extends StatelessWidget {
         Provider<CheckRegistrationService>(
           create: (_) => CheckRegistrationService(),
         ),
-        ChangeNotifierProvider<NotificationsProvider>(
-          create: (_) => NotificationsProvider(),
-        ),
         ChangeNotifierProxyProvider<FirebaseAuthService, UserService>(
           create: (_) => UserService(),
           update: (BuildContext context, FirebaseAuthService authService,
               UserService userService) {
             if (authService.user == null) {
+              print('clear');
               return userService..clearUid();
             } else {
-              print(authService.user.uid);
+              print('set up user service');
               return userService..setUid(authService.user.uid);
             }
           },
         ),
-        ChangeNotifierProxyProvider<UserService, PetService>(
-          create: (_) => PetService(),
+        ChangeNotifierProxyProvider<UserService, AllPetsProvider>(
+          create: (_) => AllPetsProvider(),
           update: (BuildContext context, UserService userService,
-              PetService petService) {
+              AllPetsProvider allPetsProvider) {
             if (userService.currentUser == null) {
-              return petService..stopPetStream();
+              return allPetsProvider..clear();
             } else {
               print(userService.currentUser.firstName);
-              return petService..setPetIds(userService.currentUser.petIds);
+              return allPetsProvider..setPetIds(userService.currentUser.petIds);
             }
           },
         ),
-        ChangeNotifierProxyProvider<PetService, CurrentPetProvider>(
+        ChangeNotifierProxyProvider<AllPetsProvider, CurrentPetProvider>(
             create: (_) => CurrentPetProvider(),
-            update: (BuildContext context, PetService petService,
+            update: (BuildContext context, AllPetsProvider allPetsProvider,
                 CurrentPetProvider currentPetProvider) {
-              if (petService.allPets == null ||
-                  petService.allPets.length == 0) {
+              if (allPetsProvider.allPets == null ||
+                  allPetsProvider.allPets.length == 0) {
                 return currentPetProvider..clearPet();
               } else if (currentPetProvider.currentPet != null) {
-                return currentPetProvider..updatePet(petService.allPets);
+                return currentPetProvider..updatePet(allPetsProvider.allPets);
               } else {
-                return currentPetProvider..setCurrentPet(petService.allPets[0]);
+                return currentPetProvider..setCurrentPet(allPetsProvider.allPets[0]);
               }
             }),
-        ChangeNotifierProxyProvider<PetService, ScansProvider>(
+        ChangeNotifierProxyProvider<AllPetsProvider, ScansProvider>(
             create: (_) => ScansProvider(),
-            update: (BuildContext context, PetService petService,
+            update: (BuildContext context, AllPetsProvider allPetsProvider,
                 ScansProvider scansProvider) {
-              if (petService.allPets == null ||
-                  petService.allPets.length == 0) {
+              if (allPetsProvider.allPets == null ||
+                  allPetsProvider.allPets.length == 0) {
                 return scansProvider..clear();
               } else {
-                return scansProvider..setScans(petService.allPets);
+                return scansProvider..setScans(allPetsProvider.allPets);
               }
             }),
         ChangeNotifierProxyProvider<FirebaseAuthService,
@@ -124,6 +120,12 @@ class MyApp extends StatelessWidget {
                 return nearbyParksProvider..setUpProvider();
               }
             }),
+        ChangeNotifierProxyProvider<FirebaseAuthService, NotificationsProvider>(
+            create: (_) => NotificationsProvider(),
+            update: (BuildContext context, FirebaseAuthService authService,
+                NotificationsProvider notificationsProvider) {
+              return notificationsProvider..loggedIn = authService.user != null;
+            })
       ],
       child: MaterialApp(
         builder: (context, child) {
@@ -131,6 +133,7 @@ class MyApp extends StatelessWidget {
         },
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
+        navigatorKey: navigatorKey,
         home: HomeScreen(),
       ),
     );
@@ -141,8 +144,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FirebaseAuthService auth = Provider.of<FirebaseAuthService>(context);
-    NotificationsProvider notificationsProvider =
-        Provider.of<NotificationsProvider>(context);
     if (auth.status == Status.Uninitialized) {
       return Scaffold(
         body: Center(
@@ -153,20 +154,7 @@ class HomeScreen extends StatelessWidget {
         auth.status == Status.Unauthenticated) {
       return EntryScreen();
     } else {
-      print('reload');
-      if (notificationsProvider.currentPayload == 'open pet parks') {
-        return DiscoverParksScreen();
-      } else if (notificationsProvider.currentPayload == 'open pet perks' ||
-          notificationsProvider.currentPayload == 'new pet perk') {
-        return PetPerksScreen(
-          customBack: true,
-        );
-      } else if (notificationsProvider.currentPayload ==
-          'vaccination expired') {
-        return VaccineHistoryScreen(customBack: true,);
-      } else {
-        return RootScreen();
-      }
+      return RootScreen();
     }
   }
 }
