@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Reminder {
+  //This variable is used only to keep track of the reminder
+  int index;
+
   String name;
   bool done;
   Timestamp date;
 
-  Reminder({this.name, this.done, this.date});
+  Reminder({this.index, this.name, this.done, this.date});
 
   factory Reminder.fromJson(Map<String, dynamic> json) {
     return Reminder(
