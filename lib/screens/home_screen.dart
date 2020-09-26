@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/UpcomingEvent.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
@@ -62,7 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
     if (petService.allPets == null) {
       return Scaffold(
         body: Center(
-          child: CircularProgressIndicator(),
+          //child: CircularProgressIndicator(),
+          child:  SpinKitCubeGrid(size: 51.0, color: StyleConstants.yellow),
+
         ),
       );
     } else if (petService.allPets.length == 0) {

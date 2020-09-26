@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/discover_parks_screen.dart';
 import 'package:petcode_app/screens/pet_perks_screen.dart';
+import 'package:petcode_app/screens/splash_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class SocialSplitScreen extends StatefulWidget {
@@ -89,7 +90,9 @@ class _SocialSplitScreenState extends State<SocialSplitScreen> {
                 ),
               ),
               SizedBox(height: _height * 0.03,),
-              comingSoonWidget(),
+              GestureDetector(
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SplashScreen())),
+                  child: comingSoonWidget()),
               SizedBox(height: _height * 0.03,),
               comingSoonWidget(),
             ],
