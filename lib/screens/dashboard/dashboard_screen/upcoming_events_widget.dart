@@ -67,7 +67,7 @@ class UpcomingEventsWidget extends StatelessWidget {
                 child: ReminderWidget(
                   completed: false,
                   name: allPetUpcomingEvents[index].name,
-                  date: allPetUpcomingEvents[index].date.toDate(),
+                  date: allPetUpcomingEvents[index].date != null ? allPetUpcomingEvents[index].date.toDate() : null,
                 ),
               );
             }

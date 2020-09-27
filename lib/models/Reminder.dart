@@ -8,7 +8,8 @@ class Reminder {
   String notificationMethod;
   String frequency;
   bool enabled;
-  Timestamp date;
+  Timestamp startDate;
+  Timestamp endDate;
 
   Reminder(
       {this.index,
@@ -16,7 +17,8 @@ class Reminder {
       this.notificationMethod,
       this.frequency,
       this.enabled,
-      this.date});
+      this.startDate,
+      this.endDate});
 
   factory Reminder.fromJson(Map<String, dynamic> json) {
     return Reminder(
@@ -24,7 +26,8 @@ class Reminder {
       notificationMethod: json['notificationMethod'] as String,
       frequency: json['frequency'] as String,
       enabled: json['enabled'] as bool,
-      date: json['date'] as Timestamp,
+      startDate: json['startDate'] as Timestamp,
+      endDate: json['endDate'] as Timestamp,
     );
   }
 
@@ -35,6 +38,7 @@ class Reminder {
         'notificationMethod': instance.notificationMethod,
         'frequency': instance.frequency,
         'enabled': instance.enabled,
-        'date': instance.date,
+        'startDate': instance.startDate,
+        'endDate': instance.endDate,
       };
 }

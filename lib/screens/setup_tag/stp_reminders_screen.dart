@@ -121,7 +121,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
                             notificationMethod: 'email',
                             frequency: 'weekly',
                             enabled: true,
-                            date: _dates[i] != null
+                            startDate: _dates[i] != null
                                 ? Timestamp.fromDate(_dates[i])
                                 : null),
                       );

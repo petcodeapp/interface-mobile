@@ -37,7 +37,13 @@ class RemindersScreen extends StatelessWidget {
     List<Reminder> allReminders = currentPetProvider.currentPet.reminders;
 
     allReminders.sort((Reminder reminderA, Reminder reminderB) {
-      return reminderA.date.compareTo(reminderB.date);
+      if (reminderA.startDate == null) {
+        return -1;
+      } else if (reminderB.startDate == null) {
+        return 1;
+      } else {
+        return reminderA.startDate.compareTo(reminderB.startDate);
+      }
     });
 
     return Scaffold(

@@ -11,6 +11,9 @@ class ReminderWidget extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+
+    print(currentReminder.frequency);
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return GestureDetector(
@@ -44,7 +47,7 @@ class ReminderWidget extends StatelessWidget {
                     height: 8.0,
                   ),
                   Text(
-                    'Recurring ' + currentReminder.frequency,
+                    'Recurring ' + (currentReminder.frequency ?? 'none'),
                     style: StyleConstants.blackThinDescriptionTextSmall,
                   ),
                 ],
@@ -54,14 +57,14 @@ class ReminderWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    StringHelper.getDateString(currentReminder.date.toDate()),
+                    currentReminder.startDate != null ? StringHelper.getDateString(currentReminder.startDate.toDate()) : 'No Start Date',
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 25.0,
                         color: StyleConstants.blue),
                   ),
                   Text(
-                    StringHelper.getTimeString(currentReminder.date.toDate()),
+                    currentReminder.startDate != null ? StringHelper.getTimeString(currentReminder.startDate.toDate()) : 'No Time',
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 25.0,
