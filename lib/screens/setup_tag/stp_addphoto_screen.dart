@@ -63,13 +63,15 @@ class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
                       builder: (BuildContext context) {
                         return ChooseImageSourceDialog();
                       });
-                  File returnedFile = await Provider.of<ImagePickerService>(
-                          context,
-                          listen: false)
-                      .pickImage(returnedSource);
-                  setState(() {
-                    chosenImage = returnedFile;
-                  });
+                  if (returnedSource != null) {
+                    File returnedFile = await Provider.of<ImagePickerService>(
+                            context,
+                            listen: false)
+                        .pickImage(returnedSource);
+                    setState(() {
+                      chosenImage = returnedFile;
+                    });
+                  }
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),

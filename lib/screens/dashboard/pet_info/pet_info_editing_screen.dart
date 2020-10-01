@@ -214,15 +214,22 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      ImageSource returnedSource = await showDialog(context: context, builder: (BuildContext context) {
-                        return ChooseImageSourceDialog();
-                      });
-                      File returnedFile = await Provider.of<ImagePickerService>(context, listen: false).pickImage(returnedSource);
-                      setState(() {
-                        _changedImage = true;
-                        chosenImageFile = returnedFile;
-                        updatedImage = FileImage(chosenImageFile);
-                      });
+                      ImageSource returnedSource = await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ChooseImageSourceDialog();
+                          });
+                      if (returnedSource != null) {
+                        File returnedFile =
+                            await Provider.of<ImagePickerService>(context,
+                                    listen: false)
+                                .pickImage(returnedSource);
+                        setState(() {
+                          _changedImage = true;
+                          chosenImageFile = returnedFile;
+                          updatedImage = FileImage(chosenImageFile);
+                        });
+                      }
                     },
                     child: Text(
                       'Change Pet Photo',

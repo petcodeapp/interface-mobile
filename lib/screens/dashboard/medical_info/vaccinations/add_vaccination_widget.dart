@@ -116,13 +116,15 @@ class _AddVaccinationWidgetState extends State<AddVaccinationWidget> {
                               builder: (BuildContext context) {
                                 return ChooseImageSourceDialog();
                               });
-                          File returnedFile =
-                              await Provider.of<ImagePickerService>(context,
-                                      listen: false)
-                                  .pickImage(returnedSource);
-                          setState(() {
-                            _vaccinationImage = returnedFile;
-                          });
+                          if (returnedSource != null) {
+                            File returnedFile =
+                                await Provider.of<ImagePickerService>(context,
+                                        listen: false)
+                                    .pickImage(returnedSource);
+                            setState(() {
+                              _vaccinationImage = returnedFile;
+                            });
+                          }
                         },
                         child: Container(
                           decoration: BoxDecoration(

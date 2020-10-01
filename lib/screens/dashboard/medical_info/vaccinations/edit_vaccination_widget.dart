@@ -134,13 +134,15 @@ class _EditVaccinationWidgetState extends State<EditVaccinationWidget> {
                               builder: (BuildContext context) {
                                 return ChooseImageSourceDialog();
                               });
-                          File returnedImage =
-                              await Provider.of<ImagePickerService>(context,
-                                      listen: false)
-                                  .pickImage(returnedSource);
-                          setState(() {
-                            _vaccinationImage = returnedImage;
-                          });
+                          if (returnedSource != null) {
+                            File returnedImage =
+                                await Provider.of<ImagePickerService>(context,
+                                        listen: false)
+                                    .pickImage(returnedSource);
+                            setState(() {
+                              _vaccinationImage = returnedImage;
+                            });
+                          }
                         },
                         child: Container(
                           decoration: BoxDecoration(

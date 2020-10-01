@@ -100,13 +100,15 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
                     builder: (BuildContext context) {
                       return ChooseImageSourceDialog();
                     });
-                File returnedImage = await Provider.of<ImagePickerService>(
-                        context,
-                        listen: false)
-                    .pickImage(returnedSource);
-                setState(() {
-                  _pickedImage = returnedImage;
-                });
+                if (returnedSource != null) {
+                  File returnedImage = await Provider.of<ImagePickerService>(
+                          context,
+                          listen: false)
+                      .pickImage(returnedSource);
+                  setState(() {
+                    _pickedImage = returnedImage;
+                  });
+                }
               },
               child: Container(
                 height: height * 0.2,
