@@ -28,65 +28,59 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
 
     return Scaffold(
       backgroundColor: StyleConstants.pageBackgroundColor,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70.0),
-        child: ChangePetAppBar(
-          actions: [
-            IconButton(
-              icon: Icon(Icons.edit),
-              color: Colors.white,
-              iconSize: 30.0,
-              onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => OwnerInfoEditingScreen(
-                        currentPet: currentPet,
-                      ))),
-            ),
-          ],
-        ),
+      appBar: ChangePetAppBar(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.edit),
+            color: Colors.white,
+            iconSize: 30.0,
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => OwnerInfoEditingScreen(
+                          currentPet: currentPet,
+                        ))),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
-      child: Container(
-        height: height,
-        width: width,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: height * 0.04,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: width * 0.03),
-              child: Text(
-                'Owner 1',
-                style: StyleConstants.blackThinTitleText,
+        child: Container(
+          width: width,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: height * 0.04,
               ),
-            ),
-            SizedBox(
-              height: height * 0.01,
-            ),
-            createOwnerWidget(
-                currentPet.contact_1, height, width),
-            SizedBox(height: height * 0.03),
-            currentPet.contact_2 == null
-                ? SizedBox()
-                : Padding(
-                  padding: EdgeInsets.only(left: width * 0.03),
-                  child: Text(
-              'Owner 2',
-              style: StyleConstants.blackThinTitleText,
-            ),
+              Padding(
+                padding: EdgeInsets.only(left: width * 0.03),
+                child: Text(
+                  'Owner 1',
+                  style: StyleConstants.blackThinTitleText,
                 ),
-            SizedBox(
-              height: height * 0.01,
-            ),
-            createOwnerWidget(
-                currentPet.contact_2, height, width)
-          ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              createOwnerWidget(currentPet.contact_1, height, width),
+              SizedBox(height: height * 0.03),
+              currentPet.contact_2 == null
+                  ? SizedBox()
+                  : Padding(
+                      padding: EdgeInsets.only(left: width * 0.03),
+                      child: Text(
+                        'Owner 2',
+                        style: StyleConstants.blackThinTitleText,
+                      ),
+                    ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              createOwnerWidget(currentPet.contact_2, height, width)
+            ],
+          ),
         ),
       ),
-    ),
     );
   }
 
@@ -107,11 +101,13 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
             ),
             title: Row(
               children: [
-                Text(owner.name,style: StyleConstants.darkBlackDescriptionText) ??
-                    Text(
-                      'Name',
-                      style: StyleConstants.greyedOutText,
-                    ),
+                owner.name != null && owner.name.isNotEmpty
+                    ? Text(owner.name,
+                        style: StyleConstants.darkBlackDescriptionText)
+                    : Text(
+                        'Name',
+                        style: StyleConstants.greyedOutText,
+                      ),
               ],
             ),
             trailing: Icon(
@@ -130,11 +126,13 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
               HeroIcons.icon_mail,
               size: 30.0,
             ),
-            title: Text(owner.email,style: StyleConstants.darkBlackDescriptionText) ??
-                Text(
-                  'Email',
-                  style: StyleConstants.greyedOutText,
-                ),
+            title: owner.email != null && owner.email.isNotEmpty
+                ? Text(owner.email,
+                    style: StyleConstants.darkBlackDescriptionText)
+                : Text(
+                    'Email',
+                    style: StyleConstants.greyedOutText,
+                  ),
             trailing: Icon(
               Icons.arrow_forward_ios,
               size: 25.0,
@@ -151,12 +149,13 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
               HeroIcons.icon_call,
               size: 30.0,
             ),
-            title: Text(owner.phoneNumber, style: StyleConstants.darkBlackDescriptionText
-            ) ??
-                Text(
-                  'Phone Number',
-                  style: StyleConstants.greyedOutText,
-                ),
+            title: owner.phoneNumber != null
+                ? Text(owner.phoneNumber,
+                    style: StyleConstants.darkBlackDescriptionText)
+                : Text(
+                    'Phone Number',
+                    style: StyleConstants.greyedOutText,
+                  ),
             trailing: Icon(
               Icons.arrow_forward_ios,
               size: 25.0,
@@ -173,11 +172,13 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
               HeroIcons.icon_home,
               size: 30.0,
             ),
-            title: Text(owner.address,style: StyleConstants.darkBlackDescriptionText) ??
-                Text(
-                  'Address',
-                  style: StyleConstants.greyedOutText,
-                ),
+            title: owner.address != null && owner.address.isNotEmpty
+                ? Text(owner.address,
+                    style: StyleConstants.darkBlackDescriptionText)
+                : Text(
+                    'Address',
+                    style: StyleConstants.greyedOutText,
+                  ),
             trailing: Icon(
               Icons.arrow_forward_ios,
               size: 25.0,
