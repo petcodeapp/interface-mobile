@@ -19,8 +19,8 @@ class PetPerksScreen extends StatelessWidget {
         description: 'Pet Food',
         discountAmount: 10),
     PetPerk(
-        storeName: 'Another Pet Store',
-        description: 'Pet Supplies, Accessories, and Products',
+        storeName: 'Another Pet Store abcd abcd abcd abcdefghijk',
+        description: 'Pet Supplies, Accessories, and Products, and more and more and more and more',
         discountAmount: 33),
     PetPerk(
         storeName: 'PetCode',
