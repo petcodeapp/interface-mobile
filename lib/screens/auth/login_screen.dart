@@ -349,11 +349,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               Spacer(),
                               GestureDetector(
                                 onTap: () async {
+                                  print('tapped');
                                   signInWithGoogle();
                                 },
                                 child: Container(
                                   height: height * 0.05,
-                                  width: width * 0.3,
                                   decoration: BoxDecoration(
                                       color: Colors.red,
                                       borderRadius: BorderRadius.circular(20.0),
@@ -436,6 +436,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void signInWithGoogle() async {
     try {
+      print('trying');
       bool successful = await authService.signInWithGoogle();
       print(successful);
       if (successful) {
