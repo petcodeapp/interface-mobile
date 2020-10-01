@@ -2,6 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class StyleConstants {
+  static MediaQueryData _mediaQueryData;
+
+  //for iPhone SE2 - 647.0 and 375.0
+  static double height;
+  static double width;
+
+  void init(BuildContext context) {
+    _mediaQueryData = MediaQuery.of(context);
+    height = _mediaQueryData.size.height -
+        (_mediaQueryData.padding.top + _mediaQueryData.padding.bottom);
+    width = _mediaQueryData.size.width -
+        (_mediaQueryData.padding.left + _mediaQueryData.padding.right);
+
+    print('height: ' + height.toString() + ' width: ' + width.toString());
+  }
+
   //colors
   static Color darkGrey = new Color(0xff66615B);
 
@@ -134,7 +150,7 @@ class StyleConstants {
 
   static TextStyle blackThinTitleTextMedium = new TextStyle(
     color: Colors.black,
-    fontSize: 25.0,
+    fontSize: width * 0.06,
     fontWeight: FontWeight.w600,
   );
 
@@ -147,13 +163,12 @@ class StyleConstants {
   static TextStyle darkBlackDescriptionText = new TextStyle(
       fontSize: 18.0,
       fontWeight: FontWeight.w500,
-      color: Colors.black.withOpacity(0.8)
-  );
+      color: Colors.black.withOpacity(0.8));
 
   static TextStyle tinyGreyDescriptionText = new TextStyle(
-      fontSize: 14.0,
-      fontWeight: FontWeight.w400,
-      color: darkPurpleGrey,
+    fontSize: 14.0,
+    fontWeight: FontWeight.w400,
+    color: darkPurpleGrey,
   );
 
   static TextStyle lightBlackThinTitleText = new TextStyle(
@@ -250,10 +265,7 @@ class StyleConstants {
   );
 
   static TextStyle greySubText = new TextStyle(
-    color: lightGrey,
-    fontSize: 12.0,
-    fontWeight: FontWeight.w300
-  );
+      color: lightGrey, fontSize: 12.0, fontWeight: FontWeight.w300);
 
   static TextStyle blueTitleText = new TextStyle(
     color: blue,
