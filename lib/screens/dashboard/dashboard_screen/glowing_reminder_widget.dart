@@ -51,7 +51,7 @@ class _GlowingReminderWidgetState extends State<GlowingReminderWidget>
             blurRadius: _animation.value,
             spreadRadius: _animation.value,
           ),
-        ], borderRadius: BorderRadius.circular(15.0)),
+        ], borderRadius: BorderRadius.circular(10.0)),
       ),
     );
   }

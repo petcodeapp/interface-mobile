@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/custom_app_bars/change_pet_app_bar.dart';
+import 'package:petcode_app/providers/current_pet_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/providers/all_pets_provider.dart';
+
 
 class RemindersScreen extends StatefulWidget {
   @override
@@ -11,6 +16,9 @@ class RemindersScreen extends StatefulWidget {
 class _RemindersScreenState extends State<RemindersScreen> {
   double _height;
   double _width;
+
+  CurrentPetProvider _currentPetProvider;
+  AllPetsProvider _allPetsProvider;
 
   DateTime _reminderDate = DateTime.now();
 
@@ -25,14 +33,14 @@ class _RemindersScreenState extends State<RemindersScreen> {
         isScrollControlled: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0)),
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0)),
         ),
         builder: (BuildContext context) {
           return StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return Container(
-                height: _height * 0.7,
+                height: _height * 0.8,
                 decoration: BoxDecoration(
                   borderRadius:
                   BorderRadius.only(topLeft: Radius.circular(30.0)),
@@ -70,9 +78,9 @@ class _RemindersScreenState extends State<RemindersScreen> {
                               ),
                               TextFormField(
                                 decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  hintText: 'Name',
-                                  hintStyle: TextStyle(fontSize: 14.0),
+                                  //border: OutlineInputBorder(),
+                                  //hintText: 'Name',
+                                  //hintStyle: TextStyle(fontSize: 14.0),
                                 ),
                               ),
                               SizedBox(
@@ -86,8 +94,8 @@ class _RemindersScreenState extends State<RemindersScreen> {
                               Container(
                                 height: _height * 0.076,
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(5.0),
+                                  //border: Border.all(color: Colors.grey),
+                                  //borderRadius: BorderRadius.circular(5.0),
                                 ),
                                 child: Center(
                                     child: Padding(
@@ -509,62 +517,130 @@ class _RemindersScreenState extends State<RemindersScreen> {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
 
+    _allPetsProvider = Provider.of<AllPetsProvider>(context);
+    _currentPetProvider = Provider.of<CurrentPetProvider>(context);
 
+    List<DropdownMenuItem<Pet>> dropdownMenuItems =
+    new List<DropdownMenuItem<Pet>>();
 
+    for (int i = 0; i < _allPetsProvider.allPets.length; i++) {
+      print(_allPetsProvider.allPets[i].pid);
+      dropdownMenuItems.add(
+        DropdownMenuItem<Pet>(
+            child: Text(
+              _allPetsProvider.allPets[i].name,
+              style: StyleConstants.whiteDescriptionText.copyWith(fontSize: 25.0),
+            ),
+            value: _allPetsProvider.allPets[i]),
+      );
+    }
 
     return Scaffold(
-      appBar: ChangePetAppBar(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: StyleConstants.blue,
         onPressed: _addReminder,
       ),
-      backgroundColor: StyleConstants.pageBackgroundColor,
+      backgroundColor: StyleConstants.blue,
       body: Container(
         height: _height,
         width: _width,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: _width * 0.1),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
+
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              //end: Alignment(0.01, 0.01),
+              end: Alignment.centerLeft,
+              stops: [0.05, 0.25, 0.7],
+              colors: [const Color(0xffB3E1EE), const Color(0xff7cdcf7), StyleConstants.blue], // whitish to gray
+              //tileMode: TileMode.repeated, // repeats the gradient over the canvas
+            ),
+          ),
+        child: Column(
+          children: [
+            Container(
+              height: _height * 0.15,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: _width * 0.1, vertical: _height * 0.02),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: DropdownButtonHideUnderline(
+                        child: new DropdownButton<Pet>(
+                          iconEnabledColor: Colors.white,
+                          dropdownColor: StyleConstants.blue,
+                          value: _currentPetProvider.currentPet,
+                          items: dropdownMenuItems,
+                          onChanged: (Pet pet) {
+                            _currentPetProvider.setCurrentPet(pet);
+                          },
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back_ios, size: 25.0, color: Colors.white,),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    )
+                  ],
+                )
+              ),
+            ),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: StyleConstants.pageBackgroundColor,
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0))
+                ),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: _height * 0.02),
-                  child: ListView(
+                  padding: EdgeInsets.symmetric(horizontal: _width * 0.1),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      reminderItemWidget(
-                          'Feed the Dog', '8/23/20', '9:00 am', 'Monthly'),
-                      SizedBox(
-                        height: _height * 0.02,
-                      ),
-                      reminderItemWidget(
-                          'Feed the Cat', '8/27/20', '6:00 pm', 'Monthly'),
-                      SizedBox(
-                        height: _height * 0.02,
-                      ),
-                      reminderItemWidget(
-                          'Reminder 1', '8/27/20', '6:00 pm', 'Monthly'),
-                      SizedBox(
-                        height: _height * 0.02,
-                      ),
-                      reminderItemWidget(
-                          'Reminder 2', '8/31/20', '6:00 pm', 'Yearly'),
-                      SizedBox(
-                        height: _height * 0.02,
-                      ),
-                      reminderItemWidget(
-                          'Reminder 3', '12/3/20', '6:00 pm', 'Monthly'),
-                      SizedBox(
-                        height: _height * 0.02,
-                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: _height * 0.02),
+                          child: ListView(
+                            children: [
+                              reminderItemWidget(
+                                  'Feed the Dog', '8/23/20', '9:00 am', 'Monthly'),
+                              SizedBox(
+                                height: _height * 0.02,
+                              ),
+                              reminderItemWidget(
+                                  'Feed the Cat', '8/27/20', '6:00 pm', 'Monthly'),
+                              SizedBox(
+                                height: _height * 0.02,
+                              ),
+                              reminderItemWidget(
+                                  'Reminder 1', '8/27/20', '6:00 pm', 'Monthly'),
+                              SizedBox(
+                                height: _height * 0.02,
+                              ),
+                              reminderItemWidget(
+                                  'Reminder 2', '8/31/20', '6:00 pm', 'Yearly'),
+                              SizedBox(
+                                height: _height * 0.02,
+                              ),
+                              reminderItemWidget(
+                                  'Reminder 3', '12/3/20', '6:00 pm', 'Monthly'),
+                              SizedBox(
+                                height: _height * 0.02,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
-              )
-            ],
-          ),
-        ),
+              ),
+            )
+          ],
+        )
       ),
     );
   }
@@ -575,13 +651,13 @@ class _RemindersScreenState extends State<RemindersScreen> {
       onTap: _editReminder,
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(20.0),
             color: StyleConstants.white,
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 6.0,
-                offset: Offset(0, 3),
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 8.0,
+                offset: Offset(0, 2),
               ),
             ]),
         width: _width * 0.8,
@@ -606,16 +682,19 @@ class _RemindersScreenState extends State<RemindersScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    reminderName,
-                    style: StyleConstants.blackThinTitleTextSmall,
+                    'Recurring : $frequency',
+                    style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400, color: StyleConstants.darkPurpleGrey),
                   ),
                   SizedBox(
                     height: 8.0,
                   ),
+
                   Text(
-                    'Recurring : $frequency',
-                    style: StyleConstants.blackThinDescriptionTextSmall,
+                    reminderName,
+                    style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500, color: Colors.black),
                   ),
+
+
                 ],
               ),
               Spacer(),

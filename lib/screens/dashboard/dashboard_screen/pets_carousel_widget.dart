@@ -46,18 +46,20 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
     return Column(
       children: [
         Container(
-          height: 200.0,
+
+          height: height * 0.31,
           width: width,
           child: CarouselSlider.builder(
             options: CarouselOptions(
               enableInfiniteScroll: false,
               viewportFraction: 1.0,
-              height: 200.0,
+              height: height * 0.31,
               initialPage: pageIndex,
               onPageChanged: (int newPage, CarouselPageChangedReason reason) {
                 if (currentPetProvider.currentPet !=
                     allPetsProvider.allPets[newPage]) {
-                  currentPetProvider.setCurrentPet(allPetsProvider.allPets[newPage]);
+                  currentPetProvider
+                      .setCurrentPet(allPetsProvider.allPets[newPage]);
                   pageIndex = newPage;
                   if (ModalRoute.of(context).isCurrent) {
                     print('set state');
@@ -70,119 +72,59 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
             ),
             carouselController: _carouselController,
             itemBuilder: (BuildContext context, int index) {
-              return Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(top: 8.0, right: 8.0, bottom: 8.0),
-                  child: Container(
-                      height: 200.0,
-                      width: width * 0.9,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(20.0),
-                              bottomRight: Radius.circular(20.0)),
-                          boxShadow: [
-                            BoxShadow(
-                              //color: StyleConstants.blue.withOpacity(0.3),
-                              color: Colors.black.withOpacity(0.3),
-                              blurRadius: 4,
-                              offset: Offset(0, 3),
-                            ),
-                          ]),
-                      //color: Colors.blue,
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(20.0),
-                                  bottomRight: Radius.circular(20.0)),
-                              child: Container(
-                                height: height * 0.3,
-                                width: width * 0.9,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(20.0),
-                                      bottomRight: Radius.circular(20.0)),
-                                ),
-                                child: Image(
-                                  image: allPetsProvider.allPets[index].petImage,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                child: Container(
+                  height: height * 0.35,
+                  child: Column(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: Container(
+                          height: height * 0.23,
+                          width: width * 0.9,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Container(
-                              width: width * 0.9,
-                              height: height * 0.12,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(20.0),
-                                    bottomRight: Radius.circular(20.0)),
-                                color: Colors.black.withOpacity(0.2),
+                          child: Image(
+                            image: allPetsProvider.allPets[index].petImage,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                allPetsProvider.allPets[index].name,
+                                style: StyleConstants.blackThinTitleTextMedium,
                               ),
-                              child: Center(
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: width * 0.05, right: width * 0.1),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            allPetsProvider.allPets[index].name,
-                                            style: StyleConstants
-                                                .whiteThinTitleTextLarge,
-                                          ),
-                                          SizedBox(
-                                            height: 2.0,
-                                          ),
-                                          Text(
-                                            allPetsProvider.allPets[index].breed,
-                                            style: StyleConstants
-                                                .whiteThinTitleTextSmall,
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                        //color: Colors.blue,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            IconButton(
-                                                icon: Icon(
-                                                  HeroIcons.icon_globe,
-                                                  size: 50.0,
-                                                  color: Colors.white,
-                                                ),
-                                                onPressed: () {}),
-                                            SizedBox(
-                                              height: 18.0,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                              SizedBox(
+                                height: 2.0,
+                              ),
+                              Text(
+                                allPetsProvider.allPets[index].breed,
+                                style: StyleConstants.blackThinTitleTextXS,
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Container(
+                            //color: Colors.blue,
+                            child: IconButton(
+                                icon: Icon(
+                                  HeroIcons.icon_globe,
+                                  size: 50.0,
+                                  color: Colors.black,
                                 ),
-                              ),
-                            ),
-                          )
+                                onPressed: () {}),
+                          ),
                         ],
-                      )),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
@@ -190,8 +132,9 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
           ),
         ),
         DotsIndicator(
-          dotsCount:
-              allPetsProvider.allPets.length > 0 ? allPetsProvider.allPets.length : 1,
+          dotsCount: allPetsProvider.allPets.length > 0
+              ? allPetsProvider.allPets.length
+              : 1,
           position: 0.0 + pageIndex,
         ),
       ],

@@ -33,46 +33,47 @@ class UpcomingEventsWidget extends StatelessWidget {
 
     return Column(
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: height * 0.04,
+          height: height * 0.01,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Text(
             'Upcoming',
-            style: StyleConstants.blackThinTitleText,
+            style: StyleConstants.blackThinTitleTextMedium,
           ),
         ),
-        SizedBox(
-          height: height * 0.02,
-        ),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: allPetUpcomingEvents.length,
-          itemBuilder: (context, index) {
-            if (index == reminderIndex) {
-              return Padding(
-                padding: EdgeInsets.all(8.0),
-                child: GlowingReminderWidget(
-                  completed: false,
-                  name: allPetUpcomingEvents[index].name,
-                  date: allPetUpcomingEvents[index].date.toDate(),
-                ),
-              );
-            } else {
-              return Padding(
-                padding: EdgeInsets.all(8.0),
-                child: ReminderWidget(
-                  completed: false,
-                  name: allPetUpcomingEvents[index].name,
-                  date: allPetUpcomingEvents[index].date.toDate(),
-                ),
-              );
-            }
-          },
+        Container(
+
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: allPetUpcomingEvents.length,
+            itemBuilder: (context, index) {
+              if (index == reminderIndex) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: GlowingReminderWidget(
+                    completed: false,
+                    name: allPetUpcomingEvents[index].name,
+                    date: allPetUpcomingEvents[index].date.toDate(),
+                  ),
+                );
+              } else {
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: ReminderWidget(
+                    completed: false,
+                    name: allPetUpcomingEvents[index].name,
+                    date: allPetUpcomingEvents[index].date.toDate(),
+                  ),
+                );
+              }
+            },
+          ),
         ),
       ],
     );

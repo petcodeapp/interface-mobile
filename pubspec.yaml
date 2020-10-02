@@ -67,6 +67,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/navigation_images/
     - assets/images/onboarding/
   fonts:
    - family: HeroIcons

@@ -19,7 +19,6 @@ class _ReminderWidgetState extends State<ReminderWidget> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
@@ -30,7 +29,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
               offset: Offset(0, 3),
             ),
           ],
-          borderRadius: BorderRadius.circular(15.0)),
+          borderRadius: BorderRadius.circular(10.0)),
       height: height * 0.1,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -48,6 +47,18 @@ class _ReminderWidgetState extends State<ReminderWidget> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                widget.date != null
+                    ? Text(
+                  StringHelper.getDateString(widget.date) +
+                      ' - ' +
+                      DateFormat.jm().format(widget.date),
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.w400, color: StyleConstants.darkPurpleGrey),
+                )
+                    : Text(
+                  'No date given',
+                  overflow: TextOverflow.ellipsis,
+                ),
                 Text(
                   widget.name,
                   overflow: TextOverflow.ellipsis,
@@ -56,17 +67,6 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                   style:
                       TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
                 ),
-                widget.date != null
-                    ? Text(
-                        StringHelper.getDateString(widget.date) +
-                            ' at ' +
-                            DateFormat.jm().format(widget.date),
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    : Text(
-                        'No date given',
-                        overflow: TextOverflow.ellipsis,
-                      ),
               ],
             ),
           ],

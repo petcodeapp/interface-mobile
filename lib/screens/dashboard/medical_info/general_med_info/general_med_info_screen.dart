@@ -42,6 +42,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               SizedBox(
                 height: height * 0.04,
               ),
