@@ -91,7 +91,7 @@ class ReminderWidget extends StatelessWidget {
           return StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return Container(
-                height: height * 0.7,
+                height: height * 0.72,
                 decoration: BoxDecoration(
                   borderRadius:
                   BorderRadius.only(topLeft: Radius.circular(30.0)),
