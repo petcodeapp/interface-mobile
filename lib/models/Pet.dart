@@ -90,6 +90,9 @@ class Pet {
       reminderMaps.forEach((reminder) {
         convertedReminders.add(Reminder.fromJson(reminder));
       });
+      for (int i = 0; i < convertedReminders.length; i++) {
+        convertedReminders[i]..index = i;
+      }
     }
 
     List<dynamic> scanMaps = json['scans'] as List;

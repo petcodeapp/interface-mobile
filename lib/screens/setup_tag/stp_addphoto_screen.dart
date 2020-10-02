@@ -6,6 +6,7 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/setup_tag/stp_medinfo_screen.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/choose_image_source_dialog.dart';
 import 'package:provider/provider.dart';
 
 class StpAddPhotoScreen extends StatefulWidget {
@@ -19,52 +20,6 @@ class StpAddPhotoScreen extends StatefulWidget {
 
 class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
   File chosenImage;
-
-  _showSelectImageDialog() {
-    return _androidDialog();
-  }
-
-  _handleImage(ImageSource source) async {
-    final imagePickerService = Provider.of<ImagePickerService>(context, listen: false);
-
-    Navigator.pop(context);
-    File imageFile = await imagePickerService.pickImage(source);
-    if (imageFile != null) {
-      setState(() {
-        chosenImage = imageFile;
-      });
-    }
-  }
-
-  _androidDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          title: Text('Add Photo'),
-          children: <Widget>[
-            SimpleDialogOption(
-              child: Text('Take Photo'),
-              onPressed: () => _handleImage(ImageSource.camera),
-            ),
-            SimpleDialogOption(
-              child: Text('Choose From Gallery'),
-              onPressed: () => _handleImage(ImageSource.gallery),
-            ),
-            SimpleDialogOption(
-              child: Text(
-                'Cancel',
-                style: TextStyle(
-                  color: Colors.redAccent,
-                ),
-              ),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +57,22 @@ class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
                 height: height * 0.06,
               ),
               GestureDetector(
-                onTap: _showSelectImageDialog,
+                onTap: () async {
+                  ImageSource returnedSource = await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ChooseImageSourceDialog();
+                      });
+                  if (returnedSource != null) {
+                    File returnedFile = await Provider.of<ImagePickerService>(
+                            context,
+                            listen: false)
+                        .pickImage(returnedSource);
+                    setState(() {
+                      chosenImage = returnedFile;
+                    });
+                  }
+                },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
                   child: Container(

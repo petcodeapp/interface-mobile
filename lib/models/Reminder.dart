@@ -1,17 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Reminder {
-  String name;
-  bool done;
-  Timestamp date;
+  //This variable is used only to keep track of the reminder
+  int index;
 
-  Reminder({this.name, this.done, this.date});
+  String name;
+  String notificationMethod;
+  String frequency;
+  bool enabled;
+  Timestamp startDate;
+  Timestamp endDate;
+
+  Reminder(
+      {this.index,
+      this.name,
+      this.notificationMethod,
+      this.frequency,
+      this.enabled,
+      this.startDate,
+      this.endDate});
 
   factory Reminder.fromJson(Map<String, dynamic> json) {
     return Reminder(
       name: json['name'] as String,
-      done: json['done'] as bool,
-      date: json['date'] as Timestamp,
+      notificationMethod: json['notificationMethod'] as String,
+      frequency: json['frequency'] as String,
+      enabled: json['enabled'] as bool,
+      startDate: json['startDate'] as Timestamp,
+      endDate: json['endDate'] as Timestamp,
     );
   }
 
@@ -19,7 +35,10 @@ class Reminder {
 
   Map<String, dynamic> _ReminderToJson(Reminder instance) => <String, dynamic>{
         'name': instance.name,
-        'done': instance.done,
-        'date': instance.date,
+        'notificationMethod': instance.notificationMethod,
+        'frequency': instance.frequency,
+        'enabled': instance.enabled,
+        'startDate': instance.startDate,
+        'endDate': instance.endDate,
       };
 }

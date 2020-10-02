@@ -12,6 +12,7 @@ import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
+import 'package:petcode_app/widgets/choose_image_source_dialog.dart';
 import 'package:provider/provider.dart';
 
 class EditVaccinationScreen extends StatefulWidget {
@@ -32,52 +33,11 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
 
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  _androidDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          title: Text('Add Photo'),
-          children: <Widget>[
-            SimpleDialogOption(
-                child: Text('Take Photo'),
-                onPressed: () async {
-                  _pickedImage = await Provider.of<ImagePickerService>(context,
-                      listen: false)
-                      .pickImage(ImageSource.camera);
-                  Navigator.pop(context);
-                  setState(() {});
-                }),
-            SimpleDialogOption(
-              child: Text('Choose From Gallery'),
-              onPressed: () async {
-                _pickedImage = await Provider.of<ImagePickerService>(context,
-                    listen: false)
-                    .pickImage(ImageSource.camera);
-                Navigator.pop(context);
-                setState(() {});
-              },
-            ),
-            SimpleDialogOption(
-              child: Text(
-                'Cancel',
-                style: TextStyle(
-                  color: Colors.redAccent,
-                ),
-              ),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   void initState() {
     _currentVaccination = widget.pet.vaccinations[widget.vaccinationIndex];
     _nameInputController =
-    new TextEditingController(text: _currentVaccination.name);
+        new TextEditingController(text: _currentVaccination.name);
     if (_currentVaccination.date != null) {
       _expirationDate = _currentVaccination.date.toDate();
     }
@@ -105,20 +65,20 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
 
                 if (_pickedImage != null) {
                   String downloadUrl =
-                  await Provider.of<FirebaseStorageService>(context,
-                      listen: false)
-                      .uploadVaccineImage(
-                      _pickedImage,
-                      widget.pet.pid +
-                          'vaccine' +
-                          widget.vaccinationIndex.toString());
+                      await Provider.of<FirebaseStorageService>(context,
+                              listen: false)
+                          .uploadVaccineImage(
+                              _pickedImage,
+                              widget.pet.pid +
+                                  'vaccine' +
+                                  DateTime.now().toString());
                   updatedVaccination.imageUrl = downloadUrl;
                 } else if (_currentVaccination.imageUrl != null) {
                   updatedVaccination.imageUrl = _currentVaccination.imageUrl;
                 }
                 Provider.of<DatabaseService>(context, listen: false)
                     .updateVaccination(updatedVaccination,
-                    widget.vaccinationIndex, widget.pet);
+                        widget.vaccinationIndex, widget.pet);
                 Navigator.pop(context);
               }
             },
@@ -135,19 +95,32 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
           children: [
             GestureDetector(
               onTap: () async {
-                _androidDialog();
+                ImageSource returnedSource = await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ChooseImageSourceDialog();
+                    });
+                if (returnedSource != null) {
+                  File returnedImage = await Provider.of<ImagePickerService>(
+                          context,
+                          listen: false)
+                      .pickImage(returnedSource);
+                  setState(() {
+                    _pickedImage = returnedImage;
+                  });
+                }
               },
               child: Container(
                 height: height * 0.2,
                 child: _pickedImage != null
                     ? Image.file(_pickedImage)
                     : hasImage
-                    ? CachedNetworkImage(
-                    imageUrl: _currentVaccination.imageUrl)
-                    : Container(
-                  color: StyleConstants.lightGrey,
-                  child: Text('No Image'),
-                ),
+                        ? CachedNetworkImage(
+                            imageUrl: _currentVaccination.imageUrl)
+                        : Container(
+                            color: StyleConstants.lightGrey,
+                            child: Text('No Image'),
+                          ),
               ),
             ),
             TextFormField(
