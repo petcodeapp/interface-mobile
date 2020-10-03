@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Positioned(
-                    top: height * 0.3,
+                    top: height * 0.28,
                     left: width * 0.4,
                     child: SlidingContainer(
                       initialOffsetX: 1,
@@ -449,6 +449,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void signInWithGoogle() async {
     try {
+      print('trying');
       bool successful = await authService.signInWithGoogle();
       if (successful) {
         bool hasAccount =

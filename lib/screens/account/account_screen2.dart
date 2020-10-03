@@ -27,7 +27,6 @@ class AccountScreen2 extends StatelessWidget {
 
     bool starOn = false;
 
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -36,6 +35,9 @@ class AccountScreen2 extends StatelessWidget {
         child: Container(
           height: height,
           width: width,
+          decoration: BoxDecoration(
+            gradient: StyleConstants.bgGradient,
+          ),
           child: Column(
             children: [
               Container(
@@ -194,9 +196,6 @@ class AccountScreen2 extends StatelessWidget {
                             },
                           ),
                           Divider(thickness: 1.5,),
-
-
-
                         ],
                       ),
                     ),

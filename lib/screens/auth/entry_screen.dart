@@ -73,13 +73,12 @@ class _EntryScreenState extends State<EntryScreen> {
               Align(
                 alignment: Alignment.center,
                 child: SizedBox(
-                  height: height * 0.38,
                   width: width,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Container(
-                        height: height * 0.34,
+                      Flexible(
                         child: PageView(
                           controller: _controller,
                           scrollDirection: Axis.horizontal,

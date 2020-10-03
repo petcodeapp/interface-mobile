@@ -5,6 +5,7 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/setup_tag/stp_petinfo_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/address_search_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:slimy_card/slimy_card.dart';
 
 class StpContactScreen extends StatefulWidget {
@@ -225,7 +226,8 @@ class _StpContactScreenState extends State<StpContactScreen> {
                     border: InputBorder.none,
                     hintText: 'Phone Number',
                     hintStyle: TextStyle(fontSize: 15.0)),
-                selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                selectorConfig: SelectorConfig(
+                    selectorType: PhoneInputSelectorType.BOTTOM_SHEET),
                 formatInput: true,
                 initialValue: _initialOwner1PhoneNumber,
               )),
@@ -365,7 +367,8 @@ class _StpContactScreenState extends State<StpContactScreen> {
                     border: InputBorder.none,
                     hintText: 'Phone Number',
                     hintStyle: TextStyle(fontSize: 15.0)),
-                selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                selectorConfig: SelectorConfig(
+                    selectorType: PhoneInputSelectorType.BOTTOM_SHEET),
                 onInputChanged: (PhoneNumber newNumber) {
                   _owner2FormattedPhoneNumber = newNumber.toString();
                 },

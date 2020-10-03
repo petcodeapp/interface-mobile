@@ -1,11 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/setup_tag/stp_contactinfo_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
 class StpConnectTagScreen extends StatefulWidget {
   @override
@@ -13,8 +10,6 @@ class StpConnectTagScreen extends StatefulWidget {
 }
 
 class _StpConnectTagScreenState extends State<StpConnectTagScreen> {
-  StreamController<ErrorAnimationType> errorController =
-  StreamController<ErrorAnimationType>();
   TextEditingController textEditingController = TextEditingController();
   String currentText = "";
   final formKey = GlobalKey<FormState>();
@@ -218,7 +213,6 @@ class _StpConnectTagScreenState extends State<StpConnectTagScreen> {
                             onTap: () {
                               print('TAPPED: ' + currentText);
                               if (formKey.currentState.validate()) {
-                                errorController.close();
                                 Pet createdPet = new Pet(pid: currentText);
                                 Navigator.push(
                                     context,

@@ -1,5 +1,6 @@
 import 'package:petcode_app/models/PetPerk.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
+import 'package:petcode_app/screens/social/pet_perks/pet_perk_description_widget.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ class PetPerkWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        _showPetPerks(context, height, width);
+        _showPetPerks(context, height, width, petPerk);
         if (updateProvider != null && updateProvider) {
           print('update');
           Provider.of<NotificationsProvider>(context, listen: false)
@@ -26,7 +27,7 @@ class PetPerkWidget extends StatelessWidget {
       },
       behavior: HitTestBehavior.translucent,
       child: Container(
-        height: height * 0.2,
+        //height: height * 0.2,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(15.0),
@@ -45,43 +46,47 @@ class PetPerkWidget extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            petPerk.discountAmount.toString() + '%',
-                            style: TextStyle(
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.w600,
-                                color: StyleConstants.yellow),
-                          ),
-                          Text(
-                            ' Discount',
-                            style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w400,
-                                color: StyleConstants.blue),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Text(
-                        petPerk.storeName,
-                        style: TextStyle(
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.w600,
-                            color: StyleConstants.blue),
-                      )
-                    ],
+                  Flexible(
+                    flex: 6,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              petPerk.discountAmount.toString() + '%',
+                              style: TextStyle(
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.w600,
+                                  color: StyleConstants.yellow),
+                            ),
+                            Text(
+                              ' Discount',
+                              style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: StyleConstants.blue),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Text(
+                          petPerk.storeName,
+                          style: TextStyle(
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.w600,
+                              color: StyleConstants.blue),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      ],
+                    ),
                   ),
                   Spacer(),
-                  Container(
-                      height: 100,
-                      width: 150,
+                  Expanded(
+                      flex: 3,
                       child: Image.asset(
                         'assets/images/petsmartlogo.jpg',
                       )),
@@ -91,6 +96,8 @@ class PetPerkWidget extends StatelessWidget {
                 petPerk.description,
                 style: StyleConstants.blackThinDescriptionTextSmall.copyWith(
                     color: StyleConstants.blue, fontWeight: FontWeight.w400),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               )
             ],
           ),
@@ -99,7 +106,8 @@ class PetPerkWidget extends StatelessWidget {
     );
   }
 
-  void _showPetPerks(BuildContext context, double height, double width) {
+  void _showPetPerks(
+      BuildContext context, double height, double width, PetPerk petPerk) {
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -110,92 +118,8 @@ class PetPerkWidget extends StatelessWidget {
       builder: (BuildContext context) {
         return Container(
           height: height * 0.6,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 10.0,
-                ),
-                Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Pet Perks',
-                      style: StyleConstants.blackThinTitleText,
-                    )),
-                Row(
-                  children: [
-                    Text('50%',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 60.0,
-                            color: StyleConstants.yellow)),
-                    Container(
-                        height: 100.0,
-                        width: 200.0,
-                        child: Image.asset('assets/images/petsmartlogo.jpg')),
-                  ],
-                ),
-                Text(
-                  'Discount at PetSmart',
-                  style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.w600,
-                      color: StyleConstants.blue),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Text(
-                  'Details',
-                  style: StyleConstants.blackThinTitleTextMedium,
-                ),
-                Text(
-                    'Back to School Sale! Get an extra 50% off regular & sale Belk exclusive & select national brands purchases (40% off select national brands; 20% off select designer brands)'),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Promo Code: ',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 25.0,
-                          color: StyleConstants.blue),
-                    ),
-                    Text(
-                      'PETCODE123',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30.0,
-                          color: StyleConstants.yellow),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    height: height * 0.08,
-                    width: width * 0.5,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0),
-                      color: StyleConstants.blue,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Shop Now',
-                        style: StyleConstants.whiteThinTitleTextSmall,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
+          child: PetPerkDescriptionWidget(
+            currentPetPerk: petPerk,
           ),
         );
       },

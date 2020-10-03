@@ -15,6 +15,7 @@ import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/set_up_keys.dart';
+import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/no_glow_behavior.dart';
 import 'package:provider/provider.dart';
 
@@ -143,6 +144,7 @@ class MyApp extends StatelessWidget {
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    StyleConstants().init(context);
     FirebaseAuthService auth = Provider.of<FirebaseAuthService>(context);
     if (auth.status == Status.Uninitialized) {
       return Scaffold(

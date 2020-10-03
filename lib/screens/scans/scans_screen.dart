@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
@@ -88,7 +89,6 @@ class _ScansScreenState extends State<ScansScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-
                 Container(
                   height: height * 0.15,
                   child: Padding(
@@ -107,7 +107,7 @@ class _ScansScreenState extends State<ScansScreen> {
                     ),
                   ),
                 ),
-                Expanded(
+                currentLocationProvider.currentLocation != null ? Expanded(
                   child: currentLocationProvider.currentLocation != null
                       ? ClipRRect(
                     borderRadius: BorderRadius.only(topRight: Radius.circular(10.0), topLeft: Radius.circular(10.0)),
@@ -139,8 +139,10 @@ class _ScansScreenState extends State<ScansScreen> {
                         ),
                       )
                       : Center(
-                          child: CircularProgressIndicator(),
+                          child: SpinKitDualRing(size: 30.0, color: StyleConstants.yellow),
                         ),
+                ): Center(
+                  child: SpinKitDualRing(size: 30.0, color: StyleConstants.yellow),
                 ),
               ],
             ),
