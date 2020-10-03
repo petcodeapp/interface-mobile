@@ -85,14 +85,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Positioned(
-                    top: height * 0.3,
+                    top: height * 0.28,
                     left: width * 0.4,
                     child: Text(
                       'Welcome Back',
-                      style: TextStyle(
-                          color: StyleConstants.blue,
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold),
+                      style: StyleConstants.blueTitleTextLarge,
                     )),
                 Positioned(
                   bottom: height * 0.12,

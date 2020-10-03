@@ -273,6 +273,12 @@ class StyleConstants {
     fontWeight: FontWeight.w600,
   );
 
+  static TextStyle blueTitleTextLarge = new TextStyle(
+    color: blue,
+    fontSize: width * 0.06,
+    fontWeight: FontWeight.w700,
+  );
+
   static TextStyle blueDescriptionText = new TextStyle(
     color: blue,
     fontSize: width * 0.04,
