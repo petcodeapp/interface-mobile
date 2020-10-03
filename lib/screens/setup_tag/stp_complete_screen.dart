@@ -45,7 +45,7 @@ class _StpCompleteScreenState extends State<StpCompleteScreen> {
     for (int i = 0; i < updatedPet.vaccinations.length; i++) {
       if (widget.vaccineImages[i] != null) {
         String downloadUrl = await storageService.uploadVaccineImage(
-            widget.vaccineImages[i], updatedPet.pid + 'vaccine' + i.toString());
+            widget.vaccineImages[i], updatedPet.pid + 'vaccine' + DateTime.now().toString());
         updatedPet.vaccinations[i].imageUrl = downloadUrl;
       }
     }

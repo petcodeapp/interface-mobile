@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/button_list.dart';
-import 'package:flutter_signin_button/button_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/screens/setup_tag/stp_nameandphone_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';

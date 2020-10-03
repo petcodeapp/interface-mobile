@@ -9,6 +9,7 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/choose_image_source_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:slimy_card/slimy_card.dart';
 
@@ -30,55 +31,6 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
   List<DateTime> _expireDates;
 
   List<TextEditingController> _vaccineNameInputControllers;
-
-  _showSelectImageDialog(int num) {
-    return _androidDialog(num);
-  }
-
-  _handleImage(ImageSource source, int num) async {
-    Navigator.pop(context);
-
-    final imagePickerService =
-        Provider.of<ImagePickerService>(context, listen: false);
-
-    File imageFile = await imagePickerService.pickImage(source);
-    if (imageFile != null) {
-      setState(() {
-        _vaccineImages[num] = imageFile;
-      });
-    }
-  }
-
-  _androidDialog(int num) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          title: Text('Add Photo'),
-          children: <Widget>[
-            SimpleDialogOption(
-                child: Text('Take Photo'),
-                onPressed: () {
-                  _handleImage(ImageSource.camera, num);
-                }),
-            SimpleDialogOption(
-              child: Text('Choose From Gallery'),
-              onPressed: () => _handleImage(ImageSource.gallery, num),
-            ),
-            SimpleDialogOption(
-              child: Text(
-                'Cancel',
-                style: TextStyle(
-                  color: Colors.redAccent,
-                ),
-              ),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   @override
   void initState() {
@@ -293,7 +245,19 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
             height: height * 0.02,
           ),
           GestureDetector(
-            onTap: () => _androidDialog(0),
+            onTap: () async {
+              ImageSource returnedSource = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ChooseImageSourceDialog();
+                  });
+              File returnedFile =
+                  await Provider.of<ImagePickerService>(context, listen: false)
+                      .pickImage(returnedSource);
+              setState(() {
+                _vaccineImages[0] = returnedFile;
+              });
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -412,7 +376,19 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
             height: height * 0.02,
           ),
           GestureDetector(
-            onTap: () => _androidDialog(1),
+            onTap: () async {
+              ImageSource returnedSource = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ChooseImageSourceDialog();
+                  });
+              File returnedFile =
+                  await Provider.of<ImagePickerService>(context, listen: false)
+                      .pickImage(returnedSource);
+              setState(() {
+                _vaccineImages[1] = returnedFile;
+              });
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

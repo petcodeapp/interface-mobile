@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/PetPerk.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
+import 'package:petcode_app/screens/social/pet_perks/pet_perks_categories_selector.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/screens/social/pet_perks/glowing_pet_perk_widget.dart';
 import 'package:petcode_app/screens/social/pet_perks/pet_perk_widget.dart';
 import 'package:petcode_app/widgets/custom_app_bars/text_only_curved_app_bar.dart';
 import 'package:provider/provider.dart';
 
-class PetPerksScreen extends StatefulWidget {
-  PetPerksScreen({Key key}) : super(key: key);
-
-  @override
-  _PetPerksScreenState createState() => _PetPerksScreenState();
-}
-
-class _PetPerksScreenState extends State<PetPerksScreen> {
-  List<PetPerk> petPerks = [
+class PetPerksScreen extends StatelessWidget {
+  final List<PetPerk> petPerks = [
     PetPerk(
         storeName: 'Pet Store',
         description: 'Pet Supplies, Accessories, and Products',
@@ -68,107 +62,7 @@ class _PetPerksScreenState extends State<PetPerksScreen> {
             SizedBox(
               height: height * 0.01,
             ),
-            Container(
-              height: height * 0.2,
-              width: width,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    offset: Offset(0, 3),
-                    blurRadius: 6.0,
-                  ),
-                ],
-              ),
-              child: Center(
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    SizedBox(
-                      width: 30.0,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Image.asset(
-                            'assets/images/petperksplaceholderimg.png',
-                            fit: BoxFit.cover,
-                          ),
-                          height: 100.0,
-                          width: 100.0,
-                        ),
-                        Text(
-                          'Toys',
-                          style: StyleConstants.blackThinDescriptionText,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 30.0,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Image.asset(
-                            'assets/images/petperksplaceholderimg.png',
-                            fit: BoxFit.cover,
-                          ),
-                          height: 100.0,
-                          width: 100.0,
-                        ),
-                        Text(
-                          'Food',
-                          style: StyleConstants.blackThinDescriptionText,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 30.0,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Image.asset(
-                            'assets/images/petperksplaceholderimg.png',
-                            fit: BoxFit.cover,
-                          ),
-                          height: 100.0,
-                          width: 100.0,
-                        ),
-                        Text(
-                          'Medication',
-                          style: StyleConstants.blackThinDescriptionText,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 30.0,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Image.asset(
-                            'assets/images/petperksplaceholderimg.png',
-                            fit: BoxFit.cover,
-                          ),
-                          height: 100.0,
-                          width: 100.0,
-                        ),
-                        Text(
-                          'Clothing',
-                          style: StyleConstants.blackThinDescriptionText,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            PetPerksCategoriesSelector(),
             SizedBox(
               height: height * 0.03,
             ),
@@ -195,49 +89,16 @@ class _PetPerksScreenState extends State<PetPerksScreen> {
                     );
                   } else {
                     return Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: PetPerkWidget(
-                          petPerk: petPerks[index],
-                        ));
+                      padding: const EdgeInsets.all(12.0),
+                      child: PetPerkWidget(
+                        petPerk: petPerks[index],
+                      ),
+                    );
                   }
                 },
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget comingSoonWidget() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15.0),
-      child: Container(
-        height: 125,
-        width: 150,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          color: StyleConstants.lightGrey,
-        ),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'More',
-                style: StyleConstants.whiteThinTitleTextSmall,
-              ),
-              Text(
-                'Coming',
-                style: StyleConstants.whiteThinTitleTextSmall,
-              ),
-              Text(
-                'Soon!',
-                style: StyleConstants.whiteThinTitleTextSmall,
-              ),
-            ],
-          ),
         ),
       ),
     );

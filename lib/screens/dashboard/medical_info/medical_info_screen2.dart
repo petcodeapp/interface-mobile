@@ -68,14 +68,7 @@ class _MedicalInfoScreen2State extends State<MedicalInfoScreen2> {
             width: width,
             height: height,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                //end: Alignment(0.01, 0.01),
-                end: Alignment.centerLeft,
-                stops: [0.05, 0.25, 0.7],
-                colors: [const Color(0xffB3E1EE), const Color(0xff7cdcf7), StyleConstants.blue], // whitish to gray
-                //tileMode: TileMode.repeated, // repeats the gradient over the canvas
-              ),
+              gradient: StyleConstants.bgGradient,
             ),
             child: Column(
               children: [
@@ -146,276 +139,285 @@ class _MedicalInfoScreen2State extends State<MedicalInfoScreen2> {
                           SizedBox(
                             height: height * 0.05,
                           ),
-                          Container(
-                              height: height * 0.17,
-                              width: width * 0.9,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(25.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      offset: Offset(0, 3),
-                                      blurRadius: 6.0,
-                                    ),
-                                  ]),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: width * 0.04,
-                                    vertical: height * 0.01),
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        child: Container(
-                                          height: 75.0,
-                                          width: 75.0,
-                                          decoration: BoxDecoration(
-                                            //color: StyleConstants.blue,
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              Container(
-                                                height: 74.0,
-                                                width: 74.0,
-                                                child: Image.asset(
-                                                  'assets/navigation_images/gradcontainer.png',
-                                                  fit: BoxFit.cover,
+                          GestureDetector(
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => GeneralMedicalInfoScreen())),
+                            child: Container(
+                                height: height * 0.17,
+                                width: width * 0.9,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        offset: Offset(0, 3),
+                                        blurRadius: 6.0,
+                                      ),
+                                    ]),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: width * 0.04,
+                                      vertical: height * 0.01),
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          child: Container(
+                                            height: 75.0,
+                                            width: 75.0,
+                                            decoration: BoxDecoration(
+                                              //color: StyleConstants.blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                Container(
+                                                  height: 74.0,
+                                                  width: 74.0,
+                                                  child: Image.asset(
+                                                    'assets/navigation_images/gradcontainer.png',
+                                                    fit: BoxFit.cover,
+                                                  ),
                                                 ),
-                                              ),
-                                              Align(
-                                                alignment: Alignment.bottomLeft,
-                                                child: Container(
-                                                    height: 75.0,
-                                                    width: 75.0,
+                                                Align(
+                                                  alignment: Alignment.bottomLeft,
+                                                  child: Container(
+                                                      height: 75.0,
+                                                      width: 75.0,
+                                                      child: Image.asset(
+                                                          'assets/navigation_images/polygon.png', fit: BoxFit.cover,)),
+                                                ),
+                                                Align(
+                                                    alignment: Alignment.center,
                                                     child: Image.asset(
+                                                        'assets/navigation_images/info.png')),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: width * 0.05,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Medical Info',
+                                              style: StyleConstants
+                                                  .blackThinTitleTextMedium,
+                                            ),
+                                            SizedBox(
+                                              height: height * 0.01,
+                                            ),
+                                            Text(
+                                              'Filler Content, Filler Content,\nFiller Content, Filler Content',
+                                              style: StyleConstants
+                                                  .greyThinDescriptionTextSmall,
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )),
+                          ),
+                          SizedBox(
+                            height: height * 0.05,
+                          ),
+                          GestureDetector(
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => VaccineHistoryScreen())),
+                            child: Container(
+                                height: height * 0.17,
+                                width: width * 0.9,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        offset: Offset(0, 3),
+                                        blurRadius: 6.0,
+                                      ),
+                                    ]),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: width * 0.04,
+                                      vertical: height * 0.01),
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                          BorderRadius.circular(10.0),
+                                          child: Container(
+                                            height: 75.0,
+                                            width: 75.0,
+                                            decoration: BoxDecoration(
+                                              //color: StyleConstants.blue,
+                                              borderRadius:
+                                              BorderRadius.circular(10.0),
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                Container(
+                                                  height: 74.0,
+                                                  width: 74.0,
+                                                  child: Image.asset(
+                                                    'assets/navigation_images/gradcontainer.png',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Align(
+                                                  alignment: Alignment.bottomLeft,
+                                                  child: Container(
+                                                      height: 75.0,
+                                                      width: 75.0,
+                                                      child: Image.asset(
                                                         'assets/navigation_images/polygon.png', fit: BoxFit.cover,)),
-                                              ),
-                                              Align(
-                                                  alignment: Alignment.center,
-                                                  child: Image.asset(
-                                                      'assets/navigation_images/info.png')),
-                                            ],
+                                                ),
+                                                Align(
+                                                    alignment: Alignment.center,
+                                                    child: Image.asset(
+                                                        'assets/navigation_images/syringe.png')),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: width * 0.05,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Medical Info',
-                                            style: StyleConstants
-                                                .blackThinTitleTextMedium,
-                                          ),
-                                          SizedBox(
-                                            height: height * 0.01,
-                                          ),
-                                          Text(
-                                            'Filler Content, Filler Content,\nFiller Content, Filler Content',
-                                            style: StyleConstants
-                                                .greyThinDescriptionTextSmall,
-                                          )
-                                        ],
-                                      )
-                                    ],
+                                        SizedBox(
+                                          width: width * 0.05,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Vaccines',
+                                              style: StyleConstants
+                                                  .blackThinTitleTextMedium,
+                                            ),
+                                            SizedBox(
+                                              height: height * 0.01,
+                                            ),
+                                            Text(
+                                              'Filler Content, Filler Content,\nFiller Content, Filler Content',
+                                              style: StyleConstants
+                                                  .greyThinDescriptionTextSmall,
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              )),
+                                )),
+                          ),
                           SizedBox(
                             height: height * 0.05,
                           ),
-                          Container(
-                              height: height * 0.17,
-                              width: width * 0.9,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(25.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      offset: Offset(0, 3),
-                                      blurRadius: 6.0,
-                                    ),
-                                  ]),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: width * 0.04,
-                                    vertical: height * 0.01),
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius:
-                                        BorderRadius.circular(10.0),
-                                        child: Container(
-                                          height: 75.0,
-                                          width: 75.0,
-                                          decoration: BoxDecoration(
-                                            //color: StyleConstants.blue,
-                                            borderRadius:
-                                            BorderRadius.circular(10.0),
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              Container(
-                                                height: 74.0,
-                                                width: 74.0,
-                                                child: Image.asset(
-                                                  'assets/navigation_images/gradcontainer.png',
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                              Align(
-                                                alignment: Alignment.bottomLeft,
-                                                child: Container(
-                                                    height: 75.0,
-                                                    width: 75.0,
-                                                    child: Image.asset(
-                                                      'assets/navigation_images/polygon.png', fit: BoxFit.cover,)),
-                                              ),
-                                              Align(
-                                                  alignment: Alignment.center,
+                          GestureDetector(
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ShareRecordsScreen())),
+                            child: Container(
+                                height: height * 0.17,
+                                width: width * 0.9,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        offset: Offset(0, 3),
+                                        blurRadius: 6.0,
+                                      ),
+                                    ]),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: width * 0.04,
+                                      vertical: height * 0.01),
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                          BorderRadius.circular(10.0),
+                                          child: Container(
+                                            height: 75.0,
+                                            width: 75.0,
+                                            decoration: BoxDecoration(
+                                              //color: StyleConstants.blue,
+                                              borderRadius:
+                                              BorderRadius.circular(10.0),
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                Container(
+                                                  height: 74.0,
+                                                  width: 74.0,
                                                   child: Image.asset(
-                                                      'assets/navigation_images/syringe.png')),
-                                            ],
+                                                    'assets/navigation_images/gradcontainer.png',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Align(
+                                                  alignment: Alignment.bottomLeft,
+                                                  child: Container(
+                                                      height: 75.0,
+                                                      width: 75.0,
+                                                      child: Image.asset(
+                                                        'assets/navigation_images/polygon.png', fit: BoxFit.cover,)),
+                                                ),
+                                                Align(
+                                                    alignment: Alignment.center,
+                                                    child: Image.asset(
+                                                        'assets/navigation_images/share.png')),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: width * 0.05,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Vaccines',
-                                            style: StyleConstants
-                                                .blackThinTitleTextMedium,
-                                          ),
-                                          SizedBox(
-                                            height: height * 0.01,
-                                          ),
-                                          Text(
-                                            'Filler Content, Filler Content,\nFiller Content, Filler Content',
-                                            style: StyleConstants
-                                                .greyThinDescriptionTextSmall,
-                                          )
-                                        ],
-                                      )
-                                    ],
+                                        SizedBox(
+                                          width: width * 0.05,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Share Records',
+                                              style: StyleConstants
+                                                  .blackThinTitleTextMedium,
+                                            ),
+                                            SizedBox(
+                                              height: height * 0.01,
+                                            ),
+                                            Text(
+                                              'Filler Content, Filler Content,\nFiller Content, Filler Content',
+                                              style: StyleConstants
+                                                  .greyThinDescriptionTextSmall,
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              )),
-                          SizedBox(
-                            height: height * 0.05,
+                                )),
                           ),
-                          Container(
-                              height: height * 0.17,
-                              width: width * 0.9,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(25.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      offset: Offset(0, 3),
-                                      blurRadius: 6.0,
-                                    ),
-                                  ]),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: width * 0.04,
-                                    vertical: height * 0.01),
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius:
-                                        BorderRadius.circular(10.0),
-                                        child: Container(
-                                          height: 75.0,
-                                          width: 75.0,
-                                          decoration: BoxDecoration(
-                                            //color: StyleConstants.blue,
-                                            borderRadius:
-                                            BorderRadius.circular(10.0),
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              Container(
-                                                height: 74.0,
-                                                width: 74.0,
-                                                child: Image.asset(
-                                                  'assets/navigation_images/gradcontainer.png',
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                              Align(
-                                                alignment: Alignment.bottomLeft,
-                                                child: Container(
-                                                    height: 75.0,
-                                                    width: 75.0,
-                                                    child: Image.asset(
-                                                      'assets/navigation_images/polygon.png', fit: BoxFit.cover,)),
-                                              ),
-                                              Align(
-                                                  alignment: Alignment.center,
-                                                  child: Image.asset(
-                                                      'assets/navigation_images/share.png')),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: width * 0.05,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Share Records',
-                                            style: StyleConstants
-                                                .blackThinTitleTextMedium,
-                                          ),
-                                          SizedBox(
-                                            height: height * 0.01,
-                                          ),
-                                          Text(
-                                            'Filler Content, Filler Content,\nFiller Content, Filler Content',
-                                            style: StyleConstants
-                                                .greyThinDescriptionTextSmall,
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              )),
                         ],
                       ),
                     ),

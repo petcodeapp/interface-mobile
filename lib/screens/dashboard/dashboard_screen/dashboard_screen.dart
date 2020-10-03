@@ -36,14 +36,7 @@ class DashboardScreen extends StatelessWidget {
             width: width,
             height: height,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                //end: Alignment(0.01, 0.01),
-                end: Alignment.centerLeft,
-                stops: [0.05, 0.25, 0.7],
-                colors: [const Color(0xffB3E1EE), const Color(0xff7cdcf7), StyleConstants.blue], // whitish to gray
-                //tileMode: TileMode.repeated, // repeats the gradient over the canvas
-              ),
+              gradient: StyleConstants.bgGradient,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,

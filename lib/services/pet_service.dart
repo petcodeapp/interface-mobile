@@ -37,11 +37,11 @@ class PetService extends ChangeNotifier {
               currentReminder.name.trim().isEmpty) {
             currentReminder.name = 'Untitled';
           }
-          if (currentReminder.date != null) {
+          if (currentReminder.startDate != null) {
             UpcomingEvent upcomingEvent = UpcomingEvent(
                 name: currentReminder.name,
                 petName: allPets[i].name,
-                date: currentReminder.date);
+                date: currentReminder.startDate);
             allUpcomingEvents.add(upcomingEvent);
           } else {
             UpcomingEvent upcomingEvent = UpcomingEvent(

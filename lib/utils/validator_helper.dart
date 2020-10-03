@@ -113,4 +113,20 @@ class ValidatorHelper {
       return null;
     }
   }
+
+  static String vaccinationNameValidator(String vaccinationName) {
+    if (vaccinationName == null || vaccinationName.trim().isEmpty) {
+      return 'Please enter a valid name';
+    } else {
+      return null;
+    }
+  }
+
+  static String reminderNameValidator(String reminderName) {
+    if (reminderName == null || reminderName.trim().isEmpty) {
+      return 'Please enter a valid name';
+    } else {
+      return null;
+    }
+  }
 }
