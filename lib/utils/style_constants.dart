@@ -273,6 +273,12 @@ class StyleConstants {
     fontWeight: FontWeight.w600,
   );
 
+  static TextStyle blueDescriptionText = new TextStyle(
+    color: blue,
+    fontSize: width * 0.04,
+    fontWeight: FontWeight.w600,
+  );
+
   static TextStyle yellowDescriptionText = new TextStyle(
     color: yellow,
     fontSize: width * 0.04,

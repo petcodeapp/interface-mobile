@@ -30,47 +30,58 @@ class ReminderWidget extends StatelessWidget {
               ),
             ]),
         width: width * 0.8,
-        height: height * 0.12,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+          padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: height * 0.02),
           child: Row(
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    currentReminder.name,
-                    style: StyleConstants.blackThinTitleTextSmall,
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  Text(
-                    'Recurring ' + (currentReminder.frequency ?? 'none'),
-                    style: StyleConstants.blackThinDescriptionTextSmall,
-                  ),
-                ],
+              Expanded(
+                flex: 5,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      currentReminder.name,
+                      style: StyleConstants.blackThinTitleTextSmall,
+                      maxLines: 10,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Text(
+                      'Recurring ' + (currentReminder.frequency ?? 'none'),
+                      style: StyleConstants.blackThinDescriptionTextSmall,
+                      maxLines: 10,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
               Spacer(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    currentReminder.startDate != null ? StringHelper.getDateString(currentReminder.startDate.toDate()) : 'No Start Date',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 25.0,
-                        color: StyleConstants.blue),
+              Expanded(
+                flex: 3,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        currentReminder.startDate != null ? StringHelper.getDateString(currentReminder.startDate.toDate()) : 'No Start Date',
+                        style: StyleConstants.blueDescriptionText,
+                        maxLines: 10,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        currentReminder.startDate != null ? StringHelper.getTimeString(currentReminder.startDate.toDate()) : 'No Time',
+                        style: StyleConstants.yellowDescriptionText,
+                        maxLines: 10,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
-                  Text(
-                    currentReminder.startDate != null ? StringHelper.getTimeString(currentReminder.startDate.toDate()) : 'No Time',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 25.0,
-                        color: StyleConstants.yellow),
-                  ),
-                ],
+                ),
               ),
             ],
           ),
