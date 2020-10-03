@@ -4,7 +4,6 @@ import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Scan.dart';
-import 'package:petcode_app/utils/map_constants.dart';
 
 class MapService extends ChangeNotifier {
   Future<List<Scan>> getScansFromAllPets(List<Pet> allPets) async {
@@ -23,9 +22,9 @@ class MapService extends ChangeNotifier {
     return allScans;
   }
 
-  Set<Marker> createMarkers(List<Scan> allScans) {
+  Future<Set<Marker>> createMarkers(
+      List<Scan> allScans, List<BitmapDescriptor> bitmapDescriptors) async {
     List<Marker> allMarkers = new List<Marker>();
-
     if (allScans != null) {
       for (int i = 0; i < allScans.length; i++) {
         Scan currentScan = allScans[i];
@@ -34,8 +33,7 @@ class MapService extends ChangeNotifier {
             markerId: MarkerId(currentScan.date.toString()),
             position: LatLng(
                 currentScan.location.latitude, currentScan.location.longitude),
-            icon: BitmapDescriptor.defaultMarkerWithHue(
-                MapConstants.bitmapDescriptorHues[currentScan.petIndex]),
+            icon: bitmapDescriptors[allScans[i].petIndex],
             infoWindow: InfoWindow(),
           ),
         );
