@@ -200,8 +200,10 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                     print(number.toString());
                                     _owner1FormattedNumber = number.toString();
                                   },
-                                  selectorType:
-                                      PhoneInputSelectorType.BOTTOM_SHEET,
+                                  selectorConfig: SelectorConfig(
+                                    selectorType:
+                                        PhoneInputSelectorType.BOTTOM_SHEET,
+                                  ),
                                   formatInput: true,
                                 ),
                               ],
@@ -354,8 +356,9 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                     _owner2FormattedNumber = number.phoneNumber;
                                   },
                                   formatInput: true,
-                                  selectorType:
-                                      PhoneInputSelectorType.BOTTOM_SHEET,
+                                  selectorConfig: SelectorConfig(
+                                      selectorType:
+                                          PhoneInputSelectorType.BOTTOM_SHEET),
                                 ),
                               ],
                             ),
@@ -428,7 +431,9 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: height * 0.02,),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
                       ],
                     ),
                   )

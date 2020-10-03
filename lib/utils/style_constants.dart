@@ -2,6 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class StyleConstants {
+  static MediaQueryData _mediaQueryData;
+
+  //for iPhone SE2 - 647.0 and 375.0
+  static double height;
+  static double width;
+
+  void init(BuildContext context) {
+    _mediaQueryData = MediaQuery.of(context);
+    height = _mediaQueryData.size.height -
+        (_mediaQueryData.padding.top + _mediaQueryData.padding.bottom);
+    width = _mediaQueryData.size.width -
+        (_mediaQueryData.padding.left + _mediaQueryData.padding.right);
+
+    print('height: ' + height.toString() + ' width: ' + width.toString());
+  }
+
   //colors
   static Color darkGrey = new Color(0xff66615B);
 
@@ -33,198 +49,197 @@ class StyleConstants {
   static TextStyle whiteButtonText = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: white,
-        fontSize: 25.0,
+        fontSize: width * 0.06,
       ));
 
   static TextStyle yellowButtonText = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: yellow,
-        fontSize: 25.0,
+        fontSize: width * 0.06,
       ));
 
   static TextStyle whiteTitleText = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.white,
-        fontSize: 30.0,
+        fontSize: width * 0.07,
       ));
 
   static TextStyle whiteTitleTextLarge = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.white,
-        fontSize: 40.0,
+        fontSize: width * 0.1,
       ));
 
   static TextStyle whiteTitleTextSmall = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.white,
-        fontSize: 25.0,
+        fontSize: width * 0.06,
       ));
 
   static TextStyle whiteTitleTextXS = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.white,
-        fontSize: 20.0,
+        fontSize: width * 0.05,
       ));
 
   static TextStyle whiteTitleTextXL = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.white,
-        fontSize: 50.0,
+        fontSize: width * 0.12,
       ));
 
   static TextStyle whiteDescriptionText = new TextStyle(
     color: Colors.white,
-    fontSize: 20.0,
+    fontSize: width * 0.05,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle whiteDescriptionTextSmall = new TextStyle(
     color: Colors.white,
-    fontSize: 14.0,
+    fontSize: width * 0.035,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle whiteDescriptionTextXS = new TextStyle(
     color: Colors.white,
-    fontSize: 10.0,
+    fontSize: width * 0.021,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle whiteThinTitleTextLarge = new TextStyle(
     color: Colors.white,
-    fontSize: 40.0,
+    fontSize: width * 0.1,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle blackTitleText = TextStyle(
     color: Colors.black,
-    fontSize: 26.0,
+    fontSize: width * 0.06,
     fontWeight: FontWeight.w800,
   );
 
   static TextStyle blackTitleTextLarge = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.black,
-        fontSize: 40.0,
+        fontSize: width * 0.1,
       ));
 
   static TextStyle blackTitleTextSmall = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.black,
-        fontSize: 25.0,
+        fontSize: width * 0.06,
       ));
 
   static TextStyle blackTitleTextXS = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.black,
-        fontSize: 20.0,
+        fontSize: width * 0.05,
       ));
 
   static TextStyle blackTitleTextXL = GoogleFonts.getFont('Lilita One',
       textStyle: TextStyle(
         color: Colors.black,
-        fontSize: 50.0,
+        fontSize: width * 0.12,
       ));
 
   static TextStyle blackThinTitleText = new TextStyle(
     color: Colors.black,
-    fontSize: 30.0,
+    fontSize: width * 0.07,
     fontWeight: FontWeight.w600,
   );
 
   static TextStyle blackThinTitleTextMedium = new TextStyle(
     color: Colors.black,
-    fontSize: 25.0,
+    fontSize: width * 0.06,
     fontWeight: FontWeight.w600,
   );
 
   static TextStyle blackThinTitleTextXS = new TextStyle(
     color: Colors.black,
-    fontSize: 16.0,
+    fontSize: width * 0.04,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle darkBlackDescriptionText = new TextStyle(
-      fontSize: 18.0,
+      fontSize: width * 0.041,
       fontWeight: FontWeight.w500,
-      color: Colors.black.withOpacity(0.8)
-  );
+      color: Colors.black.withOpacity(0.8));
 
   static TextStyle tinyGreyDescriptionText = new TextStyle(
-      fontSize: 14.0,
-      fontWeight: FontWeight.w400,
-      color: darkPurpleGrey,
+    fontSize: width * 0.035,
+    fontWeight: FontWeight.w400,
+    color: darkPurpleGrey,
   );
 
   static TextStyle lightBlackThinTitleText = new TextStyle(
     color: lightBlack,
-    fontSize: 30.0,
+    fontSize: width * 0.07,
     fontWeight: FontWeight.w600,
   );
 
   static TextStyle blackThinTitleTextLarge = new TextStyle(
     color: Colors.black87.withOpacity(0.8),
-    fontSize: 40.0,
+    fontSize: width * 0.1,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle blackThinTitleTextSmall = new TextStyle(
     color: Colors.black,
-    fontSize: 22.0,
+    fontSize: width * 0.052,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle lightBlackThinTitleTextSmall = new TextStyle(
     color: lightBlack,
-    fontSize: 22.0,
+    fontSize: width * 0.052,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle blackDescriptionText = new TextStyle(
     color: Colors.black,
-    fontSize: 20.0,
+    fontSize: width * 0.05,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle blackThinDescriptionText = new TextStyle(
     color: Colors.black,
-    fontSize: 20.0,
+    fontSize: width * 0.05,
     fontWeight: FontWeight.w300,
   );
 
   static TextStyle greyThinTitleText = new TextStyle(
     color: darkPurpleGrey,
-    fontSize: 30.0,
+    fontSize: width * 0.07,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle greyThinDescriptionText = new TextStyle(
     color: lightGrey,
-    fontSize: 20.0,
+    fontSize: width * 0.05,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle blackThinDescriptionTextSmall = new TextStyle(
     color: Colors.black,
-    fontSize: 14.0,
+    fontSize: width * 0.035,
     fontWeight: FontWeight.w300,
   );
 
   static TextStyle darkGreyThinDescriptionTextSmall = new TextStyle(
     color: lightBlack,
-    fontSize: 14.0,
+    fontSize: width * 0.035,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle whiteThinTitleText = new TextStyle(
     color: Colors.white,
-    fontSize: 30.0,
+    fontSize: width * 0.07,
     fontWeight: FontWeight.w600,
   );
 
   static TextStyle whiteThinTitleTextSmall = new TextStyle(
     color: Colors.white,
-    fontSize: 22.0,
+    fontSize: width * 0.052,
     fontWeight: FontWeight.w400,
   );
 
@@ -233,37 +248,46 @@ class StyleConstants {
 
   static TextStyle greyThinTitleTextSmall = new TextStyle(
     color: darkPurpleGrey,
-    fontSize: 20.0,
+    fontSize: width * 0.05,
     fontWeight: FontWeight.w500,
   );
 
   static TextStyle greyThinDescriptionTextSmall = new TextStyle(
     color: darkPurpleGrey,
-    fontSize: 14.0,
+    fontSize: width * 0.035,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle lightBlackDescriptionTextSmall = new TextStyle(
     color: lightBlack,
-    fontSize: 14.0,
+    fontSize: width * 0.035,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle greySubText = new TextStyle(
-    color: lightGrey,
-    fontSize: 12.0,
-    fontWeight: FontWeight.w300
-  );
+      color: lightGrey, fontSize: width * 0.03, fontWeight: FontWeight.w300);
 
   static TextStyle blueTitleText = new TextStyle(
     color: blue,
-    fontSize: 20.0,
+    fontSize: width * 0.05,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle blueTitleTextLarge = new TextStyle(
+    color: blue,
+    fontSize: width * 0.06,
+    fontWeight: FontWeight.w700,
+  );
+
+  static TextStyle blueDescriptionText = new TextStyle(
+    color: blue,
+    fontSize: width * 0.04,
     fontWeight: FontWeight.w600,
   );
 
   static TextStyle yellowDescriptionText = new TextStyle(
     color: yellow,
-    fontSize: 16.0,
+    fontSize: width * 0.04,
     fontWeight: FontWeight.w600,
   );
 
