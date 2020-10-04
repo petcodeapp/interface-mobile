@@ -115,7 +115,7 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                             child: IconButton(
                                 icon: Icon(
                                   HeroIcons.icon_globe,
-                                  size: 50.0,
+                                  size: width * 0.1,
                                   color: Colors.black,
                                 ),
                                 onPressed: () {}),

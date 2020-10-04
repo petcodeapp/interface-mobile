@@ -53,7 +53,8 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                       ' - ' +
                       DateFormat.jm().format(widget.date),
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.w400, color: StyleConstants.darkPurpleGrey),
+                  style: StyleConstants.darkGreyThinDescriptionTextSmall
+                  //style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: StyleConstants.darkPurpleGrey),
                 )
                     : Text(
                   'No date given',
