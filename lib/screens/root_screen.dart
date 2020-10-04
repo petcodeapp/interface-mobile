@@ -50,6 +50,8 @@ class _RootScreenState extends State<RootScreen> {
           children: _pageOptions,
         ),
       ),
+
+      /*
       bottomNavigationBar: BottomNavyBar(
         selectedIndex: _currentIndex,
         showElevation: true,
@@ -85,7 +87,38 @@ class _RootScreenState extends State<RootScreen> {
             inactiveColor: Colors.grey.withOpacity(0.6),
           ),
         ],
+      ),*/
+
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) => setState(() {
+          _currentIndex = index;
+          _pageController.jumpToPage(index);
+        }),
+        selectedItemColor: StyleConstants.blue,
+        backgroundColor: Colors.white,
+        unselectedItemColor: Colors.black.withOpacity(0.2),
+        showUnselectedLabels: true,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.location_on),
+            label: 'Scans',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.assignment),
+            label: 'Social',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Account',
+          ),
+        ],
       ),
+
     );
   }
 }

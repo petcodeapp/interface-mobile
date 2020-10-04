@@ -23,7 +23,7 @@ class StyleConstants {
 
   static Color lightBlue = new Color(0xff51CBCE);
 
-  static Color blue = new Color(0xff51BCDA);
+  static Color blue = new Color(0xff52BCDA);
 
   static Color green = new Color(0xff6BD098);
 
