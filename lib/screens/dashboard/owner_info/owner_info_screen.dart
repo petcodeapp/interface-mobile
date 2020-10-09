@@ -101,8 +101,8 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
             ),
             title: Row(
               children: [
-                owner.name != null && owner.name.isNotEmpty
-                    ? Text(owner.name,
+                owner.name != null && owner.name.value.isNotEmpty
+                    ? Text(owner.name.value,
                         style: StyleConstants.darkBlackDescriptionText)
                     : Text(
                         'Name',
@@ -126,8 +126,8 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
               HeroIcons.icon_mail,
               size: 30.0,
             ),
-            title: owner.email != null && owner.email.isNotEmpty
-                ? Text(owner.email,
+            title: owner.email != null && owner.email.value.isNotEmpty
+                ? Text(owner.email.value,
                     style: StyleConstants.darkBlackDescriptionText)
                 : Text(
                     'Email',
@@ -150,7 +150,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
               size: 30.0,
             ),
             title: owner.phoneNumber != null
-                ? Text(owner.phoneNumber,
+                ? Text(owner.phoneNumber.value,
                     style: StyleConstants.darkBlackDescriptionText)
                 : Text(
                     'Phone Number',
@@ -172,8 +172,8 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
               HeroIcons.icon_home,
               size: 30.0,
             ),
-            title: owner.address != null && owner.address.isNotEmpty
-                ? Text(owner.address,
+            title: owner.address != null && owner.address.value.isNotEmpty
+                ? Text(owner.address.value,
                     style: StyleConstants.darkBlackDescriptionText)
                 : Text(
                     'Address',

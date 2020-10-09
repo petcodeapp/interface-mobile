@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/models/VisibleValue.dart';
 import 'package:petcode_app/screens/setup_tag/stp_petinfo_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/address_search_bar.dart';
@@ -108,18 +109,27 @@ class _StpContactScreenState extends State<StpContactScreen> {
                 onTap: () {
                   Pet updatedPet = widget.pet;
                   Owner owner1 = new Owner(
-                      name: _owner1Name.text,
-                      phoneNumber: _owner1FormattedPhoneNumber,
-                      email: _owner1Email.text,
-                      address: _owner1Address.text);
+                    name: VisibleValue<String>(
+                        value: _owner1Name.text.trim(), visible: true),
+                    phoneNumber: VisibleValue<String>(
+                        value: _owner1FormattedPhoneNumber, visible: true),
+                    email: VisibleValue<String>(
+                        value: _owner1Email.text.trim(), visible: true),
+                    address: VisibleValue<String>(
+                        value: _owner1Address.text.trim(), visible: true),
+                  );
                   updatedPet.contact_1 = owner1;
 
                   if (!owner2IsEmpty()) {
                     Owner owner2 = new Owner(
-                      name: _owner2Name.text,
-                      phoneNumber: _owner2FormattedPhoneNumber,
-                      email: _owner2Email.text,
-                      address: _owner2Address.text,
+                      name: VisibleValue<String>(
+                          value: _owner2Name.text.trim(), visible: true),
+                      phoneNumber: VisibleValue<String>(
+                          value: _owner2FormattedPhoneNumber, visible: true),
+                      email: VisibleValue<String>(
+                          value: _owner2Email.text.trim(), visible: true),
+                      address: VisibleValue<String>(
+                          value: _owner2Address.text.trim(), visible: true),
                     );
                     updatedPet.contact_2 = owner2;
                   } else {

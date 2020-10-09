@@ -253,7 +253,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
             children: [
               Flexible(
                 child: Text(
-                  owner.name,
+                  owner.name.value,
                   style: StyleConstants.blackTitleTextSmall,
                 ),
               ),
@@ -262,7 +262,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
               ),
               Flexible(
                 child: Text(
-                  owner.email,
+                  owner.email.value,
                   style: StyleConstants.blackDescriptionText,
                 ),
               ),
@@ -271,7 +271,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
               ),
               Flexible(
                 child: Text(
-                  owner.phoneNumber,
+                  owner.phoneNumber.value,
                   style: StyleConstants.blackDescriptionText,
                 ),
               ),
@@ -280,7 +280,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
               ),
               Flexible(
                 child: Text(
-                  owner.address,
+                  owner.address.value,
                   style: StyleConstants.blackDescriptionText,
                 ),
               ),

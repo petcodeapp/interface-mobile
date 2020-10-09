@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/models/VisibleValue.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
@@ -79,10 +80,14 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                         if (_owner2FormKey.currentState.validate()) {
                           Owner updatedOwner2 = new Owner();
 
-                          updatedOwner2.name = _owner2Name.text.trim();
-                          updatedOwner2.phoneNumber = _owner2FormattedNumber;
-                          updatedOwner2.email = _owner2Email.text.trim();
-                          updatedOwner2.address = _owner2Address.text.trim();
+                          updatedOwner2.name = VisibleValue<String>(
+                              value: _owner2Name.text.trim(), visible: true);
+                          updatedOwner2.phoneNumber = VisibleValue<String>(
+                              value: _owner2FormattedNumber, visible: true);
+                          updatedOwner2.email = VisibleValue<String>(
+                              value: _owner2Email.text.trim(), visible: true);
+                          updatedOwner2.address = VisibleValue<String>(
+                              value: _owner2Address.text.trim(), visible: true);
 
                           updatedPet.contact_2 = updatedOwner2;
                         } else {
@@ -94,10 +99,14 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
 
                       Owner updatedOwner1 = new Owner();
 
-                      updatedOwner1.name = _owner1Name.text.trim();
-                      updatedOwner1.phoneNumber = _owner1FormattedNumber;
-                      updatedOwner1.email = _owner1Email.text.trim();
-                      updatedOwner1.address = _owner1Address.text.trim();
+                      updatedOwner1.name = VisibleValue<String>(
+                          value: _owner1Name.text.trim(), visible: true);
+                      updatedOwner1.phoneNumber = VisibleValue<String>(
+                          value: _owner1FormattedNumber, visible: true);
+                      updatedOwner1.email = VisibleValue<String>(
+                          value: _owner1Email.text.trim(), visible: true);
+                      updatedOwner1.address = VisibleValue<String>(
+                          value: _owner1Address.text.trim(), visible: true);
 
                       updatedPet.contact_1 = updatedOwner1;
 
@@ -446,19 +455,19 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
 
   void setUpInputControllers() {
     _owner1Name =
-        new TextEditingController(text: widget.currentPet.contact_1.name);
-    _owner1Email =
-        new TextEditingController(text: widget.currentPet.contact_1.email);
-    _owner1Address =
-        new TextEditingController(text: widget.currentPet.contact_1.address);
+        new TextEditingController(text: widget.currentPet.contact_1.name.value);
+    _owner1Email = new TextEditingController(
+        text: widget.currentPet.contact_1.email.value);
+    _owner1Address = new TextEditingController(
+        text: widget.currentPet.contact_1.address.value);
 
     if (widget.currentPet.contact_2 != null) {
-      _owner2Name =
-          new TextEditingController(text: widget.currentPet.contact_2.name);
-      _owner2Email =
-          new TextEditingController(text: widget.currentPet.contact_2.email);
-      _owner2Address =
-          new TextEditingController(text: widget.currentPet.contact_2.address);
+      _owner2Name = new TextEditingController(
+          text: widget.currentPet.contact_2.name.value);
+      _owner2Email = new TextEditingController(
+          text: widget.currentPet.contact_2.email.value);
+      _owner2Address = new TextEditingController(
+          text: widget.currentPet.contact_2.address.value);
     } else {
       _owner2Name = new TextEditingController();
       _owner2Email = new TextEditingController();
@@ -468,7 +477,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
 
   void getPhoneNumbers() async {
     _initialOwner1PhoneNumber = await PhoneNumber.getRegionInfoFromPhoneNumber(
-        widget.currentPet.contact_1.phoneNumber);
+        widget.currentPet.contact_1.phoneNumber.value);
     _owner1FormattedNumber = _initialOwner1PhoneNumber.phoneNumber;
 
     print(_owner1FormattedNumber);
@@ -476,7 +485,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
     if (widget.currentPet.contact_2 != null) {
       _initialOwner2PhoneNumber =
           await PhoneNumber.getRegionInfoFromPhoneNumber(
-              widget.currentPet.contact_2.phoneNumber);
+              widget.currentPet.contact_2.phoneNumber.value);
       _owner1FormattedNumber = _initialOwner2PhoneNumber.phoneNumber;
     } else {
       _initialOwner2PhoneNumber = PhoneNumber(isoCode: 'US');
