@@ -90,6 +90,7 @@ class _ScansScreenState extends State<ScansScreen> {
                           padding: EdgeInsets.only(
                               bottom: _mapBottomPadding + height * 0.295),
                           mapType: MapType.normal,
+                          indoorViewEnabled: true,
                           initialCameraPosition: CameraPosition(
                             target: LatLng(
                                 currentLocationProvider

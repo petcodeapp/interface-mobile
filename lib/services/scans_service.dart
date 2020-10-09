@@ -43,11 +43,17 @@ class MapService extends ChangeNotifier {
   }
 
   Future<String> getLocationAddress(GeoPoint coordinates) async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(
-        coordinates.latitude, coordinates.longitude);
-    if (placemarks.length > 0) {
-      return placemarkToAddressName(placemarks[0]);
-    } else {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          coordinates.latitude, coordinates.longitude);
+      if (placemarks.length > 0) {
+        return placemarkToAddressName(placemarks[0]);
+      } else {
+        return 'Address Not Found';
+      }
+    }
+    catch (error) {
+      print(error);
       return 'Address Not Found';
     }
   }

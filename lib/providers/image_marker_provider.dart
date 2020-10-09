@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/services/image_marker_service.dart';
 import 'package:petcode_app/utils/map_constants.dart';
+import 'package:petcode_app/utils/style_constants.dart';
 
 class ImageMarkerProvider extends ChangeNotifier {
   List<BitmapDescriptor> _markerImages;
@@ -19,7 +20,7 @@ class ImageMarkerProvider extends ChangeNotifier {
     List<Future<BitmapDescriptor>> descriptors =
         new List<Future<BitmapDescriptor>>();
     for (int i = 0; i < urls.length; i++) {
-      descriptors.add(_imageMarkerService.getMarkerIcon(urls[i], Size(80, 80), MapConstants.markerColors[i]));
+      descriptors.add(_imageMarkerService.getMarkerIcon(urls[i], Size(StyleConstants.width * 0.27, StyleConstants.width * 0.27), MapConstants.markerColors[i]));
     }
     _markerImages = await Future.wait(descriptors);
     notifyListeners();
