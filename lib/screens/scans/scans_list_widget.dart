@@ -47,8 +47,10 @@ class ScansListWidget extends StatelessWidget {
         );
       }
     }
-    return Column(
-      children: scans,
+    return Container(
+      child: ListView(
+        children: scans,
+      ),
     );
   }
 
@@ -66,77 +68,71 @@ class ScansListWidget extends StatelessWidget {
         );
       },
       child: Container(
-        height: height * 0.13,
-        width: width * 0.9,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.0),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                offset: Offset(0, 3),
-                blurRadius: 6.0,
-              ),
-            ]),
-        child: Row(
-          children: [
-            Container(
-              width: width * 0.443,
+        width: width,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+          child: Container(
+            height: height * 0.13,
+            //width: width * 0.9,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    offset: Offset(0, 3),
+                    blurRadius: 6.0,
+                  ),
+                ]),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: width * 0.05),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Expanded(
-                    flex: 7,
+                  CircleAvatar(
+                    radius: width * 0.05,
+                    backgroundImage: AssetImage('assets/images/stockdog1.jpg'),
+                  ),
+                  SizedBox(width: width * 0.05,),
+                  Container(
+                    width: width * 0.5,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          StringHelper.getDateString(date),
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20.0,
-                              color: StyleConstants.blue),
+                          '${StringHelper.getDateString(date)} - ${StringHelper.getTimeString(date)}',
+                          style: StyleConstants.lightBlackDescriptionTextSmall,
                         ),
                         Text(
-                          StringHelper.getTimeString(date),
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20.0,
-                              color: StyleConstants.yellow),
+                          address,
+                          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.black.withOpacity(0.8)),
+
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
-            VerticalDivider(
-              indent: height * 0.02,
-              endIndent: height * 0.02,
-              width: 4.0,
-              color: StyleConstants.darkPurpleGrey,
-            ),
-            Container(
-              width: width * 0.443,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width * 0.01),
-                      child: Text(
-                        address,
-                        style: StyleConstants.lightBlackDescriptionTextSmall,
-                        textAlign: TextAlign.center,
-                        maxLines: 4,
-                        overflow: TextOverflow.ellipsis,
+                  Spacer(),
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: StyleConstants.blue,
+                    ),
+                    height: width * 0.09,
+                    width: width * 0.09,
+                    child: Center(
+                      child: Icon(
+                        Icons.navigation,
+                        color: Colors.white,
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

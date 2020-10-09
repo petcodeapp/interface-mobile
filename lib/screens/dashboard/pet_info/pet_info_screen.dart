@@ -82,7 +82,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: IconButton(
-                            icon: Icon(Icons.arrow_back_ios, size: 25.0, color: Colors.white,),
+                            icon: Icon(Icons.arrow_back, size: 25.0, color: Colors.white,),
                             onPressed: () => Navigator.pop(context),
                           ),
                         )
@@ -163,7 +163,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                             StyleConstants.whiteThinTitleText,
                                       ),
                                       Text(
-                                        _currentPetProvider.currentPet.name,
+                                        _currentPetProvider.currentPet.breed,
                                         style: StyleConstants
                                             .whiteThinTitleTextSmall,
                                       )
@@ -182,12 +182,17 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                       ),
                       SizedBox(height: _height * 0.05,),
                       Container(
-
                         height: _height * 0.8,
                         width: _width * 0.9,
                         decoration: BoxDecoration(
-
                             color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                offset: Offset(0, 3),
+                                blurRadius: 10.0,
+                              ),
+                            ],
                             borderRadius: BorderRadius.circular(20.0)),
                         child: Expanded(
                           child: ListView(

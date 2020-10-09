@@ -109,8 +109,8 @@ class _RootScreenState extends State<RootScreen> {
             label: 'Scans',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.assignment),
-            label: 'Social',
+            icon: Icon(Icons.search),
+            label: 'Discovery',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),

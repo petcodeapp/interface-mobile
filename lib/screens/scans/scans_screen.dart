@@ -48,6 +48,7 @@ class _ScansScreenState extends State<ScansScreen> {
               topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
           backdropColor: StyleConstants.pageBackgroundColor,
           minHeight: height * 0.11,
+          maxHeight: height * 0.5,
           onPanelSlide: (double position) {
             setState(() {
               _mapBottomPadding = position * (500 - height * 0.11);
@@ -72,8 +73,8 @@ class _ScansScreenState extends State<ScansScreen> {
                       height: height * 0.01,
                     ),
                     Text(
-                      'Scan Locations',
-                      style: StyleConstants.blackTitleText,
+                      'View Scan Locations',
+                      style: StyleConstants.blackTitleText.copyWith(fontSize: 20.0, fontWeight: FontWeight.w400),
                     ),
                   ],
                 ),
@@ -149,7 +150,7 @@ class _ScansScreenState extends State<ScansScreen> {
           ),
           panel: Container(
             decoration: BoxDecoration(
-              color: StyleConstants.pageBackgroundColor,
+              color: Colors.white,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.0),
                   topRight: Radius.circular(30.0)),
@@ -159,7 +160,8 @@ class _ScansScreenState extends State<ScansScreen> {
                 SizedBox(
                   height: height * 0.1,
                 ),
-                Expanded(
+                Container(
+                  height: height * 0.4,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 10.0),
                     child: ScansListWidget(

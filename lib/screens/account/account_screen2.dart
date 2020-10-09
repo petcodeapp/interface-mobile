@@ -50,11 +50,11 @@ class AccountScreen2 extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Account', style: StyleConstants.whiteThinTitleText,),
+                          Text('Account', style: StyleConstants.whiteThinTitleTextSmall.copyWith(fontWeight: FontWeight.w600, fontSize: 22.0),),
 
                         ],
                       ),
-                      SizedBox(height: height * 0.01,),
+                      SizedBox(height: height * 0.02,),
                     ],
                   ),
                 ),
@@ -85,9 +85,9 @@ class AccountScreen2 extends StatelessWidget {
                         ]
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.symmetric(horizontal: width * 0.1),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CircleAvatar(
                               backgroundColor: Colors.transparent,
@@ -96,52 +96,58 @@ class AccountScreen2 extends StatelessWidget {
                                   ? allPetsProvider.allPets[0].petImage
                                   : AssetImage('assets/images/puppyphoto.jpg'),
                             ),
-                            SizedBox(width: width * 0.075,),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            SizedBox(width: width * 0.06,),
+                            Row(
                               children: [
-                                Text(
-                                  user.firstName + ' ' + user.lastName,
-                                  style: StyleConstants.blackThinTitleText,
-                                ),
-                                Row(
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      width: 7.0,
-                                        height: 7.0,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: StyleConstants.blue,
-                                      ),
-                                    ),
-                                    SizedBox(width: width * 0.01,),
                                     Text(
-                                      user.petIds.length.toString() + ' Pets',
-                                      style: TextStyle(
-                                          color: StyleConstants.darkPurpleGrey,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 16.0),
+                                      user.firstName + ' ' + user.lastName,
+                                      style: StyleConstants.blackThinTitleText.copyWith(fontSize: 25.0),
                                     ),
-                                    SizedBox(width: width * 0.05,),
-                                    Container(
-                                      width: 7.0,
-                                      height: 7.0,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: StyleConstants.yellow,
-                                      ),
-                                    ),
-                                    SizedBox(width: width * 0.01,),
-                                    Text(
-                                      numScans.toString() + ' Scans',
-                                      style: TextStyle(
-                                          color: StyleConstants.darkPurpleGrey,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 16.0),
+                                    SizedBox(height: height * 0.01,),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          width: 7.0,
+                                            height: 7.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: StyleConstants.blue,
+                                          ),
+                                        ),
+                                        SizedBox(width: width * 0.01,),
+                                        Text(
+                                          user.petIds.length.toString() + ' Pets',
+                                          style: TextStyle(
+                                              color: StyleConstants.darkPurpleGrey,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16.0),
+                                        ),
+                                        SizedBox(width: width * 0.05,),
+                                        Container(
+                                          width: 7.0,
+                                          height: 7.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: StyleConstants.yellow,
+                                          ),
+                                        ),
+                                        SizedBox(width: width * 0.01,),
+                                        Text(
+                                          numScans.toString() + ' Scans',
+                                          style: TextStyle(
+                                              color: StyleConstants.darkPurpleGrey,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16.0),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
+                                SizedBox(width: width * 0.06,)
                               ],
                             ),
                           ],
