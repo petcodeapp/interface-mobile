@@ -74,16 +74,14 @@ class _MedicalInfoScreen2State extends State<MedicalInfoScreen2> {
               children: [
                 Container(
                   height: height * 0.15,
+
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.1),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            //Text('Health', style: StyleConstants.whiteThinTitleText,),
-                            DropdownButtonHideUnderline(
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.1, vertical: height * 0.02),
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: DropdownButtonHideUnderline(
                               child: new DropdownButton<Pet>(
                                 iconEnabledColor: Colors.white,
                                 dropdownColor: StyleConstants.blue,
@@ -94,33 +92,16 @@ class _MedicalInfoScreen2State extends State<MedicalInfoScreen2> {
                                 },
                               ),
                             ),
-                            Spacer(),
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
-                                        offset: Offset(0, 3),
-                                        blurRadius: 6.0),
-                                  ]),
-                              child: CircleAvatar(
-                                backgroundColor: StyleConstants.blue,
-                                radius: 30.0,
-                                backgroundImage:
-                                    _allPetsProvider.allPets.length > 0
-                                        ? _allPetsProvider.allPets[0].petImage
-                                        : AssetImage(
-                                            'assets/images/puppyphoto.jpg'),
-                              ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child: IconButton(
+                              icon: Icon(Icons.arrow_back, size: 25.0, color: Colors.white,),
+                              onPressed: () => Navigator.pop(context),
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: height * 0.01,
-                        ),
-                      ],
-                    ),
+                          )
+                        ],
+                      )
                   ),
                 ),
                 Expanded(
