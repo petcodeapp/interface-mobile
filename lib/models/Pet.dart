@@ -13,13 +13,13 @@ class Pet {
   String profileUrl;
   String breed;
   String temperament;
-  String allergies;
   String species;
   String color;
   String additionalInfo;
   VisibleValue<String> specialNeeds;
   VisibleValue<String> vetName;
   VisibleValue<String> vetPhoneNumber;
+  VisibleValue<String> allergies;
   bool isServiceAnimal;
   bool isLost;
   bool isAdopted;
@@ -127,13 +127,13 @@ class Pet {
       profileUrl: json['profileUrl'] as String,
       breed: json['breed'] as String,
       temperament: json['temperament'] as String,
-      allergies: json['allergies'] as String,
       species: json['species'] as String,
       color: json['color'] as String,
       additionalInfo: json['additionalInfo'] as String,
       specialNeeds: VisibleValue.fromJson(json['specialNeeds']),
       vetName: VisibleValue.fromJson(json['vetName']),
       vetPhoneNumber: VisibleValue.fromJson(json['vetPhoneNumber']),
+      allergies: VisibleValue.fromJson(json['allergies']),
       isServiceAnimal: json['isServiceAnimal'] as bool,
       isLost: json['isLost'] as bool,
       isAdopted: json['isAdopted'] as bool,
@@ -155,13 +155,13 @@ class Pet {
         'profileUrl': instance.profileUrl,
         'breed': instance.breed,
         'temperament': instance.temperament,
-        'allergies': instance.allergies,
         'species': instance.species,
         'color': instance.color,
         'additionalInfo': instance.additionalInfo,
         'specialNeeds': instance.specialNeeds.toJson(),
         'vetName': instance.vetName.toJson(),
         'vetPhoneNumber': instance.vetPhoneNumber.toJson(),
+        'allergies': instance.allergies.toJson(),
         'isServiceAnimal': instance.isServiceAnimal,
         'isLost': instance.isLost,
         'isAdopted': instance.isAdopted,

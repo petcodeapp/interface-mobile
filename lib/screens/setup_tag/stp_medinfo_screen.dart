@@ -208,10 +208,18 @@ class _StpMedicalInfoScreenState extends State<StpMedicalInfoScreen> {
               GestureDetector(
                 onTap: () {
                   Pet updatedPet = widget.pet;
-                  updatedPet.allergies = _petAllergiesInputController.text.trim();
-                  updatedPet.specialNeeds = VisibleValue<String>(value: _specialNeedsInputController.text.trim(), visible: true);
-                  updatedPet.vetName = VisibleValue<String>(value:  _vetNameInputController.text.trim(), visible: true);
-                  updatedPet.vetPhoneNumber = VisibleValue<String>(value: _vetPhoneNumberInputController.text.trim(), visible: true);
+                  updatedPet.allergies = VisibleValue<String>(
+                      value: _petAllergiesInputController.text.trim(),
+                      visible: true);
+                  updatedPet.specialNeeds = VisibleValue<String>(
+                      value: _specialNeedsInputController.text.trim(),
+                      visible: true);
+                  updatedPet.vetName = VisibleValue<String>(
+                      value: _vetNameInputController.text.trim(),
+                      visible: true);
+                  updatedPet.vetPhoneNumber = VisibleValue<String>(
+                      value: _vetPhoneNumberInputController.text.trim(),
+                      visible: true);
 
                   Navigator.push(
                       context,

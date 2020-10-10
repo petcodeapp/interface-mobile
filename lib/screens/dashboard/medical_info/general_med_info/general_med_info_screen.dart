@@ -101,7 +101,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 ),
                 title: Row(
                   children: [
-                    Text(currentPet.allergies,
+                    Text(currentPet.allergies.value,
                             style: StyleConstants.darkBlackDescriptionText) ??
                         Text(
                           'Allergies',
