@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:petcode_app/models/VisibleValue.dart';
 import 'package:petcode_app/screens/setup_tag/stp_vaccinehist_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/utils/validator_helper.dart';
 
 class StpMedicalInfoScreen extends StatefulWidget {
   StpMedicalInfoScreen({Key key, this.pet, this.petImage}) : super(key: key);
@@ -20,14 +22,18 @@ class _StpMedicalInfoScreenState extends State<StpMedicalInfoScreen> {
   TextEditingController _petAllergiesInputController;
   TextEditingController _specialNeedsInputController;
   TextEditingController _vetNameInputController;
-  TextEditingController _vetPhoneNumberInputController;
+
+  PhoneNumber _initialVetPhoneNumber;
+
+  String _vetFormattedPhoneNumber;
 
   @override
   void initState() {
     _petAllergiesInputController = new TextEditingController();
     _specialNeedsInputController = new TextEditingController();
     _vetNameInputController = new TextEditingController();
-    _vetPhoneNumberInputController = new TextEditingController();
+
+    _initialVetPhoneNumber = new PhoneNumber(isoCode: 'US');
 
     super.initState();
   }
@@ -186,14 +192,22 @@ class _StpMedicalInfoScreenState extends State<StpMedicalInfoScreen> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Center(
-                          child: TextFormField(
-                            controller: _vetPhoneNumberInputController,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Vet Phone Number',
-                                hintStyle: TextStyle(fontSize: 15.0)),
+                            child: InternationalPhoneNumberInput(
+                          onInputChanged: (PhoneNumber newNumber) {
+                            _vetFormattedPhoneNumber = newNumber.toString();
+                          },
+                          initialValue: _initialVetPhoneNumber,
+                          inputDecoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Vet Phone Number',
+                            hintStyle: TextStyle(fontSize: 15.0),
                           ),
-                        ),
+                          textStyle: TextStyle(fontSize: 12.0),
+                          selectorConfig: SelectorConfig(
+                            selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                          ),
+                          formatInput: true,
+                        )),
                       ),
                     ),
                     SizedBox(
@@ -218,8 +232,7 @@ class _StpMedicalInfoScreenState extends State<StpMedicalInfoScreen> {
                       value: _vetNameInputController.text.trim(),
                       visible: true);
                   updatedPet.vetPhoneNumber = VisibleValue<String>(
-                      value: _vetPhoneNumberInputController.text.trim(),
-                      visible: true);
+                      value: _vetFormattedPhoneNumber, visible: true);
 
                   Navigator.push(
                       context,

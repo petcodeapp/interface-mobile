@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:petcode_app/services/breed_autocomplete_service.dart';
 
 class ValidatorHelper {
   static String emailValidator(String email) {
@@ -58,9 +59,9 @@ class ValidatorHelper {
     }
   }
 
-  static String petSpeciesValidator(String petSpecies) {
-    if (petSpecies == null || petSpecies.trim().length == 0) {
-      return 'Please enter a valid pet species';
+  static String petSpeciesValidator(Species petSpecies) {
+    if (petSpecies == null) {
+      return 'Please select a species';
     } else {
       return null;
     }
@@ -98,6 +99,14 @@ class ValidatorHelper {
     }
   }
 
+  static String petBirthdayValidator(String petBirthday) {
+    if (petBirthday == null || petBirthday.trim().isEmpty) {
+      return 'Please select a birthday';
+    } else {
+      return null;
+    }
+  }
+
   static String phoneNumberValidator(String phoneNumber) {
     if (int.tryParse(phoneNumber.trim()) == null) {
       return 'Please enter a valid phone number';
@@ -124,6 +133,14 @@ class ValidatorHelper {
 
   static String reminderNameValidator(String reminderName) {
     if (reminderName == null || reminderName.trim().isEmpty) {
+      return 'Please enter a valid name';
+    } else {
+      return null;
+    }
+  }
+
+  static String ownerNameValidator(String ownerName) {
+    if (ownerName == null || ownerName.trim().isEmpty) {
       return 'Please enter a valid name';
     } else {
       return null;

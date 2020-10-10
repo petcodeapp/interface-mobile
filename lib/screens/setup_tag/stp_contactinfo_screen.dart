@@ -5,8 +5,8 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/VisibleValue.dart';
 import 'package:petcode_app/screens/setup_tag/stp_petinfo_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:petcode_app/widgets/address_search_bar.dart';
-import 'package:provider/provider.dart';
 import 'package:slimy_card/slimy_card.dart';
 
 class StpContactScreen extends StatefulWidget {
@@ -35,6 +35,9 @@ class _StpContactScreenState extends State<StpContactScreen> {
 
   String _owner1FormattedPhoneNumber;
   String _owner2FormattedPhoneNumber;
+
+  GlobalKey<FormState> _formKey1 = new GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey2 = new GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -107,40 +110,45 @@ class _StpContactScreenState extends State<StpContactScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Pet updatedPet = widget.pet;
-                  Owner owner1 = new Owner(
-                    name: VisibleValue<String>(
-                        value: _owner1Name.text.trim(), visible: true),
-                    phoneNumber: VisibleValue<String>(
-                        value: _owner1FormattedPhoneNumber, visible: true),
-                    email: VisibleValue<String>(
-                        value: _owner1Email.text.trim(), visible: true),
-                    address: VisibleValue<String>(
-                        value: _owner1Address.text.trim(), visible: true),
-                  );
-                  updatedPet.contact_1 = owner1;
-
-                  if (!owner2IsEmpty()) {
-                    Owner owner2 = new Owner(
+                  if (_formKey1.currentState.validate() &&
+                      (owner2IsEmpty() ||
+                          (!owner2IsEmpty() &&
+                              _formKey2.currentState.validate()))) {
+                    Pet updatedPet = widget.pet;
+                    Owner owner1 = new Owner(
                       name: VisibleValue<String>(
-                          value: _owner2Name.text.trim(), visible: true),
+                          value: _owner1Name.text.trim(), visible: true),
                       phoneNumber: VisibleValue<String>(
-                          value: _owner2FormattedPhoneNumber, visible: true),
+                          value: _owner1FormattedPhoneNumber, visible: true),
                       email: VisibleValue<String>(
-                          value: _owner2Email.text.trim(), visible: true),
+                          value: _owner1Email.text.trim(), visible: true),
                       address: VisibleValue<String>(
-                          value: _owner2Address.text.trim(), visible: true),
+                          value: _owner1Address.text.trim(), visible: true),
                     );
-                    updatedPet.contact_2 = owner2;
-                  } else {
-                    updatedPet.contact_2 = null;
+                    updatedPet.contact_1 = owner1;
+
+                    if (!owner2IsEmpty()) {
+                      Owner owner2 = new Owner(
+                        name: VisibleValue<String>(
+                            value: _owner2Name.text.trim(), visible: true),
+                        phoneNumber: VisibleValue<String>(
+                            value: _owner2FormattedPhoneNumber, visible: true),
+                        email: VisibleValue<String>(
+                            value: _owner2Email.text.trim(), visible: true),
+                        address: VisibleValue<String>(
+                            value: _owner2Address.text.trim(), visible: true),
+                      );
+                      updatedPet.contact_2 = owner2;
+                    } else {
+                      updatedPet.contact_2 = null;
+                    }
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => StpPetInfoScreen(
+                                  pet: updatedPet,
+                                )));
                   }
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => StpPetInfoScreen(
-                                pet: updatedPet,
-                              )));
                 },
                 child: Container(
                   height: 55.0,
@@ -172,18 +180,50 @@ class _StpContactScreenState extends State<StpContactScreen> {
         borderRadius: BorderRadius.circular(12.0),
       ),
       padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Contact 1',
-            style: StyleConstants.whiteTitleTextSmall,
-          ),
-          SizedBox(
-            height: height * 0.02,
-          ),
-          Container(
-            decoration: BoxDecoration(
+      child: Form(
+        key: _formKey1,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Contact 1',
+              style: StyleConstants.whiteTitleTextSmall,
+            ),
+            SizedBox(
+              height: height * 0.02,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10.0,
+                      offset: Offset(0, 2),
+                    ),
+                  ]),
+              height: 50.0,
+              width: 250.0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Center(
+                  child: TextFormField(
+                    controller: _owner1Name,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Full Name',
+                        hintStyle: TextStyle(fontSize: 15.0)),
+                    validator: ValidatorHelper.ownerNameValidator,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: height * 0.02,
+            ),
+            Container(
+              decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5.0),
                 boxShadow: [
@@ -192,118 +232,94 @@ class _StpContactScreenState extends State<StpContactScreen> {
                     blurRadius: 10.0,
                     offset: Offset(0, 2),
                   ),
-                ]),
-            height: 50.0,
-            width: 250.0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Center(
-                child: TextFormField(
-                  controller: _owner1Name,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Full Name',
-                      hintStyle: TextStyle(fontSize: 15.0)),
-                ),
+                ],
               ),
-            ),
-          ),
-          SizedBox(
-            height: height * 0.02,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            height: 50.0,
-            width: 250.0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Center(
-                  child: InternationalPhoneNumberInput(
-                onInputChanged: (PhoneNumber newNumber) {
-                  _owner1FormattedPhoneNumber = newNumber.toString();
-                },
-                inputDecoration: InputDecoration(
+              height: 50.0,
+              width: 250.0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Center(
+                    child: InternationalPhoneNumberInput(
+                  onInputChanged: (PhoneNumber newNumber) {
+                    _owner1FormattedPhoneNumber = newNumber.toString();
+                  },
+                  textStyle: TextStyle(fontSize: 12.0),
+                  inputDecoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Phone Number',
-                    hintStyle: TextStyle(fontSize: 15.0)),
-                selectorConfig: SelectorConfig(
-                    selectorType: PhoneInputSelectorType.BOTTOM_SHEET),
-                formatInput: true,
-                initialValue: _initialOwner1PhoneNumber,
-              )),
+                    hintStyle: TextStyle(fontSize: 15.0),
+                  ),
+                  selectorConfig: SelectorConfig(
+                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET),
+                  formatInput: true,
+                  initialValue: _initialOwner1PhoneNumber,
+                )),
+              ),
             ),
-          ),
-          SizedBox(
-            height: height * 0.02,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
+            SizedBox(
+              height: height * 0.02,
             ),
-            height: 50.0,
-            width: 250.0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Center(
-                child: TextFormField(
-                  controller: _owner1Email,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Email',
-                      hintStyle: TextStyle(fontSize: 15.0)),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              height: 50.0,
+              width: 250.0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Center(
+                  child: TextFormField(
+                    controller: _owner1Email,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Email',
+                        hintStyle: TextStyle(fontSize: 15.0)),
+                    validator: ValidatorHelper.emailValidator,
+                  ),
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            height: height * 0.02,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
+            SizedBox(
+              height: height * 0.02,
             ),
-            height: 50.0,
-            width: 250.0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Center(
-                  child: AddressSearchBar(
-                addressController: _owner1Address,
-                inputDecoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Address',
-                  hintStyle: TextStyle(fontSize: 15.0),
-                ),
-              )),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              height: 50.0,
+              width: 250.0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Center(
+                    child: AddressSearchBar(
+                  addressController: _owner1Address,
+                  inputDecoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Address',
+                    hintStyle: TextStyle(fontSize: 15.0),
+                  ),
+                  addressValidator: ValidatorHelper.addressValidator,
+                )),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -316,18 +332,50 @@ class _StpContactScreenState extends State<StpContactScreen> {
         borderRadius: BorderRadius.circular(12.0),
       ),
       padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
-      child: Column(
-        //crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Contact 2',
-            style: StyleConstants.whiteTitleTextSmall,
-          ),
-          SizedBox(
-            height: height * 0.02,
-          ),
-          Container(
-            decoration: BoxDecoration(
+      child: Form(
+        key: _formKey2,
+        child: Column(
+          //crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Contact 2',
+              style: StyleConstants.whiteTitleTextSmall,
+            ),
+            SizedBox(
+              height: height * 0.02,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10.0,
+                      offset: Offset(0, 2),
+                    ),
+                  ]),
+              height: 50.0,
+              width: 250.0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Center(
+                  child: TextFormField(
+                    controller: _owner2Name,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Full Name',
+                        hintStyle: TextStyle(fontSize: 15.0)),
+                    validator: ValidatorHelper.ownerNameValidator,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: height * 0.02,
+            ),
+            Container(
+              decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5.0),
                 boxShadow: [
@@ -336,117 +384,91 @@ class _StpContactScreenState extends State<StpContactScreen> {
                     blurRadius: 10.0,
                     offset: Offset(0, 2),
                   ),
-                ]),
-            height: 50.0,
-            width: 250.0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Center(
-                child: TextFormField(
-                  controller: _owner2Name,
-                  decoration: InputDecoration(
+                ],
+              ),
+              height: 50.0,
+              width: 250.0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Center(
+                    child: InternationalPhoneNumberInput(
+                  inputDecoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Full Name',
+                      hintText: 'Phone Number',
                       hintStyle: TextStyle(fontSize: 15.0)),
+                  selectorConfig: SelectorConfig(
+                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET),
+                  onInputChanged: (PhoneNumber newNumber) {
+                    _owner2FormattedPhoneNumber = newNumber.toString();
+                  },
+                  initialValue: _initialOwner2PhoneNumber,
+                  formatInput: true,
+                )),
+              ),
+            ),
+            SizedBox(
+              height: height * 0.02,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              height: 50.0,
+              width: 250.0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Center(
+                  child: TextFormField(
+                    controller: _owner2Email,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Email',
+                        hintStyle: TextStyle(fontSize: 15.0)),
+                    validator: ValidatorHelper.emailValidator,
+                  ),
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            height: height * 0.02,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
+            SizedBox(
+              height: height * 0.02,
             ),
-            height: 50.0,
-            width: 250.0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Center(
-                  child: InternationalPhoneNumberInput(
-                inputDecoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Phone Number',
-                    hintStyle: TextStyle(fontSize: 15.0)),
-                selectorConfig: SelectorConfig(
-                    selectorType: PhoneInputSelectorType.BOTTOM_SHEET),
-                onInputChanged: (PhoneNumber newNumber) {
-                  _owner2FormattedPhoneNumber = newNumber.toString();
-                },
-                initialValue: _initialOwner2PhoneNumber,
-                formatInput: true,
-              )),
-            ),
-          ),
-          SizedBox(
-            height: height * 0.02,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            height: 50.0,
-            width: 250.0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Center(
-                child: TextFormField(
-                  controller: _owner2Email,
-                  decoration: InputDecoration(
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              height: 50.0,
+              width: 250.0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Center(
+                    child: AddressSearchBar(
+                  addressController: _owner2Address,
+                  inputDecoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Email',
+                      hintText: 'Address',
                       hintStyle: TextStyle(fontSize: 15.0)),
-                ),
+                  addressValidator: ValidatorHelper.addressValidator,
+                )),
               ),
             ),
-          ),
-          SizedBox(
-            height: height * 0.02,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            height: 50.0,
-            width: 250.0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Center(
-                  child: AddressSearchBar(
-                addressController: _owner2Address,
-                inputDecoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Address',
-                    hintStyle: TextStyle(fontSize: 15.0)),
-              )),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
