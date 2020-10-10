@@ -5,6 +5,7 @@ import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/models/Scan.dart';
 import 'package:petcode_app/models/Vaccination.dart';
+import 'package:petcode_app/models/VisibleValue.dart';
 
 class Pet {
   String pid;
@@ -13,12 +14,12 @@ class Pet {
   String breed;
   String temperament;
   String allergies;
-  String specialNeeds;
   String species;
   String color;
-  String vetName;
-  String vetPhoneNumber;
   String additionalInfo;
+  VisibleValue<String> specialNeeds;
+  VisibleValue<String> vetName;
+  VisibleValue<String> vetPhoneNumber;
   bool isServiceAnimal;
   bool isLost;
   bool isAdopted;
@@ -41,12 +42,12 @@ class Pet {
       this.breed,
       this.temperament,
       this.allergies,
-      this.specialNeeds,
       this.species,
       this.color,
+      this.additionalInfo,
+      this.specialNeeds,
       this.vetName,
       this.vetPhoneNumber,
-      this.additionalInfo,
       this.isServiceAnimal,
       this.isLost,
       this.isAdopted,
@@ -127,12 +128,12 @@ class Pet {
       breed: json['breed'] as String,
       temperament: json['temperament'] as String,
       allergies: json['allergies'] as String,
-      specialNeeds: json['specialNeeds'] as String,
       species: json['species'] as String,
       color: json['color'] as String,
-      vetName: json['vetName'] as String,
-      vetPhoneNumber: json['vetPhoneNumber'] as String,
       additionalInfo: json['additionalInfo'] as String,
+      specialNeeds: VisibleValue.fromJson(json['specialNeeds']),
+      vetName: VisibleValue.fromJson(json['vetName']),
+      vetPhoneNumber: VisibleValue.fromJson(json['vetPhoneNumber']),
       isServiceAnimal: json['isServiceAnimal'] as bool,
       isLost: json['isLost'] as bool,
       isAdopted: json['isAdopted'] as bool,
@@ -155,12 +156,12 @@ class Pet {
         'breed': instance.breed,
         'temperament': instance.temperament,
         'allergies': instance.allergies,
-        'specialNeeds': instance.specialNeeds,
         'species': instance.species,
         'color': instance.color,
-        'vetName': instance.vetName,
-        'vetPhoneNumber': instance.vetPhoneNumber,
         'additionalInfo': instance.additionalInfo,
+        'specialNeeds': instance.specialNeeds.toJson(),
+        'vetName': instance.vetName.toJson(),
+        'vetPhoneNumber': instance.vetPhoneNumber.toJson(),
         'isServiceAnimal': instance.isServiceAnimal,
         'isLost': instance.isLost,
         'isAdopted': instance.isAdopted,

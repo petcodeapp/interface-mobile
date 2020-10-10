@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:petcode_app/models/VisibleValue.dart';
 import 'package:petcode_app/screens/setup_tag/stp_vaccinehist_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/models/Pet.dart';
@@ -207,11 +208,10 @@ class _StpMedicalInfoScreenState extends State<StpMedicalInfoScreen> {
               GestureDetector(
                 onTap: () {
                   Pet updatedPet = widget.pet;
-                  updatedPet.allergies = _petAllergiesInputController.text;
-                  updatedPet.specialNeeds = _specialNeedsInputController.text;
-                  updatedPet.vetName = _vetNameInputController.text;
-                  updatedPet.vetPhoneNumber =
-                      _vetPhoneNumberInputController.text;
+                  updatedPet.allergies = _petAllergiesInputController.text.trim();
+                  updatedPet.specialNeeds = VisibleValue<String>(value: _specialNeedsInputController.text.trim(), visible: true);
+                  updatedPet.vetName = VisibleValue<String>(value:  _vetNameInputController.text.trim(), visible: true);
+                  updatedPet.vetPhoneNumber = VisibleValue<String>(value: _vetPhoneNumberInputController.text.trim(), visible: true);
 
                   Navigator.push(
                       context,

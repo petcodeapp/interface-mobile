@@ -62,7 +62,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 ),
                 title: Row(
                   children: [
-                    Text(currentPet.specialNeeds,
+                    Text(currentPet.specialNeeds.value,
                             style: StyleConstants.darkBlackDescriptionText) ??
                         Text(
                           'Special Needs',
@@ -140,7 +140,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 ),
                 title: Row(
                   children: [
-                    Text(currentPet.vetName,
+                    Text(currentPet.vetName.value,
                             style: StyleConstants.darkBlackDescriptionText) ??
                         Text(
                           'Veterinarian Name',
@@ -179,7 +179,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 ),
                 title: Row(
                   children: [
-                    Text(currentPet.vetPhoneNumber,
+                    Text(currentPet.vetPhoneNumber.value,
                             style: StyleConstants.darkBlackDescriptionText) ??
                         Text(
                           'Veterinarian Phone Number',
