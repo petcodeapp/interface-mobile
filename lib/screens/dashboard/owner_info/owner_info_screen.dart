@@ -6,6 +6,7 @@ import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/screens/dashboard/owner_info/owner_info_editing_screen.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
+import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
 import 'package:petcode_app/widgets/custom_app_bars/change_pet_app_bar.dart';
@@ -83,7 +84,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: IconButton(
-                            icon: Icon(Icons.arrow_back_ios, size: 25.0, color: Colors.white,),
+                            icon: Icon(HeroIcons2.left_arrow_1, size: 25.0, color: Colors.white,),
                             onPressed: () => Navigator.pop(context),
                           ),
                         )
@@ -159,26 +160,26 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
                   padding: EdgeInsets.only(left: width * 0.04),
                   child: Text(
                     title,
-                    style: StyleConstants.blackThinTitleTextSmall.copyWith(fontWeight: FontWeight.w600),
+                    style: StyleConstants.blackThinTitleTextSmall.copyWith(fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.7)),
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.edit),
+                  icon: Icon(HeroIcons2.edit_2),
                   iconSize: width * 0.08,
                 )
               ],
             ),
             ListTile(
               leading: Icon(
-                HeroIcons.icon_user,
-                size: width * 0.08,
+                HeroIcons2.name_1,
+                size: width * 0.07,
                 color: StyleConstants.blue,
               ),
               title: Row(
                 children: [
                   owner.name != null && owner.name.isNotEmpty
                       ? Text(owner.name,
-                          style: TextStyle(fontSize: width * 0.05, fontWeight: FontWeight.w600, color: Colors.black))
+                          style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))
                       : Text(
                           'Name',
                           style: StyleConstants.greyedOutText,
@@ -187,7 +188,7 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
               ),
               trailing: Text(
                 'Visibility',
-                style: TextStyle(fontSize: width * 0.03, fontWeight: FontWeight.w400, color: Colors.black),
+                style: TextStyle(fontSize: width * 0.03, fontWeight: FontWeight.w400, color: Colors.black.withOpacity(0.8)),
               ),
             ),
             Padding(
@@ -198,13 +199,13 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
             ),
             ListTile(
               leading: Icon(
-                HeroIcons.icon_mail,
-                size: width * 0.08,
+                HeroIcons2.email_1,
+                size: width * 0.07,
                 color: StyleConstants.blue,
               ),
               title: owner.email != null && owner.email.isNotEmpty
                   ? Text(owner.email,
-                      style: TextStyle(fontSize: width * 0.05, fontWeight: FontWeight.w600, color: Colors.black))
+                      style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))
                   : Text(
                       'Email',
                       style: StyleConstants.greyedOutText,
@@ -225,13 +226,13 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
             ),
             ListTile(
               leading: Icon(
-                HeroIcons.icon_call,
-                size: width * 0.08,
+                HeroIcons2.phone_2,
+                size: width * 0.07,
                 color: StyleConstants.blue,
               ),
               title: owner.phoneNumber != null
                   ? Text(owner.phoneNumber,
-                      style: TextStyle(fontSize: width * 0.05, fontWeight: FontWeight.w600, color: Colors.black))
+                      style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))
                   : Text(
                       'Phone Number',
                       style: StyleConstants.greyedOutText,
@@ -252,13 +253,13 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
             ),
             ListTile(
               leading: Icon(
-                HeroIcons.icon_home,
-                size: width * 0.08,
+                HeroIcons2.home_1,
+                size: width * 0.07,
                 color: StyleConstants.blue,
               ),
               title: owner.address != null && owner.address.isNotEmpty
                   ? Text(owner.address,
-                      style: TextStyle(fontSize: width * 0.05, fontWeight: FontWeight.w600, color: Colors.black))
+                      style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))
                   : Text(
                       'Address',
                       style: StyleConstants.greyedOutText,

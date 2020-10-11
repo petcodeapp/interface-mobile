@@ -158,7 +158,7 @@ class _ScansScreenState extends State<ScansScreen> {
             child: Column(
               children: [
                 SizedBox(
-                  height: height * 0.1,
+                  height: height * 0.08,
                 ),
                 Container(
                   height: height * 0.4,

@@ -3,6 +3,7 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
+import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/custom_app_bars/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -80,7 +81,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: IconButton(
-                            icon: Icon(Icons.arrow_back_ios, size: 25.0, color: Colors.white,),
+                            icon: Icon(HeroIcons2.left_arrow_1, size: 25.0, color: Colors.white,),
                             onPressed: () => Navigator.pop(context),
                           ),
                         )
@@ -150,19 +151,19 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.edit),
+                  icon: Icon(HeroIcons2.edit_2),
                   iconSize: width * 0.08,
                 )
               ],
             ),
             ListTile(
               leading: Icon(
-                HeroIcons.icon_user,
+                HeroIcons2.pharmacy_1,
                 size: width * 0.08,
                 color: StyleConstants.blue,
               ),
               title: Text(currentPet.specialNeeds,
-                  style: TextStyle(fontSize: width * 0.05, fontWeight: FontWeight.w600, color: Colors.black)) ??
+                  style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))??
                   Text(
                     'Special Needs',
                     style: StyleConstants.greyedOutText,
@@ -184,12 +185,12 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
             ),
             ListTile(
               leading: Icon(
-                HeroIcons.icon_user,
+                HeroIcons2.antibacterial_1,
                 size: width * 0.08,
                 color: StyleConstants.blue,
               ),
               title: Text(currentPet.allergies,
-                  style: TextStyle(fontSize: width * 0.05, fontWeight: FontWeight.w600, color: Colors.black)) ??
+                  style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8))) ??
                   Text(
                     'Allergies',
                     style: StyleConstants.greyedOutText,
@@ -211,12 +212,12 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
             ),
             ListTile(
               leading: Icon(
-                HeroIcons.icon_user,
+                HeroIcons2.vet_1,
                 size: width * 0.08,
                 color: StyleConstants.blue,
               ),
               title: Text(currentPet.vetName,
-                  style: TextStyle(fontSize: width * 0.05, fontWeight: FontWeight.w600, color: Colors.black)) ??
+                  style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8))) ??
                   Text(
                     'Veterinarian Name',
                     style: StyleConstants.greyedOutText,
@@ -238,24 +239,19 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
             ),
             ListTile(
               leading: Icon(
-                HeroIcons.icon_user,
+                HeroIcons2.paw_1,
                 size: width * 0.08,
                 color: StyleConstants.blue,
               ),
               title: Text(currentPet.vetPhoneNumber,
-                  style: TextStyle(fontSize: width * 0.05, fontWeight: FontWeight.w600, color: Colors.black)) ??
+                  style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))??
                   Text(
                     'Veterinarian Phone Number',
                     style: StyleConstants.greyedOutText,
                   ),
 
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Divider(
-                thickness: 2,
-              ),
-            ),
+
           ],
         ),
       )

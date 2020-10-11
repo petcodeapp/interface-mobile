@@ -4,6 +4,7 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/dashboard/pet_info/pet_info_editing_screen.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
+import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
@@ -82,7 +83,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: IconButton(
-                            icon: Icon(Icons.arrow_back, size: 25.0, color: Colors.white,),
+                            icon: Icon(HeroIcons2.left_arrow_1, size: 25.0, color: Colors.white,),
                             onPressed: () => Navigator.pop(context),
                           ),
                         )
@@ -172,7 +173,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 ],
                               ),
                               IconButton(
-                                icon: Icon(Icons.edit, color: Colors.white,),
+                                icon: Icon(HeroIcons2.edit_2, color: Colors.white,),
                                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => PetInfoEditingScreen(currentPet: currentPet,))),
                                 iconSize: 30.0,
                               )
@@ -200,7 +201,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                             children: [
                               ListTile(
                                 leading: Icon(
-                                  HeroIcons.icon_star,
+                                  HeroIcons2.pawprint_1,
                                   size: 30.0,
                                   color: StyleConstants.blue,
                                 ),
@@ -237,7 +238,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                               ),
                               ListTile(
                                 leading: Icon(
-                                  HeroIcons.icon_calander,
+                                  HeroIcons2.calendar_1,
                                   size: 30.0,
                                   color: StyleConstants.blue,
                                 ),
@@ -273,7 +274,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                               ),
                               ListTile(
                                 leading: Icon(
-                                  HeroIcons.icon_emotion_happy,
+                                  HeroIcons2.user_2,
                                   size: 30.0,
                                   color: StyleConstants.blue,
                                 ),
@@ -314,7 +315,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                               ),
                               ListTile(
                                 leading: Icon(
-                                  HeroIcons.icon_user_check,
+                                  HeroIcons2.cardiogram_1,
                                   color: StyleConstants.blue,
                                   size: 30.0,
                                 ),

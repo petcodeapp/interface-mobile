@@ -71,3 +71,6 @@ flutter:
    - family: HeroIcons
      fonts:
        - asset: assets/icons/HeroIcons.ttf
+   - family: HeroIcons2
+     fonts:
+       - asset: assets/icons/HeroIcons2.ttf

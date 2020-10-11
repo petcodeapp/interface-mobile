@@ -123,9 +123,12 @@ class ScansListWidget extends StatelessWidget {
                     height: width * 0.09,
                     width: width * 0.09,
                     child: Center(
-                      child: Icon(
-                        Icons.navigation,
-                        color: Colors.white,
+                      child: Transform.rotate(
+                        angle: 45 * 3.14 / 180,
+                        child: Icon(
+                          Icons.navigation,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   )
