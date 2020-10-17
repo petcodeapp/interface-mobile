@@ -152,7 +152,8 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 ),
                 IconButton(
                   icon: Icon(HeroIcons2.edit_2),
-                  iconSize: width * 0.08,
+                  iconSize: width * 0.07,
+                  onPressed: () {},
                 )
               ],
             ),
@@ -177,12 +178,9 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
               ),
             ),
             SizedBox(
-              height: 15.0,
+              height: height * 0.01,
             ),
 
-            SizedBox(
-              height: 10.0,
-            ),
             ListTile(
               leading: Icon(
                 HeroIcons2.antibacterial_1,
@@ -204,12 +202,10 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
               ),
             ),
             SizedBox(
-              height: 15.0,
+              height: height * 0.01,
             ),
 
-            SizedBox(
-              height: 10.0,
-            ),
+
             ListTile(
               leading: Icon(
                 HeroIcons2.vet_1,
@@ -231,11 +227,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
               ),
             ),
             SizedBox(
-              height: 15.0,
-            ),
-
-            SizedBox(
-              height: 10.0,
+              height: height * 0.01,
             ),
             ListTile(
               leading: Icon(
