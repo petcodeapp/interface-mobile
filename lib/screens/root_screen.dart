@@ -20,7 +20,7 @@ class _RootScreenState extends State<RootScreen> {
     DashboardScreen(),
     ScansScreen(),
     SocialSplitScreen(),
-    AccountScreen2()
+    AccountScreen()
   ];
 
   @override

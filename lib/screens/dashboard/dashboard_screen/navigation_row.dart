@@ -131,7 +131,7 @@ class NavigationRow extends StatelessWidget {
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => MedicalInfoScreen2(),
+                            builder: (_) => MedicalInfoScreen(),
                           ),
                         ),
                         child: Column(

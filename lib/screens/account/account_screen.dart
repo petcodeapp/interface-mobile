@@ -9,7 +9,7 @@ import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
-class AccountScreen2 extends StatelessWidget {
+class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserService userService = Provider.of<UserService>(context);

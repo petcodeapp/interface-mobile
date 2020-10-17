@@ -11,14 +11,14 @@ import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/widgets/custom_app_bars/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
 
-class MedicalInfoScreen2 extends StatefulWidget {
-  MedicalInfoScreen2({Key key}) : super(key: key);
+class MedicalInfoScreen extends StatefulWidget {
+  MedicalInfoScreen({Key key}) : super(key: key);
 
   @override
-  _MedicalInfoScreen2State createState() => _MedicalInfoScreen2State();
+  _MedicalInfoScreenState createState() => _MedicalInfoScreenState();
 }
 
-class _MedicalInfoScreen2State extends State<MedicalInfoScreen2> {
+class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
   CurrentPetProvider _currentPetProvider;
   AllPetsProvider _allPetsProvider;
 
