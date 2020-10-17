@@ -41,7 +41,7 @@ class StyleConstants {
 
   static Color darkPurpleGrey = new Color(0xffA0AEC0);
 
-  static Color lightBlack = new Color(0xff718096);
+  static Color lightBlack = new Color(0xff2D3748);
 
   static Color pageBackgroundColor = new Color(0xffEEF2F6);
 

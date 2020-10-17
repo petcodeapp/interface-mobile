@@ -83,44 +83,49 @@ class _EditVaccinationWidgetState extends State<EditVaccinationWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Edit Vaccination',
-                      style: StyleConstants.blackThinTitleTextMedium,
-                    ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    Text('Name', style: StyleConstants.blackThinTitleTextXS),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    TextFormField(
-                      controller: _vaccinationNameController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Name',
-                        hintStyle: TextStyle(fontSize: 14.0),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Edit Vaccination',
+                        style: StyleConstants.blackThinTitleTextMedium,
                       ),
-                      validator: ValidatorHelper.vaccinationNameValidator,
                     ),
                     SizedBox(
-                      height: 8.0,
+                      height: height * 0.06,
                     ),
-                    Text('Expiration',
-                        style: StyleConstants.blackThinTitleTextXS),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    TextField(
-                      controller: _vaccinationDateController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Expiration Date',
-                        hintStyle: TextStyle(fontSize: 14.0),
-                        suffixIcon: Icon(Icons.calendar_today),
+                    Text('Name', style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16.0,
+                        color: Colors.black.withOpacity(0.8))),
+
+                    SizedBox(height: height * 0.07,
+                      child: TextFormField(
+                        controller: _vaccinationNameController,
+                        decoration: InputDecoration(
+                        ),
+                        validator: ValidatorHelper.vaccinationNameValidator,
                       ),
-                      readOnly: true,
-                      onTap: () => pickDate(context),
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Text('Expiration Date',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.0,
+                            color: Colors.black.withOpacity(0.8))),
+
+                    SizedBox(
+                      height: height * 0.07,
+                      child: TextField(
+                        controller: _vaccinationDateController,
+                        decoration: InputDecoration(
+
+                          suffixIcon: Icon(Icons.calendar_today),
+                        ),
+                        readOnly: true,
+                        onTap: () => pickDate(context),
+                      ),
                     ),
                     SizedBox(
                       height: height * 0.05,
