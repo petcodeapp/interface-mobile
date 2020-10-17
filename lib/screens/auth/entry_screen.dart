@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/auth/login_screen.dart';
 import 'package:petcode_app/screens/auth/signup_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:provider/provider.dart';
 
 class EntryScreen extends StatefulWidget {
   @override
@@ -214,8 +215,15 @@ class _EntryScreenState extends State<EntryScreen> {
               Positioned(
                 bottom: height * 0.22,
                 child: GestureDetector(
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen())),
-
+                  //onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen())),
+                  onTap: () => Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation){
+                    return ListenableProvider(
+                      create: (context) => animation,
+                      child: LoginScreen(),
+                    );
+                  },
+                    transitionDuration: Duration(seconds:1),
+                  )),
                   child: Container(
                     decoration: StyleConstants.roundYellowButtonDeco,
                     width: width * 0.55,
@@ -232,7 +240,17 @@ class _EntryScreenState extends State<EntryScreen> {
                 bottom: height * 0.12,
                 child: GestureDetector(
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SignupScreen())),
+                  /*
+                  onTap: () => Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation){
+                    return ListenableProvider(
+                      create: (context) => animation,
+                      child: SignupScreen2(),
+                    );
+                  },
+                    transitionDuration: Duration(seconds:1),
+                  )),*/
                   child: Container(
+
                     decoration: StyleConstants.roundWhiteButtonDeco.copyWith(color: StyleConstants.blue),
                     width: width * 0.55,
                     height: height * 0.07,

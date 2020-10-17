@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
@@ -40,13 +41,14 @@ class _ScansScreenState extends State<ScansScreen> {
         Provider.of<CurrentLocationProvider>(context);
 
     return Scaffold(
-      appBar: ChangePetAppBar(),
+      backgroundColor: StyleConstants.blue,
       body: SlidingUpPanel(
           controller: _panelController,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
           backdropColor: StyleConstants.pageBackgroundColor,
           minHeight: height * 0.11,
+          maxHeight: height * 0.5,
           onPanelSlide: (double position) {
             setState(() {
               _mapBottomPadding = position * (500 - height * 0.11);
@@ -71,8 +73,8 @@ class _ScansScreenState extends State<ScansScreen> {
                       height: height * 0.01,
                     ),
                     Text(
-                      'Scan Locations',
-                      style: StyleConstants.blackTitleText,
+                      'View Scan Locations',
+                      style: StyleConstants.blackTitleText.copyWith(fontSize: 20.0, fontWeight: FontWeight.w400),
                     ),
                   ],
                 ),
@@ -81,42 +83,74 @@ class _ScansScreenState extends State<ScansScreen> {
           ),
           body: Container(
             height: height,
+            decoration: BoxDecoration(
+              color: StyleConstants.blue,
+              gradient: StyleConstants.bgGradient,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Expanded(
-                  child: currentLocationProvider.currentLocation != null
-                      ? GoogleMap(
-                          padding: EdgeInsets.only(
-                              bottom: _mapBottomPadding + height * 0.295),
-                          mapType: MapType.normal,
-                          initialCameraPosition: CameraPosition(
-                            target: LatLng(
-                                currentLocationProvider
-                                    .currentLocation.latitude,
-                                currentLocationProvider
-                                    .currentLocation.longitude),
-                            zoom: 14.0,
-                          ),
-                          onMapCreated: (GoogleMapController controller) {
-                            setState(() {
-
-                            });
-                            _controller.complete(controller);
-                          },
-                          zoomControlsEnabled: true,
-                          markers: scansProvider.mapMarkers,
-                        )
-                      : Center(
-                          child: CircularProgressIndicator(),
+                Container(
+                  height: height * 0.15,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Scan Locations', style: StyleConstants.whiteThinTitleText.copyWith(fontSize: 25.0),),
+                          ],
                         ),
+                        SizedBox(height: height * 0.03,),
+                      ],
+                    ),
+                  ),
+                ),
+                currentLocationProvider.currentLocation != null ? Expanded(
+                  child: currentLocationProvider.currentLocation != null
+                      ? ClipRRect(
+                    borderRadius: BorderRadius.only(topRight: Radius.circular(10.0), topLeft: Radius.circular(10.0)),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(topRight: Radius.circular(10.0), topLeft: Radius.circular(10.0)),
+                          ),
+                          child: GoogleMap(
+                              padding: EdgeInsets.only(
+                                  bottom: _mapBottomPadding + height * 0.295),
+                              mapType: MapType.normal,
+                              initialCameraPosition: CameraPosition(
+                                target: LatLng(
+                                    currentLocationProvider
+                                        .currentLocation.latitude,
+                                    currentLocationProvider
+                                        .currentLocation.longitude),
+                                zoom: 14.0,
+                              ),
+                              onMapCreated: (GoogleMapController controller) {
+                                setState(() {
+
+                                });
+                                _controller.complete(controller);
+                              },
+                              zoomControlsEnabled: true,
+                              markers: scansProvider.mapMarkers,
+                            ),
+                        ),
+                      )
+                      : Center(
+                          child: SpinKitDualRing(size: 30.0, color: StyleConstants.yellow),
+                        ),
+                ): Center(
+                  child: SpinKitDualRing(size: 30.0, color: StyleConstants.yellow),
                 ),
               ],
             ),
           ),
           panel: Container(
             decoration: BoxDecoration(
-              color: StyleConstants.pageBackgroundColor,
+              color: Colors.white,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.0),
                   topRight: Radius.circular(30.0)),
@@ -124,9 +158,10 @@ class _ScansScreenState extends State<ScansScreen> {
             child: Column(
               children: [
                 SizedBox(
-                  height: height * 0.1,
+                  height: height * 0.08,
                 ),
-                Expanded(
+                Container(
+                  height: height * 0.4,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 10.0),
                     child: ScansListWidget(
