@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/dashboard/pet_info/pet_info_editing_screen.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
@@ -9,7 +8,6 @@ import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/change_pet_dropdown.dart';
 import 'package:provider/provider.dart';
-import 'package:petcode_app/providers/all_pets_provider.dart';
 
 class PetInfoScreen extends StatefulWidget {
   @override
@@ -19,18 +17,12 @@ class PetInfoScreen extends StatefulWidget {
 class _PetInfoScreenState extends State<PetInfoScreen> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     CurrentPetProvider currentPetProvider =
         Provider.of<CurrentPetProvider>(context);
     Pet currentPet = currentPetProvider.currentPet;
-
-    double _height = MediaQuery.of(context).size.height;
-    double _width = MediaQuery.of(context).size.width;
-
-    CurrentPetProvider _currentPetProvider;
-    AllPetsProvider _allPetsProvider;
-
-    _allPetsProvider = Provider.of<AllPetsProvider>(context);
-    _currentPetProvider = Provider.of<CurrentPetProvider>(context);
 
     return Scaffold(
       backgroundColor: StyleConstants.pageBackgroundColor,
@@ -39,16 +31,16 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
           decoration: BoxDecoration(
             gradient: StyleConstants.bgGradient,
           ),
-          width: _width,
+          width: width,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: _height * 0.15,
+                height: height * 0.15,
                 child: Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: _width * 0.1, vertical: _height * 0.02),
+                        horizontal: width * 0.1, vertical: height * 0.02),
                     child: Stack(
                       children: [
                         Align(
@@ -71,7 +63,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
               ),
               Flexible(
                 child: Container(
-                  width: _width,
+                  width: width,
                   decoration: BoxDecoration(
                       color: StyleConstants.pageBackgroundColor,
                       borderRadius: BorderRadius.only(
@@ -81,10 +73,10 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(
-                        height: _height * 0.02,
+                        height: height * 0.02,
                       ),
                       Container(
-                        width: _width * 0.9,
+                        width: width * 0.9,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topRight,
@@ -102,7 +94,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(_width * 0.05),
+                          padding: EdgeInsets.all(width * 0.05),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -120,42 +112,43 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                                 BorderRadius.circular(30.0),
                                             boxShadow: [
                                               BoxShadow(
-                                                  color:
-                                                      Colors.black.withOpacity(0.2),
+                                                  color: Colors.black
+                                                      .withOpacity(0.2),
                                                   offset: Offset(0, 3),
                                                   blurRadius: 6.0),
                                             ]),
                                         child: CircleAvatar(
                                           backgroundColor: StyleConstants.blue,
                                           radius: 40.0,
-                                          backgroundImage: _allPetsProvider
-                                                      .allPets.length >
-                                                  0
-                                              ? _allPetsProvider.allPets[0].petImage
+                                          backgroundImage: currentPet
+                                                      .petImage !=
+                                                  null
+                                              ? currentPet.petImage
                                               : AssetImage(
                                                   'assets/images/puppyphoto.jpg'),
                                         ),
                                       ),
                                     ),
                                     SizedBox(
-                                      width: _width * 0.05,
+                                      width: width * 0.05,
                                     ),
                                     Expanded(
                                       flex: 2,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            _currentPetProvider.currentPet.name,
-                                            style:
-                                                StyleConstants.whiteThinTitleText,
+                                            currentPetProvider.currentPet.name,
+                                            style: StyleConstants
+                                                .whiteThinTitleText,
                                             maxLines: 3,
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                           Text(
-                                            _currentPetProvider.currentPet.breed,
+                                            currentPetProvider.currentPet.breed,
                                             style: StyleConstants
                                                 .whiteThinTitleTextSmall,
                                             maxLines: 3,
@@ -188,10 +181,10 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: _height * 0.05,
+                        height: height * 0.05,
                       ),
                       Container(
-                        width: _width * 0.9,
+                        width: width * 0.9,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             boxShadow: [
@@ -213,13 +206,14 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 color: StyleConstants.blue,
                               ),
                               //need to add species field
-                              title: Text(currentPet.species) ??
-                                  Text('Species',
+                              title: currentPet.species != null
+                                  ? Text(currentPet.species)
+                                  : Text('Species',
                                       style: StyleConstants.greyedOutText),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
                               child: Divider(
                                 thickness: 1,
                               ),
@@ -230,15 +224,16 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 size: 30.0,
                                 color: StyleConstants.blue,
                               ),
-                              title: Text(currentPet.breed) ??
-                                  Text(
-                                    'Breed',
-                                    style: StyleConstants.greyedOutText,
-                                  ),
+                              title: currentPet.breed != null
+                                  ? Text(currentPet.breed)
+                                  : Text(
+                                      'Breed',
+                                      style: StyleConstants.greyedOutText,
+                                    ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
                               child: Divider(
                                 thickness: 1,
                               ),
@@ -256,8 +251,8 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                       currentPet.birthday.toDate())),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
                               child: Divider(
                                 thickness: 1,
                               ),
@@ -268,13 +263,14 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 size: 30.0,
                                 color: StyleConstants.blue,
                               ),
-                              title: Text(currentPet.color) ??
-                                  Text('Color',
+                              title: currentPet.color != null
+                                  ? Text(currentPet.color)
+                                  : Text('Color',
                                       style: StyleConstants.greyedOutText),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
                               child: Divider(
                                 thickness: 1,
                               ),
@@ -290,8 +286,8 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                       style: StyleConstants.greyedOutText),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
                               child: Divider(
                                 thickness: 1,
                               ),
@@ -314,8 +310,8 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
                               child: Divider(
                                 thickness: 1,
                               ),
@@ -337,8 +333,8 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
                               child: Divider(
                                 thickness: 1,
                               ),
@@ -349,76 +345,21 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 color: StyleConstants.blue,
                                 size: 30.0,
                               ),
-                              title: Text(
-                                  (currentPet.additionalInfo != null
-                                      ? currentPet.additionalInfo
-                                      : 'Additional Notes'),
-                                  style: StyleConstants.greyedOutText),
+                              title: currentPet.additionalInfo != null
+                                  ? Text(currentPet.additionalInfo)
+                                  : Text(
+                                      'Additional Notes',
+                                      style: StyleConstants.greyedOutText,
+                                    ),
                             ),
                           ],
                         ),
                       ),
                       SizedBox(
-                        height: _height * 0.02,
+                        height: height * 0.02,
                       ),
                     ],
                   ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget createOwnerWidget(Owner owner, double height, double width) {
-    return Container(
-      width: width * 0.85,
-      //height: height * 0.15,
-      decoration: BoxDecoration(
-        color: StyleConstants.white,
-        borderRadius: BorderRadius.circular(24.0),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Container(
-          width: width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(
-                child: Text(
-                  owner.name.value,
-                  style: StyleConstants.blackTitleTextSmall,
-                ),
-              ),
-              SizedBox(
-                height: height * 0.008,
-              ),
-              Flexible(
-                child: Text(
-                  owner.email.value,
-                  style: StyleConstants.blackDescriptionText,
-                ),
-              ),
-              SizedBox(
-                height: height * 0.008,
-              ),
-              Flexible(
-                child: Text(
-                  owner.phoneNumber.value,
-                  style: StyleConstants.blackDescriptionText,
-                ),
-              ),
-              SizedBox(
-                height: height * 0.008,
-              ),
-              Flexible(
-                child: Text(
-                  owner.address.value,
-                  style: StyleConstants.blackDescriptionText,
                 ),
               ),
             ],
