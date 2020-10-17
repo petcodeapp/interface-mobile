@@ -206,7 +206,8 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 color: StyleConstants.blue,
                               ),
                               //need to add species field
-                              title: currentPet.species != null
+                              title: currentPet.species != null &&
+                                      currentPet.species.isNotEmpty
                                   ? Text(currentPet.species)
                                   : Text('Species',
                                       style: StyleConstants.greyedOutText),
@@ -224,7 +225,8 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 size: 30.0,
                                 color: StyleConstants.blue,
                               ),
-                              title: currentPet.breed != null
+                              title: currentPet.breed != null &&
+                                      currentPet.breed.isNotEmpty
                                   ? Text(currentPet.breed)
                                   : Text(
                                       'Breed',
@@ -263,7 +265,8 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 size: 30.0,
                                 color: StyleConstants.blue,
                               ),
-                              title: currentPet.color != null
+                              title: currentPet.color != null &&
+                                      currentPet.color.isNotEmpty
                                   ? Text(currentPet.color)
                                   : Text('Color',
                                       style: StyleConstants.greyedOutText),
@@ -281,8 +284,10 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 size: 30.0,
                                 color: StyleConstants.blue,
                               ),
-                              title: Text(currentPet.temperament) ??
-                                  Text('Temperament',
+                              title: currentPet.temperament != null &&
+                                      currentPet.temperament.isNotEmpty
+                                  ? Text(currentPet.temperament)
+                                  : Text('Temperament',
                                       style: StyleConstants.greyedOutText),
                             ),
                             Padding(
@@ -345,7 +350,8 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 color: StyleConstants.blue,
                                 size: 30.0,
                               ),
-                              title: currentPet.additionalInfo != null
+                              title: currentPet.additionalInfo != null &&
+                                      currentPet.additionalInfo.isNotEmpty
                                   ? Text(currentPet.additionalInfo)
                                   : Text(
                                       'Additional Notes',
