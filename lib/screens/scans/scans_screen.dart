@@ -125,7 +125,7 @@ class _ScansScreenState extends State<ScansScreen> {
                                   child: GoogleMap(
                                     padding: EdgeInsets.only(
                                         bottom:
-                                            _mapBottomPadding + height * 0.165),
+                                            _mapBottomPadding + height * 0.18),
                                     mapType: MapType.normal,
                                     initialCameraPosition: CameraPosition(
                                       target: LatLng(

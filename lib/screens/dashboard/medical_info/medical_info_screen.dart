@@ -5,7 +5,7 @@ import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/vaccinat
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/providers/all_pets_provider.dart';
+import 'package:petcode_app/widgets/change_pet_dropdown.dart';
 import 'package:provider/provider.dart';
 
 class MedicalInfoScreen extends StatelessWidget {
@@ -13,25 +13,10 @@ class MedicalInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    CurrentPetProvider currentPetProvider = Provider.of<CurrentPetProvider>(context);
-    AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
+    CurrentPetProvider currentPetProvider =
+        Provider.of<CurrentPetProvider>(context);
 
     Pet selectedPet = currentPetProvider.currentPet;
-    List<DropdownMenuItem<Pet>> dropdownMenuItems =
-    new List<DropdownMenuItem<Pet>>();
-
-    for (int i = 0; i < allPetsProvider.allPets.length; i++) {
-      print(allPetsProvider.allPets[i].pid);
-      dropdownMenuItems.add(
-        DropdownMenuItem<Pet>(
-            child: Text(
-              allPetsProvider.allPets[i].name,
-              style:
-              StyleConstants.whiteDescriptionText.copyWith(fontSize: 25.0),
-            ),
-            value: allPetsProvider.allPets[i]),
-      );
-    }
 
     if (selectedPet == null) {
       return Scaffold(
@@ -56,35 +41,28 @@ class MedicalInfoScreen extends StatelessWidget {
               children: [
                 Container(
                   height: height * 0.15,
-
                   child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width * 0.1, vertical: height * 0.02),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: width * 0.1, vertical: height * 0.02),
                       child: Stack(
                         children: [
                           Align(
                             alignment: Alignment.bottomCenter,
-                            child: DropdownButtonHideUnderline(
-                              child: new DropdownButton<Pet>(
-                                iconEnabledColor: Colors.white,
-                                dropdownColor: StyleConstants.blue,
-                                value: currentPetProvider.currentPet,
-                                items: dropdownMenuItems,
-                                onChanged: (Pet pet) {
-                                  currentPetProvider.setCurrentPet(pet);
-                                },
-                              ),
-                            ),
+                            child: ChangePetDropdown(),
                           ),
                           Align(
                             alignment: Alignment.bottomLeft,
                             child: IconButton(
-                              icon: Icon(Icons.arrow_back, size: 25.0, color: Colors.white,),
+                              icon: Icon(
+                                Icons.arrow_back,
+                                size: 25.0,
+                                color: Colors.white,
+                              ),
                               onPressed: () => Navigator.pop(context),
                             ),
                           )
                         ],
-                      )
-                  ),
+                      )),
                 ),
                 Expanded(
                   child: Container(
@@ -103,7 +81,11 @@ class MedicalInfoScreen extends StatelessWidget {
                             height: height * 0.05,
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => GeneralMedicalInfoScreen())),
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        GeneralMedicalInfoScreen())),
                             child: Container(
                                 height: height * 0.17,
                                 width: width * 0.9,
@@ -123,20 +105,21 @@ class MedicalInfoScreen extends StatelessWidget {
                                       vertical: height * 0.01),
                                   child: Center(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                       children: [
                                         ClipRRect(
                                           borderRadius:
-                                          BorderRadius.circular(10.0),
+                                              BorderRadius.circular(10.0),
                                           child: Container(
                                             height: 75.0,
                                             width: 75.0,
                                             decoration: BoxDecoration(
                                               //color: StyleConstants.blue,
                                               borderRadius:
-                                              BorderRadius.circular(10.0),
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             child: Stack(
                                               children: [
@@ -149,12 +132,15 @@ class MedicalInfoScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Align(
-                                                  alignment: Alignment.bottomLeft,
+                                                  alignment:
+                                                      Alignment.bottomLeft,
                                                   child: Container(
                                                       height: 75.0,
                                                       width: 75.0,
                                                       child: Image.asset(
-                                                        'assets/navigation_images/polygon.png', fit: BoxFit.cover,)),
+                                                        'assets/navigation_images/polygon.png',
+                                                        fit: BoxFit.cover,
+                                                      )),
                                                 ),
                                                 Align(
                                                     alignment: Alignment.center,
@@ -169,9 +155,9 @@ class MedicalInfoScreen extends StatelessWidget {
                                         ),
                                         Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           children: [
                                             Text(
                                               'Medical Info',
@@ -197,7 +183,10 @@ class MedicalInfoScreen extends StatelessWidget {
                             height: height * 0.05,
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => VaccineHistoryScreen())),
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => VaccineHistoryScreen())),
                             child: Container(
                                 height: height * 0.17,
                                 width: width * 0.9,
@@ -217,20 +206,21 @@ class MedicalInfoScreen extends StatelessWidget {
                                       vertical: height * 0.01),
                                   child: Center(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                       children: [
                                         ClipRRect(
                                           borderRadius:
-                                          BorderRadius.circular(10.0),
+                                              BorderRadius.circular(10.0),
                                           child: Container(
                                             height: 75.0,
                                             width: 75.0,
                                             decoration: BoxDecoration(
                                               //color: StyleConstants.blue,
                                               borderRadius:
-                                              BorderRadius.circular(10.0),
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             child: Stack(
                                               children: [
@@ -243,12 +233,15 @@ class MedicalInfoScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Align(
-                                                  alignment: Alignment.bottomLeft,
+                                                  alignment:
+                                                      Alignment.bottomLeft,
                                                   child: Container(
                                                       height: 75.0,
                                                       width: 75.0,
                                                       child: Image.asset(
-                                                        'assets/navigation_images/polygon.png', fit: BoxFit.cover,)),
+                                                        'assets/navigation_images/polygon.png',
+                                                        fit: BoxFit.cover,
+                                                      )),
                                                 ),
                                                 Align(
                                                     alignment: Alignment.center,
@@ -263,9 +256,9 @@ class MedicalInfoScreen extends StatelessWidget {
                                         ),
                                         Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           children: [
                                             Text(
                                               'Vaccines',
@@ -291,7 +284,10 @@ class MedicalInfoScreen extends StatelessWidget {
                             height: height * 0.05,
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ShareRecordsScreen())),
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => ShareRecordsScreen())),
                             child: Container(
                                 height: height * 0.17,
                                 width: width * 0.9,
@@ -311,20 +307,21 @@ class MedicalInfoScreen extends StatelessWidget {
                                       vertical: height * 0.01),
                                   child: Center(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                       children: [
                                         ClipRRect(
                                           borderRadius:
-                                          BorderRadius.circular(10.0),
+                                              BorderRadius.circular(10.0),
                                           child: Container(
                                             height: 75.0,
                                             width: 75.0,
                                             decoration: BoxDecoration(
                                               //color: StyleConstants.blue,
                                               borderRadius:
-                                              BorderRadius.circular(10.0),
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             child: Stack(
                                               children: [
@@ -337,12 +334,15 @@ class MedicalInfoScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Align(
-                                                  alignment: Alignment.bottomLeft,
+                                                  alignment:
+                                                      Alignment.bottomLeft,
                                                   child: Container(
                                                       height: 75.0,
                                                       width: 75.0,
                                                       child: Image.asset(
-                                                        'assets/navigation_images/polygon.png', fit: BoxFit.cover,)),
+                                                        'assets/navigation_images/polygon.png',
+                                                        fit: BoxFit.cover,
+                                                      )),
                                                 ),
                                                 Align(
                                                     alignment: Alignment.center,
@@ -357,9 +357,9 @@ class MedicalInfoScreen extends StatelessWidget {
                                         ),
                                         Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           children: [
                                             Text(
                                               'Share Records',

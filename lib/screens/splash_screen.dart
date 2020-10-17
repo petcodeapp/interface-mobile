@@ -2,19 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
-class SplashScreen extends StatefulWidget {
-  @override
-  _SplashScreenState createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-
-
+class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-
 
     return Scaffold(
       body: Container(
@@ -58,13 +50,10 @@ class _SplashScreenState extends State<SplashScreen> {
                           width: width * 0.02,
                         ),
                         Image.asset('assets/images/onboarding/textlogo.png',
-                            fit: BoxFit.cover
-                        ),
+                            fit: BoxFit.cover),
                       ],
                     ),
                   ),
-
-
                 ],
               ),
             ),
@@ -72,11 +61,9 @@ class _SplashScreenState extends State<SplashScreen> {
               alignment: Alignment.center,
               child: SpinKitDualRing(size: 50.0, color: StyleConstants.yellow),
             )
-
-
           ],
         ),
       ),
     );
-    }
+  }
 }

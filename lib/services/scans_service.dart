@@ -51,8 +51,7 @@ class MapService extends ChangeNotifier {
       } else {
         return 'Address Not Found';
       }
-    }
-    catch (error) {
+    } catch (error) {
       print(error);
       return 'Address Not Found';
     }
@@ -60,8 +59,8 @@ class MapService extends ChangeNotifier {
 
   String placemarkToAddressName(Placemark placemark) {
     print(placemark.thoroughfare.length);
-    return getName(placemark.name) +
-        getName(placemark.thoroughfare) +
+    return getName(placemark.thoroughfare) +
+        getName(placemark.subThoroughfare) +
         getName(placemark.subLocality) +
         getName(placemark.locality) +
         getName(placemark.administrativeArea) +

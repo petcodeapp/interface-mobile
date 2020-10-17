@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/models/NearbyPark.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
+import 'package:petcode_app/providers/nearby_parks_map_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/providers/provider_state.dart';
@@ -26,8 +27,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
   double _mapBottomPadding;
 
   NearbyParksProvider _nearbyParksProvider;
-
-  CameraPosition _cameraPosition;
+  NearbyParksMapProvider _nearbyParksMapProvider;
 
   Completer<GoogleMapController> _controller = Completer();
   PanelController _panelController;
@@ -46,7 +46,6 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     print("moved: " + _cameraMoved.toString());
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
@@ -56,6 +55,8 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
 
     _nearbyParksProvider = Provider.of<NearbyParksProvider>(context);
 
+    _nearbyParksMapProvider = Provider.of<NearbyParksMapProvider>(context);
+
     if (currentLocationProvider.currentLocation != null && firstLoad) {
       _nearbyParksProvider.getNearbyParks(
           LatLng(
@@ -63,12 +64,12 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
             currentLocationProvider.currentLocation.longitude,
           ),
           14.0);
-      _cameraPosition = CameraPosition(
+      _nearbyParksMapProvider.setCameraPosition(CameraPosition(
           target: LatLng(
             currentLocationProvider.currentLocation.latitude,
             currentLocationProvider.currentLocation.longitude,
           ),
-          zoom: 14.0);
+          zoom: 14.0));
       firstLoad = false;
     }
 
@@ -140,13 +141,14 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                 children: [
                   GoogleMap(
                     padding: EdgeInsets.only(bottom: _mapBottomPadding),
-                    initialCameraPosition: _cameraPosition,
+                    initialCameraPosition:
+                        _nearbyParksMapProvider.cameraPosition,
                     onMapCreated: (GoogleMapController controller) {
                       _controller.complete(controller);
                     },
                     markers: createMarkers(_nearbyParksProvider.nearbyParks),
                     onCameraMove: (CameraPosition position) {
-                      _cameraPosition = position;
+                      _nearbyParksMapProvider.setCameraPosition(position);
                       if (_cameraMoved == false) {
                         setState(() {
                           _cameraMoved = true;
@@ -227,9 +229,9 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
           GestureDetector(
             onTap: () async {
               await _nearbyParksProvider.getNearbyParks(
-                  LatLng(_cameraPosition.target.latitude,
-                      _cameraPosition.target.longitude),
-                  _cameraPosition.zoom);
+                  LatLng(_nearbyParksMapProvider.cameraPosition.target.latitude,
+                      _nearbyParksMapProvider.cameraPosition.target.longitude),
+                  _nearbyParksMapProvider.cameraPosition.zoom);
               setState(() {
                 _cameraMoved = false;
               });
@@ -278,7 +280,8 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
           new Marker(
             markerId: MarkerId(nearbyParks[i].name + i.toString() + 'ID'),
             position: nearbyParks[i].location,
-            icon: BitmapDescriptor.defaultMarkerWithHue(MapConstants.bitmapDescriptorHues[5]),
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+                MapConstants.bitmapDescriptorHues[5]),
             onTap: () async {
               await _panelController.hide();
               setState(() {
