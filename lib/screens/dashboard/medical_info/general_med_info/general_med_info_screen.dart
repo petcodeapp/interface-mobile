@@ -15,8 +15,6 @@ class GeneralMedicalInfoScreen extends StatelessWidget {
         Provider.of<CurrentPetProvider>(context);
     Pet currentPet = currentPetProvider.currentPet;
 
-    currentPetProvider = Provider.of<CurrentPetProvider>(context);
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
