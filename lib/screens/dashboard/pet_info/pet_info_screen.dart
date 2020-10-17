@@ -8,7 +8,6 @@ import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
-import 'package:petcode_app/widgets/custom_app_bars/pet_info_app_bar.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
 
 class PetInfoScreen extends StatefulWidget {

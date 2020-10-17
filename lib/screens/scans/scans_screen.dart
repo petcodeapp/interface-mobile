@@ -7,7 +7,6 @@ import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/screens/scans/scans_list_widget.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/widgets/custom_app_bars/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 

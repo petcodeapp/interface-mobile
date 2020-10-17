@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/general_med_info/general_med_info_screen.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/share_records/share_records_screen.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/vaccination_history_screen.dart';
@@ -8,7 +6,6 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
-import 'package:petcode_app/widgets/custom_app_bars/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class MedicalInfoScreen extends StatelessWidget {
@@ -23,20 +20,19 @@ class MedicalInfoScreen extends StatelessWidget {
     List<DropdownMenuItem<Pet>> dropdownMenuItems =
     new List<DropdownMenuItem<Pet>>();
 
-    for (int i = 0; i < _allPetsProvider.allPets.length; i++) {
+    for (int i = 0; i < allPetsProvider.allPets.length; i++) {
       print(allPetsProvider.allPets[i].pid);
       dropdownMenuItems.add(
         DropdownMenuItem<Pet>(
             child: Text(
-              _allPetsProvider.allPets[i].name,
+              allPetsProvider.allPets[i].name,
               style:
               StyleConstants.whiteDescriptionText.copyWith(fontSize: 25.0),
             ),
-            value: _allPetsProvider.allPets[i]),
+            value: allPetsProvider.allPets[i]),
       );
     }
 
-    Pet selectedPet = _currentPetProvider.currentPet;
     if (selectedPet == null) {
       return Scaffold(
         backgroundColor: StyleConstants.blue,
@@ -71,10 +67,10 @@ class MedicalInfoScreen extends StatelessWidget {
                               child: new DropdownButton<Pet>(
                                 iconEnabledColor: Colors.white,
                                 dropdownColor: StyleConstants.blue,
-                                value: _currentPetProvider.currentPet,
+                                value: currentPetProvider.currentPet,
                                 items: dropdownMenuItems,
                                 onChanged: (Pet pet) {
-                                  _currentPetProvider.setCurrentPet(pet);
+                                  currentPetProvider.setCurrentPet(pet);
                                 },
                               ),
                             ),

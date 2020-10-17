@@ -1,16 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
-import 'package:petcode_app/screens/dashboard/owner_info/owner_info_editing_screen.dart';
 import 'package:petcode_app/screens/dashboard/owner_info/owner_widget.dart';
-import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/widgets/circular_check_box.dart';
-import 'package:petcode_app/widgets/custom_app_bars/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class OwnerInfoScreen extends StatelessWidget {
@@ -25,16 +20,15 @@ class OwnerInfoScreen extends StatelessWidget {
     List<DropdownMenuItem<Pet>> dropdownMenuItems =
     new List<DropdownMenuItem<Pet>>();
 
-    for (int i = 0; i < _allPetsProvider.allPets.length; i++) {
-      print(_allPetsProvider.allPets[i].pid);
+    for (int i = 0; i < allPetsProvider.allPets.length; i++) {
       dropdownMenuItems.add(
         DropdownMenuItem<Pet>(
             child: Text(
-              _allPetsProvider.allPets[i].name,
+              allPetsProvider.allPets[i].name,
               style:
               StyleConstants.whiteDescriptionText.copyWith(fontSize: 25.0),
             ),
-            value: _allPetsProvider.allPets[i]),
+            value: allPetsProvider.allPets[i]),
       );
     }
 
@@ -95,7 +89,7 @@ class OwnerInfoScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: height * 0.03),
-                      createOwnerWidget(currentPet.contact_1, height, width, 'Owner 1'),
+                      OwnerWidget(owner: currentPet.contact_1, height: height, width: width, title: 'Owner 1'),
                       SizedBox(height: height * 0.03),
                       currentPet.contact_2 == null
                           ? SizedBox()
@@ -109,7 +103,7 @@ class OwnerInfoScreen extends StatelessWidget {
                       SizedBox(
                         height: height * 0.01,
                       ),
-                      createOwnerWidget(currentPet.contact_2, height, width, 'Owner 2'),
+                      OwnerWidget(owner: currentPet.contact_2, height: height, width: width, title: 'Owner 2'),
                     ],
                   ),
                 ),

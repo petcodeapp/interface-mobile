@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/models/PetPerk.dart';
 import 'package:petcode_app/screens/social/discover_parks/discover_parks_screen.dart';
 import 'package:petcode_app/screens/social/pet_perks/pet_perks_screen.dart';
-import 'package:petcode_app/screens/splash_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class SocialSplitScreen extends StatefulWidget {

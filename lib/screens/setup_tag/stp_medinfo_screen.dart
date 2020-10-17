@@ -6,7 +6,6 @@ import 'package:petcode_app/models/VisibleValue.dart';
 import 'package:petcode_app/screens/setup_tag/stp_vaccinehist_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/utils/validator_helper.dart';
 
 class StpMedicalInfoScreen extends StatefulWidget {
   StpMedicalInfoScreen({Key key, this.pet, this.petImage}) : super(key: key);

@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
-import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/widgets/custom_app_bars/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class GeneralMedicalInfoScreen extends StatelessWidget {
@@ -156,7 +154,7 @@ class GeneralMedicalInfoScreen extends StatelessWidget {
                 size: width * 0.08,
                 color: StyleConstants.blue,
               ),
-              title: Text(currentPet.specialNeeds,
+              title: Text(currentPet.specialNeeds.value,
                   style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))??
                   Text(
                     'Special Needs',
@@ -180,7 +178,7 @@ class GeneralMedicalInfoScreen extends StatelessWidget {
                 size: width * 0.08,
                 color: StyleConstants.blue,
               ),
-              title: Text(currentPet.allergies,
+              title: Text(currentPet.allergies.value,
                   style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8))) ??
                   Text(
                     'Allergies',
@@ -205,7 +203,7 @@ class GeneralMedicalInfoScreen extends StatelessWidget {
                 size: width * 0.08,
                 color: StyleConstants.blue,
               ),
-              title: Text(currentPet.vetName,
+              title: Text(currentPet.vetName.value,
                   style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8))) ??
                   Text(
                     'Veterinarian Name',
@@ -228,7 +226,7 @@ class GeneralMedicalInfoScreen extends StatelessWidget {
                 size: width * 0.08,
                 color: StyleConstants.blue,
               ),
-              title: Text(currentPet.vetPhoneNumber,
+              title: Text(currentPet.vetPhoneNumber.value,
                   style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))??
                   Text(
                     'Veterinarian Phone Number',
