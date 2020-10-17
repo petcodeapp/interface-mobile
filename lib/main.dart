@@ -4,6 +4,7 @@ import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/image_marker_provider.dart';
+import 'package:petcode_app/providers/nearby_parks_map_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
@@ -95,10 +96,10 @@ class MyApp extends StatelessWidget {
             create: (_) => ImageMarkerProvider(),
             update: (BuildContext context, AllPetsProvider allPetsProvider,
                 ImageMarkerProvider imageMarkerProvider) {
-              if (allPetsProvider.allPets == null || allPetsProvider.allPets.length == 0) {
+              if (allPetsProvider.allPets == null ||
+                  allPetsProvider.allPets.length == 0) {
                 return imageMarkerProvider..clear();
-              }
-              else {
+              } else {
                 List<String> urls = new List<String>();
                 for (int i = 0; i < allPetsProvider.allPets.length; i++) {
                   urls.add(allPetsProvider.allPets[i].profileUrl);
@@ -151,6 +152,9 @@ class MyApp extends StatelessWidget {
                 NotificationsProvider notificationsProvider) {
               return notificationsProvider..loggedIn = authService.user != null;
             }),
+        ChangeNotifierProvider<NearbyParksMapProvider>(
+          create: (_) => NearbyParksMapProvider(),
+        )
       ],
       child: MaterialApp(
         builder: (context, child) {
