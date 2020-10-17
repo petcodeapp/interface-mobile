@@ -75,8 +75,6 @@ class ScansListWidget extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.05),
           child: Container(
-            height: height * 0.13,
-            //width: width * 0.9,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
                 color: Colors.white,
@@ -88,7 +86,7 @@ class ScansListWidget extends StatelessWidget {
                   ),
                 ]),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+              padding: EdgeInsets.symmetric(vertical: height * 0.025, horizontal: width * 0.05),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -110,7 +108,6 @@ class ScansListWidget extends StatelessWidget {
                         Text(
                           address,
                           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.black.withOpacity(0.8)),
-
                           maxLines: 4,
                           overflow: TextOverflow.ellipsis,
                         ),
