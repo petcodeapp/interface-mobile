@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/medical_info_screen2.dart';
+import 'package:petcode_app/screens/dashboard/medical_info/medical_info_screen.dart';
 import 'package:petcode_app/screens/dashboard/pet_info/pet_info_screen.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/medical_info_screen.dart';
 import 'package:petcode_app/screens/dashboard/owner_info/owner_info_screen.dart';

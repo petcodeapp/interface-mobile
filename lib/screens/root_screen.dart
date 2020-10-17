@@ -6,7 +6,7 @@ import 'package:petcode_app/screens/scans/scans_screen.dart';
 import 'package:petcode_app/screens/social/social_split/social_split_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
-import 'account/account_screen2.dart';
+import 'account/account_screen.dart';
 
 class RootScreen extends StatefulWidget {
   @override
