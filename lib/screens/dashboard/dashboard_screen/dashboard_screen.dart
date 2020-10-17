@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/provider_state.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/navigation_row.dart';
@@ -19,7 +20,7 @@ class DashboardScreen extends StatelessWidget {
     if (allPetsProvider.allPets == null) {
       return Scaffold(
         body: Center(
-          child: CircularProgressIndicator(),
+          child: SpinKitDualRing(size: 30.0, color: StyleConstants.yellow),
         ),
       );
     } else if (allPetsProvider.allPets.length == 0 &&
@@ -29,38 +30,117 @@ class DashboardScreen extends StatelessWidget {
       );
     } else {
       return Scaffold(
-        backgroundColor: StyleConstants.pageBackgroundColor,
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: StyleConstants.blue,
-          title: Container(
-              height: 75,
-              child: Image.asset(
-                'assets/images/appbarlogoyellow.png',
-                fit: BoxFit.cover,
-              )),
-        ),
+        backgroundColor: StyleConstants.blue,
         body: SingleChildScrollView(
           child: Container(
             width: width,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            height: height,
+            decoration: BoxDecoration(
+              //gradient: StyleConstants.bgGradient,
+            ),
+            child: Stack(
               children: [
-                SizedBox(
-                  height: height * 0.02,
-                ),
-                PetsCarouselWidget(),
-                SizedBox(
-                  height: height * 0.03,
-                ),
                 Align(
-                  alignment: Alignment.centerRight,
-                  child: NavigationRow(),
+                  alignment: Alignment.topRight,
+                  child: Image.asset(
+                    'assets/images/onboarding/quartercircle.png',
+                    width: width * 0.4,
+                  ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.035),
-                  child: UpcomingEventsWidget(),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: height * 0.15,
+                      width: width,
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: width,
+                            height: 0.01,
+                          ),
+                          /*
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Image.asset(
+                              'assets/images/onboarding/quartercircle.png',
+                            ),
+                          ),*/
+                          Align(
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text('Dashboard', style: StyleConstants.whiteThinTitleText,),
+                                      Spacer(),
+                                      Image.asset(
+                                        'assets/images/onboarding/pawlogohighres.png',
+                                        fit: BoxFit.cover,
+                                        width: width * 0.15,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: height * 0.01,),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0))
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: height * 0.02,
+                            ),
+                            PetsCarouselWidget(),
+                            SizedBox(
+                              height: height * 0.01,
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: NavigationRow(),
+                            ),
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.bottomRight,
+                                    end: Alignment.topLeft,
+                                    colors: [ const Color(0xffB3E1EE),  Colors.white],
+                                    stops: [0.05, 0.95],
+                                  ),
+                                ),
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: height * 0.01,),
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: width * 0.035),
+                                      child: UpcomingEventsWidget(),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ],
             ),

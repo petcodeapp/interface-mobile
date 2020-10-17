@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/general_med_info/general_med_info_screen.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/share_records/share_records_screen.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/vaccination_history_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/widgets/custom_app_bars/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -15,10 +17,29 @@ class MedicalInfoScreen extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     CurrentPetProvider currentPetProvider = Provider.of<CurrentPetProvider>(context);
+    AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
 
     Pet selectedPet = currentPetProvider.currentPet;
+    List<DropdownMenuItem<Pet>> dropdownMenuItems =
+    new List<DropdownMenuItem<Pet>>();
+
+    for (int i = 0; i < _allPetsProvider.allPets.length; i++) {
+      print(allPetsProvider.allPets[i].pid);
+      dropdownMenuItems.add(
+        DropdownMenuItem<Pet>(
+            child: Text(
+              _allPetsProvider.allPets[i].name,
+              style:
+              StyleConstants.whiteDescriptionText.copyWith(fontSize: 25.0),
+            ),
+            value: _allPetsProvider.allPets[i]),
+      );
+    }
+
+    Pet selectedPet = _currentPetProvider.currentPet;
     if (selectedPet == null) {
       return Scaffold(
+        backgroundColor: StyleConstants.blue,
         body: Center(
           child: Text(
             'Error: Pet not found',
@@ -28,243 +49,349 @@ class MedicalInfoScreen extends StatelessWidget {
       );
     } else {
       return Scaffold(
-        backgroundColor: StyleConstants.pageBackgroundColor,
-        appBar: ChangePetAppBar(shape: ContinuousRectangleBorder(),),
+        backgroundColor: StyleConstants.blue,
         body: Container(
-          width: width,
-          height: height,
-          child: Stack(
-            children: [
-              Container(
-                width: width,
-                height: height * 0.25,
-                decoration: BoxDecoration(
-                    color: StyleConstants.blue,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20.0),
-                      bottomRight: Radius.circular(20.0),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 6.0,
-                        offset: Offset(0,3),
-                      )
-                    ]
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: height * 0.01,),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            width: width,
+            height: height,
+            decoration: BoxDecoration(
+              gradient: StyleConstants.bgGradient,
+            ),
+            child: Column(
+              children: [
+                Container(
+                  height: height * 0.15,
+
+                  child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.1, vertical: height * 0.02),
+                      child: Stack(
                         children: [
-                          CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              radius: 50.0,
-                              backgroundImage: selectedPet.petImage
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: DropdownButtonHideUnderline(
+                              child: new DropdownButton<Pet>(
+                                iconEnabledColor: Colors.white,
+                                dropdownColor: StyleConstants.blue,
+                                value: _currentPetProvider.currentPet,
+                                items: dropdownMenuItems,
+                                onChanged: (Pet pet) {
+                                  _currentPetProvider.setCurrentPet(pet);
+                                },
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child: IconButton(
+                              icon: Icon(Icons.arrow_back, size: 25.0, color: Colors.white,),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          )
+                        ],
+                      )
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    width: width,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20.0),
+                            topRight: Radius.circular(20.0))),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: height * 0.05,
+                          ),
+                          GestureDetector(
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => GeneralMedicalInfoScreen())),
+                            child: Container(
+                                height: height * 0.17,
+                                width: width * 0.9,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        offset: Offset(0, 3),
+                                        blurRadius: 6.0,
+                                      ),
+                                    ]),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: width * 0.04,
+                                      vertical: height * 0.01),
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                          BorderRadius.circular(10.0),
+                                          child: Container(
+                                            height: 75.0,
+                                            width: 75.0,
+                                            decoration: BoxDecoration(
+                                              //color: StyleConstants.blue,
+                                              borderRadius:
+                                              BorderRadius.circular(10.0),
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                Container(
+                                                  height: 74.0,
+                                                  width: 74.0,
+                                                  child: Image.asset(
+                                                    'assets/navigation_images/gradcontainer.png',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Align(
+                                                  alignment: Alignment.bottomLeft,
+                                                  child: Container(
+                                                      height: 75.0,
+                                                      width: 75.0,
+                                                      child: Image.asset(
+                                                        'assets/navigation_images/polygon.png', fit: BoxFit.cover,)),
+                                                ),
+                                                Align(
+                                                    alignment: Alignment.center,
+                                                    child: Image.asset(
+                                                        'assets/navigation_images/info.png')),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: width * 0.05,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Medical Info',
+                                              style: StyleConstants
+                                                  .blackThinTitleTextMedium,
+                                            ),
+                                            SizedBox(
+                                              height: height * 0.01,
+                                            ),
+                                            Text(
+                                              'Filler Content, Filler Content,\nFiller Content, Filler Content',
+                                              style: StyleConstants
+                                                  .greyThinDescriptionTextSmall,
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )),
                           ),
                           SizedBox(
-                            width: width * 0.05,
+                            height: height * 0.05,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                selectedPet.name,
-                                style: StyleConstants.whiteThinTitleText,
-                              ),
-                              Text(
-                                selectedPet.breed,
-                                style: StyleConstants.whiteDescriptionText,
-                              ),
-                            ],
+                          GestureDetector(
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => VaccineHistoryScreen())),
+                            child: Container(
+                                height: height * 0.17,
+                                width: width * 0.9,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        offset: Offset(0, 3),
+                                        blurRadius: 6.0,
+                                      ),
+                                    ]),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: width * 0.04,
+                                      vertical: height * 0.01),
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                          BorderRadius.circular(10.0),
+                                          child: Container(
+                                            height: 75.0,
+                                            width: 75.0,
+                                            decoration: BoxDecoration(
+                                              //color: StyleConstants.blue,
+                                              borderRadius:
+                                              BorderRadius.circular(10.0),
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                Container(
+                                                  height: 74.0,
+                                                  width: 74.0,
+                                                  child: Image.asset(
+                                                    'assets/navigation_images/gradcontainer.png',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Align(
+                                                  alignment: Alignment.bottomLeft,
+                                                  child: Container(
+                                                      height: 75.0,
+                                                      width: 75.0,
+                                                      child: Image.asset(
+                                                        'assets/navigation_images/polygon.png', fit: BoxFit.cover,)),
+                                                ),
+                                                Align(
+                                                    alignment: Alignment.center,
+                                                    child: Image.asset(
+                                                        'assets/navigation_images/syringe.png')),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: width * 0.05,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Vaccines',
+                                              style: StyleConstants
+                                                  .blackThinTitleTextMedium,
+                                            ),
+                                            SizedBox(
+                                              height: height * 0.01,
+                                            ),
+                                            Text(
+                                              'Filler Content, Filler Content,\nFiller Content, Filler Content',
+                                              style: StyleConstants
+                                                  .greyThinDescriptionTextSmall,
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )),
                           ),
-                          Spacer()
+                          SizedBox(
+                            height: height * 0.05,
+                          ),
+                          GestureDetector(
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ShareRecordsScreen())),
+                            child: Container(
+                                height: height * 0.17,
+                                width: width * 0.9,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        offset: Offset(0, 3),
+                                        blurRadius: 6.0,
+                                      ),
+                                    ]),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: width * 0.04,
+                                      vertical: height * 0.01),
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                          BorderRadius.circular(10.0),
+                                          child: Container(
+                                            height: 75.0,
+                                            width: 75.0,
+                                            decoration: BoxDecoration(
+                                              //color: StyleConstants.blue,
+                                              borderRadius:
+                                              BorderRadius.circular(10.0),
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                Container(
+                                                  height: 74.0,
+                                                  width: 74.0,
+                                                  child: Image.asset(
+                                                    'assets/navigation_images/gradcontainer.png',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Align(
+                                                  alignment: Alignment.bottomLeft,
+                                                  child: Container(
+                                                      height: 75.0,
+                                                      width: 75.0,
+                                                      child: Image.asset(
+                                                        'assets/navigation_images/polygon.png', fit: BoxFit.cover,)),
+                                                ),
+                                                Align(
+                                                    alignment: Alignment.center,
+                                                    child: Image.asset(
+                                                        'assets/navigation_images/share.png')),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: width * 0.05,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Share Records',
+                                              style: StyleConstants
+                                                  .blackThinTitleTextMedium,
+                                            ),
+                                            SizedBox(
+                                              height: height * 0.01,
+                                            ),
+                                            Text(
+                                              'Filler Content, Filler Content,\nFiller Content, Filler Content',
+                                              style: StyleConstants
+                                                  .greyThinDescriptionTextSmall,
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )),
+                          ),
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-              Positioned(
-                top: height * 0.12,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: height * 0.02,
-                      ),
-                      SizedBox(
-                        height: height * 0.04,
-                      ),
-                      GestureDetector(
-                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => GeneralMedicalInfoScreen())),
-                        child: Container(
-                          height: height * 0.12,
-                          width: width - 50,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.20),
-                                  blurRadius: 6,
-                                  offset: Offset(0, 3),
-                                )
-                              ]
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: width* 0.05),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 25.0,
-                                  child: FaIcon(
-                                    FontAwesomeIcons.infoCircle,
-                                    color: StyleConstants.yellow,
-                                    size: 30.0,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: width * 0.05,
-                                ),
-                                Text(
-                                  'General Information',
-                                  style: StyleConstants.blackThinTitleTextMedium,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: height * 0.03,
-                      ),
-                      GestureDetector(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => VaccineHistoryScreen(),
-                          ),
-                        ),
-                        child: Container(
-                          height: height * 0.12,
-                          width: width - 50,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.20),
-                                  blurRadius: 6,
-                                  offset: Offset(0, 3),
-                                )
-                              ]
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: width* 0.05),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 25.0,
-                                  child: FaIcon(
-                                    FontAwesomeIcons.syringe,
-                                    color: StyleConstants.yellow,
-                                    size: 30.0,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: width * 0.05,
-                                ),
-                                Text(
-                                  'Vaccinations',
-                                  style: StyleConstants.blackThinTitleTextMedium,
-                                ),
-
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: height * 0.03,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ShareRecordsScreen(
-                                  petName: selectedPet.name,
-                                  petVaccinations: selectedPet.vaccinations,
-                                )),
-                          );
-                        },
-                        child: Container(
-                          height: height * 0.12,
-                          width: width - 50,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.20),
-                                  blurRadius: 6,
-                                  offset: Offset(0, 3),
-                                )
-                              ]
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: width* 0.05),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                /*
-                              Icon(
-                                Icons.settings,
-                                color: StyleConstants.yellow,
-                                size: 30.0,
-                              ),
-                              */
-                                Container(
-                                  width: 25.0,
-                                  child: FaIcon(
-                                    FontAwesomeIcons.share,
-                                    color: StyleConstants.yellow,
-                                    size: 30.0,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: width * 0.05,
-                                ),
-                                Text(
-                                  'Share Records',
-                                  style: StyleConstants.blackThinTitleTextMedium,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: height * 0.01,
-                      ),
-                    ],
                   ),
-                ),
-              ),
-            ],
-          ),
-        ),
+                )
+              ],
+            )),
       );
     }
   }

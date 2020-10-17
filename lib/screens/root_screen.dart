@@ -6,6 +6,8 @@ import 'package:petcode_app/screens/scans/scans_screen.dart';
 import 'package:petcode_app/screens/social/social_split/social_split_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
+import 'account/account_screen.dart';
+
 class RootScreen extends StatefulWidget {
   @override
   _RootScreenState createState() => _RootScreenState();
@@ -48,6 +50,8 @@ class _RootScreenState extends State<RootScreen> {
           children: _pageOptions,
         ),
       ),
+
+      /*
       bottomNavigationBar: BottomNavyBar(
         selectedIndex: _currentIndex,
         showElevation: true,
@@ -83,7 +87,38 @@ class _RootScreenState extends State<RootScreen> {
             inactiveColor: Colors.grey.withOpacity(0.6),
           ),
         ],
+      ),*/
+
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) => setState(() {
+          _currentIndex = index;
+          _pageController.jumpToPage(index);
+        }),
+        selectedItemColor: StyleConstants.blue,
+        backgroundColor: Colors.white,
+        unselectedItemColor: Colors.black.withOpacity(0.2),
+        showUnselectedLabels: true,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.location_on),
+            label: 'Scans',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Discovery',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Account',
+          ),
+        ],
       ),
+
     );
   }
 }

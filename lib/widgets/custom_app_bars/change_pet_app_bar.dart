@@ -24,8 +24,10 @@ class _ChangePetAppBarState extends State<ChangePetAppBar> {
   Widget build(BuildContext context) {
     AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
     CurrentPetProvider currentPetProvider = Provider.of<CurrentPetProvider>(context);
+
     List<DropdownMenuItem<Pet>> dropdownMenuItems =
         new List<DropdownMenuItem<Pet>>();
+
     for (int i = 0; i < allPetsProvider.allPets.length; i++) {
       print(allPetsProvider.allPets[i].pid);
       dropdownMenuItems.add(
@@ -37,10 +39,12 @@ class _ChangePetAppBarState extends State<ChangePetAppBar> {
             value: allPetsProvider.allPets[i]),
       );
     }
+
+
     return AppBar(
       backgroundColor: StyleConstants.blue,
       centerTitle: true,
-      elevation: 6.0,
+      elevation: 0.0,
       shape: widget.shape ??
           RoundedRectangleBorder(
             borderRadius: BorderRadius.only(

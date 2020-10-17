@@ -79,194 +79,192 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Edit Reminder',
-                        style: StyleConstants.blackThinTitleTextMedium,
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Edit Reminder',
+                          style: StyleConstants.blackThinTitleTextMedium,
+                        ),
                       ),
                       SizedBox(
                         height: 8.0,
                       ),
                       Text('Name', style: StyleConstants.blackThinTitleTextXS),
                       SizedBox(
-                        height: 8.0,
-                      ),
-                      TextFormField(
-                        controller: _reminderNameController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Name',
-                          hintStyle: TextStyle(fontSize: 14.0),
+                        height: height * 0.07,
+                        child: TextFormField(
+                          controller: _reminderNameController,
+                          decoration: InputDecoration(
+                            hintText: 'Name',
+                            hintStyle: TextStyle(fontSize: 14.0),
+                          ),
+                          validator: ValidatorHelper.reminderNameValidator,
                         ),
-                        validator: ValidatorHelper.reminderNameValidator,
                       ),
                       SizedBox(
-                        height: 8.0,
+                        height: height * 0.04,
                       ),
                       Text('When', style: StyleConstants.blackThinTitleTextXS),
                       SizedBox(
-                        height: 8.0,
-                      ),
-                      TextField(
-                        controller: _reminderStartDateController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Start Date',
-                          hintStyle: TextStyle(fontSize: 14.0),
-                          suffixIcon: Icon(Icons.calendar_today),
-                        ),
-                        onTap: () {
-                          showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(2019),
-                                  lastDate: DateTime(2021))
-                              .then((DateTime selectedDate) {
-                            setState(() {
-                              _reminderStartDateController
-                                ..text = StringHelper.getDateStringNoYear(
-                                    selectedDate);
-                              _reminderStartDate = selectedDate;
+                        height: height * 0.07,
+                        child: TextField(
+                          controller: _reminderStartDateController,
+                          decoration: InputDecoration(
+                            hintText: 'Start Date',
+                            hintStyle: TextStyle(fontSize: 14.0),
+                            suffixIcon: Icon(Icons.calendar_today),
+                          ),
+                          onTap: () {
+                            showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2019),
+                                    lastDate: DateTime(2021))
+                                .then((DateTime selectedDate) {
+                              setState(() {
+                                _reminderStartDateController
+                                  ..text = StringHelper.getDateStringNoYear(
+                                      selectedDate);
+                                _reminderStartDate = selectedDate;
+                              });
                             });
-                          });
-                        },
-                        readOnly: true,
-                      ),
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                      Text('Repeat', style: StyleConstants.blackThinTitleTextXS),
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                      Container(
-                        height: height * 0.076,
-                        width: width * 0.9 - 16,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-                          child: DropdownButton<String>(
-                              value: _repeatValue ?? 'Never',
-                              underline: SizedBox.shrink(),
-                              isExpanded: true,
-                              items: <String>[
-                                'Never',
-                                'Daily',
-                                'Weekly',
-                                'Monthly',
-                                'Yearly'
-                              ].map((String value) {
-                                return new DropdownMenuItem<String>(
-                                  value: value,
-                                  child: new Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (String value) {
-                                setState(() {
-                                  _repeatValue = value;
-                                });
-                              }),
+                          },
+                          readOnly: true,
                         ),
                       ),
                       SizedBox(
-                        height: 8.0,
+                        height: height * 0.04,
+                      ),
+                      Text('Repeat',
+                          style: StyleConstants.blackThinTitleTextXS),
+                      DropdownButton<String>(
+                          value: _repeatValue ?? 'Never',
+                          underline: Container(
+                            color: Colors.grey,
+                            height: 1.0,
+                          ),
+                          isExpanded: true,
+                          items: <String>[
+                            'Never',
+                            'Daily',
+                            'Weekly',
+                            'Monthly',
+                            'Yearly'
+                          ].map((String value) {
+                            return new DropdownMenuItem<String>(
+                              value: value,
+                              child: new Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (String value) {
+                            setState(() {
+                              _repeatValue = value;
+                            });
+                          }),
+                      SizedBox(
+                        height: height * 0.04,
                       ),
                       Text('Until', style: StyleConstants.blackThinTitleTextXS),
                       SizedBox(
-                        height: 8.0,
-                      ),
-                      TextField(
-                        controller: _reminderEndDateController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'End Date',
-                          hintStyle: TextStyle(fontSize: 14.0),
-                          suffixIcon: Icon(Icons.calendar_today),
-                        ),
-                        onTap: () {
-                          showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(2019),
-                                  lastDate: DateTime(2050))
-                              .then((DateTime selectedDate) {
-                            setState(() {
-                              _reminderEndDateController
-                                ..text = StringHelper.getDateStringNoYear(
-                                    selectedDate);
-                              _reminderEndDate = selectedDate;
+                        height: height * 0.07,
+                        child: TextField(
+                          controller: _reminderEndDateController,
+                          decoration: InputDecoration(
+                            hintText: 'End Date',
+                            hintStyle: TextStyle(fontSize: 14.0),
+                            suffixIcon: Icon(Icons.calendar_today),
+                          ),
+                          onTap: () {
+                            showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2019),
+                                    lastDate: DateTime(2050))
+                                .then((DateTime selectedDate) {
+                              setState(() {
+                                _reminderEndDateController
+                                  ..text = StringHelper.getDateStringNoYear(
+                                      selectedDate);
+                                _reminderEndDate = selectedDate;
+                              });
                             });
-                          });
-                        },
-                        readOnly: true,
+                          },
+                          readOnly: true,
+                        ),
                       ),
                       SizedBox(
-                        height: 12.0,
+                        height: height * 0.04,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: GestureDetector(
+                          onTap: () {
+                            if (_formKey.currentState.validate()) {
+                              Reminder newReminder = new Reminder(
+                                name: _reminderNameController.text,
+                                notificationMethod: 'email',
+                                frequency: _repeatValue,
+                                enabled: true,
+                                startDate:
+                                    Timestamp.fromDate(_reminderStartDate),
+                                endDate: Timestamp.fromDate(_reminderEndDate),
+                                index: widget.currentReminder.index,
+                              );
+                              Provider.of<DatabaseService>(context,
+                                      listen: false)
+                                  .updateReminder(newReminder, currentPet);
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: StyleConstants.blue,
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            height: height * 0.06,
+                            width: width * 0.8,
+                            child: Center(
+                                child: Text(
+                              'Schedule Reminder',
+                              style: StyleConstants.whiteThinTitleTextSmall,
+                            )),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: GestureDetector(
+                          onTap: () {
+                            Provider.of<DatabaseService>(context, listen: false)
+                                .deleteReminder(
+                                    widget.currentReminder.index, currentPet);
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: StyleConstants.red,
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            height: height * 0.06,
+                            width: width * 0.8,
+                            child: Center(
+                                child: Text(
+                              'Delete Reminder',
+                              style: StyleConstants.whiteThinTitleTextSmall,
+                            )),
+                          ),
+                        ),
                       ),
                       Align(
                         alignment: Alignment.center,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                Provider.of<DatabaseService>(context,
-                                        listen: false)
-                                    .deleteReminder(
-                                        widget.currentReminder.index, currentPet);
-                                Navigator.pop(context);
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: StyleConstants.red,
-                                  borderRadius: BorderRadius.circular(40.0),
-                                ),
-                                height: height * 0.06,
-                                width: width * 0.35,
-                                child: Center(
-                                    child: Text(
-                                  'Delete',
-                                  style: StyleConstants.whiteThinTitleTextSmall,
-                                )),
-                              ),
-                            ),
                             SizedBox(
                               width: 20.0,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                if (_formKey.currentState.validate()) {
-                                  Reminder newReminder = new Reminder(
-                                    name: _reminderNameController.text,
-                                    notificationMethod: 'email',
-                                    frequency: _repeatValue,
-                                    enabled: true,
-                                    startDate:
-                                        Timestamp.fromDate(_reminderStartDate),
-                                    endDate: Timestamp.fromDate(_reminderEndDate),
-                                    index: widget.currentReminder.index,
-                                  );
-                                  Provider.of<DatabaseService>(context,
-                                          listen: false)
-                                      .updateReminder(newReminder, currentPet);
-                                  Navigator.pop(context);
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: StyleConstants.blue,
-                                  borderRadius: BorderRadius.circular(40.0),
-                                ),
-                                height: height * 0.06,
-                                width: width * 0.35,
-                                child: Center(
-                                    child: Text(
-                                  'Update',
-                                  style: StyleConstants.whiteThinTitleTextSmall,
-                                )),
-                              ),
                             ),
                           ],
                         ),
