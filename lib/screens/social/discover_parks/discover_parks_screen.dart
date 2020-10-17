@@ -46,6 +46,8 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    print("moved: " + _cameraMoved.toString());
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
 
@@ -104,12 +106,6 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
       ),
       body: SlidingUpPanel(
         controller: _panelController,
-        // onPanelSlide: (double position) {
-        //   setState(() {
-        //     _mapBottomPadding =
-        //         position * (500.0 - _height * 0.11) + _height * 0.22;
-        //   });
-        // },
         minHeight: _height * 0.11,
         borderRadius: topRoundedRadius,
         header: Center(

@@ -31,8 +31,8 @@ class _ScansScreenState extends State<ScansScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
 
     ScansProvider scansProvider = Provider.of<ScansProvider>(context);
 
@@ -68,7 +68,8 @@ class _ScansScreenState extends State<ScansScreen> {
                     ),
                     Text(
                       'View Scan Locations',
-                      style: StyleConstants.blackTitleText.copyWith(fontSize: 20.0, fontWeight: FontWeight.w400),
+                      style: StyleConstants.blackTitleText.copyWith(
+                          fontSize: 20.0, fontWeight: FontWeight.w400),
                     ),
                   ],
                 ),
@@ -94,51 +95,65 @@ class _ScansScreenState extends State<ScansScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('Scan Locations', style: StyleConstants.whiteThinTitleText.copyWith(fontSize: 25.0),),
+                            Text(
+                              'Scan Locations',
+                              style: StyleConstants.whiteThinTitleText
+                                  .copyWith(fontSize: 25.0),
+                            ),
                           ],
                         ),
-                        SizedBox(height: height * 0.03,),
+                        SizedBox(
+                          height: height * 0.03,
+                        ),
                       ],
                     ),
                   ),
                 ),
-                currentLocationProvider.currentLocation != null ? Expanded(
-                  child: currentLocationProvider.currentLocation != null
-                      ? ClipRRect(
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(10.0), topLeft: Radius.circular(10.0)),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(topRight: Radius.circular(10.0), topLeft: Radius.circular(10.0)),
-                          ),
-                          child: GoogleMap(
-                              padding: EdgeInsets.only(
-                                  bottom: _mapBottomPadding + height * 0.295),
-                              mapType: MapType.normal,
-                              initialCameraPosition: CameraPosition(
-                                target: LatLng(
-                                    currentLocationProvider
-                                        .currentLocation.latitude,
-                                    currentLocationProvider
-                                        .currentLocation.longitude),
-                                zoom: 14.0,
+                currentLocationProvider.currentLocation != null
+                    ? Expanded(
+                        child: currentLocationProvider.currentLocation != null
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10.0),
+                                    topLeft: Radius.circular(10.0)),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(10.0),
+                                        topLeft: Radius.circular(10.0)),
+                                  ),
+                                  child: GoogleMap(
+                                    padding: EdgeInsets.only(
+                                        bottom:
+                                            _mapBottomPadding + height * 0.165),
+                                    mapType: MapType.normal,
+                                    initialCameraPosition: CameraPosition(
+                                      target: LatLng(
+                                          currentLocationProvider
+                                              .currentLocation.latitude,
+                                          currentLocationProvider
+                                              .currentLocation.longitude),
+                                      zoom: 14.0,
+                                    ),
+                                    onMapCreated:
+                                        (GoogleMapController controller) {
+                                      setState(() {});
+                                      _controller.complete(controller);
+                                    },
+                                    zoomControlsEnabled: true,
+                                    markers: scansProvider.mapMarkers,
+                                  ),
+                                ),
+                              )
+                            : Center(
+                                child: SpinKitDualRing(
+                                    size: 30.0, color: StyleConstants.yellow),
                               ),
-                              onMapCreated: (GoogleMapController controller) {
-                                setState(() {
-
-                                });
-                                _controller.complete(controller);
-                              },
-                              zoomControlsEnabled: true,
-                              markers: scansProvider.mapMarkers,
-                            ),
-                        ),
                       )
-                      : Center(
-                          child: SpinKitDualRing(size: 30.0, color: StyleConstants.yellow),
-                        ),
-                ): Center(
-                  child: SpinKitDualRing(size: 30.0, color: StyleConstants.yellow),
-                ),
+                    : Center(
+                        child: SpinKitDualRing(
+                            size: 30.0, color: StyleConstants.yellow),
+                      ),
               ],
             ),
           ),
