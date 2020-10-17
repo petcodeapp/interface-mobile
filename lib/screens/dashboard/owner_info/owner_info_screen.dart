@@ -4,19 +4,13 @@ import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/screens/dashboard/owner_info/owner_info_editing_screen.dart';
+import 'package:petcode_app/screens/dashboard/owner_info/owner_widget.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/custom_app_bars/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
 
-class OwnerInfoScreen extends StatefulWidget {
-  OwnerInfoScreen({Key key}) : super(key: key);
-
-  @override
-  _OwnerInfoScreenState createState() => _OwnerInfoScreenState();
-}
-
-class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
+class OwnerInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CurrentPetProvider currentPetProvider =
@@ -62,129 +56,28 @@ class _OwnerInfoScreenState extends State<OwnerInfoScreen> {
               SizedBox(
                 height: height * 0.01,
               ),
-              createOwnerWidget(currentPet.contact_1, height, width),
+              OwnerWidget(
+                  owner: currentPet.contact_1, height: height, width: width),
               SizedBox(height: height * 0.03),
-              currentPet.contact_2 == null
-                  ? SizedBox()
-                  : Padding(
+              currentPet.contact_2 != null
+                  ? Padding(
                       padding: EdgeInsets.only(left: width * 0.03),
                       child: Text(
                         'Owner 2',
                         style: StyleConstants.blackThinTitleText,
                       ),
-                    ),
+                    )
+                  : SizedBox.shrink(),
               SizedBox(
                 height: height * 0.01,
               ),
-              createOwnerWidget(currentPet.contact_2, height, width)
+              currentPet.contact_2 != null
+                  ? OwnerWidget(
+                      owner: currentPet.contact_2, height: height, width: width)
+                  : Container(),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget createOwnerWidget(Owner owner, double height, double width) {
-    if (owner == null) {
-      return Container();
-    }
-    return Container(
-      width: width,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            leading: Icon(
-              HeroIcons.icon_user,
-              size: 30.0,
-            ),
-            title: Row(
-              children: [
-                owner.name != null && owner.name.value.isNotEmpty
-                    ? Text(owner.name.value,
-                        style: StyleConstants.darkBlackDescriptionText)
-                    : Text(
-                        'Name',
-                        style: StyleConstants.greyedOutText,
-                      ),
-              ],
-            ),
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              size: 25.0,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Divider(
-              thickness: 2,
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              HeroIcons.icon_mail,
-              size: 30.0,
-            ),
-            title: owner.email != null && owner.email.value.isNotEmpty
-                ? Text(owner.email.value,
-                    style: StyleConstants.darkBlackDescriptionText)
-                : Text(
-                    'Email',
-                    style: StyleConstants.greyedOutText,
-                  ),
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              size: 25.0,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Divider(
-              thickness: 2,
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              HeroIcons.icon_call,
-              size: 30.0,
-            ),
-            title: owner.phoneNumber != null
-                ? Text(owner.phoneNumber.value,
-                    style: StyleConstants.darkBlackDescriptionText)
-                : Text(
-                    'Phone Number',
-                    style: StyleConstants.greyedOutText,
-                  ),
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              size: 25.0,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Divider(
-              thickness: 2,
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              HeroIcons.icon_home,
-              size: 30.0,
-            ),
-            title: owner.address != null && owner.address.value.isNotEmpty
-                ? Text(owner.address.value,
-                    style: StyleConstants.darkBlackDescriptionText)
-                : Text(
-                    'Address',
-                    style: StyleConstants.greyedOutText,
-                  ),
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              size: 25.0,
-            ),
-          ),
-        ],
       ),
     );
   }

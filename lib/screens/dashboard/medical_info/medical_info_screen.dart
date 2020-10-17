@@ -9,27 +9,14 @@ import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/custom_app_bars/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
 
-class MedicalInfoScreen extends StatefulWidget {
-  MedicalInfoScreen({Key key}) : super(key: key);
-  @override
-  _MedicalInfoScreenState createState() => _MedicalInfoScreenState();
-}
-
-class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
-  CurrentPetProvider _currentPetProvider;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class MedicalInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    _currentPetProvider = Provider.of<CurrentPetProvider>(context);
+    CurrentPetProvider currentPetProvider = Provider.of<CurrentPetProvider>(context);
 
-    Pet selectedPet = _currentPetProvider.currentPet;
+    Pet selectedPet = currentPetProvider.currentPet;
     if (selectedPet == null) {
       return Scaffold(
         body: Center(
@@ -52,18 +39,18 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                 width: width,
                 height: height * 0.25,
                 decoration: BoxDecoration(
-                  color: StyleConstants.blue,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20.0),
-                    bottomRight: Radius.circular(20.0),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      blurRadius: 6.0,
-                      offset: Offset(0,3),
-                    )
-                  ]
+                    color: StyleConstants.blue,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20.0),
+                      bottomRight: Radius.circular(20.0),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 6.0,
+                        offset: Offset(0,3),
+                      )
+                    ]
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -123,8 +110,8 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                           height: height * 0.12,
                           width: width - 50,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.0),
-                            color: Colors.white,
+                              borderRadius: BorderRadius.circular(8.0),
+                              color: Colors.white,
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black.withOpacity(0.20),
@@ -217,9 +204,9 @@ class _MedicalInfoScreenState extends State<MedicalInfoScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ShareRecordsScreen(
-                                      petName: selectedPet.name,
-                                      petVaccinations: selectedPet.vaccinations,
-                                    )),
+                                  petName: selectedPet.name,
+                                  petVaccinations: selectedPet.vaccinations,
+                                )),
                           );
                         },
                         child: Container(
