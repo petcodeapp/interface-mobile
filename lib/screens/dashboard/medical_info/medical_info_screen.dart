@@ -6,6 +6,7 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
+import 'package:petcode_app/widgets/change_pet_dropdown.dart';
 import 'package:provider/provider.dart';
 
 class MedicalInfoScreen extends StatelessWidget {
@@ -17,21 +18,6 @@ class MedicalInfoScreen extends StatelessWidget {
     AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
 
     Pet selectedPet = currentPetProvider.currentPet;
-    List<DropdownMenuItem<Pet>> dropdownMenuItems =
-    new List<DropdownMenuItem<Pet>>();
-
-    for (int i = 0; i < allPetsProvider.allPets.length; i++) {
-      print(allPetsProvider.allPets[i].pid);
-      dropdownMenuItems.add(
-        DropdownMenuItem<Pet>(
-            child: Text(
-              allPetsProvider.allPets[i].name,
-              style:
-              StyleConstants.whiteDescriptionText.copyWith(fontSize: 25.0),
-            ),
-            value: allPetsProvider.allPets[i]),
-      );
-    }
 
     if (selectedPet == null) {
       return Scaffold(
@@ -63,17 +49,7 @@ class MedicalInfoScreen extends StatelessWidget {
                         children: [
                           Align(
                             alignment: Alignment.bottomCenter,
-                            child: DropdownButtonHideUnderline(
-                              child: new DropdownButton<Pet>(
-                                iconEnabledColor: Colors.white,
-                                dropdownColor: StyleConstants.blue,
-                                value: currentPetProvider.currentPet,
-                                items: dropdownMenuItems,
-                                onChanged: (Pet pet) {
-                                  currentPetProvider.setCurrentPet(pet);
-                                },
-                              ),
-                            ),
+                            child: ChangePetDropdown(),
                           ),
                           Align(
                             alignment: Alignment.bottomLeft,
