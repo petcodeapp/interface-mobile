@@ -8,6 +8,7 @@ import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/providers/provider_state.dart';
+import 'package:petcode_app/utils/map_constants.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/screens/social/discover_parks/show_nearby_park_widget.dart';
 import 'package:provider/provider.dart';
@@ -103,12 +104,12 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
       ),
       body: SlidingUpPanel(
         controller: _panelController,
-        onPanelSlide: (double position) {
-          setState(() {
-            _mapBottomPadding =
-                position * (500.0 - _height * 0.11) + _height * 0.22;
-          });
-        },
+        // onPanelSlide: (double position) {
+        //   setState(() {
+        //     _mapBottomPadding =
+        //         position * (500.0 - _height * 0.11) + _height * 0.22;
+        //   });
+        // },
         minHeight: _height * 0.11,
         borderRadius: topRoundedRadius,
         header: Center(
@@ -281,7 +282,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
           new Marker(
             markerId: MarkerId(nearbyParks[i].name + i.toString() + 'ID'),
             position: nearbyParks[i].location,
-            icon: BitmapDescriptor.defaultMarkerWithHue(42.0),
+            icon: BitmapDescriptor.defaultMarkerWithHue(MapConstants.bitmapDescriptorHues[5]),
             onTap: () async {
               await _panelController.hide();
               setState(() {

@@ -47,9 +47,14 @@ class _ScansScreenState extends State<ScansScreen> {
               topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
           backdropColor: StyleConstants.pageBackgroundColor,
           minHeight: height * 0.11,
-          onPanelSlide: (double position) {
+          onPanelOpened: () {
             setState(() {
-              _mapBottomPadding = position * (500 - height * 0.11);
+              //_mapBottomPadding = 500 - height * 0.11;
+            });
+          },
+          onPanelClosed: () {
+            setState(() {
+              //_mapBottomPadding = 0;
             });
           },
           header: Center(
@@ -99,9 +104,7 @@ class _ScansScreenState extends State<ScansScreen> {
                             zoom: 14.0,
                           ),
                           onMapCreated: (GoogleMapController controller) {
-                            setState(() {
-
-                            });
+                            setState(() {});
                             _controller.complete(controller);
                           },
                           zoomControlsEnabled: true,
@@ -130,7 +133,8 @@ class _ScansScreenState extends State<ScansScreen> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 10.0),
                     child: ScansListWidget(
-                      controller: _controller,
+                      mapController: _controller,
+                      panelController: _panelController,
                     ),
                   ),
                 ),

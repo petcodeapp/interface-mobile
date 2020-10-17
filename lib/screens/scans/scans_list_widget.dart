@@ -9,11 +9,13 @@ import 'package:petcode_app/utils/map_constants.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ScansListWidget extends StatelessWidget {
-  ScansListWidget({Key key, this.controller}) : super(key: key);
+  ScansListWidget({Key key, this.mapController, this.panelController}) : super(key: key);
 
-  final Completer<GoogleMapController> controller;
+  final Completer<GoogleMapController> mapController;
+  final PanelController panelController;
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +58,11 @@ class ScansListWidget extends StatelessWidget {
       GeoPoint markerPosition, String address, double height, double width) {
     return GestureDetector(
       onTap: () async {
-        GoogleMapController mapController = await controller.future;
+        panelController.close();
+        GoogleMapController googleMapController = await mapController.future;
         LatLng mapPosition =
             LatLng(markerPosition.latitude, markerPosition.longitude);
-        mapController.animateCamera(
+        googleMapController.animateCamera(
           CameraUpdate.newLatLng(
             mapPosition,
           ),
