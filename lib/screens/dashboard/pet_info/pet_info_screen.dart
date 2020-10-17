@@ -7,6 +7,7 @@ import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/change_pet_dropdown.dart';
 import 'package:provider/provider.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
 
@@ -31,22 +32,6 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
     _allPetsProvider = Provider.of<AllPetsProvider>(context);
     _currentPetProvider = Provider.of<CurrentPetProvider>(context);
 
-    List<DropdownMenuItem<Pet>> dropdownMenuItems =
-        new List<DropdownMenuItem<Pet>>();
-
-    for (int i = 0; i < _allPetsProvider.allPets.length; i++) {
-      print(_allPetsProvider.allPets[i].pid);
-      dropdownMenuItems.add(
-        DropdownMenuItem<Pet>(
-            child: Text(
-              _allPetsProvider.allPets[i].name,
-              style:
-                  StyleConstants.whiteDescriptionText.copyWith(fontSize: 25.0),
-            ),
-            value: _allPetsProvider.allPets[i]),
-      );
-    }
-
     return Scaffold(
       backgroundColor: StyleConstants.pageBackgroundColor,
       body: SingleChildScrollView(
@@ -54,43 +39,37 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
           decoration: BoxDecoration(
             gradient: StyleConstants.bgGradient,
           ),
-          height: _height * 1.2,
           width: _width,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 height: _height * 0.15,
                 child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: _width * 0.1, vertical: _height * 0.02),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: _width * 0.1, vertical: _height * 0.02),
                     child: Stack(
                       children: [
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: DropdownButtonHideUnderline(
-                            child: new DropdownButton<Pet>(
-                              iconEnabledColor: Colors.white,
-                              dropdownColor: StyleConstants.blue,
-                              value: _currentPetProvider.currentPet,
-                              items: dropdownMenuItems,
-                              onChanged: (Pet pet) {
-                                _currentPetProvider.setCurrentPet(pet);
-                              },
-                            ),
-                          ),
+                          child: ChangePetDropdown(),
                         ),
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: IconButton(
-                            icon: Icon(HeroIcons2.left_arrow_1, size: 25.0, color: Colors.white,),
+                            icon: Icon(
+                              HeroIcons2.left_arrow_1,
+                              size: 25.0,
+                              color: Colors.white,
+                            ),
                             onPressed: () => Navigator.pop(context),
                           ),
                         )
                       ],
-                    )
-                ),
+                    )),
               ),
-              Expanded(
+              Flexible(
                 child: Container(
                   width: _width,
                   decoration: BoxDecoration(
@@ -99,12 +78,12 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                           topLeft: Radius.circular(20.0),
                           topRight: Radius.circular(20.0))),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(
                         height: _height * 0.02,
                       ),
                       Container(
-                        height: _height * 0.17,
                         width: _width * 0.9,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
@@ -112,7 +91,11 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                             //end: Alignment(0.01, 0.01),
                             end: Alignment.bottomLeft,
                             stops: [0.05, 0.20, 0.75],
-                            colors: [const Color(0xffB3E1EE), const Color(0xff7cdcf7), StyleConstants.blue], // whitish to gray
+                            colors: [
+                              const Color(0xffB3E1EE),
+                              const Color(0xff7cdcf7),
+                              StyleConstants.blue
+                            ], // whitish to gray
                             //tileMode: TileMode.repeated, // repeats the gradient over the canvas
                           ),
                           color: StyleConstants.blue,
@@ -124,65 +107,90 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color:
-                                                  Colors.black.withOpacity(0.2),
-                                              offset: Offset(0, 3),
-                                              blurRadius: 6.0),
-                                        ]),
-                                    child: CircleAvatar(
-                                      backgroundColor: StyleConstants.blue,
-                                      radius: 40.0,
-                                      backgroundImage: _allPetsProvider
-                                                  .allPets.length >
-                                              0
-                                          ? _allPetsProvider.allPets[0].petImage
-                                          : AssetImage(
-                                              'assets/images/puppyphoto.jpg'),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: _width * 0.05,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        _currentPetProvider.currentPet.name,
-                                        style:
-                                            StyleConstants.whiteThinTitleText,
+                              Expanded(
+                                flex: 5,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(30.0),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color:
+                                                      Colors.black.withOpacity(0.2),
+                                                  offset: Offset(0, 3),
+                                                  blurRadius: 6.0),
+                                            ]),
+                                        child: CircleAvatar(
+                                          backgroundColor: StyleConstants.blue,
+                                          radius: 40.0,
+                                          backgroundImage: _allPetsProvider
+                                                      .allPets.length >
+                                                  0
+                                              ? _allPetsProvider.allPets[0].petImage
+                                              : AssetImage(
+                                                  'assets/images/puppyphoto.jpg'),
+                                        ),
                                       ),
-                                      Text(
-                                        _currentPetProvider.currentPet.breed,
-                                        style: StyleConstants
-                                            .whiteThinTitleTextSmall,
-                                      )
-                                    ],
-                                  ),
-                                ],
+                                    ),
+                                    SizedBox(
+                                      width: _width * 0.05,
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            _currentPetProvider.currentPet.name,
+                                            style:
+                                                StyleConstants.whiteThinTitleText,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          Text(
+                                            _currentPetProvider.currentPet.breed,
+                                            style: StyleConstants
+                                                .whiteThinTitleTextSmall,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              IconButton(
-                                icon: Icon(HeroIcons2.edit_2, color: Colors.white,),
-                                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => PetInfoEditingScreen(currentPet: currentPet,))),
-                                iconSize: 30.0,
+                              Expanded(
+                                flex: 1,
+                                child: IconButton(
+                                  icon: Icon(
+                                    HeroIcons2.edit_2,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => PetInfoEditingScreen(
+                                                currentPet: currentPet,
+                                              ))),
+                                  iconSize: 30.0,
+                                ),
                               )
                             ],
                           ),
                         ),
                       ),
-                      SizedBox(height: _height * 0.05,),
+                      SizedBox(
+                        height: _height * 0.05,
+                      ),
                       Container(
-                        height: _height * 0.8,
                         width: _width * 0.9,
                         decoration: BoxDecoration(
                             color: Colors.white,
@@ -194,167 +202,169 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                               ),
                             ],
                             borderRadius: BorderRadius.circular(20.0)),
-                        child: Expanded(
-                          child: ListView(
-                            physics: NeverScrollableScrollPhysics(),
-                            children: [
-                              ListTile(
-                                leading: Icon(
-                                  HeroIcons2.pawprint_1,
-                                  size: 30.0,
-                                  color: StyleConstants.blue,
-                                ),
-                                //need to add species field
-                                title: Text(currentPet.species) ??
-                                    Text('Species',
-                                        style: StyleConstants.greyedOutText),
+                        child: ListView(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          children: [
+                            ListTile(
+                              leading: Icon(
+                                HeroIcons2.pawprint_1,
+                                size: 30.0,
+                                color: StyleConstants.blue,
                               ),
-                              Padding(
-                                padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                                child: Divider(
-                                  thickness: 1,
-                                ),
+                              //need to add species field
+                              title: Text(currentPet.species) ??
+                                  Text('Species',
+                                      style: StyleConstants.greyedOutText),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0),
+                              child: Divider(
+                                thickness: 1,
                               ),
-                              ListTile(
-                                leading: Icon(
-                                  HeroIcons.icon_information,
-                                  size: 30.0,
-                                  color: StyleConstants.blue,
-                                ),
-                                title: Text(currentPet.breed) ??
-                                    Text(
-                                      'Breed',
-                                      style: StyleConstants.greyedOutText,
-                                    ),
+                            ),
+                            ListTile(
+                              leading: Icon(
+                                HeroIcons.icon_information,
+                                size: 30.0,
+                                color: StyleConstants.blue,
                               ),
-                              Padding(
-                                padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                                child: Divider(
-                                  thickness: 1,
-                                ),
+                              title: Text(currentPet.breed) ??
+                                  Text(
+                                    'Breed',
+                                    style: StyleConstants.greyedOutText,
+                                  ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0),
+                              child: Divider(
+                                thickness: 1,
                               ),
-                              ListTile(
-                                leading: Icon(
-                                  HeroIcons2.calendar_1,
-                                  size: 30.0,
-                                  color: StyleConstants.blue,
-                                ),
-                                title: currentPet.birthday == null
-                                    ? Text('Birthday',
-                                    style: StyleConstants.greyedOutText)
-                                    : Text(StringHelper.getDateString(
-                                    currentPet.birthday.toDate())),
+                            ),
+                            ListTile(
+                              leading: Icon(
+                                HeroIcons2.calendar_1,
+                                size: 30.0,
+                                color: StyleConstants.blue,
                               ),
-                              Padding(
-                                padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                                child: Divider(
-                                  thickness: 1,
-                                ),
+                              title: currentPet.birthday == null
+                                  ? Text('Birthday',
+                                      style: StyleConstants.greyedOutText)
+                                  : Text(StringHelper.getDateString(
+                                      currentPet.birthday.toDate())),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0),
+                              child: Divider(
+                                thickness: 1,
                               ),
-                              ListTile(
-                                leading: Icon(
-                                  HeroIcons.icon_view,
-                                  size: 30.0,
-                                  color: StyleConstants.blue,
-                                ),
-                                title: Text(currentPet.color) ??
-                                    Text('Color',
-                                        style: StyleConstants.greyedOutText),
+                            ),
+                            ListTile(
+                              leading: Icon(
+                                HeroIcons.icon_view,
+                                size: 30.0,
+                                color: StyleConstants.blue,
                               ),
-                              Padding(
-                                padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                                child: Divider(
-                                  thickness: 1,
-                                ),
+                              title: Text(currentPet.color) ??
+                                  Text('Color',
+                                      style: StyleConstants.greyedOutText),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0),
+                              child: Divider(
+                                thickness: 1,
                               ),
-                              ListTile(
-                                leading: Icon(
-                                  HeroIcons2.user_2,
-                                  size: 30.0,
-                                  color: StyleConstants.blue,
-                                ),
-                                title: Text(currentPet.temperament) ??
-                                    Text('Temperament',
-                                        style: StyleConstants.greyedOutText),
+                            ),
+                            ListTile(
+                              leading: Icon(
+                                HeroIcons2.user_2,
+                                size: 30.0,
+                                color: StyleConstants.blue,
                               ),
-                              Padding(
-                                padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                                child: Divider(
-                                  thickness: 1,
-                                ),
+                              title: Text(currentPet.temperament) ??
+                                  Text('Temperament',
+                                      style: StyleConstants.greyedOutText),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0),
+                              child: Divider(
+                                thickness: 1,
                               ),
-                              ListTile(
-                                leading: Icon(
-                                  HeroIcons.icon_tag,
-                                  color: StyleConstants.blue,
-                                  size: 30.0,
-                                ),
-                                title: Row(
-                                  children: [
-                                    Text('Adopted: '),
-                                    currentPet.isAdopted == null
-                                        ? Text('N/A')
-                                        : (currentPet.isAdopted
-                                        ? Text('Yes')
-                                        : Text('No')),
-                                  ],
-                                ),
+                            ),
+                            ListTile(
+                              leading: Icon(
+                                HeroIcons.icon_tag,
+                                color: StyleConstants.blue,
+                                size: 30.0,
                               ),
-                              Padding(
-                                padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                                child: Divider(
-                                  thickness: 1,
-                                ),
+                              title: Row(
+                                children: [
+                                  Text('Adopted: '),
+                                  currentPet.isAdopted == null
+                                      ? Text('N/A')
+                                      : (currentPet.isAdopted
+                                          ? Text('Yes')
+                                          : Text('No')),
+                                ],
                               ),
-                              ListTile(
-                                leading: Icon(
-                                  HeroIcons2.cardiogram_1,
-                                  color: StyleConstants.blue,
-                                  size: 30.0,
-                                ),
-                                title: Row(
-                                  children: [
-                                    Text('Service Animal: '),
-                                    (currentPet.isServiceAnimal
-                                        ? Text('Yes')
-                                        : Text('No')) ??
-                                        Text('N/A'),
-                                  ],
-                                ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0),
+                              child: Divider(
+                                thickness: 1,
                               ),
-                              Padding(
-                                padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                                child: Divider(
-                                  thickness: 1,
-                                ),
+                            ),
+                            ListTile(
+                              leading: Icon(
+                                HeroIcons2.cardiogram_1,
+                                color: StyleConstants.blue,
+                                size: 30.0,
                               ),
-                              ListTile(
-                                leading: Icon(
-                                  HeroIcons.icon_clipboard,
-                                  color: StyleConstants.blue,
-                                  size: 30.0,
-                                ),
-                                title: Text(
-                                    (currentPet.additionalInfo != null
-                                        ? currentPet.additionalInfo
-                                        : 'Additional Notes'),
-                                    style: StyleConstants.greyedOutText),
+                              title: Row(
+                                children: [
+                                  Text('Service Animal: '),
+                                  (currentPet.isServiceAnimal
+                                          ? Text('Yes')
+                                          : Text('No')) ??
+                                      Text('N/A'),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0),
+                              child: Divider(
+                                thickness: 1,
+                              ),
+                            ),
+                            ListTile(
+                              leading: Icon(
+                                HeroIcons.icon_clipboard,
+                                color: StyleConstants.blue,
+                                size: 30.0,
+                              ),
+                              title: Text(
+                                  (currentPet.additionalInfo != null
+                                      ? currentPet.additionalInfo
+                                      : 'Additional Notes'),
+                                  style: StyleConstants.greyedOutText),
+                            ),
+                          ],
                         ),
-                      )
+                      ),
+                      SizedBox(
+                        height: _height * 0.02,
+                      ),
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
