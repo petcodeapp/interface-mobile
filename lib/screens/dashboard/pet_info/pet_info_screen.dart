@@ -8,7 +8,6 @@ import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
-import 'package:petcode_app/widgets/custom_app_bars/pet_info_app_bar.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
 
 class PetInfoScreen extends StatefulWidget {
@@ -381,7 +380,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
             children: [
               Flexible(
                 child: Text(
-                  owner.name,
+                  owner.name.value,
                   style: StyleConstants.blackTitleTextSmall,
                 ),
               ),
@@ -390,7 +389,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
               ),
               Flexible(
                 child: Text(
-                  owner.email,
+                  owner.email.value,
                   style: StyleConstants.blackDescriptionText,
                 ),
               ),
@@ -399,7 +398,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
               ),
               Flexible(
                 child: Text(
-                  owner.phoneNumber,
+                  owner.phoneNumber.value,
                   style: StyleConstants.blackDescriptionText,
                 ),
               ),
@@ -408,7 +407,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
               ),
               Flexible(
                 child: Text(
-                  owner.address,
+                  owner.address.value,
                   style: StyleConstants.blackDescriptionText,
                 ),
               ),

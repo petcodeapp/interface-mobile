@@ -4,7 +4,6 @@ import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/screens/setup_tag/stp_start_screen.dart';
 import 'package:petcode_app/screens/account/account_info/account_editing_screen.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
-import 'package:petcode_app/services/pet_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';

@@ -4,11 +4,16 @@ import 'package:petcode_app/services/breed_autocomplete_service.dart';
 
 class BreedSearchBar extends StatefulWidget {
   BreedSearchBar(
-      {Key key, this.breedInputController, this.inputDecoration, this.species})
+      {Key key,
+      this.breedInputController,
+      this.inputDecoration,
+      this.species,
+      this.breedValidator})
       : super(key: key);
   final TextEditingController breedInputController;
   final InputDecoration inputDecoration;
   final Species species;
+  final FormFieldValidator<String> breedValidator;
   @override
   _BreedSearchBarState createState() => _BreedSearchBarState();
 }
@@ -48,6 +53,7 @@ class _BreedSearchBarState extends State<BreedSearchBar> {
           AnimationController controller) {
         return suggestionsBox;
       },
+      validator: widget.breedValidator,
     );
   }
 }

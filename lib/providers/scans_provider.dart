@@ -17,9 +17,10 @@ class ScansProvider extends ChangeNotifier {
     _mapService = new MapService();
   }
 
-  void setScans(List<Pet> allPets) async {
+  void setScans(
+      List<Pet> allPets, List<BitmapDescriptor> bitmapDescriptors) async {
     _allScans = await _mapService.getScansFromAllPets(allPets);
-    _mapMarkers = _mapService.createMarkers(_allScans);
+    _mapMarkers = await _mapService.createMarkers(_allScans, bitmapDescriptors);
     notifyListeners();
   }
 

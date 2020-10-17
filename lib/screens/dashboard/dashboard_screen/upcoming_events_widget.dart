@@ -10,10 +10,12 @@ import 'package:provider/provider.dart';
 class UpcomingEventsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
 
     AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
-    List<UpcomingEvent> allPetUpcomingEvents = allPetsProvider.getAllPetReminders();
+    List<UpcomingEvent> allPetUpcomingEvents =
+        allPetsProvider.getAllPetReminders();
 
     NotificationsProvider notificationsProvider =
         Provider.of<NotificationsProvider>(context);
@@ -53,20 +55,26 @@ class UpcomingEventsWidget extends StatelessWidget {
             itemBuilder: (context, index) {
               if (index == reminderIndex) {
                 return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: EdgeInsets.fromLTRB(
+                      width * 0.012, 0, width * 0.012, height * 0.024),
                   child: GlowingReminderWidget(
-              completed: false,
+                    completed: false,
                     name: allPetUpcomingEvents[index].name,
-                    date: allPetUpcomingEvents[index].date == null ?  null :allPetUpcomingEvents[index].date.toDate(),
+                    date: allPetUpcomingEvents[index].date == null
+                        ? null
+                        : allPetUpcomingEvents[index].date.toDate(),
                   ),
                 );
               } else {
                 return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: EdgeInsets.fromLTRB(
+                      width * 0.012, 0, width * 0.012, height * 0.024),
                   child: ReminderWidget(
                     completed: false,
                     name: allPetUpcomingEvents[index].name,
-                    date: allPetUpcomingEvents[index].date == null ?  null :allPetUpcomingEvents[index].date.toDate(),
+                    date: allPetUpcomingEvents[index].date == null
+                        ? null
+                        : allPetUpcomingEvents[index].date.toDate(),
                   ),
                 );
               }

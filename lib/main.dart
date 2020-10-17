@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
+import 'package:petcode_app/providers/image_marker_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
@@ -86,18 +87,41 @@ class MyApp extends StatelessWidget {
               } else if (currentPetProvider.currentPet != null) {
                 return currentPetProvider..updatePet(allPetsProvider.allPets);
               } else {
-                return currentPetProvider..setCurrentPet(allPetsProvider.allPets[0]);
+                return currentPetProvider
+                  ..setCurrentPet(allPetsProvider.allPets[0]);
               }
             }),
-        ChangeNotifierProxyProvider<AllPetsProvider, ScansProvider>(
-            create: (_) => ScansProvider(),
+        ChangeNotifierProxyProvider<AllPetsProvider, ImageMarkerProvider>(
+            create: (_) => ImageMarkerProvider(),
             update: (BuildContext context, AllPetsProvider allPetsProvider,
+                ImageMarkerProvider imageMarkerProvider) {
+              if (allPetsProvider.allPets == null || allPetsProvider.allPets.length == 0) {
+                return imageMarkerProvider..clear();
+              }
+              else {
+                List<String> urls = new List<String>();
+                for (int i = 0; i < allPetsProvider.allPets.length; i++) {
+                  urls.add(allPetsProvider.allPets[i].profileUrl);
+                }
+                return imageMarkerProvider..setImages(urls);
+              }
+            }),
+        ChangeNotifierProxyProvider2<AllPetsProvider, ImageMarkerProvider,
+                ScansProvider>(
+            create: (_) => ScansProvider(),
+            update: (BuildContext context,
+                AllPetsProvider allPetsProvider,
+                ImageMarkerProvider imageMarkerProvider,
                 ScansProvider scansProvider) {
               if (allPetsProvider.allPets == null ||
-                  allPetsProvider.allPets.length == 0) {
+                  allPetsProvider.allPets.length == 0 ||
+                  imageMarkerProvider.markerImages == null ||
+                  imageMarkerProvider.markerImages.length == 0) {
                 return scansProvider..clear();
               } else {
-                return scansProvider..setScans(allPetsProvider.allPets);
+                return scansProvider
+                  ..setScans(allPetsProvider.allPets,
+                      imageMarkerProvider.markerImages);
               }
             }),
         ChangeNotifierProxyProvider<FirebaseAuthService,
@@ -126,7 +150,7 @@ class MyApp extends StatelessWidget {
             update: (BuildContext context, FirebaseAuthService authService,
                 NotificationsProvider notificationsProvider) {
               return notificationsProvider..loggedIn = authService.user != null;
-            })
+            }),
       ],
       child: MaterialApp(
         builder: (context, child) {

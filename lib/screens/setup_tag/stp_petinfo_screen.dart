@@ -5,6 +5,7 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/setup_tag/stp_petinfo2_screen.dart';
 import 'package:petcode_app/services/breed_autocomplete_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:petcode_app/widgets/breed_search_bar.dart';
 
 class StpPetInfoScreen extends StatefulWidget {
@@ -23,6 +24,8 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
   TextEditingController _colorInputController;
 
   Species _petSpecies;
+
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -75,11 +78,43 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 10.0,
+                                offset: Offset(0, 2),
+                              ),
+                            ]),
+                        height: 50.0,
+                        width: 250.0,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Center(
+                            child: TextFormField(
+                              controller: _petNameInputController,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Pet Name',
+                                  hintStyle: TextStyle(fontSize: 15.0)),
+                              validator: ValidatorHelper.petNameValidator,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(5.0),
                           boxShadow: [
@@ -88,137 +123,112 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
                               blurRadius: 10.0,
                               offset: Offset(0, 2),
                             ),
-                          ]),
-                      height: 50.0,
-                      width: 250.0,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Center(
-                          child: TextFormField(
-                            controller: _petNameInputController,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Pet Name',
-                                hintStyle: TextStyle(fontSize: 15.0)),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 10.0,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      height: 50.0,
-                      width: 250.0,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Center(
-                            child: DropdownButtonFormField<Species>(
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Species',
-                            hintStyle: TextStyle(fontSize: 15.0),
-                          ),
-                          onChanged: (Species species) {
-                            setState(() {
-                              _petSpecies = species;
-                            });
-                          },
-                          items: [
-                            DropdownMenuItem(
-                              child: Text('Dog'),
-                              value: Species.Dog,
-                            ),
-                            DropdownMenuItem(
-                              child: Text('Cat'),
-                              value: Species.Cat,
-                            ),
-                            DropdownMenuItem(
-                              child: Text('Other'),
-                              value: Species.Other,
-                            ),
                           ],
-                          value: _petSpecies,
-                        )),
-                      ),
-                    ),
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 10.0,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      height: 50.0,
-                      width: 250.0,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Center(
-                          child: BreedSearchBar(
-                            breedInputController: _breedInputController,
-                            inputDecoration: InputDecoration(
+                        ),
+                        height: 50.0,
+                        width: 250.0,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Center(
+                              child: DropdownButtonFormField<Species>(
+                            decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: 'Breed',
+                              hintText: 'Species',
                               hintStyle: TextStyle(fontSize: 15.0),
                             ),
-                            species: _petSpecies,
-                          ),
+                            onChanged: (Species species) {
+                              setState(() {
+                                _petSpecies = species;
+                              });
+                            },
+                            items: [
+                              DropdownMenuItem(
+                                child: Text('Dog'),
+                                value: Species.Dog,
+                              ),
+                              DropdownMenuItem(
+                                child: Text('Cat'),
+                                value: Species.Cat,
+                              ),
+                              DropdownMenuItem(
+                                child: Text('Other'),
+                                value: Species.Other,
+                              ),
+                            ],
+                            value: _petSpecies,
+                            validator: ValidatorHelper.petSpeciesValidator,
+                          )),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 10.0,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
+                      SizedBox(
+                        height: height * 0.02,
                       ),
-                      height: 50.0,
-                      width: 250.0,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Center(
-                          child: TextFormField(
-                            controller: _colorInputController,
-                            decoration: InputDecoration(
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 10.0,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        height: 50.0,
+                        width: 250.0,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Center(
+                            child: BreedSearchBar(
+                              breedInputController: _breedInputController,
+                              inputDecoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'Color',
-                                hintStyle: TextStyle(fontSize: 15.0)),
+                                hintText: 'Breed',
+                                hintStyle: TextStyle(fontSize: 15.0),
+                              ),
+                              species: _petSpecies,
+                              breedValidator: ValidatorHelper.petBreedValidator,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                  ],
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 10.0,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        height: 50.0,
+                        width: 250.0,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Center(
+                            child: TextFormField(
+                              controller: _colorInputController,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Color',
+                                  hintStyle: TextStyle(fontSize: 15.0)),
+                              validator: ValidatorHelper.petColorValidator,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -226,20 +236,22 @@ class _StpPetInfoScreenState extends State<StpPetInfoScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Pet updatedPet = widget.pet;
+                  if (_formKey.currentState.validate()) {
+                    Pet updatedPet = widget.pet;
 
-                  updatedPet.name = _petNameInputController.text;
-                  updatedPet.breed = _breedInputController.text;
-                  updatedPet.color = _colorInputController.text;
+                    updatedPet.name = _petNameInputController.text;
+                    updatedPet.breed = _breedInputController.text;
+                    updatedPet.color = _colorInputController.text;
 
-                  updatedPet.species = _petSpecies.toShortString();
+                    updatedPet.species = _petSpecies.toShortString();
 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => StpPetInfo2Screen(
-                                pet: updatedPet,
-                              )));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => StpPetInfo2Screen(
+                                  pet: updatedPet,
+                                )));
+                  }
                 },
                 child: Container(
                   height: 55.0,

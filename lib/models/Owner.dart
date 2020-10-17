@@ -1,26 +1,28 @@
+import 'package:petcode_app/models/VisibleValue.dart';
+
 class Owner {
-  String name;
-  String phoneNumber;
-  String email;
-  String address;
+  VisibleValue<String> name;
+  VisibleValue<String> phoneNumber;
+  VisibleValue<String> email;
+  VisibleValue<String> address;
 
   Owner({this.name, this.phoneNumber, this.email, this.address});
 
   factory Owner.fromJson(Map<String, dynamic> json) {
     return Owner(
-      name: json['name'] as String,
-      phoneNumber: json['phoneNumber'] as String,
-      email: json['email'] as String,
-      address: json['address'] as String,
+      name: VisibleValue<String>.fromJson(json['name']),
+      phoneNumber: VisibleValue<String>.fromJson(json['phoneNumber']),
+      email: VisibleValue<String>.fromJson(json['email']),
+      address: VisibleValue<String>.fromJson(json['address']),
     );
   }
 
   Map<String, dynamic> toJson() => _OwnerToJson(this);
 
   Map<String, dynamic> _OwnerToJson(Owner instance) => <String, dynamic>{
-        'name': instance.name,
-        'phoneNumber': instance.phoneNumber,
-        'email': instance.email,
-        'address': instance.address,
+        'name': instance.name.toJson(),
+        'phoneNumber': instance.phoneNumber.toJson(),
+        'email': instance.email.toJson(),
+        'address': instance.address.toJson(),
       };
 }

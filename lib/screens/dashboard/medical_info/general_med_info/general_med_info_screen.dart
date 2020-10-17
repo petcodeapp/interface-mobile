@@ -2,26 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
-import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/widgets/custom_app_bars/change_pet_app_bar.dart';
 import 'package:provider/provider.dart';
 
-class GeneralMedicalInfoScreen extends StatefulWidget {
-  @override
-  _GeneralMedicalInfoScreenState createState() =>
-      _GeneralMedicalInfoScreenState();
-}
-
-class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
-  @override
+class GeneralMedicalInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
     CurrentPetProvider currentPetProvider =
-        Provider.of<CurrentPetProvider>(context);
+    Provider.of<CurrentPetProvider>(context);
     Pet currentPet = currentPetProvider.currentPet;
 
     AllPetsProvider _allPetsProvider;
@@ -163,7 +154,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 size: width * 0.08,
                 color: StyleConstants.blue,
               ),
-              title: Text(currentPet.specialNeeds,
+              title: Text(currentPet.specialNeeds.value,
                   style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))??
                   Text(
                     'Special Needs',
@@ -187,7 +178,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 size: width * 0.08,
                 color: StyleConstants.blue,
               ),
-              title: Text(currentPet.allergies,
+              title: Text(currentPet.allergies.value,
                   style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8))) ??
                   Text(
                     'Allergies',
@@ -212,7 +203,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 size: width * 0.08,
                 color: StyleConstants.blue,
               ),
-              title: Text(currentPet.vetName,
+              title: Text(currentPet.vetName.value,
                   style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8))) ??
                   Text(
                     'Veterinarian Name',
@@ -235,7 +226,7 @@ class _GeneralMedicalInfoScreenState extends State<GeneralMedicalInfoScreen> {
                 size: width * 0.08,
                 color: StyleConstants.blue,
               ),
-              title: Text(currentPet.vetPhoneNumber,
+              title: Text(currentPet.vetPhoneNumber.value,
                   style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))??
                   Text(
                     'Veterinarian Phone Number',
