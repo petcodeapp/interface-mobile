@@ -21,7 +21,7 @@ class PetPerksScreen extends StatelessWidget {
         description: 'Pet Food',
         discountAmount: 10),
     PetPerk(
-        storeName: 'Another Pet Store abcd abcd abcd abcdefghijk',
+        storeName: 'Another Pet Store',
         description: 'Pet Supplies, Accessories, and Products, and more and more and more and more',
         discountAmount: 33),
     PetPerk(
@@ -110,7 +110,11 @@ class PetPerksScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: width * 0.05),
                       child: Text(
                         'Food Perks',
-                        style: StyleConstants.blackThinTitleText,
+                        style: TextStyle(
+                          color: StyleConstants.grey,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                     SizedBox(

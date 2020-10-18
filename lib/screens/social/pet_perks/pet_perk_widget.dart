@@ -38,31 +38,94 @@ class PetPerkWidget extends StatelessWidget {
                 offset: Offset(0, 3),
               ),
             ]),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: height * 0.14,
-                width: height * 0.14,
-                decoration: BoxDecoration(
-                  color: StyleConstants.yellow,
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                child: Center(
-                  child: Image.asset('assets/images/petsmartlogo.png'),
+        child: Stack(
+          children: [
+            Positioned(
+              right: -5.0,
+              child: Container(
+                // height: height * 0.2,
+                //color: Colors.red,
+                //width: height * 0.2,
+                child: Stack(
+                  children: [
+                    Container(
+                      height: height * 0.08,
+                       //width: height * 0.08,
+                        //color: Colors.blue,
+                        child: Image.asset('assets/navigation_images/right_tag.png'),
+                    ),
+                    Positioned(
+                        top: width * 0.045,
+                        right: width * 0.018,
+                        child: Container(
+                            //color: Colors.blue,
+                            child: Text(
+                              '${petPerk.discountAmount}%',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20.0),
+                            ))),
+                  ],
                 ),
               ),
-              Text(
-                petPerk.description,
-                style: StyleConstants.blackThinDescriptionTextSmall.copyWith(
-                    color: StyleConstants.blue, fontWeight: FontWeight.w400),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: height * 0.14,
+                    width: height * 0.14,
+                    decoration: BoxDecoration(
+                      color: StyleConstants.yellow,
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Center(
+                      child: Container(
+                          width: height * 0.12,
+                          height: height * 0.12,
+                          child: Image.asset('assets/images/petsmartlogo.png')),
+                    ),
+                  ),
+                  SizedBox(
+                    width: width * 0.02,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: width * 0.6,
+                        child: Text(
+                          petPerk.storeName,
+                          style: TextStyle(
+                            color: StyleConstants.blue,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 22.0,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: width * 0.6,
+                        child: Text(
+                          petPerk.description,
+                          style: StyleConstants.blackThinDescriptionTextSmall
+                              .copyWith(
+                                  fontSize: 15.0,
+                                  color: StyleConstants.grey,
+                                  fontWeight: FontWeight.w500),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
