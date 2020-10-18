@@ -93,16 +93,16 @@ class _EditVaccinationWidgetState extends State<EditVaccinationWidget> {
                     SizedBox(
                       height: height * 0.06,
                     ),
-                    Text('Name', style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16.0,
-                        color: Colors.black.withOpacity(0.8))),
-
-                    SizedBox(height: height * 0.07,
+                    Text('Name',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.0,
+                            color: Colors.black.withOpacity(0.8))),
+                    SizedBox(
+                      height: height * 0.07,
                       child: TextFormField(
                         controller: _vaccinationNameController,
-                        decoration: InputDecoration(
-                        ),
+                        decoration: InputDecoration(),
                         validator: ValidatorHelper.vaccinationNameValidator,
                       ),
                     ),
@@ -114,13 +114,11 @@ class _EditVaccinationWidgetState extends State<EditVaccinationWidget> {
                             fontWeight: FontWeight.w400,
                             fontSize: 16.0,
                             color: Colors.black.withOpacity(0.8))),
-
                     SizedBox(
                       height: height * 0.07,
                       child: TextField(
                         controller: _vaccinationDateController,
                         decoration: InputDecoration(
-
                           suffixIcon: Icon(Icons.calendar_today),
                         ),
                         readOnly: true,
@@ -128,8 +126,14 @@ class _EditVaccinationWidgetState extends State<EditVaccinationWidget> {
                       ),
                     ),
                     SizedBox(
-                      height: height * 0.05,
+                      height: height * 0.04,
                     ),
+                    Text('Current: ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.0,
+                            color: Colors.black.withOpacity(0.8))),
+                    SizedBox(height: height * 0.01),
                     Align(
                       alignment: Alignment.center,
                       child: GestureDetector(
@@ -151,95 +155,114 @@ class _EditVaccinationWidgetState extends State<EditVaccinationWidget> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            color: StyleConstants.yellow,
-                            borderRadius: BorderRadius.circular(40.0),
-                          ),
+                              color: StyleConstants.yellow,
+                              borderRadius: BorderRadius.circular(10.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 6.0,
+                                  offset: Offset(0, 4),
+                                )
+                              ]),
                           height: height * 0.06,
-                          width: width * 0.7,
+                          width: width * 0.8,
                           child: Center(
                               child: Text(
-                            'Change Document',
-                            style: StyleConstants.whiteThinTitleTextSmall,
+                            'Upload Document',
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white),
                           )),
                         ),
                       ),
                     ),
+
                     SizedBox(
-                      height: 25.0,
+                      height: height * 0.06,
                     ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Provider.of<DatabaseService>(context,
-                                      listen: false)
-                                  .deleteVaccination(
-                                      widget.vaccinationIndex, currentPet);
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: StyleConstants.red,
-                                borderRadius: BorderRadius.circular(40.0),
-                              ),
-                              height: height * 0.06,
-                              width: width * 0.35,
-                              child: Center(
-                                  child: Text(
-                                'Delete',
-                                style: StyleConstants.whiteThinTitleTextSmall,
-                              )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20.0,
-                          ),
-                          GestureDetector(
-                            onTap: () async {
-                              if (_formKey.currentState.validate()) {
-                                String vaccinationImageUrl;
-                                if (_vaccinationImage != null) {
-                                  vaccinationImageUrl =
-                                      await Provider.of<FirebaseStorageService>(
-                                              context,
-                                              listen: false)
-                                          .uploadVaccineImage(
-                                              _vaccinationImage,
-                                              currentPet.pid +
-                                                  'vaccine' +
-                                                  DateTime.now().toString());
-                                }
-                                Vaccination newVaccination = new Vaccination(
-                                    name: _vaccinationNameController.text,
-                                    date: Timestamp.fromDate(_vaccineDate),
-                                    imageUrl: vaccinationImageUrl);
-                                Provider.of<DatabaseService>(context,
+
+                    GestureDetector(
+                      onTap: () async {
+                        if (_formKey.currentState.validate()) {
+                          String vaccinationImageUrl;
+                          if (_vaccinationImage != null) {
+                            vaccinationImageUrl =
+                                await Provider.of<FirebaseStorageService>(
+                                        context,
                                         listen: false)
-                                    .updateVaccination(newVaccination,
-                                        widget.vaccinationIndex, currentPet);
-                                Navigator.pop(context);
-                              }
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: StyleConstants.blue,
-                                borderRadius: BorderRadius.circular(40.0),
-                              ),
-                              height: height * 0.06,
-                              width: width * 0.35,
-                              child: Center(
-                                  child: Text(
-                                'Update',
-                                style: StyleConstants.whiteThinTitleTextSmall,
-                              )),
-                            ),
-                          ),
-                        ],
+                                    .uploadVaccineImage(
+                                        _vaccinationImage,
+                                        currentPet.pid +
+                                            'vaccine' +
+                                            DateTime.now().toString());
+                          }
+                          Vaccination newVaccination = new Vaccination(
+                              name: _vaccinationNameController.text,
+                              date: Timestamp.fromDate(_vaccineDate),
+                              imageUrl: vaccinationImageUrl);
+                          Provider.of<DatabaseService>(context, listen: false)
+                              .updateVaccination(newVaccination,
+                                  widget.vaccinationIndex, currentPet);
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: StyleConstants.blue,
+                            borderRadius: BorderRadius.circular(10.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 6.0,
+                                offset: Offset(0, 4),
+                              )
+                            ]),
+                        height: height * 0.06,
+                        width: width * 0.8,
+                        child: Center(
+                            child: Text(
+                          'Update Vaccination',
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                        )),
                       ),
-                    )
+                    ),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Provider.of<DatabaseService>(context, listen: false)
+                            .deleteVaccination(
+                                widget.vaccinationIndex, currentPet);
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: StyleConstants.red,
+                            borderRadius: BorderRadius.circular(10.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 6.0,
+                                offset: Offset(0, 4),
+                              )
+                            ]),
+                        height: height * 0.06,
+                        width: width * 0.8,
+                        child: Center(
+                            child: Text(
+                          'Delete Vaccination',
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                        )),
+                      ),
+                    ),
                   ],
                 ),
               ),

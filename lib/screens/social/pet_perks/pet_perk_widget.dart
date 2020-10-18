@@ -40,57 +40,19 @@ class PetPerkWidget extends StatelessWidget {
             ]),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Flexible(
-                    flex: 6,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              petPerk.discountAmount.toString() + '%',
-                              style: TextStyle(
-                                  fontSize: 30.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: StyleConstants.yellow),
-                            ),
-                            Text(
-                              ' Discount',
-                              style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w400,
-                                  color: StyleConstants.blue),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        Text(
-                          petPerk.storeName,
-                          style: TextStyle(
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.w600,
-                              color: StyleConstants.blue),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      ],
-                    ),
-                  ),
-                  Spacer(),
-                  Expanded(
-                      flex: 3,
-                      child: Image.asset(
-                        'assets/images/petsmartlogo.jpg',
-                      )),
-                ],
+              Container(
+                height: height * 0.14,
+                width: height * 0.14,
+                decoration: BoxDecoration(
+                  color: StyleConstants.yellow,
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: Center(
+                  child: Image.asset('assets/images/petsmartlogo.png'),
+                ),
               ),
               Text(
                 petPerk.description,
@@ -98,7 +60,7 @@ class PetPerkWidget extends StatelessWidget {
                     color: StyleConstants.blue, fontWeight: FontWeight.w400),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-              )
+              ),
             ],
           ),
         ),

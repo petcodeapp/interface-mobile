@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:petcode_app/utils/hero_icons.dart';
+import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class PetPerksCategoriesSelector extends StatelessWidget {
@@ -9,101 +11,171 @@ class PetPerksCategoriesSelector extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
 
     return Container(
-      height: height * 0.2,
+      height: height * 0.15,
       width: width,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            offset: Offset(0, 3),
-            blurRadius: 6.0,
-          ),
-        ],
-      ),
-      child: Center(
+      child: SizedBox(
+        height: height * 0.05,
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: [
             SizedBox(
-              width: 30.0,
+              width: width * 0.08,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  child: Image.asset(
-                    'assets/images/petperksplaceholderimg.png',
-                    fit: BoxFit.cover,
+            Padding(
+              padding: EdgeInsets.all(width * 0.01),
+              child: Container(
+                width: width * 0.4,
+                height: height * 0.1,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.16),
+                      blurRadius: 10.0,
+                      offset: Offset(0, 3),
+                    )
+                  ],
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.04),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: StyleConstants.yellow,
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        height: height * 0.09,
+                        width: height * 0.09,
+                        child: Center(
+                          child: Icon(
+                              HeroIcons2.bone_2,
+                            color: Colors.white,
+                            size: 35.0,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'Toys',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                          fontSize: 20.0,
+                        ),
+                      )
+                    ],
                   ),
-                  height: 100.0,
-                  width: 100.0,
                 ),
-                Text(
-                  'Toys',
-                  style: StyleConstants.blackThinDescriptionText,
-                ),
-              ],
+              ),
             ),
             SizedBox(
-              width: 30.0,
+              width: width * 0.08,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  child: Image.asset(
-                    'assets/images/petperksplaceholderimg.png',
-                    fit: BoxFit.cover,
+            Padding(
+              padding: EdgeInsets.all(width * 0.01),
+              child: Container(
+                width: width * 0.4,
+                height: height * 0.1,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.16),
+                      blurRadius: 10.0,
+                      offset: Offset(0, 3),
+                    )
+                  ],
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.04),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: StyleConstants.yellow,
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        height: height * 0.09,
+                        width: height * 0.09,
+                        child: Center(
+                          child: Icon(
+                            HeroIcons2.dog_food_1,
+                            color: Colors.white,
+                            size: 35.0,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'Food',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                          fontSize: 20.0,
+                        ),
+                      )
+                    ],
                   ),
-                  height: 100.0,
-                  width: 100.0,
                 ),
-                Text(
-                  'Food',
-                  style: StyleConstants.blackThinDescriptionText,
-                ),
-              ],
+              ),
             ),
             SizedBox(
-              width: 30.0,
+              width: width * 0.08,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  child: Image.asset(
-                    'assets/images/petperksplaceholderimg.png',
-                    fit: BoxFit.cover,
+            Padding(
+              padding: EdgeInsets.all(width * 0.01),
+              child: Container(
+                width: width * 0.5,
+                height: height * 0.1,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.16),
+                      blurRadius: 10.0,
+                      offset: Offset(0, 3),
+                    )
+                  ],
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.035),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: StyleConstants.yellow,
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        height: height * 0.09,
+                        width: height * 0.09,
+                        child: Center(
+                          child: Icon(
+                            HeroIcons2.pills_1,
+                            color: Colors.white,
+                            size: 35.0,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'Medicine',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                          fontSize: 20.0,
+                        ),
+                      )
+                    ],
                   ),
-                  height: 100.0,
-                  width: 100.0,
                 ),
-                Text(
-                  'Medication',
-                  style: StyleConstants.blackThinDescriptionText,
-                ),
-              ],
+              ),
             ),
             SizedBox(
-              width: 30.0,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  child: Image.asset(
-                    'assets/images/petperksplaceholderimg.png',
-                    fit: BoxFit.cover,
-                  ),
-                  height: 100.0,
-                  width: 100.0,
-                ),
-                Text(
-                  'Clothing',
-                  style: StyleConstants.blackThinDescriptionText,
-                ),
-              ],
+              width: width * 0.08,
             ),
           ],
         ),

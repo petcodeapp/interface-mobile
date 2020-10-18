@@ -65,7 +65,9 @@ class _AddVaccinationWidgetState extends State<AddVaccinationWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: height * 0.02,),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
                     Align(
                       alignment: Alignment.center,
                       child: Text(
@@ -111,8 +113,14 @@ class _AddVaccinationWidgetState extends State<AddVaccinationWidget> {
                       ),
                     ),
                     SizedBox(
-                      height: height * 0.05,
+                      height: height * 0.04,
                     ),
+                    Text('Current: ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.0,
+                            color: Colors.black.withOpacity(0.8))),
+                    SizedBox(height: height * 0.01),
                     Align(
                       alignment: Alignment.center,
                       child: GestureDetector(
@@ -187,7 +195,7 @@ class _AddVaccinationWidgetState extends State<AddVaccinationWidget> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            color: StyleConstants.blue,
+                              color: StyleConstants.blue,
                               borderRadius: BorderRadius.circular(10.0),
                               boxShadow: [
                                 BoxShadow(
@@ -195,18 +203,17 @@ class _AddVaccinationWidgetState extends State<AddVaccinationWidget> {
                                   blurRadius: 6.0,
                                   offset: Offset(0, 4),
                                 )
-                              ]
-                          ),
+                              ]),
                           height: height * 0.06,
                           width: width * 0.8,
                           child: Center(
                               child: Text(
                             'Add Vaccination',
-                                style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white),
-                              )),
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white),
+                          )),
                         ),
                       ),
                     ),

@@ -103,7 +103,7 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
                         width: _height * 0.01,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.green,
+                          color: StyleConstants.green,
                         ),
                       )
                     ],
@@ -139,7 +139,7 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
         ),
         builder: (BuildContext context) {
           return Container(
-            height: _height * 0.7,
+            height: _height * 0.8,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
               color: Colors.white,

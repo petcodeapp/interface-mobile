@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/models/PetPerk.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/screens/social/pet_perks/pet_perks_categories_selector.dart';
+import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/screens/social/pet_perks/glowing_pet_perk_widget.dart';
 import 'package:petcode_app/screens/social/pet_perks/pet_perk_widget.dart';
+import 'package:petcode_app/widgets/change_pet_dropdown.dart';
 import 'package:petcode_app/widgets/custom_app_bars/text_only_curved_app_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -42,60 +44,102 @@ class PetPerksScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: StyleConstants.pageBackgroundColor,
-      appBar: TextOnlyCurvedAppBar(),
       body: Container(
-        height: height,
         width: width,
+        height: height,
+        decoration: BoxDecoration(
+          gradient: StyleConstants.bgGradient,
+        ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: height * 0.01,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-              child: Text(
-                'Categories',
-                style: StyleConstants.blackThinTitleTextSmall,
+            Container(
+              height: height * 0.15,
+              child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.1, vertical: height * 0.02),
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: ChangePetDropdown(),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: IconButton(
+                          icon: Icon(HeroIcons2.left_arrow_1, size: 25.0, color: Colors.white,),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      )
+                    ],
+                  )
               ),
-            ),
-            SizedBox(
-              height: height * 0.01,
-            ),
-            PetPerksCategoriesSelector(),
-            SizedBox(
-              height: height * 0.03,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-              child: Text(
-                'Food Perks',
-                style: StyleConstants.blackThinTitleText,
-              ),
-            ),
-            SizedBox(
-              height: height * 0.01,
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: petPerks.length,
-                itemBuilder: (context, index) {
-                  if (petPerkIndex == index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: GlowingPetPerkWidget(
-                        petPerk: petPerks[index],
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20.0),
+                        topRight: Radius.circular(20.0))),
+                height: height,
+                width: width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: height * 0.03,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                      child: Text(
+                        'Categories',
+                        style: TextStyle(
+                          color: StyleConstants.grey,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    );
-                  } else {
-                    return Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: PetPerkWidget(
-                        petPerk: petPerks[index],
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),
+                    PetPerksCategoriesSelector(),
+                    SizedBox(
+                      height: height * 0.03,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                      child: Text(
+                        'Food Perks',
+                        style: StyleConstants.blackThinTitleText,
                       ),
-                    );
-                  }
-                },
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: petPerks.length,
+                        itemBuilder: (context, index) {
+                          if (petPerkIndex == index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: GlowingPetPerkWidget(
+                                petPerk: petPerks[index],
+                              ),
+                            );
+                          } else {
+                            return Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: PetPerkWidget(
+                                petPerk: petPerks[index],
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
