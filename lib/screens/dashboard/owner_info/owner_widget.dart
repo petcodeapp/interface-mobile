@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Owner.dart';
+import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/screens/dashboard/owner_info/owner_info_editing_screen.dart';
 import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
@@ -10,8 +12,9 @@ class OwnerWidget extends StatelessWidget {
   final double height;
   final double width;
   final String title;
+  final Pet currentPet;
 
-  OwnerWidget({Key key, this.owner, this.height, this.width, this.title}) : super(key: key);
+  OwnerWidget({Key key, this.owner, this.height, this.width, this.title, this.currentPet}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +50,8 @@ class OwnerWidget extends StatelessWidget {
                 ),
                 IconButton(
                   icon: Icon(HeroIcons2.edit_2),
-                  iconSize: width * 0.08,
+                  iconSize: width * 0.07,
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => OwnerInfoEditingScreen(currentPet: currentPet,))),
                 )
               ],
             ),

@@ -70,7 +70,9 @@ class OwnerInfoScreen extends StatelessWidget {
                           owner: currentPet.contact_1,
                           height: height,
                           width: width,
-                          title: 'Owner 1'),
+                          title: 'Owner 1',
+                        currentPet: currentPet,
+                      ),
                       SizedBox(height: height * 0.03),
                       currentPet.contact_2 == null
                           ? SizedBox()
@@ -89,7 +91,9 @@ class OwnerInfoScreen extends StatelessWidget {
                               owner: currentPet.contact_2,
                               height: height,
                               width: width,
-                              title: 'Owner 2')
+                              title: 'Owner 2',
+                        currentPet: currentPet,
+                      )
                           : Container(),
                       SizedBox(
                         height: height * 0.02,
