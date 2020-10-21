@@ -16,7 +16,7 @@ class ShareRecordsScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: petVaccinations.length > 0
+      body: petVaccinations != null && petVaccinations.length > 0
           ? Padding(
         padding: EdgeInsets.symmetric(horizontal: width * 0.02),
         child: ListView.builder(

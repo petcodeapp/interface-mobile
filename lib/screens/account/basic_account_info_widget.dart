@@ -45,7 +45,7 @@ class BasicAccountInfoWidget extends StatelessWidget {
             CircleAvatar(
               backgroundColor: Colors.transparent,
               radius: 40.0,
-              backgroundImage: allPetsProvider.allPets.length > 0
+              backgroundImage: allPetsProvider.allPets != null && allPetsProvider.allPets.length > 0
                   ? allPetsProvider.allPets[0].petImage
                   : AssetImage('assets/images/puppyphoto.jpg'),
             ),
