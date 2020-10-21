@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/screens/dashboard/owner_info/owner_widget.dart';
@@ -44,13 +45,12 @@ class OwnerInfoScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: IconButton(
-                            icon: Icon(
-                              HeroIcons2.left_arrow_1,
-                              size: 25.0,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => Navigator.pop(context),
-                          ),
+                              icon: Icon(
+                                HeroIcons2.left_arrow_1,
+                                size: 25.0,
+                                color: Colors.white,
+                              ),
+                              onPressed: () => Navigator.pop(context)),
                         )
                       ],
                     )),
