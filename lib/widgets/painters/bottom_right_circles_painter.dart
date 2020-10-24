@@ -10,12 +10,12 @@ class BottomRightCirclesPainter extends CustomPainter {
     Rect darkBlueCircleRect = Rect.fromCenter(
         center: Offset(size.width, size.height),
         width: size.width * 0.5 * 2,
-        height: size.height * 0.34 * 2);
+        height: size.height * 0.31 * 2);
 
     Rect lightBlueCircleRect = Rect.fromCenter(
         center: Offset(size.width, size.height),
         width: size.width * 0.7 * 2,
-        height: size.height * 0.32 * 2);
+        height: size.height * 0.29 * 2);
 
     canvas.drawArc(darkBlueCircleRect, pi, pi / 2, true, darkBlue);
     canvas.drawArc(lightBlueCircleRect, pi, pi / 2, true, lightBlue);
