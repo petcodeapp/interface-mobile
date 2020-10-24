@@ -7,6 +7,8 @@ import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/painters/bottom_right_circles_painter.dart';
+import 'package:petcode_app/widgets/painters/top_left_circles_painter.dart';
 import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -56,21 +58,13 @@ class _SignupScreenState extends State<SignupScreen> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Image.asset(
-                    'assets/images/onboarding/topleftcircles.png',
-                    width: width,
-                  ),
+                CustomPaint(
+                  painter: TopLeftCirclesPainter(),
+                  child: Container(),
                 ),
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Image.asset(
-                    'assets/images/onboarding/bottomrightcircles.png',
-                    width: width,
-                  ),
+                CustomPaint(
+                  painter: BottomRightCirclesPainter(),
+                  child: Container(),
                 ),
                 Positioned(
                   top: height * 0.1,
@@ -376,7 +370,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w600,
-                                    color: StyleConstants.blue),
+                                    color: StyleConstants.yellow),
                               ),
                             ],
                           ),

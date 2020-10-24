@@ -121,12 +121,14 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                                     firstDate: DateTime(2019),
                                     lastDate: DateTime(2021))
                                 .then((DateTime selectedDate) {
-                              setState(() {
-                                _reminderStartDateController
-                                  ..text = StringHelper.getDateStringNoYear(
-                                      selectedDate);
-                                _reminderStartDate = selectedDate;
-                              });
+                              if (selectedDate != null) {
+                                setState(() {
+                                  _reminderStartDateController
+                                    ..text = StringHelper.getDateStringNoYear(
+                                        selectedDate);
+                                  _reminderStartDate = selectedDate;
+                                });
+                              }
                             });
                           },
                           readOnly: true,
@@ -181,12 +183,14 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                                     firstDate: DateTime(2019),
                                     lastDate: DateTime(2050))
                                 .then((DateTime selectedDate) {
-                              setState(() {
-                                _reminderEndDateController
-                                  ..text = StringHelper.getDateStringNoYear(
-                                      selectedDate);
-                                _reminderEndDate = selectedDate;
-                              });
+                              if (selectedDate != null) {
+                                setState(() {
+                                  _reminderEndDateController
+                                    ..text = StringHelper.getDateStringNoYear(
+                                        selectedDate);
+                                  _reminderEndDate = selectedDate;
+                                });
+                              }
                             });
                           },
                           readOnly: true,

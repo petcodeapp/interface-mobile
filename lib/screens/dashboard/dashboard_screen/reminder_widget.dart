@@ -59,6 +59,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                     : Text(
                   'No date given',
                   overflow: TextOverflow.ellipsis,
+                  style: StyleConstants.darkGreyThinDescriptionTextSmall,
                 ),
                 Text(
                   widget.name,

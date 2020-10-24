@@ -44,13 +44,12 @@ class OwnerInfoScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: IconButton(
-                            icon: Icon(
-                              HeroIcons2.left_arrow_1,
-                              size: 25.0,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => Navigator.pop(context),
-                          ),
+                              icon: Icon(
+                                HeroIcons2.left_arrow_1,
+                                size: 25.0,
+                                color: Colors.white,
+                              ),
+                              onPressed: () => Navigator.pop(context)),
                         )
                       ],
                     )),

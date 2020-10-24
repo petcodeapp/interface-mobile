@@ -4,19 +4,38 @@ import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
 
-class OwnerWidget extends StatelessWidget {
-
+class OwnerWidget extends StatefulWidget {
   final Owner owner;
   final double height;
   final double width;
   final String title;
 
-  OwnerWidget({Key key, this.owner, this.height, this.width, this.title}) : super(key: key);
+  OwnerWidget({Key key, this.owner, this.height, this.width, this.title})
+      : super(key: key);
+
+  @override
+  _OwnerWidgetState createState() => _OwnerWidgetState();
+}
+
+class _OwnerWidgetState extends State<OwnerWidget> {
+  bool _nameVisible;
+  bool _emailVisible;
+  bool _phoneNumberVisible;
+  bool _addressVisible;
+
+  @override
+  void initState() {
+    _nameVisible = widget.owner.name.visible;
+    _emailVisible = widget.owner.email.visible;
+    _phoneNumberVisible = widget.owner.phoneNumber.visible;
+    _addressVisible = widget.owner.address.visible;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width * 0.9,
+      width: widget.width * 0.9,
       //height: height * 0.6,
       decoration: BoxDecoration(
           color: Colors.white,
@@ -27,10 +46,9 @@ class OwnerWidget extends StatelessWidget {
               color: Colors.black.withOpacity(0.2),
               blurRadius: 6.0,
             ),
-          ]
-      ),
+          ]),
       child: Padding(
-        padding: EdgeInsets.all(width * 0.05),
+        padding: EdgeInsets.all(widget.width * 0.05),
         child: Column(
           //crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -39,38 +57,48 @@ class OwnerWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: width * 0.04),
+                  padding: EdgeInsets.only(left: widget.width * 0.04),
                   child: Text(
-                    title,
-                    style: StyleConstants.blackThinTitleTextSmall.copyWith(fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.7)),
+                    widget.owner.name.value,
+                    style: StyleConstants.blackThinTitleTextSmall.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black.withOpacity(0.7)),
                   ),
                 ),
                 IconButton(
+                  onPressed: () {},
                   icon: Icon(HeroIcons2.edit_2),
-                  iconSize: width * 0.08,
+                  iconSize: widget.width * 0.08,
                 )
               ],
             ),
             ListTile(
               leading: Icon(
                 HeroIcons2.name_1,
-                size: width * 0.07,
+                size: widget.width * 0.07,
                 color: StyleConstants.blue,
               ),
               title: Row(
                 children: [
-                  owner.name != null && owner.name.value.isNotEmpty
-                      ? Text(owner.name.value,
-                      style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))
+                  widget.owner.name != null &&
+                          widget.owner.name.value.isNotEmpty
+                      ? Text(widget.owner.name.value,
+                          style: TextStyle(
+                              fontSize: widget.width * 0.045,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black.withOpacity(0.8)))
                       : Text(
-                    'Name',
-                    style: StyleConstants.greyedOutText,
-                  ),
+                          'Name',
+                          style: StyleConstants.greyedOutText,
+                        ),
                 ],
               ),
               trailing: Text(
                 'Visibility',
-                style: TextStyle(fontSize: width * 0.03, fontWeight: FontWeight.w400, color: Colors.black.withOpacity(0.8)),
+                style: TextStyle(
+                    fontSize: widget.width * 0.03,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black.withOpacity(0.8)),
               ),
             ),
             Padding(
@@ -82,19 +110,26 @@ class OwnerWidget extends StatelessWidget {
             ListTile(
               leading: Icon(
                 HeroIcons2.email_1,
-                size: width * 0.07,
+                size: widget.width * 0.07,
                 color: StyleConstants.blue,
               ),
-              title: owner.email != null && owner.email.value.isNotEmpty
-                  ? Text(owner.email.value,
-                  style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))
+              title: widget.owner.email != null &&
+                      widget.owner.email.value.isNotEmpty
+                  ? Text(widget.owner.email.value,
+                      style: TextStyle(
+                          fontSize: widget.width * 0.045,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black.withOpacity(0.8)))
                   : Text(
-                'Email',
-                style: StyleConstants.greyedOutText,
-              ),
+                      'Email',
+                      style: StyleConstants.greyedOutText,
+                    ),
               trailing: CircularCheckBox(
-                value: true,
+                value: _emailVisible,
                 onChanged: (bool value) {
+                  setState(() {
+                    _emailVisible = value;
+                  });
                 },
                 activeColor: StyleConstants.yellow,
               ),
@@ -108,19 +143,25 @@ class OwnerWidget extends StatelessWidget {
             ListTile(
               leading: Icon(
                 HeroIcons2.phone_2,
-                size: width * 0.07,
+                size: widget.width * 0.07,
                 color: StyleConstants.blue,
               ),
-              title: owner.phoneNumber != null
-                  ? Text(owner.phoneNumber.value,
-                  style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))
+              title: widget.owner.phoneNumber != null
+                  ? Text(widget.owner.phoneNumber.value,
+                      style: TextStyle(
+                          fontSize: widget.width * 0.045,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black.withOpacity(0.8)))
                   : Text(
-                'Phone Number',
-                style: StyleConstants.greyedOutText,
-              ),
+                      'Phone Number',
+                      style: StyleConstants.greyedOutText,
+                    ),
               trailing: CircularCheckBox(
-                value: true,
+                value: _phoneNumberVisible,
                 onChanged: (bool value) {
+                  setState(() {
+                    _phoneNumberVisible = value;
+                  });
                 },
                 activeColor: StyleConstants.yellow,
               ),
@@ -134,19 +175,26 @@ class OwnerWidget extends StatelessWidget {
             ListTile(
               leading: Icon(
                 HeroIcons2.home_1,
-                size: width * 0.07,
+                size: widget.width * 0.07,
                 color: StyleConstants.blue,
               ),
-              title: owner.address != null && owner.address.value.isNotEmpty
-                  ? Text(owner.address.value,
-                  style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))
+              title: widget.owner.address != null &&
+                      widget.owner.address.value.isNotEmpty
+                  ? Text(widget.owner.address.value,
+                      style: TextStyle(
+                          fontSize: widget.width * 0.045,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black.withOpacity(0.8)))
                   : Text(
-                'Address',
-                style: StyleConstants.greyedOutText,
-              ),
+                      'Address',
+                      style: StyleConstants.greyedOutText,
+                    ),
               trailing: CircularCheckBox(
-                value: true,
+                value: _addressVisible,
                 onChanged: (bool value) {
+                  setState(() {
+                    _addressVisible = value;
+                  });
                 },
                 activeColor: StyleConstants.yellow,
               ),

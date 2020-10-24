@@ -38,14 +38,16 @@ class BasicAccountInfoWidget extends StatelessWidget {
             )
           ]),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: height * 0.05, horizontal: width * 0.1),
+        padding: EdgeInsets.symmetric(
+            vertical: height * 0.05, horizontal: width * 0.1),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CircleAvatar(
               backgroundColor: Colors.transparent,
               radius: 40.0,
-              backgroundImage: allPetsProvider.allPets.length > 0
+              backgroundImage: allPetsProvider.allPets != null &&
+                      allPetsProvider.allPets.length > 0
                   ? allPetsProvider.allPets[0].petImage
                   : AssetImage('assets/images/puppyphoto.jpg'),
             ),
@@ -59,7 +61,11 @@ class BasicAccountInfoWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      user.firstName + ' ' + user.lastName,
+                      user != null &&
+                              user.firstName != null &&
+                              user.lastName != null
+                          ? user.firstName + ' ' + user.lastName
+                          : '',
                       style: StyleConstants.blackThinTitleText
                           .copyWith(fontSize: 25.0),
                       maxLines: 3,
@@ -82,7 +88,9 @@ class BasicAccountInfoWidget extends StatelessWidget {
                           width: width * 0.01,
                         ),
                         Text(
-                          user.petIds.length.toString() + ' Pets',
+                          user != null
+                              ? user.petIds.length.toString() + ' Pets'
+                              : '',
                           style: TextStyle(
                               color: StyleConstants.darkPurpleGrey,
                               fontWeight: FontWeight.w400,
