@@ -60,15 +60,17 @@ class BasicAccountInfoWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    user.firstName != null && user.lastName != null
-                        ? Text(
-                            user.firstName + ' ' + user.lastName,
-                            style: StyleConstants.blackThinTitleText
-                                .copyWith(fontSize: 25.0),
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        : SizedBox.shrink(),
+                    Text(
+                      user != null &&
+                              user.firstName != null &&
+                              user.lastName != null
+                          ? user.firstName + ' ' + user.lastName
+                          : '',
+                      style: StyleConstants.blackThinTitleText
+                          .copyWith(fontSize: 25.0),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     SizedBox(
                       height: height * 0.01,
                     ),
@@ -86,7 +88,9 @@ class BasicAccountInfoWidget extends StatelessWidget {
                           width: width * 0.01,
                         ),
                         Text(
-                          user.petIds.length.toString() + ' Pets',
+                          user != null
+                              ? user.petIds.length.toString() + ' Pets'
+                              : '',
                           style: TextStyle(
                               color: StyleConstants.darkPurpleGrey,
                               fontWeight: FontWeight.w400,
