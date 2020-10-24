@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/models/User.dart';
+import 'package:petcode_app/screens/auth/painters/bottom_right_circles_painter.dart';
+import 'package:petcode_app/screens/auth/painters/top_left_circles_painter.dart';
 import 'package:petcode_app/screens/setup_tag/stp_connecttag_screen.dart';
 import 'package:petcode_app/screens/setup_tag/stp_nameandphone_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
@@ -56,21 +58,13 @@ class _SignupScreenState extends State<SignupScreen> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Image.asset(
-                    'assets/images/onboarding/topleftcircles.png',
-                    width: width,
-                  ),
+                CustomPaint(
+                  painter: TopLeftCirclesPainter(),
+                  child: Container(),
                 ),
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Image.asset(
-                    'assets/images/onboarding/bottomrightcircles.png',
-                    width: width,
-                  ),
+                CustomPaint(
+                  painter: BottomRightCirclesPainter(),
+                  child: Container(),
                 ),
                 Positioned(
                   top: height * 0.1,
