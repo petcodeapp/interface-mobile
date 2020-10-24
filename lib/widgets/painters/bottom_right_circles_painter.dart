@@ -7,8 +7,15 @@ class BottomRightCirclesPainter extends CustomPainter {
     var darkBlue = Paint()..color = Color(0xE651BCDA);
     var lightBlue = Paint()..color = Color(0x8051BCDA);
 
-    Rect darkBlueCircleRect = Rect.fromCenter(center: Offset(size.width, size.height), width: size.width * 0.5 * 2, height: size.height * 0.34 * 2);
-    Rect lightBlueCircleRect = Rect.fromCenter(center: Offset(size.width, size.height), width: size.width * 0.7 * 2, height: size.height * 0.32 * 2);
+    Rect darkBlueCircleRect = Rect.fromCenter(
+        center: Offset(size.width, size.height),
+        width: size.width * 0.5 * 2,
+        height: size.height * 0.34 * 2);
+
+    Rect lightBlueCircleRect = Rect.fromCenter(
+        center: Offset(size.width, size.height),
+        width: size.width * 0.7 * 2,
+        height: size.height * 0.32 * 2);
 
     canvas.drawArc(darkBlueCircleRect, pi, pi / 2, true, darkBlue);
     canvas.drawArc(lightBlueCircleRect, pi, pi / 2, true, lightBlue);
@@ -18,5 +25,4 @@ class BottomRightCirclesPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
   }
-
 }
