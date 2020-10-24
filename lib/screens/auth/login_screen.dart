@@ -234,7 +234,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                               children: [
                                 Spacer(),
-                                Text('Forgot Password',style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600, color: StyleConstants.blue),),
+                                Text('Forgot Password',style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600, color: StyleConstants.yellow),),
                               ],
                             ),
                           ),
