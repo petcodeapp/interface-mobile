@@ -55,15 +55,19 @@ class PetPerksScreen extends StatelessWidget {
             Container(
               height: height * 0.15,
               child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.1, vertical: height * 0.02),
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.1, vertical: height * 0.05),
                   child: Stack(
                     children: [
                       Align(
-                        alignment: Alignment.bottomCenter,
-                        child: ChangePetDropdown(),
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Pet Perks',
+                          style: StyleConstants.whiteThinTitleText
+                              .copyWith(fontSize: 25.0),
+                        ),
                       ),
                       Align(
-                        alignment: Alignment.bottomLeft,
+                        alignment: Alignment.centerLeft,
                         child: IconButton(
                           icon: Icon(HeroIcons2.left_arrow_1, size: 25.0, color: Colors.white,),
                           onPressed: () => Navigator.pop(context),
