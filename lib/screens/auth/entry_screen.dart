@@ -1,10 +1,10 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:petcode_app/screens/auth/painters/bottom_right_circles_painter.dart';
 import 'package:petcode_app/screens/auth/login_screen.dart';
-import 'package:petcode_app/screens/auth/painters/top_left_circles_painter.dart';
 import 'package:petcode_app/screens/auth/signup_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/painters/bottom_right_circles_painter.dart';
+import 'package:petcode_app/widgets/painters/top_left_circles_painter.dart';
 import 'package:provider/provider.dart';
 
 class EntryScreen extends StatefulWidget {

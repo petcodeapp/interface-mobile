@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcode_app/models/User.dart';
-import 'package:petcode_app/screens/auth/painters/bottom_right_circles_painter.dart';
-import 'package:petcode_app/screens/auth/painters/top_left_circles_painter.dart';
 import 'package:petcode_app/screens/setup_tag/stp_connecttag_screen.dart';
 import 'package:petcode_app/screens/setup_tag/stp_nameandphone_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/painters/bottom_right_circles_painter.dart';
+import 'package:petcode_app/widgets/painters/top_left_circles_painter.dart';
 import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
