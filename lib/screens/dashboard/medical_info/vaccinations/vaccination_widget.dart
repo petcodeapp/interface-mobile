@@ -8,7 +8,11 @@ import 'package:provider/provider.dart';
 
 class VaccinationWidget extends StatefulWidget {
   VaccinationWidget(
-      {Key key, this.updateProvider, this.vaccineName, this.vaccineDate, this.vaccineIndex})
+      {Key key,
+      this.updateProvider,
+      this.vaccineName,
+      this.vaccineDate,
+      this.vaccineIndex})
       : super(key: key);
 
   final bool updateProvider;
@@ -65,41 +69,51 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
               ),
             ]),
         width: _width * 0.8,
-        height: _height * 0.15,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: _width * 0.05),
+          padding: EdgeInsets.symmetric(
+              horizontal: _width * 0.05, vertical: _height * 0.05),
           child: Row(
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.vaccineName,
-                    style: TextStyle(
-                      color: StyleConstants.yellow,
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.w400,
+              Expanded(
+                flex: 5,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.vaccineName,
+                      style: TextStyle(
+                        color: StyleConstants.yellow,
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
-                  ),
-                  Text(hasDate
-                      ? 'Expires: ' +
-                          StringHelper.getDateString(
-                              widget.vaccineDate.toDate())
-                      : 'No Date Given'),
-                ],
+                    Text(hasDate
+                        ? 'Expires: ' +
+                            StringHelper.getDateString(
+                                widget.vaccineDate.toDate())
+                        : 'No Date Given'),
+                  ],
+                ),
               ),
-              Spacer(),
-              Icon(
-                Icons.remove_red_eye,
-                size: 30.0,
-              ),
-              SizedBox(
-                width: 10.0,
-              ),
-              Icon(
-                Icons.file_download,
-                size: 30.0,
+              Expanded(
+                flex: 2,
+                child: Row(
+                  children: [
+                    Spacer(),
+                    Icon(
+                      Icons.remove_red_eye,
+                      size: 30.0,
+                    ),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    Icon(
+                      Icons.file_download,
+                      size: 30.0,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
