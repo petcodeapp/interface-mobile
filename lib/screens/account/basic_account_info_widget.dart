@@ -38,14 +38,16 @@ class BasicAccountInfoWidget extends StatelessWidget {
             )
           ]),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: height * 0.05, horizontal: width * 0.1),
+        padding: EdgeInsets.symmetric(
+            vertical: height * 0.05, horizontal: width * 0.1),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CircleAvatar(
               backgroundColor: Colors.transparent,
               radius: 40.0,
-              backgroundImage: allPetsProvider.allPets != null && allPetsProvider.allPets.length > 0
+              backgroundImage: allPetsProvider.allPets != null &&
+                      allPetsProvider.allPets.length > 0
                   ? allPetsProvider.allPets[0].petImage
                   : AssetImage('assets/images/puppyphoto.jpg'),
             ),
@@ -58,13 +60,15 @@ class BasicAccountInfoWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      user.firstName + ' ' + user.lastName,
-                      style: StyleConstants.blackThinTitleText
-                          .copyWith(fontSize: 25.0),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    user.firstName != null && user.lastName != null
+                        ? Text(
+                            user.firstName + ' ' + user.lastName,
+                            style: StyleConstants.blackThinTitleText
+                                .copyWith(fontSize: 25.0),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        : SizedBox.shrink(),
                     SizedBox(
                       height: height * 0.01,
                     ),

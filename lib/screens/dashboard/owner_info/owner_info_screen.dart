@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/screens/dashboard/owner_info/owner_widget.dart';
