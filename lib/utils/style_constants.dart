@@ -176,119 +176,116 @@ class StyleConstants {
   );
 
   static TextStyle blackThinTitleTextMedium = TextStyle(
-        color: Colors.black,
-        fontSize: width * 0.06,
-        fontWeight: FontWeight.w600,
+    color: Colors.black,
+    fontSize: width * 0.06,
+    fontWeight: FontWeight.w600,
     fontFamily: 'OpenSans',
   );
 
   static TextStyle blackThinTitleTextXS = TextStyle(
-        color: Colors.black,
+    color: Colors.black,
     fontFamily: 'OpenSans',
-        fontSize: width * 0.04,
-        fontWeight: FontWeight.w400,
-      );
+    fontSize: width * 0.04,
+    fontWeight: FontWeight.w400,
+  );
 
-  static TextStyle darkBlackDescriptionText =  TextStyle(
-          fontSize: width * 0.041,
-          fontWeight: FontWeight.w500,
-          color: Colors.black.withOpacity(0.8),
+  static TextStyle darkBlackDescriptionText = TextStyle(
+    fontSize: width * 0.041,
+    fontWeight: FontWeight.w500,
+    color: Colors.black.withOpacity(0.8),
     fontFamily: 'OpenSans',
   );
 
   static TextStyle tinyGreyDescriptionText = TextStyle(
-        fontSize: width * 0.035,
-        fontWeight: FontWeight.w400,
-        color: darkPurpleGrey,
+    fontSize: width * 0.035,
+    fontWeight: FontWeight.w400,
+    color: darkPurpleGrey,
     fontFamily: 'OpenSans',
-      );
+  );
 
   static TextStyle lightBlackThinTitleText = TextStyle(
-        color: lightBlack,
-        fontSize: width * 0.07,
-        fontWeight: FontWeight.w600,
+    color: lightBlack,
+    fontSize: width * 0.07,
+    fontWeight: FontWeight.w600,
     fontFamily: 'OpenSans',
-      );
+  );
 
   static TextStyle blackThinTitleTextLarge = TextStyle(
-        color: Colors.black87.withOpacity(0.8),
-        fontSize: width * 0.1,
-        fontWeight: FontWeight.w400,
+    color: Colors.black87.withOpacity(0.8),
+    fontSize: width * 0.1,
+    fontWeight: FontWeight.w400,
     fontFamily: 'OpenSans',
-      );
+  );
 
-  static TextStyle blackThinTitleTextSmall =  TextStyle(
-        color: Colors.black,
-        fontSize: width * 0.052,
-        fontWeight: FontWeight.w400,
+  static TextStyle blackThinTitleTextSmall = TextStyle(
+    color: Colors.black,
+    fontSize: width * 0.052,
+    fontWeight: FontWeight.w400,
     fontFamily: 'OpenSans',
-      );
+  );
 
-  static TextStyle lightBlackThinTitleTextSmall =
-     TextStyle(
-            color: lightBlack,
-            fontSize: width * 0.052,
-            fontWeight: FontWeight.w400,
-       fontFamily: 'OpenSans',
-     );
-
-  static TextStyle blackDescriptionText =TextStyle(
+  static TextStyle lightBlackThinTitleTextSmall = TextStyle(
+    color: lightBlack,
+    fontSize: width * 0.052,
+    fontWeight: FontWeight.w400,
     fontFamily: 'OpenSans',
-        color: Colors.black,
-        fontSize: width * 0.05,
-        fontWeight: FontWeight.w400,
-      );
+  );
 
-  static TextStyle blackThinDescriptionText =TextStyle(
+  static TextStyle blackDescriptionText = TextStyle(
     fontFamily: 'OpenSans',
-        color: Colors.black,
-        fontSize: width * 0.05,
-        fontWeight: FontWeight.w300,
-      );
+    color: Colors.black,
+    fontSize: width * 0.05,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle blackThinDescriptionText = TextStyle(
+    fontFamily: 'OpenSans',
+    color: Colors.black,
+    fontSize: width * 0.05,
+    fontWeight: FontWeight.w300,
+  );
 
   static TextStyle greyThinTitleText = TextStyle(
     fontFamily: 'OpenSans',
-        color: darkPurpleGrey,
-        fontSize: width * 0.07,
-        fontWeight: FontWeight.w400,
-      );
+    color: darkPurpleGrey,
+    fontSize: width * 0.07,
+    fontWeight: FontWeight.w400,
+  );
 
-  static TextStyle greyThinDescriptionText =  TextStyle(
+  static TextStyle greyThinDescriptionText = TextStyle(
     fontFamily: 'OpenSans',
-        color: lightGrey,
-        fontSize: width * 0.05,
-        fontWeight: FontWeight.w400,
-      );
+    color: lightGrey,
+    fontSize: width * 0.05,
+    fontWeight: FontWeight.w400,
+  );
 
-  static TextStyle blackThinDescriptionTextSmall =
-       TextStyle(
-            color: Colors.black,
-            fontSize: width * 0.035,
-            fontWeight: FontWeight.w300,
-         fontFamily: 'OpenSans',
-          );
+  static TextStyle blackThinDescriptionTextSmall = TextStyle(
+    color: Colors.black,
+    fontSize: width * 0.035,
+    fontWeight: FontWeight.w300,
+    fontFamily: 'OpenSans',
+  );
 
-  static TextStyle darkGreyThinDescriptionTextSmall =
-       TextStyle(
-            color: lightBlack,
-            fontSize: width * 0.035,
-            fontWeight: FontWeight.w400,
-         fontFamily: 'OpenSans',
-          );
+  static TextStyle darkGreyThinDescriptionTextSmall = TextStyle(
+    color: lightBlack,
+    fontSize: width * 0.035,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'OpenSans',
+  );
 
   static TextStyle whiteThinTitleText = TextStyle(
-        color: Colors.white,
-        fontSize: width * 0.07,
-        fontWeight: FontWeight.w600,
+    color: Colors.white,
+    fontSize: width * 0.07,
+    fontWeight: FontWeight.w600,
     fontFamily: 'OpenSans',
-      );
+  );
 
-  static TextStyle whiteThinTitleTextSmall =  TextStyle(
-        color: Colors.white,
-        fontSize: width * 0.052,
-        fontWeight: FontWeight.w400,
+  static TextStyle whiteThinTitleTextSmall = TextStyle(
+    color: Colors.white,
+    fontSize: width * 0.052,
+    fontWeight: FontWeight.w400,
     fontFamily: 'OpenSans',
-      );
+  );
 
   static TextStyle greyedOutText =
       new TextStyle(fontWeight: FontWeight.w400, color: Colors.grey);
@@ -316,7 +313,9 @@ class StyleConstants {
 
   static TextStyle greySubText = new TextStyle(
       fontFamily: 'OpenSans',
-      color: lightGrey, fontSize: width * 0.03, fontWeight: FontWeight.w300);
+      color: lightGrey,
+      fontSize: width * 0.03,
+      fontWeight: FontWeight.w300);
 
   static TextStyle blueTitleText = new TextStyle(
     fontFamily: 'OpenSans',
@@ -346,7 +345,11 @@ class StyleConstants {
     fontWeight: FontWeight.w600,
   );
 
-  static TextStyle lightBlackListText = new TextStyle(fontSize: 20.0, color: StyleConstants.lightBlack, fontWeight: FontWeight.w600, fontFamily: 'OpenSans');
+  static TextStyle lightBlackListText = new TextStyle(
+      fontSize: 18.0,
+      color: StyleConstants.lightBlack,
+      fontWeight: FontWeight.w600,
+      fontFamily: 'OpenSans');
 
   //box decorations
   static BoxDecoration roundYellowButtonDeco = new BoxDecoration(

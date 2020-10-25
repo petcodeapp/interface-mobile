@@ -47,7 +47,9 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     //need to add something to get difference between dates
-                    color: StyleConstants.green,
+                    color: widget.date.difference(DateTime.now()).inDays < 1 ?
+                    StyleConstants.red : widget.date.difference(DateTime.now()).inDays <= 3 ? StyleConstants.yellow : StyleConstants.green
+                    ,
                   ),
                 ),
               ),

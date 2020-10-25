@@ -83,7 +83,7 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                         alignment: Alignment.center,
                         child: Text(
                           'Edit Reminder',
-                          style: StyleConstants.blackThinTitleTextMedium,
+                          style: StyleConstants.blackThinTitleTextMedium.copyWith(fontSize: 22.0),
                         ),
                       ),
                       SizedBox(
@@ -94,6 +94,9 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                         height: height * 0.07,
                         child: TextFormField(
                           controller: _reminderNameController,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600, color: StyleConstants.lightBlack, fontSize: 20.0
+                          ),
                           decoration: InputDecoration(
                             hintText: 'Name',
                             hintStyle: TextStyle(fontSize: 14.0),
@@ -104,10 +107,13 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                       SizedBox(
                         height: height * 0.04,
                       ),
-                      Text('When', style: StyleConstants.blackThinTitleTextXS),
+                      Text('Date and Time', style: StyleConstants.blackThinTitleTextXS),
                       SizedBox(
                         height: height * 0.07,
                         child: TextField(
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: StyleConstants.lightBlack, fontSize: 20.0
+                          ),
                           controller: _reminderStartDateController,
                           decoration: InputDecoration(
                             hintText: 'Start Date',
@@ -155,7 +161,9 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                           ].map((String value) {
                             return new DropdownMenuItem<String>(
                               value: value,
-                              child: new Text(value),
+                              child: new Text(value, style: TextStyle(
+                                  fontWeight: FontWeight.w600, color: StyleConstants.lightBlack, fontSize: 20.0
+                              ),),
                             );
                           }).toList(),
                           onChanged: (String value) {
@@ -166,14 +174,18 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                       SizedBox(
                         height: height * 0.04,
                       ),
-                      Text('Until', style: StyleConstants.blackThinTitleTextXS),
+                      Text('End Date/Time', style: StyleConstants.blackThinTitleTextXS),
                       SizedBox(
                         height: height * 0.07,
                         child: TextField(
                           controller: _reminderEndDateController,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: StyleConstants.lightBlack, fontSize: 20.0
+                          ),
                           decoration: InputDecoration(
                             hintText: 'End Date',
-                            hintStyle: TextStyle(fontSize: 14.0),
+
+                            hintStyle: TextStyle(fontSize: 14.0, ),
                             suffixIcon: Icon(Icons.calendar_today),
                           ),
                           onTap: () {
