@@ -92,23 +92,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
           'Edit Pet Info',
           style: TextStyle(color: Colors.white),
         ),
-        /*
-        leading: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Text(
-                'Cancel',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.0,
-                ),
-              ),
-            ),
-          ),
-        ),
-        */
+
         actions: [
           Center(
             child: Padding(
