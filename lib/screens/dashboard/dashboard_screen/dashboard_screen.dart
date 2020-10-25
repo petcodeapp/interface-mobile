@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/provider_state.dart';
+import 'package:petcode_app/screens/dashboard/dashboard_screen/header_circle_painter.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/navigation_row.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/no_pets_indicator.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/pets_carousel_widget.dart';
@@ -12,8 +13,8 @@ import 'package:provider/provider.dart';
 class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
 
     AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
 
@@ -39,13 +40,6 @@ class DashboardScreen extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Image.asset(
-                    'assets/images/onboarding/quartercircle.png',
-                    width: width * 0.4,
-                  ),
-                ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,40 +49,18 @@ class DashboardScreen extends StatelessWidget {
                       width: width,
                       child: Stack(
                         children: [
-                          Container(
-                            width: width,
-                            height: 0.01,
+                          Positioned(top: height * 0.08, left: width * 0.08, child: Text('Dashboard', style: StyleConstants.whiteThinTitleText,)),
+                          CustomPaint(
+                            painter: HeaderCirclePainter(),
+                            child: Container(),
                           ),
-                          /*
-                          Align(
-                            alignment: Alignment.bottomRight,
+                          Positioned(
+                            top: height * 0.055,
+                            right: width * 0.06,
                             child: Image.asset(
-                              'assets/images/onboarding/quartercircle.png',
-                            ),
-                          ),*/
-                          Align(
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: width * 0.1),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text('Dashboard', style: StyleConstants.whiteThinTitleText,),
-                                      Spacer(),
-                                      Image.asset(
-                                        'assets/images/onboarding/pawlogohighres.png',
-                                        fit: BoxFit.cover,
-                                        width: width * 0.15,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: height * 0.01,),
-                                ],
-                              ),
+                              'assets/images/onboarding/pawlogohighres.png',
+                              fit: BoxFit.cover,
+                              width: width * 0.15,
                             ),
                           ),
                         ],
