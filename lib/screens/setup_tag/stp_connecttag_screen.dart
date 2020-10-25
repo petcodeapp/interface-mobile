@@ -3,6 +3,8 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/setup_tag/stp_contactinfo_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
+import 'package:petcode_app/widgets/painters/bottom_right_circles_painter.dart';
+import 'package:petcode_app/widgets/painters/top_left_circles_painter.dart';
 
 class StpConnectTagScreen extends StatefulWidget {
   @override
@@ -10,9 +12,14 @@ class StpConnectTagScreen extends StatefulWidget {
 }
 
 class _StpConnectTagScreenState extends State<StpConnectTagScreen> {
-  TextEditingController textEditingController = TextEditingController();
-  String currentText = "";
+  TextEditingController _petIdController;
   final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    _petIdController = new TextEditingController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,21 +37,13 @@ class _StpConnectTagScreenState extends State<StpConnectTagScreen> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Image.asset(
-                    'assets/images/onboarding/topleftcircles.png',
-                    width: width,
-                  ),
+                CustomPaint(
+                  painter: TopLeftCirclesPainter(),
+                  child: Container(),
                 ),
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Image.asset(
-                    'assets/images/onboarding/bottomrightcircles.png',
-                    width: width,
-                  ),
+                CustomPaint(
+                  painter: BottomRightCirclesPainter(),
+                  child: Container(),
                 ),
                 Positioned(
                   top: height * 0.1,
@@ -108,15 +107,15 @@ class _StpConnectTagScreenState extends State<StpConnectTagScreen> {
                                 "Let's get started by getting",
                                 style: StyleConstants.blackThinTitleTextSmall
                                     .copyWith(
-                                    color: StyleConstants.darkPurpleGrey,
-                                    fontSize: 18.0),
+                                        color: StyleConstants.darkPurpleGrey,
+                                        fontSize: 18.0),
                               ),
                               Text(
                                 "your 6 Digit PetCode ID",
                                 style: StyleConstants.blackThinTitleTextSmall
                                     .copyWith(
-                                    color: StyleConstants.darkPurpleGrey,
-                                    fontSize: 18.0),
+                                        color: StyleConstants.darkPurpleGrey,
+                                        fontSize: 18.0),
                               ),
                               SizedBox(
                                 height: height * 0.04,
@@ -134,48 +133,24 @@ class _StpConnectTagScreenState extends State<StpConnectTagScreen> {
                               SizedBox(
                                 height: height * 0.01,
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                height: 50.0,
-                                width: 250.0,
-                                child: Center(
-                                  child: TextFormField(
-                                    controller: textEditingController,
-                                    onChanged: (value) {
-                                      print(value);
-                                      setState(() {
-                                        currentText = value;
-                                      });
-                                    },
-                                    validator: (value) =>
-                                        ValidatorHelper.petIdValidator(value),
-                                    decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(15.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color:
-                                              StyleConstants.darkPurpleGrey,
-                                              width: 2.0),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color:
-                                              StyleConstants.darkPurpleGrey,
-                                              width: 1.5),
-                                        ),
-                                        hintText: 'PetCode ID',
-                                        hintStyle: TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w600,
+                              Center(
+                                child: TextFormField(
+                                  controller: _petIdController,
+                                  validator: (value) =>
+                                      ValidatorHelper.petIdValidator(value),
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
                                             color:
-                                            StyleConstants.darkPurpleGrey)),
-                                  ),
+                                                StyleConstants.darkPurpleGrey,
+                                            width: 2.0),
+                                      ),
+                                      hintText: 'PetCode ID',
+                                      hintStyle: TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w600,
+                                          color:
+                                              StyleConstants.darkPurpleGrey)),
                                 ),
                               ),
                             ],
@@ -211,15 +186,14 @@ class _StpConnectTagScreenState extends State<StpConnectTagScreen> {
                         ),
                         GestureDetector(
                             onTap: () {
-                              print('TAPPED: ' + currentText);
                               if (formKey.currentState.validate()) {
-                                Pet createdPet = new Pet(pid: currentText);
+                                Pet createdPet = new Pet(pid: _petIdController.text);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (_) => StpContactScreen(
-                                          pet: createdPet,
-                                        )));
+                                              pet: createdPet,
+                                            )));
                               }
                             },
                             child: Container(

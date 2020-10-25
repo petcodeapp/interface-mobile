@@ -4,6 +4,7 @@ import 'package:petcode_app/screens/dashboard/pet_info/pet_info_screen.dart';
 import 'package:petcode_app/screens/dashboard/owner_info/owner_info_screen.dart';
 import 'package:petcode_app/screens/dashboard/reminders/reminders_screen.dart';
 import 'package:petcode_app/utils/hero_icons.dart';
+import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 
 class NavigationRow extends StatelessWidget {
@@ -109,7 +110,6 @@ class NavigationRow extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(
-                              //Icons.today,
                               HeroIcons.icon_notification,
                               size: 25.0,
                               color: Colors.white,

@@ -69,7 +69,7 @@ class ValidatorHelper {
 
   static String petBreedValidator(String petBreed) {
     if (petBreed == null || petBreed.trim().length == 0) {
-      return 'Please enter a valid pet name';
+      return 'Please enter a valid pet breed';
     } else {
       return null;
     }

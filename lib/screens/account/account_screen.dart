@@ -16,7 +16,7 @@ class AccountScreen extends StatelessWidget {
 
 
     return Scaffold(
-      backgroundColor: StyleConstants.blue,
+      backgroundColor: StyleConstants.white,
       body: SingleChildScrollView(
         child: Container(
             width: width,

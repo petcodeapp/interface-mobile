@@ -112,13 +112,16 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                                     firstDate: DateTime(2019),
                                     lastDate: DateTime(2050))
                                 .then((DateTime selectedDate) {
-                              setState(() {
-                                _reminderStartDateController =
-                                    new TextEditingController(
-                                        text: StringHelper.getDateStringNoYear(
-                                            selectedDate));
-                                _reminderStartDate = selectedDate;
-                              });
+                              if (selectedDate != null) {
+                                setState(() {
+                                  _reminderStartDateController =
+                                      new TextEditingController(
+                                          text:
+                                              StringHelper.getDateStringNoYear(
+                                                  selectedDate));
+                                  _reminderStartDate = selectedDate;
+                                });
+                              }
                             });
                           },
                           readOnly: true,
@@ -135,7 +138,10 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                       DropdownButton<String>(
                           value: _repeatValue ?? 'Never',
                           //underline: SizedBox.shrink(),
-                          underline: Container(color: Colors.grey, height: 1.0,),
+                          underline: Container(
+                            color: Colors.grey,
+                            height: 1.0,
+                          ),
                           isExpanded: true,
                           items: <String>[
                             'Never',
@@ -174,15 +180,19 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                                     firstDate: DateTime(2019),
                                     lastDate: DateTime(2021))
                                 .then((DateTime selectedDate) {
-                              setState(() {
-                                _reminderEndDateController =
-                                    new TextEditingController(
-                                        text: StringHelper.getDateStringNoYear(
-                                            selectedDate));
-                                _reminderEndDate = selectedDate;
-                              });
+                              if (selectedDate != null) {
+                                setState(() {
+                                  _reminderEndDateController =
+                                      new TextEditingController(
+                                          text:
+                                              StringHelper.getDateStringNoYear(
+                                                  selectedDate));
+                                  _reminderEndDate = selectedDate;
+                                });
+                              }
                             });
                           },
+                          readOnly: true,
                         ),
                       ),
                       SizedBox(
@@ -210,24 +220,24 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                              color: StyleConstants.blue,
-                              borderRadius: BorderRadius.circular(10.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 6.0,
-                                  offset: Offset(0, 4),
-                                )
-                              ]
-                            ),
+                                color: StyleConstants.blue,
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 6.0,
+                                    offset: Offset(0, 4),
+                                  )
+                                ]),
                             height: height * 0.06,
                             width: width * 0.8,
                             child: Center(
                                 child: Text(
                               'Schedule Reminder',
                               style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white
-                              ),
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white),
                             )),
                           ),
                         ),

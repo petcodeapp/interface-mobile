@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/auth/login_screen.dart';
 import 'package:petcode_app/screens/auth/signup_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/painters/bottom_right_circles_painter.dart';
+import 'package:petcode_app/widgets/painters/top_left_circles_painter.dart';
 import 'package:provider/provider.dart';
 
 class EntryScreen extends StatefulWidget {
@@ -11,7 +13,6 @@ class EntryScreen extends StatefulWidget {
 }
 
 class _EntryScreenState extends State<EntryScreen> {
-
   static PageController _controller;
 
   @override
@@ -38,21 +39,13 @@ class _EntryScreenState extends State<EntryScreen> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Positioned(
-                top: 0,
-                left: 0,
-                child: Image.asset(
-                    'assets/images/onboarding/topleftcircles.png',
-                  width:  width,
-                ),
+              CustomPaint(
+                painter: TopLeftCirclesPainter(),
+                child: Container(),
               ),
-              Positioned(
-                top: 0,
-                left: 0,
-                child: Image.asset(
-                  'assets/images/onboarding/bottomrightcircles.png',
-                  width:  width,
-                ),
+              CustomPaint(
+                painter: BottomRightCirclesPainter(),
+                child: Container(),
               ),
               Positioned(
                 top: height * 0.1,
@@ -62,9 +55,16 @@ class _EntryScreenState extends State<EntryScreen> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image.asset('assets/images/onboarding/pawlogohighres.png', fit: BoxFit.cover, width: width * 0.15,),
-                      SizedBox(width: width * 0.02,),
-                      Image.asset('assets/images/onboarding/textlogo.png', fit: BoxFit.cover),
+                      Image.asset(
+                        'assets/images/onboarding/pawlogohighres.png',
+                        fit: BoxFit.cover,
+                        width: width * 0.15,
+                      ),
+                      SizedBox(
+                        width: width * 0.02,
+                      ),
+                      Image.asset('assets/images/onboarding/textlogo.png',
+                          fit: BoxFit.cover),
                     ],
                   ),
                   //child: Image.asset('assets/images/logoyellow.png', fit: BoxFit.cover,),
@@ -83,7 +83,7 @@ class _EntryScreenState extends State<EntryScreen> {
                         child: PageView(
                           controller: _controller,
                           scrollDirection: Axis.horizontal,
-                          onPageChanged: (int page){
+                          onPageChanged: (int page) {
                             setState(() {
                               pageIndex = page;
                             });
@@ -91,29 +91,38 @@ class _EntryScreenState extends State<EntryScreen> {
                           children: <Widget>[
                             Container(
                               child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        height: height * 0.25,
-                                          child: Image.asset('assets/images/onboarding/onboarding3.png', fit: BoxFit.cover),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: height * 0.25,
+                                      child: Image.asset(
+                                          'assets/images/onboarding/onboarding3.png',
+                                          fit: BoxFit.cover),
+                                    ),
+                                    Text('One Code',
+                                        style: TextStyle(
+                                          color: StyleConstants.blue,
+                                          fontSize: 25.0,
+                                          fontWeight: FontWeight.w600,
+                                        )),
+                                    Text(
+                                      'An endless suite of',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.0,
                                       ),
-                                      Text('One Code', style: TextStyle(
-                                        color: StyleConstants.blue,
-                                        fontSize: 25.0,
-                                        fontWeight: FontWeight.w600,
-                                      )),
-                                      Text('An endless suite of', style: TextStyle(
+                                    ),
+                                    Text(
+                                      'features for pet owners',
+                                      style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 14.0,
-                                      ),),
-                                      Text('features for pet owners', style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                      ),),
-                                    ],
-                                  ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                                 //child: Text('Text Description of the app 1'),
                               ),
                             ),
@@ -125,21 +134,30 @@ class _EntryScreenState extends State<EntryScreen> {
                                   children: [
                                     Container(
                                       height: height * 0.25,
-                                      child: Image.asset('assets/images/onboarding/onboarding2.png', fit: BoxFit.cover),
+                                      child: Image.asset(
+                                          'assets/images/onboarding/onboarding2.png',
+                                          fit: BoxFit.cover),
                                     ),
-                                    Text('Peace of Mind', style: TextStyle(
-                                      color: StyleConstants.blue,
-                                      fontSize: 25.0,
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                                    Text('Keep your pet safe and secure', style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.0,
-                                    ),),
-                                    Text('with PetCode\'s QR tag system', style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.0,
-                                    ),),
+                                    Text('Peace of Mind',
+                                        style: TextStyle(
+                                          color: StyleConstants.blue,
+                                          fontSize: 25.0,
+                                          fontWeight: FontWeight.w600,
+                                        )),
+                                    Text(
+                                      'Keep your pet safe and secure',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
+                                    Text(
+                                      'with PetCode\'s QR tag system',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -153,49 +171,67 @@ class _EntryScreenState extends State<EntryScreen> {
                                   children: [
                                     Container(
                                       height: height * 0.25,
-                                      child: Image.asset('assets/images/onboarding/onboarding1.png', fit: BoxFit.cover),
+                                      child: Image.asset(
+                                          'assets/images/onboarding/onboarding1.png',
+                                          fit: BoxFit.cover),
                                     ),
-                                    Text('Stay Up to Date', style: TextStyle(
-                                      color: StyleConstants.blue,
-                                      fontSize: 25.0,
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                                    Text('PetCode\'s storage and reminder system', style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.0,
-                                    ),),
-                                    Text('keeps you updated with your pet\'s health', style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.0,
-                                    ),),
+                                    Text('Stay Up to Date',
+                                        style: TextStyle(
+                                          color: StyleConstants.blue,
+                                          fontSize: 25.0,
+                                          fontWeight: FontWeight.w600,
+                                        )),
+                                    Text(
+                                      'PetCode\'s storage and reminder system',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
+                                    Text(
+                                      'keeps you updated with your pet\'s health',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
                             Container(
                               child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  height: height * 0.25,
-                                  child: Image.asset('assets/images/onboarding/onboarding4.png', fit: BoxFit.cover),
-                                ),
-                                Text('Discover Fun', style: TextStyle(
-                                  color: StyleConstants.blue,
-                                  fontSize: 25.0,
-                                  fontWeight: FontWeight.w600,
-                                )),
-                                Text('Explore nearby pet parks, events, and pet', style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.0,
-                                ),),
-                                Text('perks with PetCode\'s discover system', style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.0,
-                                ),),
-                              ],
-                            ),
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    height: height * 0.25,
+                                    child: Image.asset(
+                                        'assets/images/onboarding/onboarding4.png',
+                                        fit: BoxFit.cover),
+                                  ),
+                                  Text('Discover Fun',
+                                      style: TextStyle(
+                                        color: StyleConstants.blue,
+                                        fontSize: 25.0,
+                                        fontWeight: FontWeight.w600,
+                                      )),
+                                  Text(
+                                    'Explore nearby pet parks, events, and pet',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                  Text(
+                                    'perks with PetCode\'s discover system',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),

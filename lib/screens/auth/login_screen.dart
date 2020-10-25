@@ -4,6 +4,8 @@ import 'package:petcode_app/screens/setup_tag/stp_nameandphone_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/painters/bottom_right_circles_painter.dart';
+import 'package:petcode_app/widgets/painters/top_left_circles_painter.dart';
 import 'package:petcode_app/widgets/sliding_scontainer.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -49,21 +51,13 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Image.asset(
-                    'assets/images/onboarding/topleftcircles.png',
-                    width: width,
-                  ),
+                CustomPaint(
+                  painter: TopLeftCirclesPainter(),
+                  child: Container(),
                 ),
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Image.asset(
-                    'assets/images/onboarding/bottomrightcircles.png',
-                    width: width,
-                  ),
+                CustomPaint(
+                  painter: BottomRightCirclesPainter(),
+                  child: Container(),
                 ),
                 Positioned(
                   top: height * 0.1,
@@ -240,7 +234,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                               children: [
                                 Spacer(),
-                                Text('Forgot Password',style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600, color: StyleConstants.blue),),
+                                Text('Forgot Password',style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600, color: StyleConstants.yellow),),
                               ],
                             ),
                           ),

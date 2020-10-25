@@ -234,11 +234,13 @@ class _AddVaccinationWidgetState extends State<AddVaccinationWidget> {
             firstDate: DateTime(2019),
             lastDate: DateTime(2050))
         .then((date) {
-      setState(() {
-        _vaccineDate = date;
-        _vaccinationDateController
-          ..text = StringHelper.getDateStringNoYear(_vaccineDate);
-      });
+      if (date != null) {
+        setState(() {
+          _vaccineDate = date;
+          _vaccinationDateController
+            ..text = StringHelper.getDateStringNoYear(_vaccineDate);
+        });
+      }
     });
   }
 }

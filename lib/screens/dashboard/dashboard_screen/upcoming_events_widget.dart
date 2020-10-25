@@ -47,7 +47,7 @@ class UpcomingEventsWidget extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
               'Upcoming',
-              style: StyleConstants.blackThinTitleTextMedium,
+              style: StyleConstants.blackThinTitleTextMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 25.0),
             ),
           ),
           Align(
@@ -142,7 +142,7 @@ class UpcomingEventsWidget extends StatelessWidget {
           ),
 
           SizedBox(
-            height: allPetUpcomingEvents.length == 1 ? height * 0.1 : 0.0,
+            height: allPetUpcomingEvents.length == 1 ? height * 0.15 : 0.0,
           ),
 
         ],

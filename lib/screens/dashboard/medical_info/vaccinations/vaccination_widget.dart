@@ -105,7 +105,7 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
                           shape: BoxShape.circle,
                           color: StyleConstants.green,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],

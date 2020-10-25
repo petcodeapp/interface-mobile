@@ -14,7 +14,7 @@ class RootScreen extends StatefulWidget {
 
 class _RootScreenState extends State<RootScreen> {
   int _currentIndex = 0;
-  PageController _pageController = PageController(initialPage: 0);
+  //PageController _pageController = PageController(initialPage: 0);
   var _pageOptions = [
     DashboardScreen(),
     ScansScreen(),
@@ -25,19 +25,25 @@ class _RootScreenState extends State<RootScreen> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    //_pageController = PageController();
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
+    //_pageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox.expand(
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _pageOptions,
+      ),
+
+      /*
+      SizedBox.expand(
         child: PageView(
           physics: NeverScrollableScrollPhysics(),
           controller: _pageController,
@@ -50,7 +56,6 @@ class _RootScreenState extends State<RootScreen> {
         ),
       ),
 
-      /*
       bottomNavigationBar: BottomNavyBar(
         selectedIndex: _currentIndex,
         showElevation: true,
@@ -92,7 +97,7 @@ class _RootScreenState extends State<RootScreen> {
         currentIndex: _currentIndex,
         onTap: (index) => setState(() {
           _currentIndex = index;
-          _pageController.jumpToPage(index);
+          //_pageController.jumpToPage(index);
         }),
         selectedItemColor: StyleConstants.blue,
         backgroundColor: Colors.white,

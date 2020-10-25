@@ -9,7 +9,7 @@ import 'package:petcode_app/services/pet_service.dart';
 class AllPetsProvider extends ChangeNotifier {
   List<Pet> _allPets;
   StreamSubscription _petsSubscription;
-  ProviderState _providerState;
+  ProviderState _providerState = ProviderState.Idle;
 
   List<Pet> get allPets => _allPets;
 
@@ -30,6 +30,9 @@ class AllPetsProvider extends ChangeNotifier {
         _providerState = ProviderState.Idle;
         notifyListeners();
       });
+    }
+    else {
+      _allPets = new List<Pet>();
     }
   }
 

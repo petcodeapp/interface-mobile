@@ -91,36 +91,36 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                           ),
                         ),
                       ),
-                      Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                allPetsProvider.allPets[index].name,
-                                style: StyleConstants.blackThinTitleTextMedium,
-                              ),
-                              SizedBox(
-                                height: 2.0,
-                              ),
-                              Text(
-                                allPetsProvider.allPets[index].breed,
-                                style: StyleConstants.blackThinTitleTextXS,
-                              ),
-                            ],
-                          ),
-                          Spacer(),
-                          Container(
-                            //color: Colors.blue,
-                            child: IconButton(
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: width * 0.03),
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  allPetsProvider.allPets[index].name,
+                                  style: StyleConstants.blackThinTitleTextMedium.copyWith(fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: 2.0,
+                                ),
+                                Text(
+                                  allPetsProvider.allPets[index].breed,
+                                  style: StyleConstants.blackThinTitleTextXS,
+                                ),
+                              ],
+                            ),
+                            Spacer(),
+                            IconButton(
                                 icon: Icon(
                                   HeroIcons.icon_globe,
                                   size: width * 0.1,
                                   color: Colors.black,
                                 ),
                                 onPressed: () {}),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),

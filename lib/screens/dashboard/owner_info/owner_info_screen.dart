@@ -44,13 +44,12 @@ class OwnerInfoScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: IconButton(
-                            icon: Icon(
-                              HeroIcons2.left_arrow_1,
-                              size: 25.0,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => Navigator.pop(context),
-                          ),
+                              icon: Icon(
+                                HeroIcons2.left_arrow_1,
+                                size: 25.0,
+                                color: Colors.white,
+                              ),
+                              onPressed: () => Navigator.pop(context)),
                         )
                       ],
                     )),
@@ -71,7 +70,7 @@ class OwnerInfoScreen extends StatelessWidget {
                           height: height,
                           width: width,
                           title: 'Owner 1',
-                        currentPet: currentPet,
+                          currentPet: currentPet,
                       ),
                       SizedBox(height: height * 0.03),
                       currentPet.contact_2 == null

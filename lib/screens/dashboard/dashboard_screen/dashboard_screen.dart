@@ -51,14 +51,11 @@ class DashboardScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      height: height * 0.15,
+                      height: height * 0.13,
                       width: width,
                       child: Stack(
                         children: [
-                          Container(
-                            width: width,
-                            height: 0.01,
-                          ),
+
                           /*
                           Align(
                             alignment: Alignment.bottomRight,
@@ -69,15 +66,16 @@ class DashboardScreen extends StatelessWidget {
                           Align(
                             alignment: Alignment.center,
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+                              padding: EdgeInsets.only(left: width * 0.08,right: width * 0.08, top: width* 0.05),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      Text('Dashboard', style: StyleConstants.whiteThinTitleText,),
+                                      Text('Dashboard', style: StyleConstants.whiteThinTitleText.copyWith(fontWeight: FontWeight.bold),),
                                       Spacer(),
                                       Image.asset(
                                         'assets/images/onboarding/pawlogohighres.png',
@@ -135,7 +133,6 @@ class DashboardScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-
                           ],
                         ),
                       ),

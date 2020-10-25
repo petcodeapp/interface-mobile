@@ -20,14 +20,19 @@ class ImageMarkerProvider extends ChangeNotifier {
     List<Future<BitmapDescriptor>> descriptors =
         new List<Future<BitmapDescriptor>>();
     for (int i = 0; i < urls.length; i++) {
-      descriptors.add(_imageMarkerService.getMarkerIcon(urls[i], Size(StyleConstants.width * 0.27, StyleConstants.width * 0.27), MapConstants.markerColors[i]));
+      descriptors.add(_imageMarkerService.getMarkerIcon(
+          urls[i],
+          Size(StyleConstants.width * 0.27, StyleConstants.width * 0.27),
+          MapConstants.markerColors[i]));
     }
     _markerImages = await Future.wait(descriptors);
     notifyListeners();
   }
 
   void clear() {
-    _markerImages.clear();
+    if (_markerImages != null) {
+      _markerImages.clear();
+    }
     notifyListeners();
   }
 }
