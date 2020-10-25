@@ -67,8 +67,8 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                   decoration: BoxDecoration(
                       color: StyleConstants.pageBackgroundColor,
                       borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20.0),
-                          topRight: Radius.circular(20.0))),
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0))),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [

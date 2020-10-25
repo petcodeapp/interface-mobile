@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
+import 'package:petcode_app/screens/dashboard/owner_info/empty_owner_widget.dart';
 import 'package:petcode_app/screens/dashboard/owner_info/owner_widget.dart';
 import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -93,7 +94,7 @@ class OwnerInfoScreen extends StatelessWidget {
                               title: 'Owner 2',
                         currentPet: currentPet,
                       )
-                          : Container(),
+                          : EmptyOwnerWidget(height: height, width: width, currentPet: currentPet,),
                       SizedBox(
                         height: height * 0.02,
                       ),
