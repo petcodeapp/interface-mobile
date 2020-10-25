@@ -205,7 +205,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 //need to add species field
                                 title: currentPet.species != null &&
                                         currentPet.species.isNotEmpty
-                                    ? Text(currentPet.species)
+                                    ? Text(currentPet.species, style: StyleConstants.lightBlackListText)
                                     : Text('Species',
                                         style: StyleConstants.greyedOutText),
                               ),
@@ -224,7 +224,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 ),
                                 title: currentPet.breed != null &&
                                         currentPet.breed.isNotEmpty
-                                    ? Text(currentPet.breed)
+                                    ? Text(currentPet.breed, style: StyleConstants.lightBlackListText)
                                     : Text(
                                         'Breed',
                                         style: StyleConstants.greyedOutText,
@@ -247,7 +247,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                     ? Text('Birthday',
                                         style: StyleConstants.greyedOutText)
                                     : Text(StringHelper.getDateString(
-                                        currentPet.birthday.toDate())),
+                                        currentPet.birthday.toDate()), style: StyleConstants.lightBlackListText),
                               ),
                               Padding(
                                 padding:
@@ -264,7 +264,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 ),
                                 title: currentPet.color != null &&
                                         currentPet.color.isNotEmpty
-                                    ? Text(currentPet.color)
+                                    ? Text(currentPet.color, style: StyleConstants.lightBlackListText)
                                     : Text('Color',
                                         style: StyleConstants.greyedOutText),
                               ),
@@ -283,7 +283,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 ),
                                 title: currentPet.temperament != null &&
                                         currentPet.temperament.isNotEmpty
-                                    ? Text(currentPet.temperament)
+                                    ? Text(currentPet.temperament, style: StyleConstants.lightBlackListText)
                                     : Text('Temperament',
                                         style: StyleConstants.greyedOutText),
                               ),
@@ -302,12 +302,12 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 ),
                                 title: Row(
                                   children: [
-                                    Text('Adopted: '),
+                                    Text('Adopted: ', style: StyleConstants.lightBlackListText),
                                     currentPet.isAdopted == null
                                         ? Text('N/A')
                                         : (currentPet.isAdopted
-                                            ? Text('Yes')
-                                            : Text('No')),
+                                            ? Text('Yes', style: StyleConstants.lightBlackListText)
+                                            : Text('No', style: StyleConstants.lightBlackListText)),
                                   ],
                                 ),
                               ),
@@ -326,10 +326,10 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 ),
                                 title: Row(
                                   children: [
-                                    Text('Service Animal: '),
+                                    Text('Service Animal: ', style: StyleConstants.lightBlackListText),
                                     (currentPet.isServiceAnimal
-                                            ? Text('Yes')
-                                            : Text('No')) ??
+                                            ? Text('Yes', style: StyleConstants.lightBlackListText)
+                                            : Text('No', style: StyleConstants.lightBlackListText)) ??
                                         Text('N/A'),
                                   ],
                                 ),
@@ -349,12 +349,13 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 ),
                                 title: currentPet.additionalInfo != null &&
                                         currentPet.additionalInfo.isNotEmpty
-                                    ? Text(currentPet.additionalInfo)
+                                    ? Text(currentPet.additionalInfo, style: StyleConstants.lightBlackListText)
                                     : Text(
                                         'Additional Notes',
                                         style: StyleConstants.greyedOutText,
                                       ),
                               ),
+                              SizedBox(height: height * 0.02,),
                             ],
                           ),
                         ),

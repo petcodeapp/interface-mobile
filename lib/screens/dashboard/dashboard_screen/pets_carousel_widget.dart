@@ -100,14 +100,14 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                               children: [
                                 Text(
                                   allPetsProvider.allPets[index].name,
-                                  style: StyleConstants.blackThinTitleTextMedium.copyWith(fontWeight: FontWeight.w600, fontSize: 28.0, fontFamily: 'OpenSans'),
+                                  style: StyleConstants.blackThinTitleTextMedium.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w700, fontSize: 28.0, fontFamily: 'OpenSans'),
                                 ),
                                 SizedBox(
                                   height: 2.0,
                                 ),
                                 Text(
                                   allPetsProvider.allPets[index].breed,
-                                  style: StyleConstants.blackThinTitleTextXS.copyWith(fontWeight: FontWeight.w600),
+                                  style: StyleConstants.blackThinTitleTextXS.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w600, fontFamily: 'OpenSans'),
                                 ),
                               ],
                             ),

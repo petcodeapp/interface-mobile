@@ -346,6 +346,8 @@ class StyleConstants {
     fontWeight: FontWeight.w600,
   );
 
+  static TextStyle lightBlackListText = new TextStyle(fontSize: 20.0, color: StyleConstants.lightBlack, fontWeight: FontWeight.w600, fontFamily: 'OpenSans');
+
   //box decorations
   static BoxDecoration roundYellowButtonDeco = new BoxDecoration(
       color: yellow,
