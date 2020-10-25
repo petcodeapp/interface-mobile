@@ -142,7 +142,7 @@ class UpcomingEventsWidget extends StatelessWidget {
           ),
 
           SizedBox(
-            height: allPetUpcomingEvents.length == 1 ? height * 0.15 : 0.0,
+            height: allPetUpcomingEvents.length == 1 ? height * 0.15 : allPetUpcomingEvents.length * height * 0.006,
           ),
 
         ],

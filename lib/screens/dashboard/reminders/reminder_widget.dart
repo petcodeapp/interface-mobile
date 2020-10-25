@@ -66,8 +66,12 @@ class ReminderWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        currentReminder.startDate != null ? StringHelper.getDateString(currentReminder.startDate.toDate()) : 'No Start Date',
-                        style: StyleConstants.blueDescriptionText,
+                        currentReminder.startDate != null ?
+                        currentReminder.startDate.toDate().difference(DateTime.now()).inDays < 7
+                        ? '${currentReminder.startDate.toDate().difference(DateTime.now()).inDays + 1} Days' :
+                        StringHelper.getDateString(currentReminder.startDate.toDate())
+                            : 'No Start Date',
+                        style: StyleConstants.blueDescriptionText.copyWith(fontSize: 23.0),
                         maxLines: 10,
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
