@@ -63,7 +63,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                       ' - ' +
                       DateFormat.jm().format(widget.date),
                   overflow: TextOverflow.ellipsis,
-                  style: StyleConstants.darkGreyThinDescriptionTextSmall
+                  style: StyleConstants.darkGreyThinDescriptionTextSmall.copyWith(fontWeight: FontWeight.w600, color: Colors.grey),
                   //style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: StyleConstants.darkPurpleGrey),
                 )
                     : Text(

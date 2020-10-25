@@ -52,66 +52,79 @@ class StyleConstants {
     //end: Alignment(0.01, 0.01),
     end: Alignment.centerLeft,
     stops: [0.05, 0.25, 0.7],
-    colors: [const Color(0xffB3E1EE), const Color(0xff7cdcf7), StyleConstants.blue], // whitish to gray
+    colors: [
+      const Color(0xffB3E1EE),
+      const Color(0xff7cdcf7),
+      StyleConstants.blue
+    ], // whitish to gray
     //tileMode: TileMode.repeated,
   );
 
   //text styles
-  static TextStyle whiteButtonText = GoogleFonts.getFont('Open Sans',
-      textStyle: TextStyle(
-        color: white,
-        fontSize: width * 0.06,
-      ));
+  static TextStyle whiteButtonText = TextStyle(
+    fontFamily: 'OpenSans',
+    color: white,
+    fontSize: width * 0.06,
+  );
 
-  static TextStyle yellowButtonText = GoogleFonts.getFont('Open Sans',
-      textStyle: TextStyle(
-        color: yellow,
-        fontSize: width * 0.06,
-      ));
+  static TextStyle yellowButtonText = TextStyle(
+    fontFamily: 'OpenSans',
+    color: yellow,
+    fontSize: width * 0.06,
+  );
 
-  static TextStyle whiteTitleText = GoogleFonts.getFont('Open Sans',
-      textStyle: TextStyle(
-        color: Colors.white,
-        fontSize: width * 0.07,
-      ));
+  static TextStyle whiteTitleText = TextStyle(
+    fontFamily: 'OpenSans',
+    color: Colors.white,
+    fontSize: width * 0.07,
+  );
 
-  static TextStyle whiteTitleTextLarge = GoogleFonts.getFont('Open Sans',
-      textStyle: TextStyle(
-        color: Colors.white,
-        fontSize: width * 0.1,
-      ));
+  static TextStyle whiteBoldTitleText = TextStyle(
+      fontFamily: 'OpenSans',
+      fontSize: 30.0,
+      color: Colors.white,
+      fontWeight: FontWeight.w600);
 
-  static TextStyle whiteTitleTextSmall = GoogleFonts.getFont('Open Sans',
-      textStyle: TextStyle(
-        color: Colors.white,
-        fontSize: width * 0.06,
-      ));
+  static TextStyle whiteTitleTextLarge = TextStyle(
+    fontFamily: 'OpenSans',
+    color: Colors.white,
+    fontSize: width * 0.1,
+  );
 
-  static TextStyle whiteTitleTextXS = GoogleFonts.getFont('Open Sans',
-      textStyle: TextStyle(
-        color: Colors.white,
-        fontSize: width * 0.05,
-      ));
+  static TextStyle whiteTitleTextSmall = TextStyle(
+    fontFamily: 'OpenSans',
+    color: Colors.white,
+    fontSize: width * 0.06,
+  );
 
-  static TextStyle whiteTitleTextXL = GoogleFonts.getFont('Open Sans',
-      textStyle: TextStyle(
-        color: Colors.white,
-        fontSize: width * 0.12,
-      ));
+  static TextStyle whiteTitleTextXS = TextStyle(
+    fontFamily: 'OpenSans',
+    color: Colors.white,
+    fontSize: width * 0.05,
+  );
+
+  static TextStyle whiteTitleTextXL = TextStyle(
+    fontFamily: 'OpenSans',
+    color: Colors.white,
+    fontSize: width * 0.12,
+  );
 
   static TextStyle whiteDescriptionText = new TextStyle(
+    fontFamily: 'OpenSans',
     color: Colors.white,
     fontSize: width * 0.05,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle whiteDescriptionTextSmall = new TextStyle(
+    fontFamily: 'OpenSans',
     color: Colors.white,
     fontSize: width * 0.035,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle whiteDescriptionTextXS = new TextStyle(
+    fontFamily: 'OpenSans',
     color: Colors.white,
     fontSize: width * 0.021,
     fontWeight: FontWeight.w400,
@@ -119,238 +132,215 @@ class StyleConstants {
 
   static TextStyle whiteThinTitleTextLarge = new TextStyle(
     color: Colors.white,
+    fontFamily: 'OpenSans',
     fontSize: width * 0.1,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle blackTitleText = TextStyle(
+    fontFamily: 'OpenSans',
     color: Colors.black,
     fontSize: width * 0.06,
     fontWeight: FontWeight.w800,
   );
 
-  static TextStyle blackTitleTextLarge = GoogleFonts.getFont('Open Sans',
-      textStyle: TextStyle(
-        color: Colors.black,
-        fontSize: width * 0.1,
-      ));
+  static TextStyle blackTitleTextLarge = TextStyle(
+    fontFamily: 'OpenSans',
+    color: Colors.black,
+    fontSize: width * 0.1,
+  );
 
-  static TextStyle blackTitleTextSmall = GoogleFonts.getFont('Open Sans',
-      textStyle: TextStyle(
-        color: Colors.black,
-        fontSize: width * 0.06,
-      ));
+  static TextStyle blackTitleTextSmall = TextStyle(
+    fontFamily: 'OpenSans',
+    color: Colors.black,
+    fontSize: width * 0.06,
+  );
 
-  static TextStyle blackTitleTextXS = GoogleFonts.getFont('Open Sans',
-      textStyle: TextStyle(
-        color: Colors.black,
-        fontSize: width * 0.05,
-      ));
+  static TextStyle blackTitleTextXS = TextStyle(
+    fontFamily: 'OpenSans',
+    color: Colors.black,
+    fontSize: width * 0.05,
+  );
 
-  static TextStyle blackTitleTextXL = GoogleFonts.getFont('Open Sans',
-      textStyle: TextStyle(
-        color: Colors.black,
-        fontSize: width * 0.12,
-      ));
+  static TextStyle blackTitleTextXL = TextStyle(
+    fontFamily: 'OpenSans',
+    color: Colors.black,
+    fontSize: width * 0.12,
+  );
 
-  static TextStyle blackThinTitleText = GoogleFonts.getFont(
-    'Open Sans',
-    textStyle: TextStyle(
-      color: Colors.black,
-      fontSize: width * 0.07,
-      fontWeight: FontWeight.w600,
-    ));
+  static TextStyle blackThinTitleText = TextStyle(
+    fontFamily: 'OpenSans',
+    color: Colors.black,
+    fontSize: width * 0.07,
+    fontWeight: FontWeight.w600,
+  );
 
-  static TextStyle blackThinTitleTextMedium = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
+  static TextStyle blackThinTitleTextMedium = TextStyle(
         color: Colors.black,
         fontSize: width * 0.06,
         fontWeight: FontWeight.w600,
-      ));
+    fontFamily: 'OpenSans',
+  );
 
-
-  static TextStyle blackThinTitleTextXS = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
+  static TextStyle blackThinTitleTextXS = TextStyle(
         color: Colors.black,
+    fontFamily: 'OpenSans',
         fontSize: width * 0.04,
         fontWeight: FontWeight.w400,
-      ));
-  static TextStyle darkBlackDescriptionText = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
+      );
+
+  static TextStyle darkBlackDescriptionText =  TextStyle(
           fontSize: width * 0.041,
           fontWeight: FontWeight.w500,
-          color: Colors.black.withOpacity(0.8)
-      ));
+          color: Colors.black.withOpacity(0.8),
+    fontFamily: 'OpenSans',
+  );
 
-  static TextStyle tinyGreyDescriptionText = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
+  static TextStyle tinyGreyDescriptionText = TextStyle(
         fontSize: width * 0.035,
         fontWeight: FontWeight.w400,
         color: darkPurpleGrey,
-      ));
+    fontFamily: 'OpenSans',
+      );
 
-  static TextStyle lightBlackThinTitleText = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
+  static TextStyle lightBlackThinTitleText = TextStyle(
         color: lightBlack,
         fontSize: width * 0.07,
         fontWeight: FontWeight.w600,
-      ));
+    fontFamily: 'OpenSans',
+      );
 
-
-  static TextStyle blackThinTitleTextLarge = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
+  static TextStyle blackThinTitleTextLarge = TextStyle(
         color: Colors.black87.withOpacity(0.8),
         fontSize: width * 0.1,
         fontWeight: FontWeight.w400,
-      ));
+    fontFamily: 'OpenSans',
+      );
 
-
-  static TextStyle blackThinTitleTextSmall = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
+  static TextStyle blackThinTitleTextSmall =  TextStyle(
         color: Colors.black,
         fontSize: width * 0.052,
         fontWeight: FontWeight.w400,
-      ));
+    fontFamily: 'OpenSans',
+      );
 
+  static TextStyle lightBlackThinTitleTextSmall =
+     TextStyle(
+            color: lightBlack,
+            fontSize: width * 0.052,
+            fontWeight: FontWeight.w400,
+       fontFamily: 'OpenSans',
+     );
 
-
-  static TextStyle lightBlackThinTitleTextSmall = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
-        color: lightBlack,
-        fontSize: width * 0.052,
-        fontWeight: FontWeight.w400,
-      ));
-
-
-  static TextStyle blackDescriptionText = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
+  static TextStyle blackDescriptionText =TextStyle(
+    fontFamily: 'OpenSans',
         color: Colors.black,
         fontSize: width * 0.05,
         fontWeight: FontWeight.w400,
-      ));
+      );
 
-
-
-  static TextStyle blackThinDescriptionText = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
+  static TextStyle blackThinDescriptionText =TextStyle(
+    fontFamily: 'OpenSans',
         color: Colors.black,
         fontSize: width * 0.05,
         fontWeight: FontWeight.w300,
-      ));
+      );
 
-
-  static TextStyle greyThinTitleText = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
+  static TextStyle greyThinTitleText = TextStyle(
+    fontFamily: 'OpenSans',
         color: darkPurpleGrey,
         fontSize: width * 0.07,
         fontWeight: FontWeight.w400,
-      ));
+      );
 
-
-
-  static TextStyle greyThinDescriptionText = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
+  static TextStyle greyThinDescriptionText =  TextStyle(
+    fontFamily: 'OpenSans',
         color: lightGrey,
         fontSize: width * 0.05,
         fontWeight: FontWeight.w400,
-      ));
+      );
 
+  static TextStyle blackThinDescriptionTextSmall =
+       TextStyle(
+            color: Colors.black,
+            fontSize: width * 0.035,
+            fontWeight: FontWeight.w300,
+         fontFamily: 'OpenSans',
+          );
 
+  static TextStyle darkGreyThinDescriptionTextSmall =
+       TextStyle(
+            color: lightBlack,
+            fontSize: width * 0.035,
+            fontWeight: FontWeight.w400,
+         fontFamily: 'OpenSans',
+          );
 
-  static TextStyle blackThinDescriptionTextSmall = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
-        color: Colors.black,
-        fontSize: width * 0.035,
-        fontWeight: FontWeight.w300,
-      ));
-
-
-
-  static TextStyle darkGreyThinDescriptionTextSmall = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
-        color: lightBlack,
-        fontSize: width * 0.035,
-        fontWeight: FontWeight.w400,
-      ));
-
-
-  static TextStyle whiteThinTitleText = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
+  static TextStyle whiteThinTitleText = TextStyle(
         color: Colors.white,
         fontSize: width * 0.07,
         fontWeight: FontWeight.w600,
-      ));
+    fontFamily: 'OpenSans',
+      );
 
-
-
-  static TextStyle whiteThinTitleTextSmall = GoogleFonts.getFont(
-      'Open Sans',
-      textStyle: TextStyle(
+  static TextStyle whiteThinTitleTextSmall =  TextStyle(
         color: Colors.white,
         fontSize: width * 0.052,
         fontWeight: FontWeight.w400,
-      ));
-
-
+    fontFamily: 'OpenSans',
+      );
 
   static TextStyle greyedOutText =
       new TextStyle(fontWeight: FontWeight.w400, color: Colors.grey);
 
   static TextStyle greyThinTitleTextSmall = new TextStyle(
+    fontFamily: 'OpenSans',
     color: darkPurpleGrey,
     fontSize: width * 0.05,
     fontWeight: FontWeight.w500,
   );
 
   static TextStyle greyThinDescriptionTextSmall = new TextStyle(
+    fontFamily: 'OpenSans',
     color: darkPurpleGrey,
     fontSize: width * 0.035,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle lightBlackDescriptionTextSmall = new TextStyle(
+    fontFamily: 'OpenSans',
     color: lightBlack,
     fontSize: width * 0.035,
     fontWeight: FontWeight.w400,
   );
 
   static TextStyle greySubText = new TextStyle(
+      fontFamily: 'OpenSans',
       color: lightGrey, fontSize: width * 0.03, fontWeight: FontWeight.w300);
 
   static TextStyle blueTitleText = new TextStyle(
+    fontFamily: 'OpenSans',
     color: blue,
     fontSize: width * 0.05,
     fontWeight: FontWeight.w600,
   );
 
   static TextStyle blueTitleTextLarge = new TextStyle(
+    fontFamily: 'OpenSans',
     color: blue,
     fontSize: width * 0.06,
     fontWeight: FontWeight.w700,
   );
 
   static TextStyle blueDescriptionText = new TextStyle(
+    fontFamily: 'OpenSans',
     color: blue,
     fontSize: width * 0.04,
     fontWeight: FontWeight.w600,
   );
 
   static TextStyle yellowDescriptionText = new TextStyle(
+    fontFamily: 'OpenSans',
     color: yellow,
     fontSize: width * 0.04,
     fontWeight: FontWeight.w600,

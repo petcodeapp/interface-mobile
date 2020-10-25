@@ -75,7 +75,7 @@ class DashboardScreen extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      Text('Dashboard', style: StyleConstants.whiteThinTitleText.copyWith(fontWeight: FontWeight.bold),),
+                                      Text('Dashboard', style: StyleConstants.whiteBoldTitleText),
                                       Spacer(),
                                       Image.asset(
                                         'assets/images/onboarding/pawlogohighres.png',
@@ -84,7 +84,7 @@ class DashboardScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: height * 0.01,),
+                                  //SizedBox(height: height * 0.01,),
                                 ],
                               ),
                             ),
