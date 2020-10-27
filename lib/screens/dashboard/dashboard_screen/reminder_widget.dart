@@ -19,6 +19,8 @@ class _ReminderWidgetState extends State<ReminderWidget> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
@@ -36,13 +38,23 @@ class _ReminderWidgetState extends State<ReminderWidget> {
         child: Row(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CircularCheckBox(
-              value: widget.completed,
-              onChanged: (bool value) {
-                setState(() {});
-              },
-              activeColor: StyleConstants.yellow,
+            Container(
+              width: width * 0.1,
+              child: Center(
+                child: Container(
+                  height: width * 0.03,
+                  width: width * 0.03,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    //need to add something to get difference between dates
+                    color: widget.date.difference(DateTime.now()).inDays < 1 ?
+                    StyleConstants.red : widget.date.difference(DateTime.now()).inDays <= 3 ? StyleConstants.yellow : StyleConstants.green
+                    ,
+                  ),
+                ),
+              ),
             ),
+            SizedBox(width: width * 0.03,),
             Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,13 +65,13 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                       ' - ' +
                       DateFormat.jm().format(widget.date),
                   overflow: TextOverflow.ellipsis,
-                  style: StyleConstants.darkGreyThinDescriptionTextSmall
+                  style: StyleConstants.darkGreyThinDescriptionTextSmall.copyWith(fontWeight: FontWeight.w600, color: Colors.grey),
                   //style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: StyleConstants.darkPurpleGrey),
                 )
                     : Text(
                   'No date given',
                   overflow: TextOverflow.ellipsis,
-                  style: StyleConstants.darkGreyThinDescriptionTextSmall,
+                  style: StyleConstants.darkGreyThinDescriptionTextSmall.copyWith(fontWeight: FontWeight.w600, color: Colors.grey),
                 ),
                 Text(
                   widget.name,

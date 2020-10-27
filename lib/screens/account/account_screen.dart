@@ -13,6 +13,8 @@ class AccountScreen extends StatelessWidget {
 
     double height = StyleConstants.height;
     double width = StyleConstants.width;
+
+
     return Scaffold(
       backgroundColor: StyleConstants.white,
       body: SingleChildScrollView(

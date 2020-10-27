@@ -45,7 +45,7 @@ class DashboardScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      height: height * 0.15,
+                      height: height * 0.13,
                       width: width,
                       child: Stack(
                         children: [
@@ -107,7 +107,6 @@ class DashboardScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-
                           ],
                         ),
                       ),

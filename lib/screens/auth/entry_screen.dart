@@ -78,7 +78,8 @@ class _EntryScreenState extends State<EntryScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Flexible(
+                      Container(
+                        height: height * 0.4,
                         child: PageView(
                           controller: _controller,
                           scrollDirection: Axis.horizontal,
@@ -127,7 +128,6 @@ class _EntryScreenState extends State<EntryScreen> {
                             ),
                             Container(
                               child: Center(
-                                //child: Text('Text Description of the app 2'),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -249,37 +249,45 @@ class _EntryScreenState extends State<EntryScreen> {
                 ),
               ),
               Positioned(
-                bottom: height * 0.22,
-                child: GestureDetector(
-                  //onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen())),
-                  onTap: () => Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) {
-                      return ListenableProvider(
-                        create: (context) => animation,
-                        child: LoginScreen(),
-                      );
-                    },
-                    transitionDuration: Duration(seconds: 1),
-                  )),
-                  child: Container(
-                    decoration: StyleConstants.roundYellowButtonDeco,
-                    width: width * 0.55,
-                    height: height * 0.07,
-                    child: Center(
-                      child: Text(
-                        'Login',
-                        style: StyleConstants.whiteThinTitleText,
+                bottom: height * 0.1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      //onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen())),
+                      onTap: () => Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation){
+                        return ListenableProvider(
+                          create: (context) => animation,
+                          child: LoginScreen(),
+                        );
+                      },
+                        transitionDuration: Duration(seconds:1),
+                      )),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: StyleConstants.yellow,
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              offset: Offset(0, 3),
+                              blurRadius: 6.0,
+                            ),
+                          ]
+                        ),
+                        width: width * 0.55,
+                        height: height * 0.055,
+                        child: Center(
+                          child: Text('Login',
+                            style: StyleConstants.whiteThinTitleText.copyWith(fontSize: 20.0, fontWeight: FontWeight.w600),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: height * 0.12,
-                child: GestureDetector(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => SignupScreen())),
-                  /*
+                    SizedBox(height: height * 0.04,),
+                    GestureDetector(
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SignupScreen())),
+                      /*
                   onTap: () => Navigator.of(context).push(PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation){
                     return ListenableProvider(
                       create: (context) => animation,
@@ -288,20 +296,32 @@ class _EntryScreenState extends State<EntryScreen> {
                   },
                     transitionDuration: Duration(seconds:1),
                   )),*/
-                  child: Container(
-                    decoration: StyleConstants.roundWhiteButtonDeco
-                        .copyWith(color: StyleConstants.blue),
-                    width: width * 0.55,
-                    height: height * 0.07,
-                    child: Center(
-                      child: Text(
-                        'Activate',
-                        style: StyleConstants.whiteThinTitleText,
+                      child: Container(
+
+                        decoration: BoxDecoration(
+                            color: StyleConstants.blue,
+                            borderRadius: BorderRadius.circular(10.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                offset: Offset(0, 3),
+                                blurRadius: 8.0,
+                              ),
+                            ]
+                        ),
+                        width: width * 0.55,
+                        height: height * 0.055,
+                        child: Center(
+                          child: Text('Activate',
+                            style: StyleConstants.whiteThinTitleText.copyWith(fontSize: 20.0, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
+
             ],
           ),
         ),

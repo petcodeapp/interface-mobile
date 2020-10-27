@@ -74,3 +74,10 @@ flutter:
    - family: HeroIcons2
      fonts:
        - asset: assets/icons/HeroIcons2.ttf
+   - family: OpenSans
+     fonts:
+       - asset: assets/fonts/open_sans/OpenSans-Regular.ttf
+       - asset: assets/fonts/open_sans/OpenSans-SemiBold.ttf
+         weight: 600
+       - asset: assets/fonts/open_sans/OpenSans-Bold.ttf
+         weight: 700

@@ -65,7 +65,7 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                         alignment: Alignment.center,
                         child: Text(
                           'New Reminder',
-                          style: StyleConstants.blackThinTitleTextMedium,
+                          style: StyleConstants.blackThinTitleTextMedium.copyWith(fontSize: 22.0),
                         ),
                       ),
                       SizedBox(
@@ -82,6 +82,9 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                           height: height * 0.07,
                           child: TextFormField(
                             controller: _reminderNameController,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, color: StyleConstants.lightBlack, fontSize: 20.0
+                            ),
                             decoration: InputDecoration(
                               //border: OutlineInputBorder(),
                               //hintText: 'Name',
@@ -99,11 +102,14 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                         height: height * 0.07,
                         child: TextField(
                           controller: _reminderStartDateController,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: StyleConstants.lightBlack, fontSize: 20.0
+                          ),
                           decoration: InputDecoration(
                             //border: OutlineInputBorder(),
                             hintText: 'Start Date',
                             hintStyle: TextStyle(fontSize: 14.0),
-                            suffixIcon: Icon(Icons.calendar_today),
+                            suffixIcon: Icon(Icons.calendar_today, ),
                           ),
                           onTap: () {
                             showDatePicker(
@@ -152,7 +158,9 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                           ].map((String value) {
                             return new DropdownMenuItem<String>(
                               value: value,
-                              child: new Text(value),
+                              child: new Text(value, style: TextStyle(
+                                  fontWeight: FontWeight.w600, color: StyleConstants.lightBlack, fontSize: 20.0
+                              ),),
                             );
                           }).toList(),
                           onChanged: (String value) {
@@ -163,11 +171,14 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                       SizedBox(
                         height: height * 0.04,
                       ),
-                      Text('Until', style: StyleConstants.blackThinTitleTextXS),
+                      Text('End Date', style: StyleConstants.blackThinTitleTextXS),
                       SizedBox(
                         height: height * 0.07,
                         child: TextField(
                           controller: _reminderEndDateController,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: StyleConstants.lightBlack, fontSize: 20.0
+                          ),
                           decoration: InputDecoration(
                             hintText: 'End Date',
                             hintStyle: TextStyle(fontSize: 14.0),
