@@ -142,7 +142,6 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
               children: [
                 Container(
                   height: height * 0.15,
-
                   child: Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: width * 0.1, vertical: height * 0.02),
