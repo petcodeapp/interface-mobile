@@ -40,18 +40,18 @@ class ReminderWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
+
                     Text(
-                      currentReminder.name,
-                      style: StyleConstants.blackThinTitleTextSmall,
+                      'Recurring : ' + (currentReminder.frequency ?? 'none'),
+                      style: StyleConstants.blackThinDescriptionTextSmall,
                       maxLines: 10,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
+
                     Text(
-                      'Recurring ' + (currentReminder.frequency ?? 'none'),
-                      style: StyleConstants.blackThinDescriptionTextSmall,
+                      currentReminder.name,
+                      style: StyleConstants.blackThinTitleTextSmall.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w600, fontSize: 20.0),
                       maxLines: 10,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -66,8 +66,12 @@ class ReminderWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        currentReminder.startDate != null ? StringHelper.getDateString(currentReminder.startDate.toDate()) : 'No Start Date',
-                        style: StyleConstants.blueDescriptionText,
+                        currentReminder.startDate != null ?
+                        currentReminder.startDate.toDate().difference(DateTime.now()).inDays < 7
+                        ? '${currentReminder.startDate.toDate().difference(DateTime.now()).inDays + 1} Days' :
+                        StringHelper.getDateString(currentReminder.startDate.toDate())
+                            : 'No Start Date',
+                        style: StyleConstants.blueDescriptionText.copyWith(fontSize: 23.0),
                         maxLines: 10,
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,

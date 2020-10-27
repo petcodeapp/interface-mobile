@@ -65,48 +65,62 @@ class _AddVaccinationWidgetState extends State<AddVaccinationWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Add a New Vaccination',
-                      style: StyleConstants.blackThinTitleTextMedium,
-                    ),
                     SizedBox(
-                      height: 8.0,
+                      height: height * 0.02,
                     ),
-                    Text('Name', style: StyleConstants.blackThinTitleTextXS),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    TextFormField(
-                      controller: _vaccinationNameController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Name',
-                        hintStyle: TextStyle(fontSize: 14.0),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'New Vaccination',
+                        style: StyleConstants.blackThinTitleTextMedium,
                       ),
-                      validator: ValidatorHelper.vaccinationNameValidator,
-                    ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    Text('Expiration',
-                        style: StyleConstants.blackThinTitleTextXS),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Expiration Date',
-                        hintStyle: TextStyle(fontSize: 14.0),
-                        suffixIcon: Icon(Icons.calendar_today),
-                      ),
-                      controller: _vaccinationDateController,
-                      onTap: () => pickDate(context),
-                      readOnly: true,
                     ),
                     SizedBox(
                       height: height * 0.05,
                     ),
+                    Text('Name',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.0,
+                            color: Colors.black.withOpacity(0.8))),
+                    SizedBox(
+                      height: height * 0.07,
+                      child: TextFormField(
+                        controller: _vaccinationNameController,
+                        decoration: InputDecoration(
+                          hintStyle: TextStyle(fontSize: 14.0),
+                        ),
+                        validator: ValidatorHelper.vaccinationNameValidator,
+                      ),
+                    ),
+                    SizedBox(
+                      height: height * 0.04,
+                    ),
+                    Text('Expiration Date',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.0,
+                            color: Colors.black.withOpacity(0.8))),
+                    SizedBox(
+                      height: height * 0.07,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          suffixIcon: Icon(Icons.calendar_today),
+                        ),
+                        controller: _vaccinationDateController,
+                        onTap: () => pickDate(context),
+                        readOnly: true,
+                      ),
+                    ),
+                    SizedBox(
+                      height: height * 0.04,
+                    ),
+                    Text('Current: ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.0,
+                            color: Colors.black.withOpacity(0.8))),
+                    SizedBox(height: height * 0.01),
                     Align(
                       alignment: Alignment.center,
                       child: GestureDetector(
@@ -128,21 +142,30 @@ class _AddVaccinationWidgetState extends State<AddVaccinationWidget> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            color: StyleConstants.yellow,
-                            borderRadius: BorderRadius.circular(40.0),
-                          ),
+                              color: StyleConstants.yellow,
+                              borderRadius: BorderRadius.circular(10.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 6.0,
+                                  offset: Offset(0, 4),
+                                )
+                              ]),
                           height: height * 0.06,
-                          width: width * 0.7,
+                          width: width * 0.8,
                           child: Center(
                               child: Text(
                             'Upload Document',
-                            style: StyleConstants.whiteThinTitleTextSmall,
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white),
                           )),
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 25.0,
+                      height: height * 0.05,
                     ),
                     Align(
                       alignment: Alignment.center,
@@ -172,15 +195,24 @@ class _AddVaccinationWidgetState extends State<AddVaccinationWidget> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            color: StyleConstants.blue,
-                            borderRadius: BorderRadius.circular(40.0),
-                          ),
+                              color: StyleConstants.blue,
+                              borderRadius: BorderRadius.circular(10.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 6.0,
+                                  offset: Offset(0, 4),
+                                )
+                              ]),
                           height: height * 0.06,
-                          width: width * 0.5,
+                          width: width * 0.8,
                           child: Center(
                               child: Text(
                             'Add Vaccination',
-                            style: StyleConstants.whiteThinTitleTextSmall,
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white),
                           )),
                         ),
                       ),

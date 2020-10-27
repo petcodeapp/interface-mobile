@@ -6,15 +6,15 @@ import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
 
-class OwnerWidget extends StatelessWidget {
+class EmptyOwnerWidget extends StatelessWidget {
 
-  final Owner owner;
+
   final double height;
   final double width;
-  final String title;
   final Pet currentPet;
 
-  OwnerWidget({Key key, this.owner, this.height, this.width, this.title, this.currentPet}) : super(key: key);
+
+  EmptyOwnerWidget({Key key,  this.height, this.width, this.currentPet}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +44,13 @@ class OwnerWidget extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: width * 0.04),
                   child: Text(
-                    title,
+                    'Owner 2 (Not Set)',
                     style: StyleConstants.blackThinTitleTextSmall.copyWith(fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.7)),
                   ),
                 ),
                 IconButton(
                   icon: Icon(HeroIcons2.edit_2),
-                  iconSize: width * 0.06,
+                  iconSize: width * 0.07,
                   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => OwnerInfoEditingScreen(currentPet: currentPet,))),
                 )
               ],
@@ -58,15 +58,12 @@ class OwnerWidget extends StatelessWidget {
             ListTile(
               leading: Icon(
                 HeroIcons2.name_1,
-                size: width * 0.07,
+                size: width * 0.06,
                 color: StyleConstants.blue,
               ),
               title: Row(
                 children: [
-                  owner.name != null && owner.name.value.isNotEmpty
-                      ? Text(owner.name.value,
-                      style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))
-                      : Text(
+                   Text(
                     'Name',
                     style: StyleConstants.greyedOutText,
                   ),
@@ -89,10 +86,8 @@ class OwnerWidget extends StatelessWidget {
                 size: width * 0.07,
                 color: StyleConstants.blue,
               ),
-              title: owner.email != null && owner.email.value.isNotEmpty
-                  ? Text(owner.email.value,
-                  style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))
-                  : Text(
+              title:
+                   Text(
                 'Email',
                 style: StyleConstants.greyedOutText,
               ),
@@ -115,10 +110,7 @@ class OwnerWidget extends StatelessWidget {
                 size: width * 0.07,
                 color: StyleConstants.blue,
               ),
-              title: owner.phoneNumber != null
-                  ? Text(owner.phoneNumber.value,
-                  style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))
-                  : Text(
+              title:  Text(
                 'Phone Number',
                 style: StyleConstants.greyedOutText,
               ),
@@ -141,10 +133,7 @@ class OwnerWidget extends StatelessWidget {
                 size: width * 0.07,
                 color: StyleConstants.blue,
               ),
-              title: owner.address != null && owner.address.value.isNotEmpty
-                  ? Text(owner.address.value,
-                  style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))
-                  : Text(
+              title:  Text(
                 'Address',
                 style: StyleConstants.greyedOutText,
               ),

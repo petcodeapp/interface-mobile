@@ -14,15 +14,15 @@ class ShowNearbyParkWidget extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
 
     return Container(
-      height: height * 0.29,
+      height: height * 0.3,
       width: width * 0.9,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
           color: StyleConstants.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 0.6,
+              color: Colors.black.withOpacity(0.16),
+              blurRadius: 6.0,
               offset: Offset(0, 3),
             )
           ]),
@@ -49,6 +49,8 @@ class ShowNearbyParkWidget extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                         ),
+
+                        /*
                         Positioned(
                           left: 10.0,
                           bottom: height * 0.03,
@@ -56,8 +58,7 @@ class ShowNearbyParkWidget extends StatelessWidget {
                             width: width * 0.3,
                             child: ListView.builder(
                               shrinkWrap: true,
-                              itemCount: shownPark
-                                  .placePhotos[index].attributionNames.length,
+                              itemCount: shownPark.placePhotos[index].attributionNames.length,
                               itemBuilder: (BuildContext context, int index2) {
                                 return RichText(
                                   text: TextSpan(
@@ -83,6 +84,7 @@ class ShowNearbyParkWidget extends StatelessWidget {
                             ),
                           ),
                         ),
+                        */
                       ]),
                     ),
                   );
@@ -107,7 +109,7 @@ class ShowNearbyParkWidget extends StatelessWidget {
                             Flexible(
                               child: Text(
                                 shownPark.name,
-                                style: StyleConstants.blueTitleText,
+                                style: StyleConstants.blackTitleText.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w500),
                                 maxLines: 2,
                               ),
                             ),
@@ -117,7 +119,7 @@ class ShowNearbyParkWidget extends StatelessWidget {
                             Flexible(
                               child: Text(
                                 shownPark.address,
-                                style: StyleConstants.yellowDescriptionText,
+                                style: StyleConstants.yellowDescriptionText.copyWith(color: StyleConstants.grey),
                                 maxLines: 2,
                               ),
                             ),
@@ -143,13 +145,19 @@ class ShowNearbyParkWidget extends StatelessWidget {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: StyleConstants.blue,
-                                border: Border.all(width: 1.3),
                               ),
-                              padding: EdgeInsets.all(5.0),
-                              child: Icon(
-                                Icons.near_me,
+                              height: width * 0.09,
+                              width: width * 0.09,
+                              child: Center(
+                                child: Transform.rotate(
+                                  angle: 45 * 3.14 / 180,
+                                  child: Icon(
+                                    Icons.navigation,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
-                            ),
+                            )
                           ),
                         ),
                       ),

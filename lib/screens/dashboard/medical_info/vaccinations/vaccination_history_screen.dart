@@ -4,7 +4,9 @@ import 'package:petcode_app/models/Vaccination.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/add_vaccination_widget.dart';
+import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:petcode_app/widgets/change_pet_dropdown.dart';
 import 'package:petcode_app/widgets/custom_app_bars/change_pet_app_bar.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/glowing_vaccination_widget.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/vaccination_widget.dart';
@@ -34,13 +36,13 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
         isScrollControlled: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
+              topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
         ),
         builder: (BuildContext context) {
           return Container(
-            height: _height * 0.6,
+            height: _height * 0.7,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0)),
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
             ),
             child: AddVaccinationWidget(),
           );
@@ -74,7 +76,6 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
       }
 
       return Scaffold(
-        appBar: ChangePetAppBar(),
         floatingActionButton: FloatingActionButton(
           backgroundColor: StyleConstants.blue,
           child: Icon(
@@ -87,43 +88,78 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
         body: Container(
           height: _height,
           width: _width,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: _width * 0.1),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 20.0,
+          decoration: BoxDecoration(
+            gradient: StyleConstants.bgGradient
+          ),
+          child: Column(
+            children: [
+              Container(
+                height: _height * 0.15,
+                child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: _width * 0.1, vertical: _height * 0.02),
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: ChangePetDropdown(),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: IconButton(
+                            icon: Icon(HeroIcons2.left_arrow_1, size: 25.0, color: Colors.white,),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        )
+                      ],
+                    )
                 ),
-                Expanded(
+              ),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.0),
+                          topRight: Radius.circular(20.0))),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: _height * 0.02),
-                    child: ListView.builder(
-                      itemCount: _vaccinations.length,
-                      itemBuilder: (context, index) {
-                        if (vaccinationIndex == index) {
-                          return Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: GlowingVaccinationWidget(
-                              vaccineName: _vaccinations[index].name,
-                              vaccineDate: _vaccinations[index].date,
+                    padding: EdgeInsets.symmetric(horizontal: _width * 0.05),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: _height * 0.02),
+                            child: ListView.builder(
+                              itemCount: _vaccinations.length,
+                              itemBuilder: (context, index) {
+                                if (vaccinationIndex == index) {
+                                  return Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: GlowingVaccinationWidget(
+                                      vaccineName: _vaccinations[index].name,
+                                      vaccineDate: _vaccinations[index].date,
+                                    ),
+                                  );
+                                }
+                                return Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: VaccinationWidget(
+                                      vaccineName: _vaccinations[index].name,
+                                      vaccineDate: _vaccinations[index].date,
+                                      vaccineIndex: index,
+                                      updateProvider: false,
+                                    ));
+                              },
                             ),
-                          );
-                        }
-                        return Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: VaccinationWidget(
-                              vaccineName: _vaccinations[index].name,
-                              vaccineDate: _vaccinations[index].date,
-                              vaccineIndex: index,
-                              updateProvider: false,
-                            ));
-                      },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       );

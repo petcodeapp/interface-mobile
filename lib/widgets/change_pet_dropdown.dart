@@ -21,7 +21,7 @@ class ChangePetDropdown extends StatelessWidget {
         DropdownMenuItem<Pet>(
             child: Text(
               allPetsProvider.allPets[i].name,
-              style: StyleConstants.whiteDescriptionText,
+              style: StyleConstants.whiteDescriptionText.copyWith(fontWeight: FontWeight.bold, fontSize: 25.0),
             ),
             value: allPetsProvider.allPets[i]),
       );

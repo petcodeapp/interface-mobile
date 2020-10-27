@@ -9,6 +9,7 @@ import 'package:petcode_app/providers/nearby_parks_map_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/providers/provider_state.dart';
+import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/map_constants.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/screens/social/discover_parks/show_nearby_park_widget.dart';
@@ -79,38 +80,16 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: StyleConstants.blue,
-        title: Container(
-            //color: Colors.white,
-            height: 75,
-            //width: 200,
-            child: Image.asset(
-              'assets/images/appbarlogoyellow.png',
-              fit: BoxFit.cover,
-            )),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-          ),
-          onPressed: () {
-            if (Navigator.canPop(context)) {
-              Navigator.pop(context);
-            } else {
-              Provider.of<NotificationsProvider>(context, listen: false)
-                  .clear();
-              Navigator.popAndPushNamed(context, '/');
-            }
-          },
-        ),
-      ),
       body: SlidingUpPanel(
         controller: _panelController,
         minHeight: _height * 0.11,
         borderRadius: topRoundedRadius,
         header: Center(
           child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: topRoundedRadius,
+            ),
             width: _width,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -125,92 +104,170 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: _height * 0.01,
+                    height: _height * 0.02,
                   ),
                   Text(
                     'Nearby Pet Parks',
-                    style: StyleConstants.blackTitleText,
+                    style: TextStyle(
+                      color: StyleConstants.lightBlack,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18.0,
+                    ),
                   ),
                 ],
               ),
             ),
           ),
         ),
-        body: currentLocationProvider.currentLocation != null
-            ? Stack(
-                children: [
-                  GoogleMap(
-                    padding: EdgeInsets.only(bottom: _mapBottomPadding),
-                    initialCameraPosition:
-                        _nearbyParksMapProvider.cameraPosition,
-                    onMapCreated: (GoogleMapController controller) {
-                      _controller.complete(controller);
-                    },
-                    markers: createMarkers(_nearbyParksProvider.nearbyParks),
-                    onCameraMove: (CameraPosition position) {
-                      _nearbyParksMapProvider.setCameraPosition(position);
-                      if (_cameraMoved == false) {
-                        setState(() {
-                          _cameraMoved = true;
-                        });
-                      }
-                    },
-                    onTap: (LatLng tappedPosition) async {
-                      await _panelController.show();
-                      setState(() {
-                        _selectedPark = null;
-                        _mapBottomPadding = _height * 0.22;
-                      });
-                    },
-                    mapToolbarEnabled: false,
-                  ),
-                  _panelController.isAttached && !_panelController.isPanelShown
-                      ? Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: EdgeInsets.only(bottom: _height * 0.14),
-                            child: ShowNearbyParkWidget(
-                              shownPark: _selectedPark,
-                            ),
-                          ),
-                        )
-                      : SizedBox.shrink(),
-                  _cameraMoved ? searchAreaWidget() : SizedBox.shrink(),
-                ],
-              )
-            : Center(child: CircularProgressIndicator()),
-        panel: Column(
-          children: [
-            SizedBox(
-              height: _height * 0.1,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10.0),
+        body: Container(
+          height: _height,
+          decoration: BoxDecoration(
+            color: StyleConstants.blue,
+            gradient: StyleConstants.bgGradient,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+
+              Container(
+                height: _height * 0.15,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: _nearbyParksProvider.nearbyParks != null
-                      ? ListView.builder(
-                          itemCount: _nearbyParksProvider.nearbyParks.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Column(
-                              children: [
-                                ShowNearbyParkWidget(
-                                  shownPark:
-                                      _nearbyParksProvider.nearbyParks[index],
-                                ),
-                                SizedBox(
-                                  height: _height * 0.03,
-                                ),
-                              ],
-                            );
-                          },
-                        )
-                      : SizedBox.shrink(),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: _width * 0.1, vertical: _width * 0.05),
+                  child: Stack(
+                    children: [
+
+
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Pet Parks',
+                          style: StyleConstants.whiteThinTitleText
+                              .copyWith(fontSize: 25.0),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: IconButton(
+                          icon: Icon(
+                            HeroIcons2.left_arrow_1,
+                            size: 25.0,
+                            color: Colors.white,
+                          ),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ),
+
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              currentLocationProvider.currentLocation != null
+                  ? Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10.0),
+                            topLeft: Radius.circular(10.0)),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10.0),
+                                topLeft: Radius.circular(10.0)),
+                          ),
+                          child: Stack(
+                            children: [
+                              GoogleMap(
+                                padding:
+                                    EdgeInsets.only(bottom: _mapBottomPadding),
+                                initialCameraPosition:
+                                    _nearbyParksMapProvider.cameraPosition,
+                                onMapCreated: (GoogleMapController controller) {
+                                  _controller.complete(controller);
+                                },
+                                markers: createMarkers(
+                                    _nearbyParksProvider.nearbyParks),
+                                onCameraMove: (CameraPosition position) {
+                                  _nearbyParksMapProvider
+                                      .setCameraPosition(position);
+                                  if (_cameraMoved == false) {
+                                    setState(() {
+                                      _cameraMoved = true;
+                                    });
+                                  }
+                                },
+                                onTap: (LatLng tappedPosition) async {
+                                  await _panelController.show();
+                                  setState(() {
+                                    _selectedPark = null;
+                                    _mapBottomPadding = _height * 0.22;
+                                  });
+                                },
+                                mapToolbarEnabled: false,
+                              ),
+                              _panelController.isAttached &&
+                                      !_panelController.isPanelShown
+                                  ? Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            bottom: _height * 0.14),
+                                        child: ShowNearbyParkWidget(
+                                          shownPark: _selectedPark,
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox.shrink(),
+                              _cameraMoved
+                                  ? searchAreaWidget()
+                                  : SizedBox.shrink(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  : Center(child: CircularProgressIndicator()),
+            ],
+          ),
+        ),
+        panel: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: topRoundedRadius,
+          ),
+          child: Column(
+            children: [
+              SizedBox(
+                height: _height * 0.08,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: _nearbyParksProvider.nearbyParks != null
+                        ? ListView.builder(
+                            itemCount: _nearbyParksProvider.nearbyParks.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Column(
+                                children: [
+                                  ShowNearbyParkWidget(
+                                    shownPark:
+                                        _nearbyParksProvider.nearbyParks[index],
+                                  ),
+                                  SizedBox(
+                                    height: _height * 0.03,
+                                  ),
+                                ],
+                              );
+                            },
+                          )
+                        : SizedBox.shrink(),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         color: StyleConstants.veryLightGrey,
       ),
