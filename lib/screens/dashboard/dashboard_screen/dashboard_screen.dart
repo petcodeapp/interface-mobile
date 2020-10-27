@@ -36,8 +36,8 @@ class DashboardScreen extends StatelessWidget {
           child: Container(
             width: width,
             decoration: BoxDecoration(
-              //gradient: StyleConstants.bgGradient,
-            ),
+                //gradient: StyleConstants.bgGradient,
+                ),
             child: Stack(
               children: [
                 Column(
@@ -49,7 +49,13 @@ class DashboardScreen extends StatelessWidget {
                       width: width,
                       child: Stack(
                         children: [
-                          Positioned(top: height * 0.08, left: width * 0.08, child: Text('Dashboard', style: StyleConstants.whiteThinTitleText,)),
+                          Positioned(
+                              top: height * 0.08,
+                              left: width * 0.08,
+                              child: Text(
+                                'Dashboard',
+                                style: StyleConstants.whiteThinTitleText,
+                              )),
                           CustomPaint(
                             painter: HeaderCirclePainter(),
                             child: Container(),
@@ -69,9 +75,10 @@ class DashboardScreen extends StatelessWidget {
                     Flexible(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0))
-                        ),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0),
+                                topRight: Radius.circular(20.0))),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -92,15 +99,21 @@ class DashboardScreen extends StatelessWidget {
                                   gradient: LinearGradient(
                                     begin: Alignment.bottomRight,
                                     end: Alignment.topLeft,
-                                    colors: [ const Color(0xffB3E1EE),  Colors.white],
+                                    colors: [
+                                      const Color(0xffB3E1EE),
+                                      Colors.white
+                                    ],
                                     stops: [0.05, 0.95],
                                   ),
                                 ),
                                 child: Column(
                                   children: [
-                                    SizedBox(height: height * 0.01,),
+                                    SizedBox(
+                                      height: height * 0.01,
+                                    ),
                                     Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: width * 0.035),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: width * 0.035),
                                       child: UpcomingEventsWidget(),
                                     ),
                                   ],
