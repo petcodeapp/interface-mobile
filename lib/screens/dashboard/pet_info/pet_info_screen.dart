@@ -45,17 +45,25 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                       children: [
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: ChangePetDropdown(),
+                          child: Container(
+                            height: height * 0.06,
+                              //color: Colors.blue,
+                              child: ChangePetDropdown()),
                         ),
                         Align(
                           alignment: Alignment.bottomLeft,
-                          child: IconButton(
-                            icon: Icon(
-                              HeroIcons2.left_arrow_1,
-                              size: 25.0,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => Navigator.pop(context),
+                          child: Container(
+                            //color: Colors.blue,
+                            height: height * 0.06,
+                            child: IconButton(
+                              icon: Icon(
+                                //HeroIcons2.left_arrow_1,
+                                Icons.arrow_back_ios,
+                                size: 25.0,
+                                color: Colors.white,
+                              ),
+                              onPressed: () => Navigator.pop(context),
+                            )
                           ),
                         )
                       ],

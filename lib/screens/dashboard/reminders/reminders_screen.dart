@@ -15,15 +15,16 @@ class RemindersScreen extends StatelessWidget {
         isScrollControlled: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0)),
+              topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
         ),
         builder: (BuildContext context) {
           return Container(
             height: height * 0.8,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0)),
             ),
             child: AddReminderWidget(),
           );
@@ -69,7 +70,8 @@ class RemindersScreen extends StatelessWidget {
             Container(
               height: height * 0.15,
               child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.1, vertical: height * 0.02),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: width * 0.1, vertical: height * 0.02),
                   child: Stack(
                     children: [
                       Align(
@@ -79,13 +81,16 @@ class RemindersScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.bottomLeft,
                         child: IconButton(
-                          icon: Icon(HeroIcons2.left_arrow_1, size: 25.0, color: Colors.white,),
+                          icon: Icon(
+                            Icons.arrow_back_ios,
+                            size: 25.0,
+                            color: Colors.white,
+                          ),
                           onPressed: () => Navigator.pop(context),
                         ),
                       )
                     ],
-                  )
-              ),
+                  )),
             ),
             Expanded(
               child: Container(
@@ -115,8 +120,6 @@ class RemindersScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
-
             )
           ],
         ),

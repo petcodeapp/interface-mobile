@@ -46,7 +46,7 @@ class OwnerInfoScreen extends StatelessWidget {
                           alignment: Alignment.bottomLeft,
                           child: IconButton(
                               icon: Icon(
-                                HeroIcons2.left_arrow_1,
+                                Icons.arrow_back_ios,
                                 size: 25.0,
                                 color: Colors.white,
                               ),

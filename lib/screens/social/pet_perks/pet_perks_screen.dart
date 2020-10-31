@@ -22,7 +22,8 @@ class PetPerksScreen extends StatelessWidget {
         discountAmount: 10),
     PetPerk(
         storeName: 'Another Pet Store',
-        description: 'Pet Supplies, Accessories, and Products, and more and more and more and more',
+        description:
+            'Pet Supplies, Accessories, and Products, and more and more and more and more',
         discountAmount: 33),
     PetPerk(
         storeName: 'PetCode',
@@ -55,7 +56,8 @@ class PetPerksScreen extends StatelessWidget {
             Container(
               height: height * 0.15,
               child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.1, vertical: height * 0.05),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: width * 0.1, vertical: height * 0.05),
                   child: Stack(
                     children: [
                       Align(
@@ -69,13 +71,16 @@ class PetPerksScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: IconButton(
-                          icon: Icon(HeroIcons2.left_arrow_1, size: 25.0, color: Colors.white,),
+                          icon: Icon(
+                            Icons.arrow_back_ios,
+                            size: 25.0,
+                            color: Colors.white,
+                          ),
                           onPressed: () => Navigator.pop(context),
                         ),
                       )
                     ],
-                  )
-              ),
+                  )),
             ),
             Expanded(
               child: Container(
