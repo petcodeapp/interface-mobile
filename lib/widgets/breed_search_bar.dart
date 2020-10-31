@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:petcode_app/services/breed_autocomplete_service.dart';
+import 'package:petcode_app/utils/style_constants.dart';
 
 class BreedSearchBar extends StatefulWidget {
   BreedSearchBar(
@@ -39,7 +40,7 @@ class _BreedSearchBarState extends State<BreedSearchBar> {
       },
       itemBuilder: (BuildContext context, String breed) {
         return ListTile(
-          title: Text(breed),
+          title: Text(breed, style: StyleConstants.editTextFieldText,),
           leading: Icon(Icons.pets),
         );
       },

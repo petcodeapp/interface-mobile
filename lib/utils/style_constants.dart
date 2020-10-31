@@ -19,7 +19,6 @@ class StyleConstants {
   }
 
   //colors
-  static Color darkGrey = new Color(0xff66615B);
 
   static Color lightBlue = new Color(0xff51CBCE);
 
@@ -42,6 +41,8 @@ class StyleConstants {
   static Color darkPurpleGrey = new Color(0xffA0AEC0);
 
   static Color grey = new Color(0xff9098A5);
+
+  static Color darkGrey = new Color(0xff575B5F);
 
   static Color lightBlack = new Color(0xff2D3748);
 
@@ -350,6 +351,18 @@ class StyleConstants {
       color: StyleConstants.lightBlack,
       fontWeight: FontWeight.w600,
       fontFamily: 'OpenSans');
+
+  static TextStyle editTextFieldText = new TextStyle(
+    fontWeight: FontWeight.w500,
+    fontFamily: 'Open Sans',
+    fontSize: 18.0,
+    color: StyleConstants.lightBlack,
+  );
+
+  static TextStyle editTextFieldDescription = new TextStyle(
+      fontWeight: FontWeight.w500,
+      fontSize: 16.0,
+      color: StyleConstants.darkGrey);
 
   //box decorations
   static BoxDecoration roundYellowButtonDeco = new BoxDecoration(

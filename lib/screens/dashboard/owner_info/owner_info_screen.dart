@@ -73,19 +73,8 @@ class OwnerInfoScreen extends StatelessWidget {
                           title: 'Owner 1',
                           currentPet: currentPet,
                       ),
-                      SizedBox(height: height * 0.03),
-                      currentPet.contact_2 == null
-                          ? SizedBox()
-                          : Padding(
-                              padding: EdgeInsets.only(left: width * 0.03),
-                              child: Text(
-                                'Owner 2',
-                                style: StyleConstants.blackThinTitleText,
-                              ),
-                            ),
-                      SizedBox(
-                        height: height * 0.01,
-                      ),
+                      SizedBox(height: height * 0.05),
+
                       currentPet.contact_2 != null
                           ? OwnerWidget(
                               owner: currentPet.contact_2,

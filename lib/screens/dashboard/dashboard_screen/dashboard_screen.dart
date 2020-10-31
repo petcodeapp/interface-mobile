@@ -31,116 +31,97 @@ class DashboardScreen extends StatelessWidget {
     } else {
       return Scaffold(
         backgroundColor: StyleConstants.blue,
-        body: SingleChildScrollView(
-          child: Container(
-            width: width,
-            decoration: BoxDecoration(
-              //gradient: StyleConstants.bgGradient,
-            ),
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Image.asset(
-                    'assets/images/onboarding/quartercircle.png',
-                    width: width * 0.4,
-                  ),
-                ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: height * 0.13,
-                      width: width,
-                      child: Stack(
-                        children: [
-
-                          /*
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: Image.asset(
-                              'assets/images/onboarding/quartercircle.png',
-                            ),
-                          ),*/
-                          Align(
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: width * 0.08,right: width * 0.08, top: width* 0.05),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text('Dashboard', style: StyleConstants.whiteBoldTitleText),
-                                      Spacer(),
-                                      Image.asset(
-                                        'assets/images/onboarding/pawlogohighres.png',
-                                        fit: BoxFit.cover,
-                                        width: width * 0.15,
-                                      ),
-                                    ],
-                                  ),
-                                  //SizedBox(height: height * 0.01,),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Flexible(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0))
+        body: Container(
+          height: height,
+          width: width,
+          decoration: BoxDecoration(
+            //gradient: StyleConstants.bgGradient,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                height: height * 0.13,
+                width: width,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Stack(
+                    children: [
+                      SizedBox(width: width,height: height * 0.01,),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Image.asset(
+                          'assets/images/onboarding/quartercircle.png',
+                          //width: width * 0.27,
                         ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: width * 0.08,right: width * 0.08, top: width* 0.08),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            SizedBox(
-                              height: height * 0.02,
-                            ),
-                            PetsCarouselWidget(),
-                            SizedBox(
-                              height: height * 0.01,
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: NavigationRow(),
-                            ),
-                            Flexible(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.bottomRight,
-                                    end: Alignment.topLeft,
-                                    colors: [ const Color(0xffB3E1EE),  Colors.white],
-                                    stops: [0.05, 0.95],
-                                  ),
-                                ),
-                                child: Column(
-                                  children: [
-                                    SizedBox(height: height * 0.01,),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: width * 0.035),
-                                      child: UpcomingEventsWidget(),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            Text('Dashboard', style: StyleConstants.whiteBoldTitleText),
+                            Spacer(),
+                            Image.asset(
+                              'assets/images/onboarding/pawlogohighres.png',
+                              fit: BoxFit.cover,
+                              width: width * 0.15,
                             ),
                           ],
                         ),
                       ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+              Expanded(
+                child: Container(
+
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0))
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      PetsCarouselWidget(),
+                      SizedBox(
+                        height: height * 0.01,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: NavigationRow(),
+                      ),
+                      Expanded(
+                        child: Container(
+                          //height: height * 0.4,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.bottomRight,
+                              end: Alignment.topLeft,
+                              colors: [ const Color(0xffB3E1EE),  Colors.white],
+                              stops: [0.05, 0.95],
+                            ),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: width * 0.035),
+                            child: Container(
+                              width: width,
+
+                                child: UpcomingEventsWidget()),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       );
