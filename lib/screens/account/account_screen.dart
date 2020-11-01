@@ -38,15 +38,13 @@ class AccountScreen extends StatelessWidget {
                           children: [
                             Text(
                               'Account',
-                              style: StyleConstants.whiteThinTitleTextSmall
-                                  .copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 22.0),
+                              style: StyleConstants.whiteThinTitleText
+                                  .copyWith(fontSize: 25.0),
                             ),
                           ],
                         ),
                         SizedBox(
-                          height: height * 0.02,
+                          height: height * 0.03,
                         ),
                       ],
                     ),
