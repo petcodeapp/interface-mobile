@@ -129,36 +129,41 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
               Container(
                 height: _height * 0.15,
+                decoration: BoxDecoration(
+                  gradient: StyleConstants.bgGradient,
+                ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: _width * 0.1, vertical: _width * 0.05),
+                      horizontal: _width * 0.1,vertical: _height * 0.02 ),
                   child: Stack(
                     children: [
-
-
                       Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Pet Parks',
-                          style: StyleConstants.whiteThinTitleText
-                              .copyWith(fontSize: 25.0),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.arrow_back_ios,
-                            size: 25.0,
-                            color: Colors.white,
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          height: _height * 0.055,
+                          child: Text(
+                            'Pet Parks',
+                              style: StyleConstants.whiteDescriptionText.copyWith(fontWeight: FontWeight.bold, fontSize: 25.0)
                           ),
-                          onPressed: () => Navigator.pop(context),
                         ),
                       ),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Container(
+                          height: _height * 0.06,
+                          child: IconButton(
 
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              size: 25.0,
+                              color: Colors.white,
+                            ),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

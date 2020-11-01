@@ -24,15 +24,16 @@ class OwnerInfoScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           width: width,
-          decoration: BoxDecoration(
-            gradient: StyleConstants.bgGradient,
-          ),
+
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 height: height * 0.15,
+                decoration: BoxDecoration(
+                  gradient: StyleConstants.bgGradient,
+                ),
                 child: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: width * 0.1, vertical: width * 0.02),

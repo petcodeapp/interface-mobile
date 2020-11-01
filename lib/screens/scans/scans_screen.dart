@@ -78,15 +78,14 @@ class _ScansScreenState extends State<ScansScreen> {
           ),
           body: Container(
             height: height,
-            decoration: BoxDecoration(
-              color: StyleConstants.blue,
-              gradient: StyleConstants.bgGradient,
-            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
                   height: height * 0.15,
+                  decoration: BoxDecoration(
+                    gradient: StyleConstants.bgGradient,
+                  ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: width * 0.1),
                     child: Column(
@@ -98,7 +97,7 @@ class _ScansScreenState extends State<ScansScreen> {
                             Text(
                               'Scan Locations',
                               style: StyleConstants.whiteThinTitleText
-                                  .copyWith(fontSize: 25.0),
+                                  .copyWith(fontSize: 25.0, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),

@@ -48,14 +48,27 @@ class StyleConstants {
 
   static Color pageBackgroundColor = new Color(0xffEEF2F6);
 
+//  static LinearGradient bgGradient = new LinearGradient(
+//    begin: Alignment.topRight,
+//    //end: Alignment(0.01, 0.01),
+//    end: Alignment.centerLeft,
+//    stops: [0.05, 0.25, 0.7],
+//    colors: [
+//      const Color(0xffB3E1EE),
+//      const Color(0xff7cdcf7),
+//      StyleConstants.blue
+//    ], // whitish to gray
+//    //tileMode: TileMode.repeated,
+//  );
+
   static LinearGradient bgGradient = new LinearGradient(
     begin: Alignment.topRight,
     //end: Alignment(0.01, 0.01),
-    end: Alignment.centerLeft,
-    stops: [0.05, 0.25, 0.7],
+    end: Alignment.bottomLeft,
+    stops: [0.01, 0.3, 0.7],
     colors: [
-      const Color(0xffB3E1EE),
-      const Color(0xff7cdcf7),
+      const Color(0xffABDEED),
+      const Color(0xff51BFDA),
       StyleConstants.blue
     ], // whitish to gray
     //tileMode: TileMode.repeated,

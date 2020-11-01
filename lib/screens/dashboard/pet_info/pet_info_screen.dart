@@ -28,9 +28,8 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
       backgroundColor: StyleConstants.pageBackgroundColor,
       body: SingleChildScrollView(
         child: Container(
-          decoration: BoxDecoration(
-            gradient: StyleConstants.bgGradient,
-          ),
+
+
           width: width,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -38,6 +37,20 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
             children: [
               Container(
                 height: height * 0.15,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    //end: Alignment(0.01, 0.01),
+                    end: Alignment.bottomLeft,
+                    stops: [0.01, 0.3, 0.7],
+                    colors: [
+                      const Color(0xffABDEED),
+                      const Color(0xff51BFDA),
+                      StyleConstants.blue
+                    ], // whitish to gray
+                    //tileMode: TileMode.repeated,
+                  ),
+                ),
                 child: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: width * 0.1, vertical: height * 0.02),
@@ -93,7 +106,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                             end: Alignment.bottomLeft,
                             stops: [0.05, 0.20, 0.75],
                             colors: [
-                              const Color(0xffB3E1EE),
+                              const Color(0xff89D2E6),
                               const Color(0xff7cdcf7),
                               StyleConstants.blue
                             ], // whitish to gray

@@ -12,15 +12,15 @@ class SocialSplitScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         height: height,
-        decoration: BoxDecoration(
-          color: StyleConstants.blue,
-          gradient: StyleConstants.bgGradient,
-        ),
+        
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               height: height * 0.15,
+              decoration: BoxDecoration(
+                gradient: StyleConstants.bgGradient,
+              ),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: width * 0.1),
                 child: Column(
@@ -32,7 +32,7 @@ class SocialSplitScreen extends StatelessWidget {
                         Text(
                           'Discovery',
                           style: StyleConstants.whiteThinTitleText
-                              .copyWith(fontSize: 25.0),
+                              .copyWith(fontSize: 25.0, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -117,15 +117,15 @@ class SocialSplitScreen extends StatelessWidget {
                                         Text(
                                           'Pet Parks',
                                           style: StyleConstants
-                                              .blackThinTitleTextMedium,
+                                              .blackThinTitleTextMedium.copyWith(fontWeight: FontWeight.bold),
                                         ),
                                         SizedBox(
                                           height: height * 0.01,
                                         ),
                                         Text(
-                                          'Filler Content, Filler Content,\nFiller Content, Filler Content',
+                                          'Find pet parks and events\nnear you',
                                           style: StyleConstants
-                                              .greyThinDescriptionTextSmall,
+                                              .greyThinDescriptionTextSmall.copyWith(fontWeight: FontWeight.w600),
                                         )
                                       ],
                                     )
@@ -191,15 +191,15 @@ class SocialSplitScreen extends StatelessWidget {
                                         Text(
                                           'Pet Perks',
                                           style: StyleConstants
-                                              .blackThinTitleTextMedium,
+                                              .blackThinTitleTextMedium.copyWith(fontWeight: FontWeight.bold),
                                         ),
                                         SizedBox(
                                           height: height * 0.01,
                                         ),
                                         Text(
-                                          'Filler Content, Filler Content,\nFiller Content, Filler Content',
+                                          'Exclusive discounts at your,\nfavorite pet boutiques',
                                           style: StyleConstants
-                                              .greyThinDescriptionTextSmall,
+                                              .greyThinDescriptionTextSmall.copyWith(fontWeight: FontWeight.w600),
                                         )
                                       ],
                                     )
@@ -285,16 +285,9 @@ class SocialSplitScreen extends StatelessWidget {
                                         Text(
                                           'Coming Soon',
                                           style: StyleConstants
-                                              .blackThinTitleTextMedium,
+                                              .blackThinTitleTextMedium.copyWith(fontWeight: FontWeight.w700),
                                         ),
-                                        SizedBox(
-                                          height: height * 0.01,
-                                        ),
-                                        Text(
-                                          'Filler Content, Filler Content,\nFiller Content, Filler Content',
-                                          style: StyleConstants
-                                              .greyThinDescriptionTextSmall,
-                                        )
+
                                       ],
                                     )
                                   ],
