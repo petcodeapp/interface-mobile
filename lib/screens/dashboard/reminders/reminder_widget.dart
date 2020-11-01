@@ -67,6 +67,8 @@ class ReminderWidget extends StatelessWidget {
                     children: [
                       Text(
                         currentReminder.startDate != null ?
+                        currentReminder.startDate.toDate().difference(DateTime.now()).inDays < 0 ? 'Past' :
+                        currentReminder.startDate.toDate().difference(DateTime.now()).inDays == 0 ? 'Today' :
                         currentReminder.startDate.toDate().difference(DateTime.now()).inDays < 7
                         ? '${currentReminder.startDate.toDate().difference(DateTime.now()).inDays + 1} Days' :
                         StringHelper.getDateString(currentReminder.startDate.toDate())
