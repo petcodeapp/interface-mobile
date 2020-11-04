@@ -412,4 +412,19 @@ class StyleConstants {
       ),
     ],
   );
+
+  static Color getReminderColor(DateTime date) {
+    if (date != null) {
+      int difference = date.difference(DateTime.now()).inDays;
+      if (difference < 1) {
+        return red;
+      } else if (difference <= 3) {
+        return yellow;
+      } else {
+        return green;
+      }
+    } else {
+      return green;
+    }
+  }
 }

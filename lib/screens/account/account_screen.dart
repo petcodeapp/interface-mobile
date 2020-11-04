@@ -11,8 +11,8 @@ class AccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     bool starOn = false;
 
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
 
 
     return Scaffold(
@@ -38,15 +38,12 @@ class AccountScreen extends StatelessWidget {
                           children: [
                             Text(
                               'Account',
-                              style: StyleConstants.whiteThinTitleTextSmall
-                                  .copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 22.0),
+                              style: StyleConstants.whiteTitleTextSmall,
                             ),
                           ],
                         ),
                         SizedBox(
-                          height: height * 0.02,
+                          height: height * 0.03,
                         ),
                       ],
                     ),

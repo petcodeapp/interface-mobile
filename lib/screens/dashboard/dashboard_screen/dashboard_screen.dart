@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/provider_state.dart';
+import 'package:petcode_app/screens/dashboard/dashboard_screen/header_circle_painter.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/navigation_row.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/no_pets_indicator.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/pets_carousel_widget.dart';
@@ -12,8 +13,8 @@ import 'package:provider/provider.dart';
 class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
 
     AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
 
@@ -35,17 +36,10 @@ class DashboardScreen extends StatelessWidget {
           child: Container(
             width: width,
             decoration: BoxDecoration(
-              //gradient: StyleConstants.bgGradient,
-            ),
+                //gradient: StyleConstants.bgGradient,
+                ),
             child: Stack(
               children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Image.asset(
-                    'assets/images/onboarding/quartercircle.png',
-                    width: width * 0.4,
-                  ),
-                ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,38 +49,24 @@ class DashboardScreen extends StatelessWidget {
                       width: width,
                       child: Stack(
                         children: [
-
-                          /*
-                          Align(
-                            alignment: Alignment.bottomRight,
+                          Positioned(
+                              top: height * 0.08,
+                              left: width * 0.08,
+                              child: Text(
+                                'Dashboard',
+                                style: StyleConstants.whiteThinTitleText,
+                              )),
+                          CustomPaint(
+                            painter: HeaderCirclePainter(),
+                            child: Container(),
+                          ),
+                          Positioned(
+                            top: height * 0.055,
+                            right: width * 0.06,
                             child: Image.asset(
-                              'assets/images/onboarding/quartercircle.png',
-                            ),
-                          ),*/
-                          Align(
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: width * 0.08,right: width * 0.08, top: width* 0.05),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text('Dashboard', style: StyleConstants.whiteBoldTitleText),
-                                      Spacer(),
-                                      Image.asset(
-                                        'assets/images/onboarding/pawlogohighres.png',
-                                        fit: BoxFit.cover,
-                                        width: width * 0.15,
-                                      ),
-                                    ],
-                                  ),
-                                  //SizedBox(height: height * 0.01,),
-                                ],
-                              ),
+                              'assets/images/onboarding/pawlogohighres.png',
+                              fit: BoxFit.cover,
+                              width: width * 0.15,
                             ),
                           ),
                         ],
@@ -95,9 +75,10 @@ class DashboardScreen extends StatelessWidget {
                     Flexible(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0))
-                        ),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0),
+                                topRight: Radius.circular(20.0))),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -118,15 +99,21 @@ class DashboardScreen extends StatelessWidget {
                                   gradient: LinearGradient(
                                     begin: Alignment.bottomRight,
                                     end: Alignment.topLeft,
-                                    colors: [ const Color(0xffB3E1EE),  Colors.white],
+                                    colors: [
+                                      const Color(0xffB3E1EE),
+                                      Colors.white
+                                    ],
                                     stops: [0.05, 0.95],
                                   ),
                                 ),
                                 child: Column(
                                   children: [
-                                    SizedBox(height: height * 0.01,),
+                                    SizedBox(
+                                      height: height * 0.01,
+                                    ),
                                     Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: width * 0.035),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: width * 0.035),
                                       child: UpcomingEventsWidget(),
                                     ),
                                   ],

@@ -31,8 +31,7 @@ class SocialSplitScreen extends StatelessWidget {
                       children: [
                         Text(
                           'Discovery',
-                          style: StyleConstants.whiteThinTitleText
-                              .copyWith(fontSize: 25.0),
+                          style: StyleConstants.whiteTitleTextSmall,
                         ),
                       ],
                     ),
@@ -43,7 +42,7 @@ class SocialSplitScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
+            Flexible(
               child: Container(
                 width: width,
                 decoration: BoxDecoration(

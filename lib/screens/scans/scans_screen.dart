@@ -97,8 +97,7 @@ class _ScansScreenState extends State<ScansScreen> {
                           children: [
                             Text(
                               'Scan Locations',
-                              style: StyleConstants.whiteThinTitleText
-                                  .copyWith(fontSize: 25.0),
+                              style: StyleConstants.whiteTitleTextSmall,
                             ),
                           ],
                         ),
