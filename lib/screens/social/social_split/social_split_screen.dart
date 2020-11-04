@@ -12,7 +12,7 @@ class SocialSplitScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         height: height,
-        
+
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
