@@ -90,11 +90,25 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
         body: Container(
           height: _height,
           width: _width,
-          decoration: BoxDecoration(gradient: StyleConstants.bgGradient),
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                //end: Alignment(0.01, 0.01),
+                end: Alignment.bottomLeft,
+                stops: [0.01, 0.4, 0.6],
+                colors: [
+                  const Color(0xffABDEED),
+                  const Color(0xff51BFDA),
+                  StyleConstants.blue
+                ], // whitish to gray
+                //tileMode: TileMode.repeated,
+              )
+          ),
           child: Column(
             children: [
               Container(
                 height: _height * 0.15,
+                decoration: BoxDecoration(gradient: StyleConstants.bgGradient),
                 child: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: _width * 0.1, vertical: _height * 0.02),

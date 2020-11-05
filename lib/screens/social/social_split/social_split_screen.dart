@@ -10,9 +10,23 @@ class SocialSplitScreen extends StatelessWidget {
     double width = StyleConstants.width;
 
     return Scaffold(
+      backgroundColor: StyleConstants.blue,
       body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              //end: Alignment(0.01, 0.01),
+              end: Alignment.bottomLeft,
+              stops: [0.01, 0.4, 0.6],
+              colors: [
+                const Color(0xffABDEED),
+                const Color(0xff51BFDA),
+                StyleConstants.blue
+              ], // whitish to gray
+              //tileMode: TileMode.repeated,
+            )
+        ),
         height: height,
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -43,7 +57,7 @@ class SocialSplitScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
+            Flexible(
               child: Container(
                 width: width,
                 decoration: BoxDecoration(

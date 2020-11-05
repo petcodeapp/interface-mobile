@@ -9,6 +9,8 @@ import 'package:petcode_app/screens/dashboard/dashboard_screen/upcoming_events_w
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
+import 'header_circle_painter.dart';
+
 class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,11 @@ class DashboardScreen extends StatelessWidget {
                   child: Stack(
                     children: [
                       SizedBox(width: width,height: height * 0.01,),
+                      CustomPaint(
+                        painter: HeaderCirclePainter(),
+                        child: Container(),
+                      ),
+                      /*
                       Align(
                         alignment: Alignment.topRight,
                         child: Image.asset(
@@ -56,6 +63,7 @@ class DashboardScreen extends StatelessWidget {
                           //width: width * 0.27,
                         ),
                       ),
+                      */
                       Padding(
                         padding: EdgeInsets.only(left: width * 0.08,right: width * 0.08, top: width* 0.08),
                         child: Row(
@@ -78,7 +86,6 @@ class DashboardScreen extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0))

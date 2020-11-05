@@ -60,14 +60,29 @@ class RemindersScreen extends StatelessWidget {
       body: Container(
         height: height,
         decoration: BoxDecoration(
-          gradient: StyleConstants.bgGradient,
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              //end: Alignment(0.01, 0.01),
+              end: Alignment.bottomLeft,
+              stops: [0.01, 0.4, 0.6],
+              colors: [
+                const Color(0xffABDEED),
+                const Color(0xff51BFDA),
+                StyleConstants.blue
+              ], // whitish to gray
+              //tileMode: TileMode.repeated,
+            )
         ),
+
         width: width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
+              decoration: BoxDecoration(
+                gradient: StyleConstants.bgGradient,
+              ),
               height: height * 0.15,
               child: Padding(
                   padding: EdgeInsets.symmetric(

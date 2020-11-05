@@ -25,11 +25,23 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
     Pet currentPet = currentPetProvider.currentPet;
 
     return Scaffold(
-      backgroundColor: StyleConstants.pageBackgroundColor,
+      backgroundColor: StyleConstants.blue,
       body: SingleChildScrollView(
         child: Container(
-
-
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                //end: Alignment(0.01, 0.01),
+                end: Alignment.bottomLeft,
+                stops: [0.01, 0.4, 0.6],
+                colors: [
+                  const Color(0xffABDEED),
+                  const Color(0xff51BFDA),
+                  StyleConstants.blue
+                ], // whitish to gray
+                //tileMode: TileMode.repeated,
+              )
+          ),
           width: width,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -86,7 +98,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                 child: Container(
                   width: width,
                   decoration: BoxDecoration(
-                      color: StyleConstants.pageBackgroundColor,
+                      color: StyleConstants.white,
                       borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0))),

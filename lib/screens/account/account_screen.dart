@@ -11,16 +11,29 @@ class AccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     bool starOn = false;
 
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
 
 
     return Scaffold(
-      backgroundColor: StyleConstants.white,
+      backgroundColor: StyleConstants.blue,
       body: SingleChildScrollView(
         child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                //end: Alignment(0.01, 0.01),
+                end: Alignment.bottomLeft,
+                stops: [0.01, 0.4, 0.6],
+                colors: [
+                  const Color(0xffABDEED),
+                  const Color(0xff51BFDA),
+                  StyleConstants.blue
+                ], // whitish to gray
+                //tileMode: TileMode.repeated,
+              )
+            ),
             width: width,
-
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -55,6 +68,7 @@ class AccountScreen extends StatelessWidget {
                   child: Container(
                     width: width,
                     decoration: BoxDecoration(
+
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20.0),
