@@ -374,8 +374,15 @@ class StyleConstants {
 
   static TextStyle editTextFieldDescription = new TextStyle(
       fontWeight: FontWeight.w500,
-      fontSize: 16.0,
-      color: StyleConstants.darkGrey);
+      fontSize: width * 0.04,
+      color: StyleConstants.darkGrey
+  );
+
+  static TextStyle editTextFieldDescriptionSmall = new TextStyle(
+      fontWeight: FontWeight.w500,
+      fontSize: width * 0.03,
+      color: StyleConstants.darkGrey
+  );
 
   //box decorations
   static BoxDecoration roundYellowButtonDeco = new BoxDecoration(

@@ -9,12 +9,15 @@ class BreedSearchBar extends StatefulWidget {
       this.breedInputController,
       this.inputDecoration,
       this.species,
-      this.breedValidator})
+      this.breedValidator,
+        this.style,
+      })
       : super(key: key);
   final TextEditingController breedInputController;
   final InputDecoration inputDecoration;
   final Species species;
   final FormFieldValidator<String> breedValidator;
+  final TextStyle style;
   @override
   _BreedSearchBarState createState() => _BreedSearchBarState();
 }
@@ -32,6 +35,7 @@ class _BreedSearchBarState extends State<BreedSearchBar> {
   Widget build(BuildContext context) {
     return TypeAheadFormField<String>(
       textFieldConfiguration: TextFieldConfiguration(
+        style: widget.style,
         controller: widget.breedInputController,
         decoration: widget.inputDecoration,
       ),

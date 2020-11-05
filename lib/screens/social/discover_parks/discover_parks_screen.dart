@@ -255,6 +255,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                             itemCount: _nearbyParksProvider.nearbyParks.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   ShowNearbyParkWidget(
                                     shownPark:

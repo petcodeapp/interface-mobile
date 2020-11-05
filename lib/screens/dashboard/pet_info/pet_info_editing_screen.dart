@@ -145,12 +145,27 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
-            gradient: StyleConstants.bgGradient,
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                //end: Alignment(0.01, 0.01),
+                end: Alignment.bottomLeft,
+                stops: [0.01, 0.4, 0.6],
+                colors: [
+                  const Color(0xffABDEED),
+                  const Color(0xff51BFDA),
+                  StyleConstants.blue
+                ], // whitish to gray
+                //tileMode: TileMode.repeated,
+              )
           ),
+
           width: width,
           child: Column(
             children: [
               Container(
+                decoration: BoxDecoration(
+                  gradient: StyleConstants.bgGradient,
+                ),
                 height: height * 0.15,
                 child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -357,8 +372,9 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                           child: Center(
                                             child: Padding(
                                               padding: EdgeInsets.symmetric(
-                                                  vertical: width * 0.03),
+                                                  vertical: width * 0.01),
                                               child: Column(
+                                                mainAxisSize: MainAxisSize.min,
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceBetween,
@@ -368,18 +384,12 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                                   Icon(
                                                     HeroIcons2.dog_1,
                                                     color: StyleConstants.blue,
-                                                    size: width * 0.1,
+                                                    size: height * 0.05,
                                                   ),
+                                                  SizedBox(height:  height * 0.01,),
                                                   Text(
                                                     'Dog',
-                                                    style: TextStyle(
-                                                        fontSize: 14.0,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: StyleConstants
-                                                            .lightBlack,
-                                                        fontFamily:
-                                                            'Open Sans'),
+                                                    style: StyleConstants.editTextFieldDescriptionSmall,
                                                   )
                                                 ],
                                               ),
@@ -418,8 +428,9 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                           child: Center(
                                             child: Padding(
                                               padding: EdgeInsets.symmetric(
-                                                  vertical: width * 0.03),
+                                                  vertical: width * 0.01),
                                               child: Column(
+                                                mainAxisSize: MainAxisSize.min,
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceBetween,
@@ -429,18 +440,12 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                                   Icon(
                                                     HeroIcons2.cat_1,
                                                     color: StyleConstants.blue,
-                                                    size: width * 0.1,
+                                                    size: height * 0.05,
                                                   ),
+                                                  SizedBox(height:  height * 0.01,),
                                                   Text(
                                                     'Cat',
-                                                    style: TextStyle(
-                                                        fontSize: 14.0,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: StyleConstants
-                                                            .lightBlack,
-                                                        fontFamily:
-                                                            'Open Sans'),
+                                                    style:  StyleConstants.editTextFieldDescriptionSmall,
                                                   )
                                                 ],
                                               ),
@@ -482,6 +487,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                               padding: EdgeInsets.symmetric(
                                                   vertical: width * 0.03),
                                               child: Column(
+                                                mainAxisSize: MainAxisSize.min,
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceBetween,
@@ -491,18 +497,12 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                                   Icon(
                                                     HeroIcons2.pawprint_2,
                                                     color: StyleConstants.blue,
-                                                    size: width * 0.1,
+                                                    size: height * 0.05,
                                                   ),
+                                                  SizedBox(height: height * 0.01,),
                                                   Text(
                                                     'Other',
-                                                    style: TextStyle(
-                                                        fontSize: 14.0,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: StyleConstants
-                                                            .lightBlack,
-                                                        fontFamily:
-                                                            'Open Sans'),
+                                                    style:  StyleConstants.editTextFieldDescriptionSmall,
                                                   )
                                                 ],
                                               ),
@@ -562,10 +562,10 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                   BreedSearchBar(
                                     breedInputController: _breedInputController,
                                     inputDecoration: InputDecoration(
-
                                       hintText: 'Breed',
                                       hintStyle: TextStyle(fontSize: 14.0),
                                     ),
+                                    style: StyleConstants.editTextFieldText,
                                     species: _petSpecies,
                                   ),
                                 ],
