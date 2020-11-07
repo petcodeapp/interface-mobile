@@ -22,7 +22,8 @@ class PetPerksScreen extends StatelessWidget {
         discountAmount: 10),
     PetPerk(
         storeName: 'Another Pet Store',
-        description: 'Pet Supplies, Accessories, and Products, and more and more and more and more',
+        description:
+            'Pet Supplies, Accessories, and Products, and more and more and more and more',
         discountAmount: 33),
     PetPerk(
         storeName: 'PetCode',
@@ -48,34 +49,59 @@ class PetPerksScreen extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          gradient: StyleConstants.bgGradient,
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              //end: Alignment(0.01, 0.01),
+              end: Alignment.bottomLeft,
+              stops: [0.01, 0.4, 0.6],
+              colors: [
+                const Color(0xffABDEED),
+                const Color(0xff51BFDA),
+                StyleConstants.blue
+              ], // whitish to gray
+              //tileMode: TileMode.repeated,
+            )
         ),
+
         child: Column(
           children: [
             Container(
               height: height * 0.15,
+              decoration: BoxDecoration(
+                gradient: StyleConstants.bgGradient,
+              ),
               child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.1, vertical: height * 0.05),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: width * 0.1, vertical: height * 0.02),
                   child: Stack(
                     children: [
                       Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Pet Perks',
-                          style: StyleConstants.whiteThinTitleText
-                              .copyWith(fontSize: 25.0),
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          height: height * 0.055,
+                          child: Text(
+                            'Pet Perks',
+                            style: StyleConstants.whiteThinTitleText
+                                .copyWith(fontSize: 25.0),
+                          ),
                         ),
                       ),
                       Align(
-                        alignment: Alignment.centerLeft,
-                        child: IconButton(
-                          icon: Icon(HeroIcons2.left_arrow_1, size: 25.0, color: Colors.white,),
-                          onPressed: () => Navigator.pop(context),
+                        alignment: Alignment.bottomLeft,
+                        child: Container(
+                          height: height * 0.055,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              size: 25.0,
+                              color: Colors.white,
+                            ),
+                            onPressed: () => Navigator.pop(context),
+                          ),
                         ),
                       )
                     ],
-                  )
-              ),
+                  )),
             ),
             Expanded(
               child: Container(

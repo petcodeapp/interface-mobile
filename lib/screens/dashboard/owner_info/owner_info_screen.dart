@@ -20,12 +20,23 @@ class OwnerInfoScreen extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: StyleConstants.pageBackgroundColor,
+      backgroundColor: StyleConstants.blue,
       body: SingleChildScrollView(
         child: Container(
           width: width,
           decoration: BoxDecoration(
-            gradient: StyleConstants.bgGradient,
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                //end: Alignment(0.01, 0.01),
+                end: Alignment.bottomLeft,
+                stops: [0.01, 0.4, 0.6],
+                colors: [
+                  const Color(0xffABDEED),
+                  const Color(0xff51BFDA),
+                  StyleConstants.blue
+                ], // whitish to gray
+                //tileMode: TileMode.repeated,
+              )
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -33,6 +44,9 @@ class OwnerInfoScreen extends StatelessWidget {
             children: [
               Container(
                 height: height * 0.15,
+                decoration: BoxDecoration(
+                  gradient: StyleConstants.bgGradient,
+                ),
                 child: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: width * 0.1, vertical: width * 0.02),
@@ -46,7 +60,7 @@ class OwnerInfoScreen extends StatelessWidget {
                           alignment: Alignment.bottomLeft,
                           child: IconButton(
                               icon: Icon(
-                                HeroIcons2.left_arrow_1,
+                                Icons.arrow_back_ios,
                                 size: 25.0,
                                 color: Colors.white,
                               ),
@@ -73,19 +87,8 @@ class OwnerInfoScreen extends StatelessWidget {
                           title: 'Owner 1',
                           currentPet: currentPet,
                       ),
-                      SizedBox(height: height * 0.03),
-                      currentPet.contact_2 == null
-                          ? SizedBox()
-                          : Padding(
-                              padding: EdgeInsets.only(left: width * 0.03),
-                              child: Text(
-                                'Owner 2',
-                                style: StyleConstants.blackThinTitleText,
-                              ),
-                            ),
-                      SizedBox(
-                        height: height * 0.01,
-                      ),
+                      SizedBox(height: height * 0.05),
+
                       currentPet.contact_2 != null
                           ? OwnerWidget(
                               owner: currentPet.contact_2,

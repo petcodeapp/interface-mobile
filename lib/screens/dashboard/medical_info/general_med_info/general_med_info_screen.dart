@@ -14,12 +14,27 @@ class GeneralMedicalInfoScreen extends StatelessWidget {
         child: Container(
           height: height,
           width: width,
-          decoration: BoxDecoration(gradient: StyleConstants.bgGradient),
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                //end: Alignment(0.01, 0.01),
+                end: Alignment.bottomLeft,
+                stops: [0.01, 0.4, 0.6],
+                colors: [
+                  const Color(0xffABDEED),
+                  const Color(0xff51BFDA),
+                  StyleConstants.blue
+                ], // whitish to gray
+                //tileMode: TileMode.repeated,
+              )
+          ),
+
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
+                decoration: BoxDecoration(gradient: StyleConstants.bgGradient),
                 height: height * 0.15,
                 child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -34,7 +49,7 @@ class GeneralMedicalInfoScreen extends StatelessWidget {
                           alignment: Alignment.bottomLeft,
                           child: IconButton(
                             icon: Icon(
-                              HeroIcons2.left_arrow_1,
+                              Icons.arrow_back_ios,
                               size: 25.0,
                               color: Colors.white,
                             ),

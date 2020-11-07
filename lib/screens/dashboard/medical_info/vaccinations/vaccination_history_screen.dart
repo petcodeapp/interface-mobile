@@ -42,7 +42,9 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
           return Container(
             height: _height * 0.7,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0)),
             ),
             child: AddVaccinationWidget(),
           );
@@ -89,14 +91,27 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
           height: _height,
           width: _width,
           decoration: BoxDecoration(
-            gradient: StyleConstants.bgGradient
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                //end: Alignment(0.01, 0.01),
+                end: Alignment.bottomLeft,
+                stops: [0.01, 0.4, 0.6],
+                colors: [
+                  const Color(0xffABDEED),
+                  const Color(0xff51BFDA),
+                  StyleConstants.blue
+                ], // whitish to gray
+                //tileMode: TileMode.repeated,
+              )
           ),
           child: Column(
             children: [
               Container(
                 height: _height * 0.15,
+                decoration: BoxDecoration(gradient: StyleConstants.bgGradient),
                 child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: _width * 0.1, vertical: _height * 0.02),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: _width * 0.1, vertical: _height * 0.02),
                     child: Stack(
                       children: [
                         Align(
@@ -106,13 +121,16 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: IconButton(
-                            icon: Icon(HeroIcons2.left_arrow_1, size: 25.0, color: Colors.white,),
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              size: 25.0,
+                              color: Colors.white,
+                            ),
                             onPressed: () => Navigator.pop(context),
                           ),
                         )
                       ],
-                    )
-                ),
+                    )),
               ),
               Expanded(
                 child: Container(
@@ -126,10 +144,10 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: _height * 0.02),
+                            padding:
+                                EdgeInsets.symmetric(vertical: _height * 0.02),
                             child: ListView.builder(
                               itemCount: _vaccinations.length,
                               itemBuilder: (context, index) {

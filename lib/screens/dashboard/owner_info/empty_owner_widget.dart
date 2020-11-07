@@ -50,7 +50,7 @@ class EmptyOwnerWidget extends StatelessWidget {
                 ),
                 IconButton(
                   icon: Icon(HeroIcons2.edit_2),
-                  iconSize: width * 0.07,
+                  iconSize: width * 0.06,
                   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => OwnerInfoEditingScreen(currentPet: currentPet,))),
                 )
               ],
