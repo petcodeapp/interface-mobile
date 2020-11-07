@@ -13,12 +13,13 @@ class RecentScanWidget extends StatelessWidget {
     double height = StyleConstants.height;
     double width = StyleConstants.width;
     return Container(
+      height: height * 0.17,
       width: width,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: width * 0.05),
         child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
+              borderRadius: BorderRadius.circular(30.0),
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
@@ -50,8 +51,8 @@ class RecentScanWidget extends StatelessWidget {
                       ),
                       Text(
                         currentScan.address,
-                        style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.black.withOpacity(0.8)),
-                        maxLines: 4,
+                        style: StyleConstants.lightBlackListText,
+                        maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ],

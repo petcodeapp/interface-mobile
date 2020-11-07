@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/models/Scan.dart';
 import 'package:petcode_app/services/scans_service.dart';
+import 'package:petcode_app/utils/style_constants.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ScansMapProvider extends ChangeNotifier {
@@ -12,6 +13,8 @@ class ScansMapProvider extends ChangeNotifier {
   List<Scan> _allScans;
   List<BitmapDescriptor> _bitmapDescriptors;
 
+  double _height;
+
   Scan get selectedScan => _selectedScan;
 
   PanelController get panelController => _panelController;
@@ -20,9 +23,11 @@ class ScansMapProvider extends ChangeNotifier {
 
   ScansMapProvider() {
     _panelController = new PanelController();
-    _mapBottomPadding = 0;
     _mapService = new MapService();
     _allScans = new List<Scan>();
+
+    _height = StyleConstants.height;
+    _mapBottomPadding = _height * 0.11;
   }
 
   void updateScans(List<Scan> allScans) {
@@ -43,13 +48,8 @@ class ScansMapProvider extends ChangeNotifier {
     if (scan == null) {
       showPanel();
     } else {
-      notifyListeners();
+      hidePanel();
     }
-  }
-
-  void setMapBottomPadding(double padding) {
-    _mapBottomPadding = padding;
-    notifyListeners();
   }
 
   void closePanel() async {
@@ -62,6 +62,7 @@ class ScansMapProvider extends ChangeNotifier {
   void hidePanel() async {
     if (_panelController.isAttached) {
       await _panelController.hide();
+      _mapBottomPadding = _height * 0.18;
       notifyListeners();
     }
   }
@@ -69,13 +70,13 @@ class ScansMapProvider extends ChangeNotifier {
   void showPanel() async {
     if (_panelController.isAttached) {
       await _panelController.show();
+      _mapBottomPadding = _height * 0.11;
       notifyListeners();
     }
   }
 
   void clear() {
     _selectedScan = null;
-    _mapBottomPadding = 0;
     _allScans = null;
     _bitmapDescriptors = null;
   }

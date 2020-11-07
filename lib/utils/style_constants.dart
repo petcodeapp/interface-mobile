@@ -346,7 +346,7 @@ class StyleConstants {
   );
 
   static TextStyle lightBlackListText = new TextStyle(
-      fontSize: 18.0,
+      fontSize: width * 0.041,
       color: StyleConstants.lightBlack,
       fontWeight: FontWeight.w600,
       fontFamily: 'OpenSans');

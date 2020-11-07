@@ -120,8 +120,7 @@ class _ScansScreenState extends State<ScansScreen> {
                                       GoogleMap(
                                         padding: EdgeInsets.only(
                                             bottom: scansMapProvider
-                                                    .mapBottomPadding +
-                                                height * 0.18),
+                                                    .mapBottomPadding + height * 0.08),
                                         mapType: MapType.normal,
                                         initialCameraPosition: CameraPosition(
                                           target: LatLng(
@@ -151,7 +150,7 @@ class _ScansScreenState extends State<ScansScreen> {
                                               !scansMapProvider
                                                   .panelController.isPanelShown
                                           ? Positioned(
-                                              bottom: height * 0.08,
+                                              bottom: height * 0.09,
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [

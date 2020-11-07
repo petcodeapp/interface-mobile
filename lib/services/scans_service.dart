@@ -44,7 +44,6 @@ class MapService extends ChangeNotifier {
                     Provider.of<ScansMapProvider>(context, listen: false);
                 scansMapProvider.setNewScan(currentScan);
                 scansMapProvider.hidePanel();
-                scansMapProvider.setMapBottomPadding(height * 0.08);
               }),
         );
       }

@@ -46,7 +46,7 @@ class ScansListWidget extends StatelessWidget {
   }
 
   Widget listItemWidget(Scan scan, BuildContext context) {
-    ScansMapProvider scansMapProvider = Provider.of<ScansMapProvider>(context);
+    ScansMapProvider scansMapProvider = Provider.of<ScansMapProvider>(context, listen: false);
 
     return GestureDetector(
       onTap: () async {
