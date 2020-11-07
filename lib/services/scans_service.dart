@@ -4,6 +4,9 @@ import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Scan.dart';
+import 'package:petcode_app/providers/scans_map_provider.dart';
+import 'package:petcode_app/utils/style_constants.dart';
+import 'package:provider/provider.dart';
 
 class MapService extends ChangeNotifier {
   Future<List<Scan>> getScansFromAllPets(List<Pet> allPets) async {
@@ -22,20 +25,27 @@ class MapService extends ChangeNotifier {
     return allScans;
   }
 
-  Future<Set<Marker>> createMarkers(
-      List<Scan> allScans, List<BitmapDescriptor> bitmapDescriptors) async {
+  Set<Marker> createMarkers(List<Scan> allScans,
+      List<BitmapDescriptor> bitmapDescriptors, BuildContext context) {
     List<Marker> allMarkers = new List<Marker>();
     if (allScans != null) {
       for (int i = 0; i < allScans.length; i++) {
         Scan currentScan = allScans[i];
         allMarkers.add(
           new Marker(
-            markerId: MarkerId(currentScan.date.toString()),
-            position: LatLng(
-                currentScan.location.latitude, currentScan.location.longitude),
-            icon: bitmapDescriptors[allScans[i].petIndex],
-            infoWindow: InfoWindow(),
-          ),
+              markerId: MarkerId(currentScan.date.toString()),
+              position: LatLng(currentScan.location.latitude,
+                  currentScan.location.longitude),
+              icon: bitmapDescriptors[allScans[i].petIndex],
+              infoWindow: InfoWindow(),
+              onTap: () {
+                double height = StyleConstants.height;
+                ScansMapProvider scansMapProvider =
+                    Provider.of<ScansMapProvider>(context, listen: false);
+                scansMapProvider.setNewScan(currentScan);
+                scansMapProvider.hidePanel();
+                scansMapProvider.setMapBottomPadding(height * 0.08);
+              }),
         );
       }
     }
