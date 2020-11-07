@@ -135,12 +135,14 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
             ),
           ),
         ),
+
         DotsIndicator(
           dotsCount: allPetsProvider.allPets.length > 0
               ? allPetsProvider.allPets.length
               : 1,
           position: 0.0 + pageIndex,
         ),
+
       ],
     );
   }
