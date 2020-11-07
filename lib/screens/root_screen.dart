@@ -36,6 +36,8 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height = StyleConstants.height;
+
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
@@ -93,34 +95,37 @@ class _RootScreenState extends State<RootScreen> {
         ],
       ),*/
 
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) => setState(() {
-          _currentIndex = index;
-          //_pageController.jumpToPage(index);
-        }),
-        selectedItemColor: StyleConstants.blue,
-        backgroundColor: Colors.white,
-        unselectedItemColor: Colors.black.withOpacity(0.2),
-        showUnselectedLabels: true,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.location_on),
-            label: 'Scans',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Discovery',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Account',
-          ),
-        ],
+      bottomNavigationBar: SizedBox(
+        height: height * 0.08,
+        child: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) => setState(() {
+            _currentIndex = index;
+            //_pageController.jumpToPage(index);
+          }),
+          selectedItemColor: StyleConstants.blue,
+          backgroundColor: Colors.white,
+          unselectedItemColor: Colors.black.withOpacity(0.2),
+          showUnselectedLabels: true,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.location_on),
+              label: 'Scans',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Discovery',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle),
+              label: 'Account',
+            ),
+          ],
+        ),
       ),
 
     );

@@ -8,6 +8,7 @@ import 'package:petcode_app/providers/image_marker_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_map_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
+import 'package:petcode_app/providers/scans_map_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/screens/auth/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
@@ -37,10 +38,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown
-    ]);
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
     return MultiProvider(
       providers: [
@@ -126,9 +125,7 @@ class MyApp extends StatelessWidget {
                   imageMarkerProvider.markerImages.length == 0) {
                 return scansProvider..clear();
               } else {
-                return scansProvider
-                  ..setScans(allPetsProvider.allPets,
-                      imageMarkerProvider.markerImages);
+                return scansProvider..setScans(allPetsProvider.allPets);
               }
             }),
         ChangeNotifierProxyProvider<FirebaseAuthService,
@@ -160,7 +157,23 @@ class MyApp extends StatelessWidget {
             }),
         ChangeNotifierProvider<NearbyParksMapProvider>(
           create: (_) => NearbyParksMapProvider(),
-        )
+        ),
+        ChangeNotifierProxyProvider2<ScansProvider, ImageMarkerProvider,
+                ScansMapProvider>(
+            create: (_) => ScansMapProvider(),
+            update: (BuildContext context,
+                ScansProvider scansProvider,
+                ImageMarkerProvider imageMarkerProvider,
+                ScansMapProvider scansMapProvider) {
+              if (scansProvider.allScans == null ||
+                  imageMarkerProvider.markerImages == null) {
+                return scansMapProvider..clear();
+              } else {
+                scansMapProvider.updateScans(scansProvider.allScans);
+                return scansMapProvider
+                  ..updateImages(imageMarkerProvider.markerImages);
+              }
+            })
       ],
       child: MaterialApp(
         builder: (context, child) {
