@@ -71,16 +71,29 @@ class _ScansScreenState extends State<ScansScreen> {
             ),
           ),
           body: Container(
-            height: height,
             decoration: BoxDecoration(
-              color: StyleConstants.blue,
-              gradient: StyleConstants.bgGradient,
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  //end: Alignment(0.01, 0.01),
+                  end: Alignment.bottomLeft,
+                  stops: [0.01, 0.4, 0.6],
+                  colors: [
+                    const Color(0xffABDEED),
+                    const Color(0xff51BFDA),
+                    StyleConstants.blue
+                  ], // whitish to gray
+                  //tileMode: TileMode.repeated,
+                )
             ),
+            height: height,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
                   height: height * 0.15,
+                  decoration: BoxDecoration(
+                    gradient: StyleConstants.bgGradient,
+                  ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: width * 0.1),
                     child: Column(
@@ -91,7 +104,8 @@ class _ScansScreenState extends State<ScansScreen> {
                           children: [
                             Text(
                               'Scan Locations',
-                              style: StyleConstants.whiteTitleTextSmall,
+                              style: StyleConstants.whiteThinTitleText
+                                  .copyWith(fontSize: 25.0, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),

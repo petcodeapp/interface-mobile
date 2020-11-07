@@ -133,16 +133,29 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
           child: Container(
             //height: height,
             decoration: BoxDecoration(
-              gradient: StyleConstants.bgGradient,
-
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  //end: Alignment(0.01, 0.01),
+                  end: Alignment.bottomLeft,
+                  stops: [0.01, 0.4, 0.6],
+                  colors: [
+                    const Color(0xffABDEED),
+                    const Color(0xff51BFDA),
+                    StyleConstants.blue
+                  ], // whitish to gray
+                  //tileMode: TileMode.repeated,
+                )
             ),
 
             width: width,
             child: Column(
               children: [
                 Container(
-                  height: height * 0.15,
+                  decoration: BoxDecoration(
+                    gradient: StyleConstants.bgGradient,
+                  ),
 
+                  height: height * 0.15,
                   child: Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: width * 0.1, vertical: height * 0.02),
@@ -263,16 +276,20 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('Full Name',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 16.0,
-                                            color: Colors.black.withOpacity(0.8))),
+                                        style: StyleConstants.editTextFieldDescription,
+                                    ),
                                     Container(
                                       //color: Colors.blue,
                                       child: SizedBox(
                                         height: height * 0.07,
                                         child: TextFormField(
                                           controller: _owner1Name,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: 'Open Sans',
+                                            fontSize: 18.0,
+                                            color: StyleConstants.lightBlack,
+                                          ),
                                           decoration: InputDecoration(
                                             //border: OutlineInputBorder(),
                                             //hintText: 'Name',
@@ -295,10 +312,8 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text('Phone Number',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 16.0,
-                                              color: Colors.black.withOpacity(0.8))),
+
+                                    style: StyleConstants.editTextFieldDescription,),
                                       InternationalPhoneNumberInput(
                                         initialValue: _initialOwner1PhoneNumber,
                                         inputDecoration: InputDecoration(
@@ -309,6 +324,12 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                           print(number.toString());
                                           _owner1FormattedNumber = number.toString();
                                         },
+                                        textStyle: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 18.0,
+                                          color: StyleConstants.lightBlack,
+                                        ),
                                         selectorConfig: SelectorConfig(
                                           selectorType:
                                           PhoneInputSelectorType.BOTTOM_SHEET,
@@ -329,10 +350,8 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text('Email Address',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 16.0,
-                                              color: Colors.black.withOpacity(0.8))),
+                                        style: StyleConstants.editTextFieldDescription,
+                                      ),
                                       SizedBox(
                                         height: 10.0,
                                       ),
@@ -340,8 +359,13 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                         controller: _owner1Email,
                                         validator: (value) =>
                                             ValidatorHelper.emailValidator(value),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 18.0,
+                                          color: StyleConstants.lightBlack,
+                                        ),
                                         decoration: InputDecoration(
-
                                           hintText: 'Email',
                                           hintStyle: TextStyle(fontSize: 14.0),
                                         ),
@@ -361,16 +385,20 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text('Address',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 16.0,
-                                              color: Colors.black.withOpacity(0.8))),
+                                        style: StyleConstants.editTextFieldDescription,
+                                      ),
                                       SizedBox(
                                         height: 10.0,
                                       ),
                                       TextFormField(
                                         validator: (value) =>
                                             ValidatorHelper.addressValidator(value),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 18.0,
+                                          color: StyleConstants.lightBlack,
+                                        ),
                                         controller: _owner1Address,
                                         decoration: InputDecoration(
 
@@ -411,16 +439,19 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('Full Name',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 16.0,
-                                            color: Colors.black.withOpacity(0.8))),
+                                      style: StyleConstants.editTextFieldDescription,),
                                     Container(
                                       //color: Colors.blue,
                                       child: SizedBox(
                                         height: height * 0.07,
                                         child: TextFormField(
                                           controller: _owner2Name,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: 'Open Sans',
+                                            fontSize: 18.0,
+                                            color: StyleConstants.lightBlack,
+                                          ),
                                           decoration: InputDecoration(
                                             //border: OutlineInputBorder(),
                                             //hintText: 'Name',
@@ -443,12 +474,15 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text('Phone Number',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 16.0,
-                                              color: Colors.black.withOpacity(0.8))),
+                                        style: StyleConstants.editTextFieldDescription,),
                                       InternationalPhoneNumberInput(
                                         initialValue: _initialOwner2PhoneNumber,
+                                        textStyle: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 18.0,
+                                          color: StyleConstants.lightBlack,
+                                        ),
                                         inputDecoration: InputDecoration(
                                           hintText: 'Phone Number',
                                           hintStyle: TextStyle(fontSize: 14.0),
@@ -477,10 +511,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text('Email Address',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 16.0,
-                                              color: Colors.black.withOpacity(0.8))),
+                                        style: StyleConstants.editTextFieldDescription,),
                                       SizedBox(
                                         height: 10.0,
                                       ),
@@ -488,6 +519,12 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                         controller: _owner2Email,
                                         validator: (value) =>
                                             ValidatorHelper.emailValidator(value),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 18.0,
+                                          color: StyleConstants.lightBlack,
+                                        ),
                                         decoration: InputDecoration(
 
                                           hintText: 'Email',
@@ -509,10 +546,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text('Address',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 16.0,
-                                              color: Colors.black.withOpacity(0.8))),
+                                        style: StyleConstants.editTextFieldDescription,),
                                       SizedBox(
                                         height: 10.0,
                                       ),
@@ -520,6 +554,12 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                         validator: (value) =>
                                             ValidatorHelper.addressValidator(value),
                                         controller: _owner2Address,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 18.0,
+                                          color: StyleConstants.lightBlack,
+                                        ),
                                         decoration: InputDecoration(
 
                                           hintText: 'Address',

@@ -16,18 +16,32 @@ class AccountScreen extends StatelessWidget {
 
 
     return Scaffold(
-      backgroundColor: StyleConstants.white,
+      backgroundColor: StyleConstants.blue,
       body: SingleChildScrollView(
         child: Container(
-            width: width,
             decoration: BoxDecoration(
-              gradient: StyleConstants.bgGradient,
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                //end: Alignment(0.01, 0.01),
+                end: Alignment.bottomLeft,
+                stops: [0.01, 0.4, 0.6],
+                colors: [
+                  const Color(0xffABDEED),
+                  const Color(0xff51BFDA),
+                  StyleConstants.blue
+                ], // whitish to gray
+                //tileMode: TileMode.repeated,
+              )
             ),
+            width: width,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
                   height: height * 0.15,
+                  decoration: BoxDecoration(
+                    gradient: StyleConstants.bgGradient,
+                  ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: width * 0.1),
                     child: Column(
@@ -38,7 +52,8 @@ class AccountScreen extends StatelessWidget {
                           children: [
                             Text(
                               'Account',
-                              style: StyleConstants.whiteTitleTextSmall,
+                              style: StyleConstants.whiteThinTitleText
+                                  .copyWith(fontSize: 25.0, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -53,6 +68,7 @@ class AccountScreen extends StatelessWidget {
                   child: Container(
                     width: width,
                     decoration: BoxDecoration(
+
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20.0),

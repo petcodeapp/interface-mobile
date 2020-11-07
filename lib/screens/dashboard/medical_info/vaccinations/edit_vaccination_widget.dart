@@ -94,13 +94,12 @@ class _EditVaccinationWidgetState extends State<EditVaccinationWidget> {
                       height: height * 0.06,
                     ),
                     Text('Name',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16.0,
-                            color: Colors.black.withOpacity(0.8))),
+                        style: StyleConstants.editTextFieldDescription,
+                    ),
                     SizedBox(
                       height: height * 0.07,
                       child: TextFormField(
+                        style: StyleConstants.editTextFieldText,
                         controller: _vaccinationNameController,
                         decoration: InputDecoration(),
                         validator: ValidatorHelper.vaccinationNameValidator,
@@ -110,14 +109,12 @@ class _EditVaccinationWidgetState extends State<EditVaccinationWidget> {
                       height: 8.0,
                     ),
                     Text('Expiration Date',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16.0,
-                            color: Colors.black.withOpacity(0.8))),
+                      style: StyleConstants.editTextFieldDescription,),
                     SizedBox(
                       height: height * 0.07,
                       child: TextField(
                         controller: _vaccinationDateController,
+                        style: StyleConstants.editTextFieldText,
                         decoration: InputDecoration(
                           suffixIcon: Icon(Icons.calendar_today),
                         ),
@@ -129,10 +126,7 @@ class _EditVaccinationWidgetState extends State<EditVaccinationWidget> {
                       height: height * 0.04,
                     ),
                     Text('Current: ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16.0,
-                            color: Colors.black.withOpacity(0.8))),
+                        style: StyleConstants.editTextFieldDescription),
                     SizedBox(height: height * 0.01),
                     Align(
                       alignment: Alignment.center,

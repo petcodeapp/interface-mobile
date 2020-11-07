@@ -25,11 +25,22 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
     Pet currentPet = currentPetProvider.currentPet;
 
     return Scaffold(
-      backgroundColor: StyleConstants.pageBackgroundColor,
+      backgroundColor: StyleConstants.blue,
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
-            gradient: StyleConstants.bgGradient,
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                //end: Alignment(0.01, 0.01),
+                end: Alignment.bottomLeft,
+                stops: [0.01, 0.4, 0.6],
+                colors: [
+                  const Color(0xffABDEED),
+                  const Color(0xff51BFDA),
+                  StyleConstants.blue
+                ], // whitish to gray
+                //tileMode: TileMode.repeated,
+              )
           ),
           width: width,
           child: Column(
@@ -38,6 +49,20 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
             children: [
               Container(
                 height: height * 0.15,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    //end: Alignment(0.01, 0.01),
+                    end: Alignment.bottomLeft,
+                    stops: [0.01, 0.3, 0.7],
+                    colors: [
+                      const Color(0xffABDEED),
+                      const Color(0xff51BFDA),
+                      StyleConstants.blue
+                    ], // whitish to gray
+                    //tileMode: TileMode.repeated,
+                  ),
+                ),
                 child: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: width * 0.1, vertical: height * 0.02),
@@ -45,17 +70,25 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                       children: [
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: ChangePetDropdown(),
+                          child: Container(
+                            height: height * 0.06,
+                              //color: Colors.blue,
+                              child: ChangePetDropdown()),
                         ),
                         Align(
                           alignment: Alignment.bottomLeft,
-                          child: IconButton(
-                            icon: Icon(
-                              HeroIcons2.left_arrow_1,
-                              size: 25.0,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => Navigator.pop(context),
+                          child: Container(
+                            //color: Colors.blue,
+                            height: height * 0.06,
+                            child: IconButton(
+                              icon: Icon(
+                                //HeroIcons2.left_arrow_1,
+                                Icons.arrow_back_ios,
+                                size: 25.0,
+                                color: Colors.white,
+                              ),
+                              onPressed: () => Navigator.pop(context),
+                            )
                           ),
                         )
                       ],
@@ -65,7 +98,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                 child: Container(
                   width: width,
                   decoration: BoxDecoration(
-                      color: StyleConstants.pageBackgroundColor,
+                      color: StyleConstants.white,
                       borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0))),
@@ -85,7 +118,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                             end: Alignment.bottomLeft,
                             stops: [0.05, 0.20, 0.75],
                             colors: [
-                              const Color(0xffB3E1EE),
+                              const Color(0xff89D2E6),
                               const Color(0xff7cdcf7),
                               StyleConstants.blue
                             ], // whitish to gray
