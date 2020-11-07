@@ -36,8 +36,8 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
 
     Pet currentPet = Provider.of<CurrentPetProvider>(context).currentPet;
 

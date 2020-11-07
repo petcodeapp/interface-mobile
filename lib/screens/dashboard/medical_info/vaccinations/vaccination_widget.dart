@@ -40,8 +40,8 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    _height = MediaQuery.of(context).size.height;
-    _width = MediaQuery.of(context).size.width;
+    _height = StyleConstants.height;
+    _width = StyleConstants.width;
 
     bool hasDate = widget.vaccineDate != null;
 

@@ -59,8 +59,8 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
   Widget build(BuildContext context) {
     _databaseService = Provider.of<DatabaseService>(context);
 
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
     return Scaffold(
         /*appBar: AppBar(
           backgroundColor: StyleConstants.blue,

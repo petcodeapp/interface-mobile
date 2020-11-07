@@ -57,8 +57,9 @@ class _StpContactScreenState extends State<StpContactScreen> {
 
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
-    height = MediaQuery.of(context).size.height;
+    height = StyleConstants.height;
+    width = StyleConstants.width;
+
     return Scaffold(
       backgroundColor: StyleConstants.blue,
       body: SingleChildScrollView(

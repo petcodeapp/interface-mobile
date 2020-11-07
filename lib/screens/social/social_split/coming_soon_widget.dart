@@ -4,8 +4,8 @@ import 'package:petcode_app/utils/style_constants.dart';
 class ComingSoonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(15.0),

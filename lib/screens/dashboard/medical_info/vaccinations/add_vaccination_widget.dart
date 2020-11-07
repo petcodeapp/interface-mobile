@@ -39,8 +39,8 @@ class _AddVaccinationWidgetState extends State<AddVaccinationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
 
     CurrentPetProvider currentPetProvider =
         Provider.of<CurrentPetProvider>(context);

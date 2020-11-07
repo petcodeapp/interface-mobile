@@ -48,8 +48,8 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
   @override
   Widget build(BuildContext context) {
     print("moved: " + _cameraMoved.toString());
-    _height = MediaQuery.of(context).size.height;
-    _width = MediaQuery.of(context).size.width;
+    _height = StyleConstants.height;
+    _width = StyleConstants.width;
 
     CurrentLocationProvider currentLocationProvider =
         Provider.of<CurrentLocationProvider>(context);
