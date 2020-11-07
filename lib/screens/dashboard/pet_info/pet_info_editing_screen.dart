@@ -124,20 +124,24 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                     padding: EdgeInsets.symmetric(
                         horizontal: width * 0.1, vertical: height * 0.02),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         GestureDetector(
                           onTap: () => Navigator.pop(context),
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Open Sans',
-                                fontSize: 20.0),
+                          child: Container(
+                            width: width * 0.2,
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 20.0),
+                            ),
                           ),
                         ),
+                        Spacer(),
                         Text(
                           'Update Pet Info',
                           style: TextStyle(
@@ -146,6 +150,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                               fontFamily: 'Open Sans',
                               fontSize: 20.0),
                         ),
+                        Spacer(),
                         GestureDetector(
                           onTap: () async {
                             if (_formKey.currentState.validate()) {
@@ -181,13 +186,20 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                               Navigator.pop(context);
                             }
                           },
-                          child: Text(
-                            'Done',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Open Sans',
-                                fontSize: 20.0),
+                          child: Container(
+
+                            width: width * 0.2,
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: Text(
+                                'Done',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Open Sans',
+                                    fontSize: 20.0),
+                              ),
+                            ),
                           ),
                         )
                       ],
@@ -203,7 +215,6 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                 child: Form(
                   key: _formKey,
                   child: Container(
-                    //height: height,
                     width: width,
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: width * 0.1),
@@ -213,10 +224,12 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                           SizedBox(
                             height: height * 0.02,
                           ),
+                          Container(
 
-                          CircleAvatar(
-                            backgroundImage: updatedImage,
-                            radius: width * 0.13,
+                            child: CircleAvatar(
+                              backgroundImage: updatedImage,
+                              radius: width * 0.13,
+                            ),
                           ),
                           SizedBox(
                             height: height * 0.01,
