@@ -62,71 +62,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-        /*appBar: AppBar(
-          backgroundColor: StyleConstants.blue,
-          centerTitle: true,
-          title: Text(
-            'Edit Owner Info',
-            style: TextStyle(color: Colors.white),
-          ),
-          actions: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: GestureDetector(
-                  onTap: () async {
-                    Pet updatedPet = widget.currentPet;
 
-                    if (_owner1FormKey.currentState.validate()) {
-                      if (!owner2IsEmpty()) {
-                        if (_owner2FormKey.currentState.validate()) {
-                          Owner updatedOwner2 = new Owner();
-
-                          updatedOwner2.name = VisibleValue<String>(
-                              value: _owner2Name.text.trim(), visible: true);
-                          updatedOwner2.phoneNumber = VisibleValue<String>(
-                              value: _owner2FormattedNumber, visible: true);
-                          updatedOwner2.email = VisibleValue<String>(
-                              value: _owner2Email.text.trim(), visible: true);
-                          updatedOwner2.address = VisibleValue<String>(
-                              value: _owner2Address.text.trim(), visible: true);
-                          updatedPet.contact_2 = updatedOwner2;
-                        } else {
-                          return;
-                        }
-                      } else {
-                        updatedPet.contact_2 = null;
-                      }
-
-                      Owner updatedOwner1 = new Owner();
-                      updatedOwner1.name = VisibleValue<String>(
-                          value: _owner1Name.text.trim(), visible: true);
-                      updatedOwner1.phoneNumber = VisibleValue<String>(
-                          value: _owner1FormattedNumber, visible: true);
-                      updatedOwner1.email = VisibleValue<String>(
-                          value: _owner1Email.text.trim(), visible: true);
-                      updatedOwner1.address = VisibleValue<String>(
-                          value: _owner1Address.text.trim(), visible: true);
-
-                      updatedPet.contact_1 = updatedOwner1;
-
-                      _databaseService.updatePet(widget.currentPet);
-
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: Text(
-                    'Done',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15.0,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),*/
 
 
         body: SingleChildScrollView(

@@ -6,6 +6,8 @@ import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
 
+import 'owner_info_single_editing_screen.dart';
+
 class OwnerWidget extends StatelessWidget {
 
   final Owner owner;
@@ -51,7 +53,7 @@ class OwnerWidget extends StatelessWidget {
                 IconButton(
                   icon: Icon(HeroIcons2.edit_2),
                   iconSize: width * 0.06,
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => OwnerInfoEditingScreen(currentPet: currentPet,))),
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => OwnerInfoSingleEditingScreen(currentPet: currentPet, ownerNumber: 1))),
                 )
               ],
             ),
@@ -115,7 +117,7 @@ class OwnerWidget extends StatelessWidget {
                 size: width * 0.07,
                 color: StyleConstants.blue,
               ),
-              title: owner.phoneNumber != null
+              title: owner.phoneNumber != null && owner.phoneNumber.value != null && owner.phoneNumber.value.isNotEmpty
                   ? Text(owner.phoneNumber.value,
                   style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))
                   : Text(
