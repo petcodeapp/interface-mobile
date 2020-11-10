@@ -48,7 +48,8 @@ class _EditVaccinationScreenState extends State<EditVaccinationScreen> {
   Widget build(BuildContext context) {
     bool hasImage = _currentVaccination.imageUrl != null;
     bool hasDate = _expirationDate != null;
-    double height = MediaQuery.of(context).size.height;
+    double height = StyleConstants.height;
+
     return Scaffold(
       appBar: AppBar(
         actions: [

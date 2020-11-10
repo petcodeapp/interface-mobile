@@ -6,6 +6,7 @@ import 'package:petcode_app/models/Scan.dart';
 import 'package:petcode_app/providers/scans_map_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/screens/scans/recent_scan_widget.dart';
+import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
 class ScansListWidget extends StatelessWidget {
@@ -15,8 +16,8 @@ class ScansListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
 
     ScansProvider scansProvider = Provider.of<ScansProvider>(context);
     List<Scan> petScans = scansProvider.allScans;

@@ -14,8 +14,8 @@ class ReminderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     print(currentReminder.frequency);
 
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
 
     return GestureDetector(
       onTap: () => _editReminder(context, height),

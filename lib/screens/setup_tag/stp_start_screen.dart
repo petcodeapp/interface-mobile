@@ -10,8 +10,8 @@ class StpStartScreen extends StatefulWidget {
 class _StpStartScreenState extends State<StpStartScreen> {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
 
     return Scaffold(
       backgroundColor: StyleConstants.white,

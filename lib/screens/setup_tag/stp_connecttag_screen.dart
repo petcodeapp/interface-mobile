@@ -23,8 +23,8 @@ class _StpConnectTagScreenState extends State<StpConnectTagScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
 
     return Scaffold(
       backgroundColor: Colors.white,

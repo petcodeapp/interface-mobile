@@ -56,8 +56,9 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
     CurrentPetProvider currentPetProvider =
         Provider.of<CurrentPetProvider>(context);
 
-    _height = MediaQuery.of(context).size.height;
-    _width = MediaQuery.of(context).size.width;
+    _height = StyleConstants.height;
+    _width = StyleConstants.width;
+
     Pet selectedPet = currentPetProvider.currentPet;
 
     if (selectedPet == null) {

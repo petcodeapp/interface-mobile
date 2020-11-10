@@ -5,8 +5,8 @@ import 'package:petcode_app/utils/style_constants.dart';
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
 
     return Scaffold(
       body: Container(
