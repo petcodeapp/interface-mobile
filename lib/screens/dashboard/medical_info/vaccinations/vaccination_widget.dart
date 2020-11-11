@@ -9,7 +9,11 @@ import 'package:provider/provider.dart';
 
 class VaccinationWidget extends StatefulWidget {
   VaccinationWidget(
-      {Key key, this.updateProvider, this.vaccineName, this.vaccineDate, this.vaccineIndex})
+      {Key key,
+      this.updateProvider,
+      this.vaccineName,
+      this.vaccineDate,
+      this.vaccineIndex})
       : super(key: key);
 
   final bool updateProvider;
@@ -66,61 +70,77 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
               ),
             ]),
         width: _width * 0.8,
-        height: _height * 0.15,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: _width * 0.05),
+          padding: EdgeInsets.symmetric(
+              vertical: _height * 0.05, horizontal: _width * 0.05),
           child: Row(
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.vaccineName,
-                    style: TextStyle(
-                      color: StyleConstants.lightBlack,
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.w500,
+              Expanded(
+                flex: 5,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.vaccineName,
+                      style: TextStyle(
+                        color: StyleConstants.lightBlack,
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      maxLines: null,
                     ),
-                  ),
-                  SizedBox(height: _height * 0.01,),
-                  Row(
-                    children: [
-                      Text(hasDate
-                          ? 'Expiriation Date: ' +
-                              StringHelper.getDateString(
-                                  widget.vaccineDate.toDate())
-                          : 'No Date Given',
-                        style: TextStyle(
-                          color: StyleConstants.lightBlack,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
+                    SizedBox(
+                      height: _height * 0.01,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          hasDate
+                              ? 'Expiriation Date: ' +
+                                  StringHelper.getDateString(
+                                      widget.vaccineDate.toDate())
+                              : 'No Date Given',
+                          style: TextStyle(
+                            color: StyleConstants.lightBlack,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.0,
+                          ),
                         ),
-                      ),
-                      SizedBox(width: _width * 0.02,),
-                      Container(
-                        height: _height * 0.01,
-                        width: _height * 0.01,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: StyleConstants.green,
+                        SizedBox(
+                          width: _width * 0.02,
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        Container(
+                          height: _height * 0.01,
+                          width: _height * 0.01,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: StyleConstants.green,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              Spacer(),
-              Icon(
-                Icons.remove_red_eye,
-                size: 30.0,
-              ),
-              SizedBox(
-                width: _width * 0.05,
-              ),
-              Icon(
-                HeroIcons2.download_1,
-                size: 22.0,
+              Expanded(
+                flex: 2,
+                child: Row(
+                  children: [
+                    Spacer(),
+                    Icon(
+                      Icons.remove_red_eye,
+                      size: 30.0,
+                    ),
+                    SizedBox(
+                      width: _width * 0.05,
+                    ),
+                    Icon(
+                      HeroIcons2.download_1,
+                      size: 22.0,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -141,7 +161,9 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
           return Container(
             height: _height * 0.8,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0)),
               color: Colors.white,
             ),
             child: EditVaccinationWidget(

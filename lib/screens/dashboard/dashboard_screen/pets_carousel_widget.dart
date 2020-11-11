@@ -46,116 +46,93 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
-          child: Container(
-            width: width,
-            child: CarouselSlider.builder(
-              options: CarouselOptions(
-                enableInfiniteScroll: false,
-                viewportFraction: 1.0,
-                height: height * 0.31,
-                initialPage: pageIndex,
-                onPageChanged: (int newPage, CarouselPageChangedReason reason) {
-                  if (currentPetProvider.currentPet !=
-                      allPetsProvider.allPets[newPage]) {
-                    currentPetProvider
-                        .setCurrentPet(allPetsProvider.allPets[newPage]);
-                    pageIndex = newPage;
-                    if (ModalRoute.of(context).isCurrent) {
-                      print('set state');
-                      setState(
-                        () {},
-                      );
-                    }
+          child: CarouselSlider.builder(
+            options: CarouselOptions(
+              enableInfiniteScroll: false,
+              viewportFraction: 1.0,
+              height: height * 0.32,
+              initialPage: pageIndex,
+              onPageChanged: (int newPage, CarouselPageChangedReason reason) {
+                if (currentPetProvider.currentPet !=
+                    allPetsProvider.allPets[newPage]) {
+                  currentPetProvider
+                      .setCurrentPet(allPetsProvider.allPets[newPage]);
+                  pageIndex = newPage;
+                  if (ModalRoute.of(context).isCurrent) {
+                    print('set state');
+                    setState(
+                      () {},
+                    );
                   }
-                },
-              ),
-              carouselController: _carouselController,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-                  child: Flexible(
-                    child: Column(
-                      //mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ClipRRect(
+                }
+              },
+            ),
+            carouselController: _carouselController,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: Container(
+                        height: height * 0.23,
+                        width: width * 0.9,
+                        decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20.0),
-                          child: Container(
-                            height: height * 0.23,
-                            width: width * 0.9,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            child: Image(
-                              image: allPetsProvider.allPets[index].petImage,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
                         ),
-
-                        Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: width * 0.03,),
-                          child: Container(
-                            child: Row(
+                        child: Image(
+                          image: allPetsProvider.allPets[index].petImage,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.03),
+                      child: Container(
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      allPetsProvider.allPets[index].name,
-                                      style: StyleConstants
-                                          .blackThinTitleTextMedium
-                                          .copyWith(
-                                              color:
-                                                  StyleConstants.lightBlack,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: height * 0.03,
-                                              fontFamily: 'OpenSans'),
-                                    ),
-                                    Text(
-                                      allPetsProvider.allPets[index].breed,
-                                      style: StyleConstants
-                                          .blackThinTitleTextXS
-                                          .copyWith(
-                                              color:
-                                                  StyleConstants.lightBlack,
-                                              fontWeight: FontWeight.w600,
-                                              fontFamily: 'OpenSans',
-                                              fontSize: height * 0.02),
-                                    ),
-                                  ],
+                                Text(
+                                  allPetsProvider.allPets[index].name,
+                                  style: StyleConstants.blackThinTitleTextMedium.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w700, fontSize: height * 0.037, fontFamily: 'OpenSans'),
                                 ),
-                                Spacer(),
-                                IconButton(
-                                    icon: Icon(
-                                      HeroIcons.icon_globe,
-                                      size: height * 0.05,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () {}),
+                                Text(
+                                  allPetsProvider.allPets[index].breed,
+                                  style: StyleConstants.blackThinTitleTextXS.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w600, fontFamily: 'OpenSans', fontSize: height * 0.027),
+                                ),
                               ],
                             ),
-                          ),
+                            Spacer(),
+                            IconButton(
+                                icon: Icon(
+                                  HeroIcons.icon_globe,
+                                  size: height * 0.05,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () {}),
+                          ],
                         ),
-
-
-                      ],
+                      ),
                     ),
-                  ),
-                );
-              },
-              itemCount: allPetsProvider.allPets.length,
-            ),
+                  ],
+                ),
+              );
+            },
+            itemCount: allPetsProvider.allPets.length,
           ),
         ),
+
         DotsIndicator(
           dotsCount: allPetsProvider.allPets.length > 0
               ? allPetsProvider.allPets.length
               : 1,
           position: 0.0 + pageIndex,
         ),
+
       ],
     );
   }

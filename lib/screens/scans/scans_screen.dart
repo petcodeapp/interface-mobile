@@ -121,13 +121,13 @@ class _ScansScreenState extends State<ScansScreen> {
                         child: currentLocationProvider.currentLocation != null
                             ? ClipRRect(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10.0),
-                                    topLeft: Radius.circular(10.0)),
+                                    topRight: Radius.circular(20.0),
+                                    topLeft: Radius.circular(20.0)),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(10.0),
-                                        topLeft: Radius.circular(10.0)),
+                                        topRight: Radius.circular(20.0),
+                                        topLeft: Radius.circular(20.0)),
                                   ),
                                   child: Stack(
                                     children: [

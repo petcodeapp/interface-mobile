@@ -77,28 +77,30 @@ class NearbyParksService {
 
     final data = response.data['result']['photos'];
 
-    for (int i = 0; i < min(2, data.length); i++) {
-      final photo = data[i];
-      List<String> photoAttributionNames = new List<String>();
-      List<String> photoAttributionLinks = new List<String>();
+    if (data != null) {
+      for (int i = 0; i < min(2, data.length); i++) {
+        final photo = data[i];
+        List<String> photoAttributionNames = new List<String>();
+        List<String> photoAttributionLinks = new List<String>();
 
-      final attributions = photo['html_attributions'];
-      for (int j = 0; j < attributions.length; j++) {
-        var doc = parseFragment(attributions[j]);
-        var child = doc.firstChild;
+        final attributions = photo['html_attributions'];
+        for (int j = 0; j < attributions.length; j++) {
+          var doc = parseFragment(attributions[j]);
+          var child = doc.firstChild;
 
-        try {
-          photoAttributionNames.add(doc.text);
-          photoAttributionLinks.add(child.attributes['href']);
-        } catch (e) {
-          print(e);
+          try {
+            photoAttributionNames.add(doc.text);
+            photoAttributionLinks.add(child.attributes['href']);
+          } catch (e) {
+            print(e);
+          }
         }
+        photos.add(PlacePhoto(
+            photo: CachedNetworkImageProvider(
+                'https://maps.googleapis.com/maps/api/place/photo?maxheight=200&photoreference=${photo['photo_reference']}&key=$apiKey'),
+            attributionNames: photoAttributionNames,
+            attributionLinks: photoAttributionLinks));
       }
-      photos.add(PlacePhoto(
-          photo: CachedNetworkImageProvider(
-              'https://maps.googleapis.com/maps/api/place/photo?maxheight=200&photoreference=${photo['photo_reference']}&key=$apiKey'),
-          attributionNames: photoAttributionNames,
-          attributionLinks: photoAttributionLinks));
     }
 
     return photos;
