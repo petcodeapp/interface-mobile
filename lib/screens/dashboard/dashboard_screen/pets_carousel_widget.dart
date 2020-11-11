@@ -47,13 +47,12 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
       children: [
         Flexible(
           child: Container(
-            //height: height * 0.31,
             width: width,
             child: CarouselSlider.builder(
               options: CarouselOptions(
                 enableInfiniteScroll: false,
                 viewportFraction: 1.0,
-                //height: height * 0.31,
+                height: height * 0.31,
                 initialPage: pageIndex,
                 onPageChanged: (int newPage, CarouselPageChangedReason reason) {
                   if (currentPetProvider.currentPet !=
@@ -75,59 +74,74 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: width * 0.05),
                   child: Flexible(
-                    child: Container(
-                      //height: height * 0.35,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            child: Container(
-                              height: height * 0.23,
-                              width: width * 0.9,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              child: Image(
-                                image: allPetsProvider.allPets[index].petImage,
-                                fit: BoxFit.cover,
-                              ),
+                    child: Column(
+                      //mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: Container(
+                            height: height * 0.23,
+                            width: width * 0.9,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: Image(
+                              image: allPetsProvider.allPets[index].petImage,
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: width * 0.03),
-                            child: Container(
+                        ),
 
-                              child: Row(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        allPetsProvider.allPets[index].name,
-                                        style: StyleConstants.blackThinTitleTextMedium.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w700, fontSize: height * 0.03, fontFamily: 'OpenSans'),
-                                      ),
-
-                                      Text(
-                                        allPetsProvider.allPets[index].breed,
-                                        style: StyleConstants.blackThinTitleTextXS.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w600, fontFamily: 'OpenSans', fontSize: height * 0.02),
-                                      ),
-                                    ],
-                                  ),
-                                  Spacer(),
-                                  IconButton(
-                                      icon: Icon(
-                                        HeroIcons.icon_globe,
-                                        size: height * 0.05,
-                                        color: Colors.black,
-                                      ),
-                                      onPressed: () {}),
-                                ],
-                              ),
+                        Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: width * 0.03,),
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      allPetsProvider.allPets[index].name,
+                                      style: StyleConstants
+                                          .blackThinTitleTextMedium
+                                          .copyWith(
+                                              color:
+                                                  StyleConstants.lightBlack,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: height * 0.03,
+                                              fontFamily: 'OpenSans'),
+                                    ),
+                                    Text(
+                                      allPetsProvider.allPets[index].breed,
+                                      style: StyleConstants
+                                          .blackThinTitleTextXS
+                                          .copyWith(
+                                              color:
+                                                  StyleConstants.lightBlack,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'OpenSans',
+                                              fontSize: height * 0.02),
+                                    ),
+                                  ],
+                                ),
+                                Spacer(),
+                                IconButton(
+                                    icon: Icon(
+                                      HeroIcons.icon_globe,
+                                      size: height * 0.05,
+                                      color: Colors.black,
+                                    ),
+                                    onPressed: () {}),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+
+
+                      ],
                     ),
                   ),
                 );
@@ -136,14 +150,12 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
             ),
           ),
         ),
-
         DotsIndicator(
           dotsCount: allPetsProvider.allPets.length > 0
               ? allPetsProvider.allPets.length
               : 1,
           position: 0.0 + pageIndex,
         ),
-
       ],
     );
   }

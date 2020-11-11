@@ -44,7 +44,6 @@ class _RootScreenState extends State<RootScreen> {
         children: _pageOptions,
       ),
 
-     
 
       bottomNavigationBar: SizedBox(
         height: height * 0.08,
