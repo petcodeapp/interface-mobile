@@ -96,6 +96,7 @@ class DashboardScreen extends StatelessWidget {
                       ),
                       Flexible(
                         child: SingleChildScrollView(
+                          physics: ClampingScrollPhysics(),
                           child: Container(
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
