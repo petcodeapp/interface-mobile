@@ -41,7 +41,7 @@ class PetPerkWidget extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              right: -5.0,
+              right: -6,
               child: Container(
                 // height: height * 0.2,
                 //color: Colors.red,
@@ -71,23 +71,26 @@ class PetPerkWidget extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(width * 0.01),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    height: height * 0.14,
-                    width: height * 0.14,
-                    decoration: BoxDecoration(
-                      color: StyleConstants.yellow,
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Center(
-                      child: Container(
-                          width: height * 0.12,
-                          height: height * 0.12,
-                          child: Image.asset('assets/images/petsmartlogo.png')),
+                  Padding(
+                    padding: EdgeInsets.only(left: width * 0.03, top: height * 0.01, bottom: height * 0.01),
+                    child: Container(
+                      height: height * 0.13,
+                      width: height * 0.13,
+                      decoration: BoxDecoration(
+                        color: StyleConstants.yellow,
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Center(
+                        child: Container(
+                            width: height * 0.11,
+                            height: height * 0.11,
+                            child: Image.asset('assets/images/petsmartlogo.png')),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -134,6 +137,7 @@ class PetPerkWidget extends StatelessWidget {
   void _showPetPerks(
       BuildContext context, double height, double width, PetPerk petPerk) {
     showModalBottomSheet(
+      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
@@ -142,6 +146,7 @@ class PetPerkWidget extends StatelessWidget {
       isScrollControlled: true,
       builder: (BuildContext context) {
         return Container(
+
           height: height * 0.6,
           child: PetPerkDescriptionWidget(
             currentPetPerk: petPerk,

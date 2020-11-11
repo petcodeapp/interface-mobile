@@ -344,7 +344,8 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
             markerId: MarkerId(nearbyParks[i].name + i.toString() + 'ID'),
             position: nearbyParks[i].location,
             icon: BitmapDescriptor.defaultMarkerWithHue(
-                MapConstants.bitmapDescriptorHues[5]),
+                MapConstants.bitmapDescriptorHues[1]
+            ),
             onTap: () async {
               await _panelController.hide();
               setState(() {

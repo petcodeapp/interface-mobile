@@ -21,7 +21,7 @@ class PetPerkDescriptionWidget extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   'Pet Perks',
-                  style: StyleConstants.blackThinTitleText,
+                  style: StyleConstants.lightBlackThinTitleText.copyWith(fontWeight: FontWeight.bold),
                 )),
             currentPetPerk.discountAmount != null
                 ? Row(
@@ -47,9 +47,9 @@ class PetPerkDescriptionWidget extends StatelessWidget {
             Text(
               'Discount at ' + (currentPetPerk.storeName ?? 'this store'),
               style: TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.w600,
-                  color: StyleConstants.blue),
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w500,
+                  color: StyleConstants.lightBlack),
             ),
             SizedBox(
               height: 20.0,
@@ -57,13 +57,13 @@ class PetPerkDescriptionWidget extends StatelessWidget {
             currentPetPerk.description != null &&
                     currentPetPerk.description.isNotEmpty
                 ? Text(
-                    'Details',
-                    style: StyleConstants.blackThinTitleTextMedium,
+                    'Details:',
+                    style: StyleConstants.lightBlackThinTitleText.copyWith(fontSize: 20.0),
                   )
                 : SizedBox.shrink(),
             currentPetPerk.description != null &&
                     currentPetPerk.description.isNotEmpty
-                ? Text(currentPetPerk.description)
+                ? Text(currentPetPerk.description, style: StyleConstants.greyThinDescriptionTextSmall.copyWith(fontSize: 15.0, fontWeight: FontWeight.w600),)
                 : SizedBox.shrink(),
             SizedBox(
               height: 20.0,
@@ -96,16 +96,16 @@ class PetPerkDescriptionWidget extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: Container(
-                height: StyleConstants.height * 0.08,
-                width: StyleConstants.width * 0.5,
+                height: StyleConstants.height * 0.07,
+                width: StyleConstants.width * 0.8,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(10.0),
                   color: StyleConstants.blue,
                 ),
                 child: Center(
                   child: Text(
                     'Shop Now',
-                    style: StyleConstants.whiteThinTitleTextSmall,
+                    style: StyleConstants.whiteThinTitleTextSmall.copyWith(fontWeight: FontWeight.w600),
                   ),
                 ),
               ),

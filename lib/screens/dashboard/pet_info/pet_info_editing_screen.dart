@@ -587,40 +587,6 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                     },
                                     readOnly: true,
                                   ),
-                                  /*
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        child: _birthDate == null
-                                            ? Text('Please select a date')
-                                            : Text(
-                                                StringHelper
-                                                    .getDateStringNoYear(
-                                                        _birthDate),
-                                          style: StyleConstants.editTextFieldText,
-                                              ),
-                                      ),
-                                      IconButton(
-                                        icon: Icon(Icons.calendar_today),
-                                        onPressed: () {
-                                          showDatePicker(
-                                                  context: context,
-                                                  initialDate: DateTime.now(),
-                                                  firstDate: DateTime(2019),
-                                                  lastDate: DateTime(2021))
-                                              .then((date) {
-                                            setState(() {
-                                              _birthDate = date;
-                                              print(_birthDate.toString());
-                                            });
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  */
                                 ],
                               ),
                             ),
@@ -759,6 +725,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                       maxLines: null,
                                       keyboardType: TextInputType.multiline,
                                       decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.only(bottom: -height * 0.02),
                                         hintText: 'Additional Info',
                                         hintStyle: TextStyle(fontSize: 14.0),
                                       ),

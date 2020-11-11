@@ -85,7 +85,7 @@ class OwnerInfoScreen extends StatelessWidget {
                           owner: currentPet.contact_1,
                           height: height,
                           width: width,
-                          title: 'Owner 1',
+                          ownerNumber: 1,
                           currentPet: currentPet,
                       ) : EmptyOwnerWidget(height: height, width: width, currentPet: currentPet,),
 
@@ -95,7 +95,7 @@ class OwnerInfoScreen extends StatelessWidget {
                               owner: currentPet.contact_2,
                               height: height,
                               width: width,
-                              title: 'Owner 2',
+                              ownerNumber: 2,
                         currentPet: currentPet,
                       )
                           : EmptyOwnerWidget(height: height, width: width, currentPet: currentPet,),
