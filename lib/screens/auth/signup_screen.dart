@@ -48,6 +48,7 @@ class _SignupScreenState extends State<SignupScreen> {
     double width = StyleConstants.width;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Form(
         key: _signupFormKey,
