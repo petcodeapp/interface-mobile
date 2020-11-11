@@ -40,6 +40,8 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
 
   @override
   void initState() {
+    _mapBottomPadding = StyleConstants.height * 0.11;
+
     _panelController = new PanelController();
     super.initState();
   }
@@ -49,8 +51,6 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
     print("moved: " + _cameraMoved.toString());
     _height = StyleConstants.height;
     _width = StyleConstants.width;
-
-    _mapBottomPadding = _height * 0.11;
 
     CurrentLocationProvider currentLocationProvider =
         Provider.of<CurrentLocationProvider>(context);
@@ -206,7 +206,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                                   await _panelController.show();
                                   setState(() {
                                     _selectedPark = null;
-                                    _mapBottomPadding = _height * 0.22;
+                                    _mapBottomPadding = _height * 0.11;
                                   });
                                 },
                                 mapToolbarEnabled: false,
@@ -352,7 +352,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
               setState(() {
                 _cameraMoved = true;
                 _selectedPark = nearbyParks[i];
-                _mapBottomPadding = _height * 0.43;
+                _mapBottomPadding = _height * 0.32;
               });
             },
           ),
