@@ -42,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: false,
       body: Form(
         key: _loginFormKey,
         child: Stack(
