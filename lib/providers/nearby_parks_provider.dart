@@ -8,7 +8,7 @@ class NearbyParksProvider extends ChangeNotifier {
   NearbyParksService _nearbyParksService;
 
   List<NearbyPark> _nearbyParks;
-  ProviderState _providerState = ProviderState.Idle;
+  ProviderState _providerState = ProviderState.Busy;
 
   List<NearbyPark> get nearbyParks => _nearbyParks;
   ProviderState get providerState => _providerState;
@@ -18,8 +18,10 @@ class NearbyParksProvider extends ChangeNotifier {
   }
 
   Future<void> getNearbyParks(LatLng location, double zoom) async {
-    _providerState = ProviderState.Busy;
-    notifyListeners();
+    if (providerState != ProviderState.Busy) {
+      _providerState = ProviderState.Busy;
+      notifyListeners();
+    }
     print('getting parks');
     _nearbyParks = await _nearbyParksService.getNearbyParks(location, zoom);
     print('got parks');
