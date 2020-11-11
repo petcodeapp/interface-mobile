@@ -40,7 +40,6 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
 
   @override
   void initState() {
-    _mapBottomPadding = 170.0;
     _panelController = new PanelController();
     super.initState();
   }
@@ -50,6 +49,8 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
     print("moved: " + _cameraMoved.toString());
     _height = StyleConstants.height;
     _width = StyleConstants.width;
+
+    _mapBottomPadding = _height * 0.11;
 
     CurrentLocationProvider currentLocationProvider =
         Provider.of<CurrentLocationProvider>(context);
@@ -216,7 +217,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                                       alignment: Alignment.bottomCenter,
                                       child: Padding(
                                         padding: EdgeInsets.only(
-                                            bottom: _height * 0.14),
+                                            bottom: _height * 0.07),
                                         child: ShowNearbyParkWidget(
                                           shownPark: _selectedPark,
                                         ),
