@@ -137,17 +137,18 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: _width * 0.1,vertical: _height * 0.02 ),
+                      horizontal: _width * 0.1, vertical: _height * 0.02),
                   child: Stack(
                     children: [
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: Container(
                           height: _height * 0.055,
-                          child: Text(
-                            'Pet Parks',
-                              style: StyleConstants.whiteDescriptionText.copyWith(fontWeight: FontWeight.bold, fontSize: 25.0)
-                          ),
+                          child: Text('Pet Parks',
+                              style: StyleConstants.whiteDescriptionText
+                                  .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25.0)),
                         ),
                       ),
                       Align(
@@ -155,7 +156,6 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                         child: Container(
                           height: _height * 0.06,
                           child: IconButton(
-
                             icon: Icon(
                               Icons.arrow_back_ios,
                               size: 25.0,
@@ -217,7 +217,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                                       alignment: Alignment.bottomCenter,
                                       child: Padding(
                                         padding: EdgeInsets.only(
-                                            bottom: _height * 0.07),
+                                            bottom: _height * 0.025),
                                         child: ShowNearbyParkWidget(
                                           shownPark: _selectedPark,
                                         ),
@@ -345,8 +345,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
             markerId: MarkerId(nearbyParks[i].name + i.toString() + 'ID'),
             position: nearbyParks[i].location,
             icon: BitmapDescriptor.defaultMarkerWithHue(
-                MapConstants.bitmapDescriptorHues[1]
-            ),
+                MapConstants.bitmapDescriptorHues[1]),
             onTap: () async {
               await _panelController.hide();
               setState(() {
