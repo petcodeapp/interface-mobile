@@ -34,6 +34,8 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
   TextEditingController _temperamentInputController;
   TextEditingController _additionalInfoInputController;
 
+  TextEditingController _birthdayDateController;
+
   Species _petSpecies;
 
   /*
@@ -66,8 +68,13 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
     _isServiceAnimal = widget.currentPet.isServiceAnimal ?? false;
     _isAdopted = widget.currentPet.isAdopted ?? false;
     updatedImage = widget.currentPet.petImage;
+    _birthdayDateController = new TextEditingController();
     if (widget.currentPet.birthday != null) {
       _birthDate = widget.currentPet.birthday.toDate();
+      _birthdayDateController
+        ..text = StringHelper.getDateStringNoYear(
+            _birthDate);
+
     }
 
     _petSpecies = Species.values.firstWhere(
@@ -75,6 +82,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
             species.toShortString() == widget.currentPet.species, orElse: () {
       return Species.Other;
     });
+
 
     _changedImage = false;
     setUpInputControllers();
@@ -88,61 +96,6 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
     double width = StyleConstants.width;
 
     return Scaffold(
-      /*appBar: AppBar(
-        backgroundColor: StyleConstants.blue,
-        centerTitle: true,
-        title: Text(
-          'Edit Pet Info',
-          style: TextStyle(color: Colors.white),
-        ),
-        actions: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: GestureDetector(
-                onTap: () async {
-                  if (_formKey.currentState.validate()) {
-                    Pet updatedPet = widget.currentPet;
-                    updatedPet.name = _nameInputController.text.trim();
-                    updatedPet.breed = _breedInputController.text.trim();
-                    updatedPet.birthday = Timestamp.fromDate(_birthDate);
-                    updatedPet.color = _colorInputController.text.trim();
-                    updatedPet.temperament =
-                        _temperamentInputController.text.trim();
-                    updatedPet.isAdopted = _isAdopted;
-                    updatedPet.isServiceAnimal = _isServiceAnimal;
-                    updatedPet.additionalInfo =
-                        _additionalInfoInputController.text.trim();
-
-                    updatedPet.species = _petSpecies.toShortString();
-
-                    if (_changedImage) {
-                      FirebaseStorageService firebaseStorageService =
-                          Provider.of<FirebaseStorageService>(context,
-                              listen: false);
-                      String updatedProfileUrl = await firebaseStorageService
-                          .uploadPetImage(chosenImageFile, updatedPet.pid);
-                      updatedPet.profileUrl = updatedProfileUrl;
-                    }
-
-                    _databaseService.updatePet(widget.currentPet);
-                    Navigator.pop(context);
-
-                  }
-                },
-                child: Text(
-                  'Done',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15.0,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),*/
-
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
@@ -172,20 +125,24 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                     padding: EdgeInsets.symmetric(
                         horizontal: width * 0.1, vertical: height * 0.02),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         GestureDetector(
                           onTap: () => Navigator.pop(context),
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Open Sans',
-                                fontSize: 20.0),
+                          child: Container(
+                            width: width * 0.2,
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 20.0),
+                            ),
                           ),
                         ),
+                        Spacer(),
                         Text(
                           'Update Pet Info',
                           style: TextStyle(
@@ -194,6 +151,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                               fontFamily: 'Open Sans',
                               fontSize: 20.0),
                         ),
+                        Spacer(),
                         GestureDetector(
                           onTap: () async {
                             if (_formKey.currentState.validate()) {
@@ -229,13 +187,20 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                               Navigator.pop(context);
                             }
                           },
-                          child: Text(
-                            'Done',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Open Sans',
-                                fontSize: 20.0),
+                          child: Container(
+
+                            width: width * 0.2,
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: Text(
+                                'Done',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Open Sans',
+                                    fontSize: 20.0),
+                              ),
+                            ),
                           ),
                         )
                       ],
@@ -251,7 +216,6 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                 child: Form(
                   key: _formKey,
                   child: Container(
-                    //height: height,
                     width: width,
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: width * 0.1),
@@ -261,10 +225,12 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                           SizedBox(
                             height: height * 0.02,
                           ),
+                          Container(
 
-                          CircleAvatar(
-                            backgroundImage: updatedImage,
-                            radius: width * 0.13,
+                            child: CircleAvatar(
+                              backgroundImage: updatedImage,
+                              radius: width * 0.13,
+                            ),
                           ),
                           SizedBox(
                             height: height * 0.01,
@@ -298,17 +264,18 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                   fontWeight: FontWeight.w400),
                             ),
                           ),
+                          SizedBox(
+                            height: height * 0.05,
+                          ),
                           Container(
                             width: width * 0.9,
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(
-                                    height: height * 0.05,
-                                  ),
                                   Text('Pet Full Name',
                                     style: StyleConstants.editTextFieldDescription,),
                                   TextFormField(
@@ -317,6 +284,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                     controller: _nameInputController,
                                     style: StyleConstants.editTextFieldText,
                                     decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.only(bottom: -height * 0.02),
                                       hintStyle: TextStyle(fontSize: 14.0),
                                     ),
                                   ),
@@ -563,6 +531,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                   BreedSearchBar(
                                     breedInputController: _breedInputController,
                                     inputDecoration: InputDecoration(
+                                      contentPadding: EdgeInsets.only(bottom: -height * 0.02),
                                       hintText: 'Breed',
                                       hintStyle: TextStyle(fontSize: 14.0),
                                     ),
@@ -586,37 +555,38 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                 children: [
                                   Text('Birthday',
                                     style: StyleConstants.editTextFieldDescription,),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        child: _birthDate == null
-                                            ? Text('Please select a date')
-                                            : Text(
-                                                StringHelper
-                                                    .getDateStringNoYear(
-                                                        _birthDate),
-                                          style: StyleConstants.editTextFieldText,
-                                              ),
-                                      ),
-                                      IconButton(
-                                        icon: Icon(Icons.calendar_today),
-                                        onPressed: () {
-                                          showDatePicker(
-                                                  context: context,
-                                                  initialDate: DateTime.now(),
-                                                  firstDate: DateTime(2019),
-                                                  lastDate: DateTime(2021))
-                                              .then((date) {
-                                            setState(() {
-                                              _birthDate = date;
-                                              print(_birthDate.toString());
-                                            });
+                                  TextField(
+                                    controller: _birthdayDateController,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600, color: StyleConstants.lightBlack, fontSize: 20.0
+                                    ),
+                                    decoration: InputDecoration(
+                                      //border: OutlineInputBorder(),
+                                      //contentPadding: EdgeInsets.only(bottom: -height * 0.02),
+                                      hintText: 'Start Date',
+                                      hintStyle: TextStyle(fontSize: 14.0),
+                                      suffixIcon: Icon(Icons.calendar_today, ),
+                                    ),
+                                    onTap: () {
+                                      showDatePicker(
+                                          context: context,
+                                          initialDate: DateTime.now(),
+                                          firstDate: DateTime(2019),
+                                          lastDate: DateTime(2050))
+                                          .then((DateTime selectedDate) {
+                                        if (selectedDate != null) {
+                                          setState(() {
+                                            _birthdayDateController =
+                                            new TextEditingController(
+                                                text:
+                                                StringHelper.getDateStringNoYear(
+                                                    selectedDate));
+                                            //_birthdayDateController = selectedDate;
                                           });
-                                        },
-                                      ),
-                                    ],
+                                        }
+                                      });
+                                    },
+                                    readOnly: true,
                                   ),
                                 ],
                               ),
@@ -635,15 +605,16 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                 children: [
                                   Text('Color',
                                     style: StyleConstants.editTextFieldDescription,),
-                                  SizedBox(height: 10.0),
+
                                   TextFormField(
-                                    validator: (value) =>
+                                      validator: (value) =>
                                         ValidatorHelper.petColorValidator(
                                             value),
                                     style: StyleConstants.editTextFieldText,
                                     controller: _colorInputController,
                                     decoration: InputDecoration(
                                       hintText: 'Color',
+                                      contentPadding: EdgeInsets.only(bottom: -height * 0.02),
                                       hintStyle: TextStyle(fontSize: 14.0),
                                     ),
                                   ),
@@ -664,7 +635,6 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                 children: [
                                   Text('Temperament',
                                     style: StyleConstants.editTextFieldDescription,),
-                                  SizedBox(height: 10.0),
                                   TextFormField(
                                     validator: (value) =>
                                         ValidatorHelper.petBreedValidator(
@@ -672,6 +642,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                     style: StyleConstants.editTextFieldText,
                                     controller: _temperamentInputController,
                                     decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.only(bottom: -height * 0.02),
                                       hintText: 'Temperament',
                                       hintStyle: TextStyle(fontSize: 14.0),
                                     ),
@@ -683,6 +654,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                           SizedBox(
                             height: height * 0.03,
                           ),
+                          /*
                           Container(
                             width: width * 0.9,
                             child: Padding(
@@ -706,6 +678,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                               ),
                             ),
                           ),
+                          */
                           Container(
                             width: width * 0.9,
                             child: Padding(
@@ -719,6 +692,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                     style: StyleConstants.editTextFieldDescription,),
                                   CircularCheckBox(
                                       tristate: false,
+                                      activeColor: StyleConstants.yellow,
                                       value: _isServiceAnimal,
                                       onChanged: (bool value) {
                                         setState(() {
@@ -752,6 +726,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                       maxLines: null,
                                       keyboardType: TextInputType.multiline,
                                       decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.only(bottom: -height * 0.02),
                                         hintText: 'Additional Info',
                                         hintStyle: TextStyle(fontSize: 14.0),
                                       ),
@@ -760,228 +735,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                 ),
                               )),
 
-                          /*
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Owner 1',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 18.0),
-                              )),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Name',
-                                style: TextStyle(fontSize: 14.0),
-                              ),
-                              Spacer(),
-                              Container(
-                                //height: height * 0.07,
-                                width: width * 0.7,
-                                child: TextFormField(
-                                  validator: (value) =>
-                                      ValidatorHelper.firstNameValidator(value),
-                                  controller: _owner1NameInputController,
-                                  maxLines: null,
-                                  keyboardType: TextInputType.multiline,
-                                  decoration: InputDecoration(
-                                    hintText: 'Name',
-                                    hintStyle: TextStyle(fontSize: 14.0),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Email',
-                                style: TextStyle(fontSize: 14.0),
-                              ),
-                              Spacer(),
-                              Container(
-                                //height: height * 0.07,
-                                width: width * 0.7,
-                                child: TextFormField(
-                                  validator: (value) =>
-                                      ValidatorHelper.emailValidator(value),
-                                  controller: _owner1EmailInputController,
-                                  maxLines: null,
-                                  keyboardType: TextInputType.multiline,
-                                  decoration: InputDecoration(
-                                    hintText: 'Email',
-                                    hintStyle: TextStyle(fontSize: 14.0),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Phone Number',
-                                style: TextStyle(fontSize: 14.0),
-                              ),
-                              Spacer(),
-                              Container(
-                                //height: height * 0.07,
-                                width: width * 0.7,
-                                child: TextFormField(
-                                  validator: (value) =>
-                                      ValidatorHelper.phoneNumberValidator(value),
-                                  controller: _owner1PhoneInputController,
-                                  maxLines: null,
-                                  keyboardType: TextInputType.multiline,
-                                  decoration: InputDecoration(
-                                    hintText: 'Phone Number',
-                                    hintStyle: TextStyle(fontSize: 14.0),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Address',
-                                style: TextStyle(fontSize: 14.0),
-                              ),
-                              Spacer(),
-                              Container(
-                                //height: height * 0.07,
-                                width: width * 0.7,
-                                child: TextFormField(
-                                  validator: (value) =>
-                                      ValidatorHelper.addressValidator(value),
-                                  controller: _owner1AddressInputController,
-                                  maxLines: null,
-                                  keyboardType: TextInputType.multiline,
-                                  decoration: InputDecoration(
-                                    hintText: 'Address',
-                                    hintStyle: TextStyle(fontSize: 14.0),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Divider(),
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Owner 2',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 18.0),
-                              )),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Name',
-                                style: TextStyle(fontSize: 14.0),
-                              ),
-                              Spacer(),
-                              Container(
-                                //height: height * 0.07,
-                                width: width * 0.7,
-                                child: TextFormField(
-                                  validator: (value) => !owner2IsNull()
-                                      ? ValidatorHelper.firstNameValidator(value)
-                                      : null,
-                                  controller: _owner2NameInputController,
-                                  maxLines: null,
-                                  keyboardType: TextInputType.multiline,
-                                  decoration: InputDecoration(
-                                    hintText: 'Name',
-                                    hintStyle: TextStyle(fontSize: 14.0),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Email',
-                                style: TextStyle(fontSize: 14.0),
-                              ),
-                              Spacer(),
-                              Container(
-                                //height: height * 0.07,
-                                width: width * 0.7,
-                                child: TextFormField(
-                                  validator: (value) => !owner2IsNull()
-                                      ? ValidatorHelper.emailValidator(value)
-                                      : null,
-                                  controller: _owner2EmailInputController,
-                                  maxLines: null,
-                                  keyboardType: TextInputType.multiline,
-                                  decoration: InputDecoration(
-                                    hintText: 'Email',
-                                    hintStyle: TextStyle(fontSize: 14.0),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Phone Number',
-                                style: TextStyle(fontSize: 14.0),
-                              ),
-                              Spacer(),
-                              Container(
-                                //height: height * 0.07,
-                                width: width * 0.7,
-                                child: TextFormField(
-                                  validator: (value) => !owner2IsNull()
-                                      ? ValidatorHelper.phoneNumberValidator(value)
-                                      : null,
-                                  controller: _owner2PhoneInputController,
-                                  maxLines: null,
-                                  keyboardType: TextInputType.multiline,
-                                  decoration: InputDecoration(
-                                    hintText: 'Phone Number',
-                                    hintStyle: TextStyle(fontSize: 14.0),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Address',
-                                style: TextStyle(fontSize: 14.0),
-                              ),
-                              Spacer(),
-                              Container(
-                                //height: height * 0.07,
-                                width: width * 0.7,
-                                child: TextFormField(
-                                  validator: (value) => !owner2IsNull()
-                                      ? ValidatorHelper.addressValidator(value)
-                                      : null,
-                                  controller: _owner2AddressInputController,
-                                  maxLines: null,
-                                  keyboardType: TextInputType.multiline,
-                                  decoration: InputDecoration(
-                                    hintText: 'Address',
-                                    hintStyle: TextStyle(fontSize: 14.0),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-
-                          */
+                        SizedBox(height: height * 0.05,),
                         ],
                       ),
                     ),

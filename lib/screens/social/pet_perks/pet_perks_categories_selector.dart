@@ -11,7 +11,7 @@ class PetPerksCategoriesSelector extends StatelessWidget {
     double width = StyleConstants.width;
 
     return Container(
-      height: height * 0.15,
+      height: height * 0.13,
       width: width,
       child: SizedBox(
         height: height * 0.05,
@@ -28,7 +28,7 @@ class PetPerksCategoriesSelector extends StatelessWidget {
                 height: height * 0.1,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(12.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.16),
@@ -71,7 +71,7 @@ class PetPerksCategoriesSelector extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: width * 0.08,
+              width: width * 0.05,
             ),
             Padding(
               padding: EdgeInsets.all(width * 0.01),
@@ -80,7 +80,7 @@ class PetPerksCategoriesSelector extends StatelessWidget {
                 height: height * 0.1,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(12.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.16),
@@ -123,7 +123,7 @@ class PetPerksCategoriesSelector extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: width * 0.08,
+              width: width * 0.05,
             ),
             Padding(
               padding: EdgeInsets.all(width * 0.01),
@@ -132,7 +132,7 @@ class PetPerksCategoriesSelector extends StatelessWidget {
                 height: height * 0.1,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(12.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.16),
@@ -175,7 +175,7 @@ class PetPerksCategoriesSelector extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: width * 0.08,
+              width: width * 0.05,
             ),
           ],
         ),

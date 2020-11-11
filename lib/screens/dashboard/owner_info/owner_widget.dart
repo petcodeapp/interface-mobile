@@ -6,15 +6,17 @@ import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
 
+import 'owner_info_single_editing_screen.dart';
+
 class OwnerWidget extends StatelessWidget {
 
   final Owner owner;
   final double height;
   final double width;
-  final String title;
+  final int ownerNumber;
   final Pet currentPet;
 
-  OwnerWidget({Key key, this.owner, this.height, this.width, this.title, this.currentPet}) : super(key: key);
+  OwnerWidget({Key key, this.owner, this.height, this.width, this.ownerNumber, this.currentPet}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +46,14 @@ class OwnerWidget extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: width * 0.04),
                   child: Text(
-                    title,
+                    'Owner $ownerNumber',
                     style: StyleConstants.blackThinTitleTextSmall.copyWith(fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.7)),
                   ),
                 ),
                 IconButton(
                   icon: Icon(HeroIcons2.edit_2),
                   iconSize: width * 0.06,
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => OwnerInfoEditingScreen(currentPet: currentPet,))),
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => OwnerInfoSingleEditingScreen(currentPet: currentPet, ownerNumber: ownerNumber))),
                 )
               ],
             ),
@@ -115,7 +117,7 @@ class OwnerWidget extends StatelessWidget {
                 size: width * 0.07,
                 color: StyleConstants.blue,
               ),
-              title: owner.phoneNumber != null
+              title: owner.phoneNumber != null && owner.phoneNumber.value != null && owner.phoneNumber.value.isNotEmpty
                   ? Text(owner.phoneNumber.value,
                   style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.8)))
                   : Text(

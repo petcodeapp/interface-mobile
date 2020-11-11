@@ -28,7 +28,9 @@ class PetPerksScreen extends StatelessWidget {
     PetPerk(
         storeName: 'PetCode',
         description: 'Pet Supplies, Accessories, and Products',
-        discountAmount: 40),
+        discountAmount: 40,
+        promoCode: 'PETCODE123'
+    ),
   ];
 
   @override

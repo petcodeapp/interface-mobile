@@ -80,21 +80,22 @@ class OwnerInfoScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: height * 0.03),
+                     currentPet.contact_1 != null ?
                       OwnerWidget(
                           owner: currentPet.contact_1,
                           height: height,
                           width: width,
-                          title: 'Owner 1',
+                          ownerNumber: 1,
                           currentPet: currentPet,
-                      ),
-                      SizedBox(height: height * 0.05),
+                      ) : EmptyOwnerWidget(height: height, width: width, currentPet: currentPet,),
 
+                      SizedBox(height: height * 0.05),
                       currentPet.contact_2 != null
                           ? OwnerWidget(
                               owner: currentPet.contact_2,
                               height: height,
                               width: width,
-                              title: 'Owner 2',
+                              ownerNumber: 2,
                         currentPet: currentPet,
                       )
                           : EmptyOwnerWidget(height: height, width: width, currentPet: currentPet,),

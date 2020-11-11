@@ -96,33 +96,34 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: width * 0.03),
-                            child: Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      allPetsProvider.allPets[index].name,
-                                      style: StyleConstants.blackThinTitleTextMedium.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w700, fontSize: 28.0, fontFamily: 'OpenSans'),
-                                    ),
-                                    SizedBox(
-                                      height: height * 0.002,
-                                    ),
-                                    Text(
-                                      allPetsProvider.allPets[index].breed,
-                                      style: StyleConstants.blackThinTitleTextXS.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w600, fontFamily: 'OpenSans'),
-                                    ),
-                                  ],
-                                ),
-                                Spacer(),
-                                IconButton(
-                                    icon: Icon(
-                                      HeroIcons.icon_globe,
-                                      size: width * 0.1,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () {}),
-                              ],
+                            child: Container(
+
+                              child: Row(
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        allPetsProvider.allPets[index].name,
+                                        style: StyleConstants.blackThinTitleTextMedium.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w700, fontSize: height * 0.03, fontFamily: 'OpenSans'),
+                                      ),
+
+                                      Text(
+                                        allPetsProvider.allPets[index].breed,
+                                        style: StyleConstants.blackThinTitleTextXS.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w600, fontFamily: 'OpenSans', fontSize: height * 0.02),
+                                      ),
+                                    ],
+                                  ),
+                                  Spacer(),
+                                  IconButton(
+                                      icon: Icon(
+                                        HeroIcons.icon_globe,
+                                        size: height * 0.05,
+                                        color: Colors.black,
+                                      ),
+                                      onPressed: () {}),
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -135,12 +136,14 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
             ),
           ),
         ),
+
         DotsIndicator(
           dotsCount: allPetsProvider.allPets.length > 0
               ? allPetsProvider.allPets.length
               : 1,
           position: 0.0 + pageIndex,
         ),
+
       ],
     );
   }
