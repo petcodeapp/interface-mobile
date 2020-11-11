@@ -96,7 +96,7 @@ class _RootScreenState extends State<RootScreen> {
       ),*/
 
       bottomNavigationBar: SizedBox(
-        height: height * 0.08,
+        //height: height * 0.12,
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: (index) => setState(() {
