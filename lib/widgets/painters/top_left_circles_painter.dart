@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 class TopLeftCirclesPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
+    print('Size: '  + size.height.toString() + ', ' + size.width.toString());
+
     var darkBlue = Paint()..color = Color(0xE651BCDA);
     var lightBlue = Paint()..color = Color(0x8051BCDA);
 

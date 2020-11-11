@@ -40,7 +40,8 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
 
   @override
   void initState() {
-    _mapBottomPadding = 170.0;
+    _mapBottomPadding = StyleConstants.height * 0.11;
+
     _panelController = new PanelController();
     super.initState();
   }
@@ -205,7 +206,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                                   await _panelController.show();
                                   setState(() {
                                     _selectedPark = null;
-                                    _mapBottomPadding = _height * 0.22;
+                                    _mapBottomPadding = _height * 0.11;
                                   });
                                 },
                                 mapToolbarEnabled: false,
@@ -216,7 +217,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                                       alignment: Alignment.bottomCenter,
                                       child: Padding(
                                         padding: EdgeInsets.only(
-                                            bottom: _height * 0.14),
+                                            bottom: _height * 0.07),
                                         child: ShowNearbyParkWidget(
                                           shownPark: _selectedPark,
                                         ),
@@ -351,7 +352,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
               setState(() {
                 _cameraMoved = true;
                 _selectedPark = nearbyParks[i];
-                _mapBottomPadding = _height * 0.43;
+                _mapBottomPadding = _height * 0.32;
               });
             },
           ),

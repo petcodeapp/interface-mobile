@@ -34,8 +34,6 @@ class MedicalInfoScreen extends StatelessWidget {
       return Scaffold(
         backgroundColor: StyleConstants.blue,
         body: Container(
-            width: width,
-            height: height,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topRight,

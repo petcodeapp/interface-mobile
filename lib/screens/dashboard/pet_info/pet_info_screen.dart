@@ -27,6 +27,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
     return Scaffold(
       backgroundColor: StyleConstants.blue,
       body: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
         child: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -42,7 +43,6 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                 //tileMode: TileMode.repeated,
               )
           ),
-          width: width,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -110,7 +110,6 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                       ),
                       Container(
                         width: width * 0.9,
-                        height: height * 0.175,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topRight,

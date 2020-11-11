@@ -15,7 +15,6 @@ class ShowNearbyParkWidget extends StatelessWidget {
 
     return Flexible(
       child: Container(
-        //height: height * 0.33,
         width: width * 0.9,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.0),
