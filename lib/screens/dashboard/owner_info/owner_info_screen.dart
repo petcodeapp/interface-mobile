@@ -22,6 +22,7 @@ class OwnerInfoScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: StyleConstants.blue,
       body: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
         child: Container(
           width: width,
           decoration: BoxDecoration(

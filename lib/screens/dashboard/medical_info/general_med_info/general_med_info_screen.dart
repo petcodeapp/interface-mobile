@@ -8,12 +8,9 @@ class GeneralMedicalInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = StyleConstants.height;
     double width = StyleConstants.width;
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          height: height,
-          width: width,
           decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topRight,
@@ -59,7 +56,7 @@ class GeneralMedicalInfoScreen extends StatelessWidget {
                       ],
                     )),
               ),
-              Expanded(
+              Flexible(
                 child: Container(
                   width: width,
                   //height: height * 0.85,

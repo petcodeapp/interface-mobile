@@ -58,7 +58,6 @@ class RemindersScreen extends StatelessWidget {
       ),
       backgroundColor: StyleConstants.blue,
       body: Container(
-        height: height,
         decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topRight,
@@ -73,8 +72,6 @@ class RemindersScreen extends StatelessWidget {
               //tileMode: TileMode.repeated,
             )
         ),
-
-        width: width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,

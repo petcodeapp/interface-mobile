@@ -89,8 +89,6 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
         ),
         backgroundColor: StyleConstants.pageBackgroundColor,
         body: Container(
-          height: _height,
-          width: _width,
           decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topRight,
@@ -133,7 +131,7 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
                       ],
                     )),
               ),
-              Expanded(
+              Flexible(
                 child: Container(
                   decoration: BoxDecoration(
                       color: Colors.white,
