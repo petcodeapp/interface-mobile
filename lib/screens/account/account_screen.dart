@@ -14,26 +14,24 @@ class AccountScreen extends StatelessWidget {
     double height = StyleConstants.height;
     double width = StyleConstants.width;
 
-
     return Scaffold(
-      backgroundColor: StyleConstants.blue,
+      backgroundColor: StyleConstants.white,
       body: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
         child: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                //end: Alignment(0.01, 0.01),
-                end: Alignment.bottomLeft,
-                stops: [0.01, 0.4, 0.6],
-                colors: [
-                  const Color(0xffABDEED),
-                  const Color(0xff51BFDA),
-                  StyleConstants.blue
-                ], // whitish to gray
-                //tileMode: TileMode.repeated,
-              )
-            ),
-            width: width,
+                gradient: LinearGradient(
+              begin: Alignment.topRight,
+              //end: Alignment(0.01, 0.01),
+              end: Alignment.bottomLeft,
+              stops: [0.01, 0.4, 0.6],
+              colors: [
+                const Color(0xffABDEED),
+                const Color(0xff51BFDA),
+                StyleConstants.blue
+              ], // whitish to gray
+              //tileMode: TileMode.repeated,
+            )),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -52,8 +50,8 @@ class AccountScreen extends StatelessWidget {
                           children: [
                             Text(
                               'Account',
-                              style: StyleConstants.whiteThinTitleText
-                                  .copyWith(fontSize: 25.0, fontWeight: FontWeight.bold),
+                              style: StyleConstants.whiteThinTitleText.copyWith(
+                                  fontSize: 25.0, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -66,9 +64,7 @@ class AccountScreen extends StatelessWidget {
                 ),
                 Flexible(
                   child: Container(
-                    width: width,
                     decoration: BoxDecoration(
-
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20.0),
