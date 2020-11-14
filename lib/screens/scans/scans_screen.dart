@@ -45,27 +45,37 @@ class _ScansScreenState extends State<ScansScreen> {
           header: Center(
             child: Container(
               width: width,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 150.0),
-                      child: Divider(
-                        thickness: 3.0,
-                        color: StyleConstants.darkGrey,
+              child: GestureDetector(
+                onTap: (){
+                  if(scansMapProvider.panelController.isPanelOpen){
+                    scansMapProvider.panelController.close();
+                  }
+                  else{
+                    scansMapProvider.panelController.open();
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 150.0),
+                        child: Divider(
+                          thickness: 3.0,
+                          color: StyleConstants.darkGrey,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: height * 0.01,
-                    ),
-                    Text(
-                      'View Scan Locations',
-                      style: StyleConstants.blackTitleText.copyWith(fontFamily: 'Open Sans',
-                          fontSize: 20.0, fontWeight: FontWeight.w400),
-                    ),
-                  ],
+                      SizedBox(
+                        height: height * 0.01,
+                      ),
+                      Text(
+                        'View Scan Locations',
+                        style: StyleConstants.blackTitleText.copyWith(fontFamily: 'Open Sans',
+                            fontSize: 20.0, fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
