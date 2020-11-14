@@ -92,30 +92,40 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
               borderRadius: topRoundedRadius,
             ),
             width: _width,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 150.0),
-                    child: Divider(
-                      thickness: 3.0,
-                      color: StyleConstants.darkGrey,
+            child: GestureDetector(
+              onTap: (){
+                if(_panelController.isPanelOpen){
+                  _panelController.close();
+                }
+                else{
+                  _panelController.open();
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 150.0),
+                      child: Divider(
+                        thickness: 3.0,
+                        color: StyleConstants.darkGrey,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: _height * 0.02,
-                  ),
-                  Text(
-                    'Nearby Pet Parks',
-                    style: TextStyle(
-                      color: StyleConstants.lightBlack,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18.0,
+                    SizedBox(
+                      height: _height * 0.012,
                     ),
-                  ),
-                ],
+                    Text(
+                      'Nearby Pet Parks',
+                      style: TextStyle(
+                        color: StyleConstants.lightBlack,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -312,7 +322,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                     ? Text(
                         'Search this Area',
                         style: TextStyle(
-                          color: StyleConstants.red,
+                          color: StyleConstants.blue,
                           fontWeight: FontWeight.w600,
                           fontSize: 12.0,
                         ),
