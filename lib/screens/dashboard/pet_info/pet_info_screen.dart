@@ -170,14 +170,14 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                           Text(
                                             currentPetProvider.currentPet.name,
                                             style: StyleConstants
-                                                .whiteThinTitleText.copyWith(fontSize: 30.0),
+                                                .whiteThinTitleText.copyWith(fontSize: height * 0.034),
                                             maxLines: 3,
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                           Text(
                                             currentPetProvider.currentPet.breed,
                                             style: StyleConstants
-                                                .whiteThinTitleTextSmall.copyWith(fontSize: 22.0),
+                                                .whiteThinTitleTextSmall.copyWith(fontSize: height * 0.026),
                                             maxLines: 3,
                                             overflow: TextOverflow.ellipsis,
                                           )
@@ -224,10 +224,10 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                             borderRadius: BorderRadius.circular(20.0)),
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: width * 0.03),
-                          child: ListView(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                          child: Column(
+
                             children: [
+                              SizedBox(height: height * 0.015,),
                               ListTile(
                                 leading: Icon(
                                   HeroIcons2.pawprint_1,
@@ -387,7 +387,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                         style: StyleConstants.greyedOutText,
                                       ),
                               ),
-                              SizedBox(height: height * 0.02,),
+                              SizedBox(height: height * 0.015,),
                             ],
                           ),
                         ),

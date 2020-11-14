@@ -6,8 +6,15 @@ import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
 class ChangePetDropdown extends StatelessWidget {
+
+
+
   @override
   Widget build(BuildContext context) {
+
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
+
     AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
     CurrentPetProvider currentPetProvider =
         Provider.of<CurrentPetProvider>(context);
@@ -21,7 +28,7 @@ class ChangePetDropdown extends StatelessWidget {
         DropdownMenuItem<Pet>(
             child: Text(
               allPetsProvider.allPets[i].name,
-              style: StyleConstants.whiteDescriptionText.copyWith(fontWeight: FontWeight.bold, fontSize: 25.0),
+              style: StyleConstants.whiteDescriptionText.copyWith(fontWeight: FontWeight.bold, fontSize: height * 0.027),
             ),
             value: allPetsProvider.allPets[i]),
       );
