@@ -35,6 +35,7 @@ class DashboardScreen extends StatelessWidget {
         backgroundColor: StyleConstants.blue,
         body: Container(
           width: width,
+          height: height,
           decoration: BoxDecoration(
             //gradient: StyleConstants.bgGradient,
           ),
@@ -55,7 +56,7 @@ class DashboardScreen extends StatelessWidget {
                         child: Container(),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: width * 0.08,right: width * 0.08, top: width* 0.08),
+                        padding: EdgeInsets.only(left: width * 0.08,right: width * 0.08, top: height * 0.05),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -81,7 +82,7 @@ class DashboardScreen extends StatelessWidget {
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0))
                   ),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    //mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(
                         height: height * 0.02,
@@ -94,7 +95,7 @@ class DashboardScreen extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: NavigationRow(),
                       ),
-                      Flexible(
+                      Expanded(
                         child: SingleChildScrollView(
                           physics: ClampingScrollPhysics(),
                           child: Container(
@@ -113,6 +114,7 @@ class DashboardScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+
                     ],
                   ),
                 ),
