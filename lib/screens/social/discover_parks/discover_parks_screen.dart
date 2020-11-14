@@ -38,16 +38,44 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
 
   NearbyPark _selectedPark;
 
+  //BitmapDescriptor customPin = BitmapDescriptor.defaultMarkerWithHue(MapConstants.bitmapDescriptorHues[1]);
+  BitmapDescriptor customPin;
+
+
   @override
   void initState() {
     _mapBottomPadding = StyleConstants.height * 0.11;
 
     _panelController = new PanelController();
+
+    //setCustomMapPin();
+
     super.initState();
+  }
+
+  void setCustomMapPin() async {
+    customPin = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/icons/custombluemarker.png'
+    );
+  }
+
+  BitmapDescriptor createMarker(context) {
+      ImageConfiguration configuration = createLocalImageConfiguration(context);
+      BitmapDescriptor.fromAssetImage(configuration, 'assets/icons/custombluemarker.png')
+          .then((icon) {
+            return icon;
+        /*1setState(() {
+          customPin = icon;
+        });*/
+      });
+
   }
 
   @override
   Widget build(BuildContext context) {
+    createMarker(context);
+
     print("moved: " + _cameraMoved.toString());
     _height = StyleConstants.height;
     _width = StyleConstants.width;
@@ -202,7 +230,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                                   _controller.complete(controller);
                                 },
                                 markers: createMarkers(
-                                    _nearbyParksProvider.nearbyParks),
+                                    _nearbyParksProvider.nearbyParks, context),
                                 onCameraMove: (CameraPosition position) {
                                   _nearbyParksMapProvider
                                       .setCameraPosition(position);
@@ -343,20 +371,24 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
     );
   }
 
-  Set<Marker> createMarkers(List<NearbyPark> nearbyParks) {
+  Set<Marker> createMarkers(List<NearbyPark> nearbyParks, context) {
+    customPin = createMarker(context);
+
     if (nearbyParks == null) {
       return null;
     } else {
       List<Marker> allMarkers = new List<Marker>();
-
       for (int i = 0; i < nearbyParks.length; i++) {
         allMarkers.add(
           new Marker(
-            markerId: MarkerId(nearbyParks[i].name + i.toString() + 'ID'),
+            icon: customPin,
+              markerId: MarkerId(nearbyParks[i].name + i.toString() + 'ID'),
             position: nearbyParks[i].location,
+            /*
             icon: BitmapDescriptor.defaultMarkerWithHue(
                 MapConstants.bitmapDescriptorHues[1]
             ),
+            */
             onTap: () async {
               await _panelController.hide();
               setState(() {
@@ -371,4 +403,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
       return allMarkers.toSet();
     }
   }
+
+
 }
+

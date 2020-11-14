@@ -67,6 +67,7 @@ flutter:
     - assets/images/
     - assets/navigation_images/
     - assets/images/onboarding/
+    - assets/icons/custombluemarker.png
   fonts:
    - family: HeroIcons
      fonts:
