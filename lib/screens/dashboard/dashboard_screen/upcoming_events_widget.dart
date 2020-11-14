@@ -46,7 +46,7 @@ class UpcomingEventsWidget extends StatelessWidget {
           child: Text(
             'Upcoming',
             style: StyleConstants.blackThinTitleTextMedium
-                .copyWith(fontWeight: FontWeight.bold, fontSize: 25.0),
+                .copyWith(fontWeight: FontWeight.bold, fontSize: width * 0.055),
           ),
         ),
         Align(
@@ -164,6 +164,7 @@ class UpcomingEventsWidget extends StatelessWidget {
                   },
                 ),
         ),
+        SizedBox(height: height * 0.06,)
       ],
     );
   }
