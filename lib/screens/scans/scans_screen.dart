@@ -62,7 +62,7 @@ class _ScansScreenState extends State<ScansScreen> {
                     ),
                     Text(
                       'View Scan Locations',
-                      style: StyleConstants.blackTitleText.copyWith(
+                      style: StyleConstants.blackTitleText.copyWith(fontFamily: 'Open Sans',
                           fontSize: 20.0, fontWeight: FontWeight.w400),
                     ),
                   ],
@@ -104,8 +104,15 @@ class _ScansScreenState extends State<ScansScreen> {
                           children: [
                             Text(
                               'Scan Locations',
-                              style: StyleConstants.whiteThinTitleText
-                                  .copyWith(fontSize: 25.0, fontWeight: FontWeight.bold),
+                              /*style: StyleConstants.whiteThinTitleText
+                                  .copyWith(fontSize: 25.0, fontWeight: FontWeight.bold),*/
+
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Open Sans',
+                                fontSize: width * 0.055,
+                                fontWeight: FontWeight.bold
+                              )
                             ),
                           ],
                         ),

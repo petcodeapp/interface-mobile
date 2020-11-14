@@ -87,6 +87,13 @@ class StyleConstants {
     fontSize: width * 0.06,
   );
 
+  static TextStyle pageTitleText = TextStyle(
+      color: Colors.white,
+      fontFamily: 'Open Sans',
+      fontSize: width * 0.055,
+      fontWeight: FontWeight.bold
+  );
+
   static TextStyle whiteTitleText = TextStyle(
     fontFamily: 'OpenSans',
     color: Colors.white,

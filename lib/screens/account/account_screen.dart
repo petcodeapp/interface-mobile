@@ -50,8 +50,7 @@ class AccountScreen extends StatelessWidget {
                           children: [
                             Text(
                               'Account',
-                              style: StyleConstants.whiteThinTitleText.copyWith(
-                                  fontSize: 25.0, fontWeight: FontWeight.bold),
+                              style: StyleConstants.pageTitleText,
                             ),
                           ],
                         ),
