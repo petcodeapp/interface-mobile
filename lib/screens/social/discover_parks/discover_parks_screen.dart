@@ -38,16 +38,44 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
 
   NearbyPark _selectedPark;
 
+  //BitmapDescriptor customPin = BitmapDescriptor.defaultMarkerWithHue(MapConstants.bitmapDescriptorHues[1]);
+  BitmapDescriptor customPin;
+
+
   @override
   void initState() {
     _mapBottomPadding = StyleConstants.height * 0.11;
 
     _panelController = new PanelController();
+
+    //setCustomMapPin();
+
     super.initState();
+  }
+
+  void setCustomMapPin() async {
+    customPin = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/icons/custombluemarker.png'
+    );
+  }
+
+  BitmapDescriptor createMarker(context) {
+      ImageConfiguration configuration = createLocalImageConfiguration(context);
+      BitmapDescriptor.fromAssetImage(configuration, 'assets/icons/custombluemarker.png')
+          .then((icon) {
+            return icon;
+        /*1setState(() {
+          customPin = icon;
+        });*/
+      });
+
   }
 
   @override
   Widget build(BuildContext context) {
+    createMarker(context);
+
     print("moved: " + _cameraMoved.toString());
     _height = StyleConstants.height;
     _width = StyleConstants.width;
@@ -92,30 +120,40 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
               borderRadius: topRoundedRadius,
             ),
             width: _width,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 150.0),
-                    child: Divider(
-                      thickness: 3.0,
-                      color: StyleConstants.darkGrey,
+            child: GestureDetector(
+              onTap: (){
+                if(_panelController.isPanelOpen){
+                  _panelController.close();
+                }
+                else{
+                  _panelController.open();
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 150.0),
+                      child: Divider(
+                        thickness: 3.0,
+                        color: StyleConstants.darkGrey,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: _height * 0.02,
-                  ),
-                  Text(
-                    'Nearby Pet Parks',
-                    style: TextStyle(
-                      color: StyleConstants.lightBlack,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18.0,
+                    SizedBox(
+                      height: _height * 0.012,
                     ),
-                  ),
-                ],
+                    Text(
+                      'Nearby Pet Parks',
+                      style: TextStyle(
+                        color: StyleConstants.lightBlack,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -137,18 +175,17 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: _width * 0.1, vertical: _height * 0.02),
+                      horizontal: _width * 0.1,vertical: _height * 0.02 ),
                   child: Stack(
                     children: [
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: Container(
                           height: _height * 0.055,
-                          child: Text('Pet Parks',
-                              style: StyleConstants.whiteDescriptionText
-                                  .copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25.0)),
+                          child: Text(
+                            'Pet Parks',
+                              style: StyleConstants.whiteDescriptionText.copyWith(fontWeight: FontWeight.bold, fontSize: 25.0)
+                          ),
                         ),
                       ),
                       Align(
@@ -156,6 +193,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                         child: Container(
                           height: _height * 0.06,
                           child: IconButton(
+
                             icon: Icon(
                               Icons.arrow_back_ios,
                               size: 25.0,
@@ -192,7 +230,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                                   _controller.complete(controller);
                                 },
                                 markers: createMarkers(
-                                    _nearbyParksProvider.nearbyParks),
+                                    _nearbyParksProvider.nearbyParks, context),
                                 onCameraMove: (CameraPosition position) {
                                   _nearbyParksMapProvider
                                       .setCameraPosition(position);
@@ -217,7 +255,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                                       alignment: Alignment.bottomCenter,
                                       child: Padding(
                                         padding: EdgeInsets.only(
-                                            bottom: _height * 0.025),
+                                            bottom: _height * 0.07),
                                         child: ShowNearbyParkWidget(
                                           shownPark: _selectedPark,
                                         ),
@@ -312,7 +350,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                     ? Text(
                         'Search this Area',
                         style: TextStyle(
-                          color: StyleConstants.red,
+                          color: StyleConstants.blue,
                           fontWeight: FontWeight.w600,
                           fontSize: 12.0,
                         ),
@@ -333,19 +371,24 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
     );
   }
 
-  Set<Marker> createMarkers(List<NearbyPark> nearbyParks) {
+  Set<Marker> createMarkers(List<NearbyPark> nearbyParks, context) {
+    customPin = createMarker(context);
+
     if (nearbyParks == null) {
       return null;
     } else {
       List<Marker> allMarkers = new List<Marker>();
-
       for (int i = 0; i < nearbyParks.length; i++) {
         allMarkers.add(
           new Marker(
-            markerId: MarkerId(nearbyParks[i].name + i.toString() + 'ID'),
+            icon: customPin,
+              markerId: MarkerId(nearbyParks[i].name + i.toString() + 'ID'),
             position: nearbyParks[i].location,
+            /*
             icon: BitmapDescriptor.defaultMarkerWithHue(
-                MapConstants.bitmapDescriptorHues[1]),
+                MapConstants.bitmapDescriptorHues[1]
+            ),
+            */
             onTap: () async {
               await _panelController.hide();
               setState(() {
@@ -360,4 +403,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
       return allMarkers.toSet();
     }
   }
+
+
 }
+

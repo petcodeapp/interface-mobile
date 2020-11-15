@@ -88,6 +88,7 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                         ),
                       ),
                     ),
+                    SizedBox(height: height * 0.01,),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: width * 0.03),
                       child: Container(
@@ -98,11 +99,11 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                               children: [
                                 Text(
                                   allPetsProvider.allPets[index].name,
-                                  style: StyleConstants.blackThinTitleTextMedium.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w700, fontSize: height * 0.037, fontFamily: 'OpenSans'),
+                                  style: StyleConstants.blackThinTitleTextMedium.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w700, fontSize: height * 0.033, fontFamily: 'OpenSans'),
                                 ),
                                 Text(
                                   allPetsProvider.allPets[index].breed,
-                                  style: StyleConstants.blackThinTitleTextXS.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w600, fontFamily: 'OpenSans', fontSize: height * 0.027),
+                                  style: StyleConstants.blackThinTitleTextXS.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w600, fontFamily: 'OpenSans', fontSize: height * 0.023),
                                 ),
                               ],
                             ),
