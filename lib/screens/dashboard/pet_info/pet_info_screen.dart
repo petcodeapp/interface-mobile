@@ -170,14 +170,15 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                           Text(
                                             currentPetProvider.currentPet.name,
                                             style: StyleConstants
-                                                .whiteThinTitleText.copyWith(fontSize: height * 0.034),
+                                                .whiteThinTitleText.copyWith(fontSize: height * 0.031),
                                             maxLines: 3,
                                             overflow: TextOverflow.ellipsis,
                                           ),
+                                          SizedBox(height: height * 0.002,),
                                           Text(
                                             currentPetProvider.currentPet.breed,
                                             style: StyleConstants
-                                                .whiteThinTitleTextSmall.copyWith(fontSize: height * 0.026),
+                                                .whiteThinTitleTextSmall.copyWith(fontSize: height * 0.023),
                                             maxLines: 3,
                                             overflow: TextOverflow.ellipsis,
                                           )

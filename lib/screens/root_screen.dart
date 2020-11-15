@@ -43,11 +43,10 @@ class _RootScreenState extends State<RootScreen> {
         index: _currentIndex,
         children: _pageOptions,
       ),
-
-
       bottomNavigationBar: SizedBox(
         //height: height * 0.12,
         child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: (index) => setState(() {
             _currentIndex = index;
@@ -56,6 +55,8 @@ class _RootScreenState extends State<RootScreen> {
           selectedItemColor: StyleConstants.blue,
           backgroundColor: Colors.white,
           unselectedItemColor: Colors.black.withOpacity(0.2),
+          unselectedIconTheme: IconThemeData(size: height * 0.028),
+          selectedIconTheme: IconThemeData(size: height * 0.028),
           showUnselectedLabels: true,
           items: [
             BottomNavigationBarItem(
