@@ -182,9 +182,11 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                         alignment: Alignment.bottomCenter,
                         child: Container(
                           height: _height * 0.055,
-                          child: Text(
-                            'Pet Parks',
-                              style: StyleConstants.whiteDescriptionText.copyWith(fontWeight: FontWeight.bold, fontSize: 25.0)
+                          child: Center(
+                            child: Text(
+                              'Pet Parks',
+                                style: StyleConstants.pageTitleText
+                            ),
                           ),
                         ),
                       ),

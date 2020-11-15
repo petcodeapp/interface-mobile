@@ -117,7 +117,7 @@ class _OwnerInfoSingleEditingScreenState extends State<OwnerInfoSingleEditingScr
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'Open Sans',
-                                  fontSize: 20.0
+                                  fontSize: height * 0.02
                               ),
                             ),
                           ),
@@ -127,7 +127,7 @@ class _OwnerInfoSingleEditingScreenState extends State<OwnerInfoSingleEditingScr
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Open Sans',
-                                fontSize: 20.0
+                                fontSize: height * 0.023
                             ),
                           ),
                           GestureDetector(
@@ -165,7 +165,7 @@ class _OwnerInfoSingleEditingScreenState extends State<OwnerInfoSingleEditingScr
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'Open Sans',
-                                  fontSize: 20.0
+                                  fontSize: height * 0.02
                               ),
                             ),
                           ),

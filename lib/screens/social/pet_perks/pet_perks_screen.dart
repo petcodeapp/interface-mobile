@@ -81,10 +81,11 @@ class PetPerksScreen extends StatelessWidget {
                         alignment: Alignment.bottomCenter,
                         child: Container(
                           height: height * 0.055,
-                          child: Text(
-                            'Pet Perks',
-                            style: StyleConstants.whiteThinTitleText
-                                .copyWith(fontSize: 25.0),
+                          child: Center(
+                            child: Text(
+                              'Pet Perks',
+                              style: StyleConstants.pageTitleText
+                            ),
                           ),
                         ),
                       ),

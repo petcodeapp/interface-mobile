@@ -44,7 +44,7 @@ class DashboardScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: height * 0.13,
+                height: height * 0.14,
                 width: width,
                 child: Align(
                   alignment: Alignment.center,
@@ -56,7 +56,7 @@ class DashboardScreen extends StatelessWidget {
                         child: Container(),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: width * 0.08,right: width * 0.08, top: height * 0.05),
+                        padding: EdgeInsets.only(left: width * 0.08,right: width * 0.08, top: height * 0.065),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.end,
