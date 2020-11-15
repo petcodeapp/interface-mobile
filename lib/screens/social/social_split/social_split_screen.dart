@@ -26,7 +26,6 @@ class SocialSplitScreen extends StatelessWidget {
               //tileMode: TileMode.repeated,
             )
         ),
-        height: height,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -21,7 +21,7 @@ class FirebaseAuthService extends ChangeNotifier {
   FirebaseAuthService() {
     _firebaseAuth = auth.FirebaseAuth.instance;
     _firebaseAuth.authStateChanges().listen(_onAuthStateChanged);
-    _googleSignIn = new GoogleSignIn();
+    _googleSignIn = new GoogleSignIn(scopes: ['email']);
   }
 
   Status get status => _status;
