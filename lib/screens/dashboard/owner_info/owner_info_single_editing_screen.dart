@@ -160,7 +160,7 @@ class _OwnerInfoSingleEditingScreenState extends State<OwnerInfoSingleEditingScr
 
                             },
                             child: Text(
-                              'Save',
+                              'Done',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
