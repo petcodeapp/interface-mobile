@@ -117,7 +117,7 @@ class _OwnerInfoSingleEditingScreenState extends State<OwnerInfoSingleEditingScr
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'Open Sans',
-                                  fontSize: height * 0.021
+                                  fontSize: height * 0.02
                               ),
                             ),
                           ),
@@ -152,12 +152,8 @@ class _OwnerInfoSingleEditingScreenState extends State<OwnerInfoSingleEditingScr
                                 else{
                                   updatedPet.contact_2 = updatedOwner;
                                 }
-
-
                                 _databaseService.updatePet(widget.currentPet);
-
                                 Navigator.pop(context);
-
                             },
                             child: Text(
                               'Done',
@@ -165,7 +161,7 @@ class _OwnerInfoSingleEditingScreenState extends State<OwnerInfoSingleEditingScr
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'Open Sans',
-                                  fontSize: height * 0.021
+                                  fontSize: height * 0.02
                               ),
                             ),
                           ),
@@ -332,7 +328,6 @@ class _OwnerInfoSingleEditingScreenState extends State<OwnerInfoSingleEditingScr
                                           ),
                                           controller: _ownerAddress,
                                           decoration: InputDecoration(
-
                                             hintText: 'Address',
                                             hintStyle: TextStyle(fontSize: 14.0),
                                           ),
@@ -345,12 +340,9 @@ class _OwnerInfoSingleEditingScreenState extends State<OwnerInfoSingleEditingScr
                             ),
                           ),
                         ),
-
-
                         SizedBox(
                           height: height * 0.02,
                         ),
-
                       ],
                     ),
                   ),
