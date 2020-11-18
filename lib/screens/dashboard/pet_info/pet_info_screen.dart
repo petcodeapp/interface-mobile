@@ -327,6 +327,8 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                   thickness: 1,
                                 ),
                               ),
+
+                              /*
                               ListTile(
                                 leading: Icon(
                                   HeroIcons.icon_tag,
@@ -344,6 +346,8 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                   ],
                                 ),
                               ),
+
+
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 20.0),
@@ -351,6 +355,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                   thickness: 1,
                                 ),
                               ),
+                              */
                               ListTile(
                                 leading: Icon(
                                   HeroIcons2.cardiogram_1,
@@ -394,7 +399,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: height * 0.02,
+                        height: height * 0.1,
                       ),
                     ],
                   ),

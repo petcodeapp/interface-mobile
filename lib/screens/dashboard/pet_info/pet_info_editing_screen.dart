@@ -188,7 +188,6 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                             }
                           },
                           child: Container(
-
                             width: width * 0.2,
                             child: Align(
                               alignment: Alignment.bottomRight,
