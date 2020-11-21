@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fAuth;
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/models/User.dart';
@@ -99,5 +102,19 @@ class DatabaseService {
     await _firestore.collection('pets').doc(pet.pid).update({
       'reminders': updatedList.map((reminder) => reminder.toJson()).toList()
     });
+  }
+
+  Future<void> handleToken(String fcmToken) async {
+    if (fcmToken != null) {
+      await _firestore
+          .collection('users')
+          .doc(fAuth.FirebaseAuth.instance.currentUser.uid)
+          .collection('tokens')
+          .doc(fcmToken)
+          .set({
+        'token': fcmToken,
+        'platform': Platform.operatingSystem,
+      });
+    }
   }
 }
