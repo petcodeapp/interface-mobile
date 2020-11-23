@@ -8,6 +8,7 @@ import 'package:petcode_app/providers/image_marker_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_map_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
+import 'package:petcode_app/providers/pet_perks_provider.dart';
 import 'package:petcode_app/providers/scans_map_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/screens/auth/entry_screen.dart';
@@ -17,6 +18,7 @@ import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
+import 'package:petcode_app/services/pet_perks_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/set_up_keys.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -172,6 +174,16 @@ class MyApp extends StatelessWidget {
                 scansMapProvider.updateScans(scansProvider.allScans);
                 return scansMapProvider
                   ..updateImages(imageMarkerProvider.markerImages);
+              }
+            }),
+        ChangeNotifierProxyProvider<FirebaseAuthService, PetPerksProvider>(
+            create: (_) => PetPerksProvider(),
+            update: (BuildContext context, FirebaseAuthService authService,
+                PetPerksProvider petPerksProvider) {
+              if (authService.user == null) {
+                return petPerksProvider..clear();
+              } else {
+                return petPerksProvider..listenToPetPerks();
               }
             })
       ],

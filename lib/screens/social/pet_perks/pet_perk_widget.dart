@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:petcode_app/models/PetPerk.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/screens/social/pet_perks/pet_perk_description_widget.dart';
@@ -50,9 +51,10 @@ class PetPerkWidget extends StatelessWidget {
                   children: [
                     Container(
                       height: height * 0.08,
-                       //width: height * 0.08,
-                        //color: Colors.blue,
-                        child: Image.asset('assets/navigation_images/right_tag.png'),
+                      //width: height * 0.08,
+                      //color: Colors.blue,
+                      child:
+                          Image.asset('assets/navigation_images/right_tag.png'),
                     ),
                     Positioned(
                         top: width * 0.045,
@@ -60,12 +62,12 @@ class PetPerkWidget extends StatelessWidget {
                         child: Container(
                             //color: Colors.blue,
                             child: Text(
-                              '${petPerk.discountAmount}%',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 20.0),
-                            ))),
+                          '${petPerk.discountAmount}%',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20.0),
+                        ))),
                   ],
                 ),
               ),
@@ -77,7 +79,10 @@ class PetPerkWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: width * 0.03, top: height * 0.01, bottom: height * 0.01),
+                    padding: EdgeInsets.only(
+                        left: width * 0.03,
+                        top: height * 0.01,
+                        bottom: height * 0.01),
                     child: Container(
                       height: height * 0.13,
                       width: height * 0.13,
@@ -85,12 +90,15 @@ class PetPerkWidget extends StatelessWidget {
                         color: StyleConstants.yellow,
                         borderRadius: BorderRadius.circular(15.0),
                       ),
-                      child: Center(
-                        child: Container(
-                            width: height * 0.11,
-                            height: height * 0.11,
-                            child: Image.asset('assets/images/petsmartlogo.png')),
-                      ),
+                      child: petPerk.storePhotoUrl != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: CachedNetworkImage(
+                                imageUrl: petPerk.storePhotoUrl,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : Container(),
                     ),
                   ),
                   SizedBox(
@@ -146,7 +154,6 @@ class PetPerkWidget extends StatelessWidget {
       isScrollControlled: true,
       builder: (BuildContext context) {
         return Container(
-
           height: height * 0.6,
           child: PetPerkDescriptionWidget(
             currentPetPerk: petPerk,
