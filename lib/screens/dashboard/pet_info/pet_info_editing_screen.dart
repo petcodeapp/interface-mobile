@@ -123,7 +123,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                 height: height * 0.15,
                 child: Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: width * 0.1, vertical: height * 0.02),
+                        horizontal: width * 0.06, vertical: height * 0.02),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -138,7 +138,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'Open Sans',
-                                  fontSize: 20.0),
+                                  fontSize: height * 0.021),
                             ),
                           ),
                         ),
@@ -147,9 +147,9 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                           'Update Pet Info',
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.bold,
                               fontFamily: 'Open Sans',
-                              fontSize: 20.0),
+                              fontSize: height * 0.023),
                         ),
                         Spacer(),
                         GestureDetector(
@@ -188,7 +188,6 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                             }
                           },
                           child: Container(
-
                             width: width * 0.2,
                             child: Align(
                               alignment: Alignment.bottomRight,
@@ -198,7 +197,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                     color: Colors.white,
                                     fontWeight: FontWeight.w400,
                                     fontFamily: 'Open Sans',
-                                    fontSize: 20.0),
+                                    fontSize: height * 0.021),
                               ),
                             ),
                           ),

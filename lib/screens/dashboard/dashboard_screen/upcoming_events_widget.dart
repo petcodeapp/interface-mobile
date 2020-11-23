@@ -130,41 +130,42 @@ class UpcomingEventsWidget extends StatelessWidget {
                   ],
                 )
               : ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  //physics: AlwaysScrollableScrollPhysics(),
-                  itemCount: allPetUpcomingEvents.length,
-                  itemBuilder: (context, index) {
-                    if (index == reminderIndex) {
-                      return Padding(
-                        padding: EdgeInsets.fromLTRB(width * 0.012, 0,
-                            width * 0.012, height * 0.024),
-                        child: GlowingReminderWidget(
-                          completed: false,
-                          name: allPetUpcomingEvents[index].name,
-                          date: allPetUpcomingEvents[index].date == null
-                              ? null
-                              : allPetUpcomingEvents[index].date.toDate(),
-                        ),
-                      );
-                    } else {
-                      return Padding(
-                        padding: EdgeInsets.fromLTRB(width * 0.012, 0,
-                            width * 0.012, height * 0.024),
-                        child: ReminderWidget(
-                          completed: false,
-                          name: allPetUpcomingEvents[index].name,
-                          date: allPetUpcomingEvents[index].date == null
-                              ? null
-                              : allPetUpcomingEvents[index].date.toDate(),
-                        ),
-                      );
-                    }
-                  },
-                ),
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            physics: NeverScrollableScrollPhysics(),
+            //physics: AlwaysScrollableScrollPhysics(),
+            itemCount: allPetUpcomingEvents.length,
+            itemBuilder: (context, index) {
+              if (index == reminderIndex) {
+                return Padding(
+                  padding: EdgeInsets.fromLTRB(width * 0.012, 0,
+                      width * 0.012, height * 0.024),
+                  child: GlowingReminderWidget(
+                    completed: false,
+                    name: allPetUpcomingEvents[index].name,
+                    date: allPetUpcomingEvents[index].date == null
+                        ? null
+                        : allPetUpcomingEvents[index].date.toDate(),
+                  ),
+                );
+              } else {
+                return Padding(
+                  padding: EdgeInsets.fromLTRB(width * 0.012, 0,
+                      width * 0.012, height * 0.024),
+                  child: ReminderWidget(
+                    completed: false,
+                    name: allPetUpcomingEvents[index].name,
+                    date: allPetUpcomingEvents[index].date == null
+                        ? null
+                        : allPetUpcomingEvents[index].date.toDate(),
+                  ),
+                );
+              }
+            },
+          ),
+
         ),
-        SizedBox(height: height * 0.06,)
+        allPetUpcomingEvents.length < 2 && allPetUpcomingEvents.length > 0 ? SizedBox(height: height * 0.16,) : SizedBox(height: height * 0.05,),
       ],
     );
   }

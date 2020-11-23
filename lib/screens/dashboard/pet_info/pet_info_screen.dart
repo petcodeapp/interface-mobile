@@ -170,14 +170,15 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                           Text(
                                             currentPetProvider.currentPet.name,
                                             style: StyleConstants
-                                                .whiteThinTitleText.copyWith(fontSize: height * 0.034),
+                                                .whiteThinTitleText.copyWith(fontSize: height * 0.031),
                                             maxLines: 3,
                                             overflow: TextOverflow.ellipsis,
                                           ),
+                                          SizedBox(height: height * 0.002,),
                                           Text(
                                             currentPetProvider.currentPet.breed,
                                             style: StyleConstants
-                                                .whiteThinTitleTextSmall.copyWith(fontSize: height * 0.026),
+                                                .whiteThinTitleTextSmall.copyWith(fontSize: height * 0.023),
                                             maxLines: 3,
                                             overflow: TextOverflow.ellipsis,
                                           )
@@ -326,6 +327,8 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                   thickness: 1,
                                 ),
                               ),
+
+                              /*
                               ListTile(
                                 leading: Icon(
                                   HeroIcons.icon_tag,
@@ -343,6 +346,8 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                   ],
                                 ),
                               ),
+
+
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 20.0),
@@ -350,6 +355,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                   thickness: 1,
                                 ),
                               ),
+                              */
                               ListTile(
                                 leading: Icon(
                                   HeroIcons2.cardiogram_1,
@@ -393,7 +399,7 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: height * 0.02,
+                        height: height * 0.1,
                       ),
                     ],
                   ),

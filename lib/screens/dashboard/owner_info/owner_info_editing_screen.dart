@@ -107,7 +107,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'Open Sans',
-                                  fontSize: 20.0
+                                  fontSize: height * 0.02
                               ),
                             ),
                           ),
@@ -115,9 +115,9 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                             'Update Owner Info',
                             style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.bold,
                               fontFamily: 'Open Sans',
-                              fontSize: 20.0
+                              fontSize: height * 0.023
                             ),
                           ),
                           GestureDetector(
@@ -170,7 +170,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'Open Sans',
-                                  fontSize: 20.0
+                                  fontSize: height * 0.02,
                               ),
                             ),
                           ),
