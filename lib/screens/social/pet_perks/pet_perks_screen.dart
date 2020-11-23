@@ -9,28 +9,6 @@ import 'package:petcode_app/screens/social/pet_perks/pet_perk_widget.dart';
 import 'package:provider/provider.dart';
 
 class PetPerksScreen extends StatelessWidget {
-  // final List<PetPerk> petPerks = [
-  //   PetPerk(
-  //       storeName: 'Pet Store',
-  //       description: 'Pet Supplies, Accessories, and Products',
-  //       discountAmount: 50),
-  //   PetPerk(
-  //       storeName: 'Dog Treats Store',
-  //       description: 'Pet Food',
-  //       discountAmount: 10),
-  //   PetPerk(
-  //       storeName: 'Another Pet Store',
-  //       description:
-  //           'Pet Supplies, Accessories, and Products, and more and more and more and more',
-  //       discountAmount: 33),
-  //   PetPerk(
-  //       storeName: 'PetCode',
-  //       description: 'Pet Supplies, Accessories, and Products',
-  //       discountAmount: 40,
-  //       promoCode: 'PETCODE123'
-  //   ),
-  // ];
-
   @override
   Widget build(BuildContext context) {
     double height = StyleConstants.height;
@@ -44,7 +22,10 @@ class PetPerksScreen extends StatelessWidget {
     }
 
     PetPerksProvider petPerksProvider = Provider.of<PetPerksProvider>(context);
-    List<PetPerk> petPerks = petPerksProvider.allPetPerks;
+    List<PetPerk> petPerks = petPerksProvider.allPetPerks.where(
+        (PetPerk perk) =>
+            petPerksProvider.currentFilter == 'none' ||
+            perk.categories.contains(petPerksProvider.currentFilter)).toList();
 
     return Scaffold(
       backgroundColor: StyleConstants.pageBackgroundColor,

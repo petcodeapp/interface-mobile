@@ -9,8 +9,11 @@ class PetPerkDescriptionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
+
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: StyleConstants.width * 0.05),
+      padding: EdgeInsets.symmetric(horizontal: width * 0.05),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,9 +43,11 @@ class PetPerkDescriptionWidget extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: Container(
+                          height: height * 0.2,
                           child: currentPetPerk.storePhotoUrl != null
                               ? CachedNetworkImage(
                                   imageUrl: currentPetPerk.storePhotoUrl,
+                            fit: BoxFit.cover,
                                 )
                               : Container(),
                         ),
