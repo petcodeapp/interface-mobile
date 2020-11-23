@@ -25,7 +25,7 @@ class AllPetsProvider extends ChangeNotifier {
     if (petIds != null && petIds.length > 0) {
       _providerState = ProviderState.Busy;
       notifyListeners();
-      _petService.createPetStream(petIds).listen((List<Pet> allPets) {
+      _petsSubscription = _petService.createPetStream(petIds).listen((List<Pet> allPets) {
         _allPets = allPets;
         _providerState = ProviderState.Idle;
         notifyListeners();
