@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/providers/pet_perks_provider.dart';
-import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';

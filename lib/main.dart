@@ -18,7 +18,6 @@ import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/services/firebase_storage_service.dart';
 import 'package:petcode_app/services/image_picker_service.dart';
-import 'package:petcode_app/services/pet_perks_service.dart';
 import 'package:petcode_app/services/user_service.dart';
 import 'package:petcode_app/set_up_keys.dart';
 import 'package:petcode_app/utils/style_constants.dart';

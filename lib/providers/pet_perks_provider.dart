@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:petcode_app/models/PetPerk.dart';
 import 'package:petcode_app/services/pet_perks_service.dart';
-import 'package:petcode_app/utils/hero_icons.dart';
 
 class PetPerksProvider extends ChangeNotifier {
   List<PetPerk> _allPetPerks;

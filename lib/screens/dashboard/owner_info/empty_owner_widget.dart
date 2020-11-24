@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/screens/dashboard/owner_info/owner_info_editing_screen.dart';
 import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
