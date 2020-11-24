@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/general_med_info/general_med_info_widget.dart';
-import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/change_pet_dropdown.dart';
 

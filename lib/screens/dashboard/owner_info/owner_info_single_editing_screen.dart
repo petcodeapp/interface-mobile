@@ -6,10 +6,8 @@ import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/VisibleValue.dart';
 import 'package:petcode_app/services/database_service.dart';
-import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
-import 'package:petcode_app/widgets/change_pet_dropdown.dart';
 import 'package:provider/provider.dart';
 
 class OwnerInfoSingleEditingScreen extends StatefulWidget {
@@ -53,9 +51,6 @@ class _OwnerInfoSingleEditingScreenState extends State<OwnerInfoSingleEditingScr
 
   File chosenImageFile;
   ImageProvider updatedImage;
-
-  GlobalKey<FormState> _owner1FormKey = new GlobalKey<FormState>();
-  GlobalKey<FormState> _owner2FormKey = new GlobalKey<FormState>();
 
   GlobalKey<FormState> _ownerFormKey = new GlobalKey<FormState>();
 

@@ -4,7 +4,6 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/screens/dashboard/owner_info/empty_owner_widget.dart';
 import 'package:petcode_app/screens/dashboard/owner_info/owner_widget.dart';
-import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/change_pet_dropdown.dart';
 import 'package:provider/provider.dart';
@@ -27,18 +26,17 @@ class OwnerInfoScreen extends StatelessWidget {
           width: width,
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topRight,
-                //end: Alignment(0.01, 0.01),
-                end: Alignment.bottomLeft,
-                stops: [0.01, 0.4, 0.6],
-                colors: [
-                  const Color(0xffABDEED),
-                  const Color(0xff51BFDA),
-                  StyleConstants.blue
-                ], // whitish to gray
-                //tileMode: TileMode.repeated,
-              )
-          ),
+            begin: Alignment.topRight,
+            //end: Alignment(0.01, 0.01),
+            end: Alignment.bottomLeft,
+            stops: [0.01, 0.4, 0.6],
+            colors: [
+              const Color(0xffABDEED),
+              const Color(0xff51BFDA),
+              StyleConstants.blue
+            ], // whitish to gray
+            //tileMode: TileMode.repeated,
+          )),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,25 +79,29 @@ class OwnerInfoScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: height * 0.03),
-                     currentPet.contact_1 != null ?
-                      OwnerWidget(
-                          owner: currentPet.contact_1,
-                          height: height,
-                          width: width,
-                          ownerNumber: 1,
-                          currentPet: currentPet,
-                      ) : EmptyOwnerWidget(height: height, width: width, currentPet: currentPet,),
-
+                      currentPet.contact_1 != null
+                          ? OwnerWidget(
+                              key: Key(currentPet.pid + '1'),
+                              owner: currentPet.contact_1,
+                              ownerNumber: 1,
+                            )
+                          : EmptyOwnerWidget(
+                              height: height,
+                              width: width,
+                              currentPet: currentPet,
+                            ),
                       SizedBox(height: height * 0.05),
                       currentPet.contact_2 != null
                           ? OwnerWidget(
+                              key: Key(currentPet.pid + '2'),
                               owner: currentPet.contact_2,
+                              ownerNumber: 2,
+                            )
+                          : EmptyOwnerWidget(
                               height: height,
                               width: width,
-                              ownerNumber: 2,
-                        currentPet: currentPet,
-                      )
-                          : EmptyOwnerWidget(height: height, width: width, currentPet: currentPet,),
+                              currentPet: currentPet,
+                            ),
                       SizedBox(
                         height: height * 0.02,
                       ),

@@ -1,6 +1,8 @@
+
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:petcode_app/services/notifications_service.dart';
 
 @immutable
 class UserId {
@@ -13,7 +15,7 @@ enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
 class FirebaseAuthService extends ChangeNotifier {
   auth.FirebaseAuth _firebaseAuth;
-  auth.User  _firebaseUser;
+  auth.User _firebaseUser;
   GoogleSignIn _googleSignIn;
 
   Status _status = Status.Uninitialized;
@@ -21,7 +23,7 @@ class FirebaseAuthService extends ChangeNotifier {
   FirebaseAuthService() {
     _firebaseAuth = auth.FirebaseAuth.instance;
     _firebaseAuth.authStateChanges().listen(_onAuthStateChanged);
-    _googleSignIn = new GoogleSignIn();
+    _googleSignIn = new GoogleSignIn(scopes: ['email']);
   }
 
   Status get status => _status;
@@ -82,13 +84,14 @@ class FirebaseAuthService extends ChangeNotifier {
     if (firebaseUser == null) {
       _status = Status.Unauthenticated;
     } else {
-          print(firebaseUser);
+      print(firebaseUser);
       _firebaseUser = firebaseUser;
       _status = Status.Authenticated;
+
+      NotificationsService().handleLogin();
     }
     notifyListeners();
   }
-
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
@@ -101,5 +104,4 @@ class FirebaseAuthService extends ChangeNotifier {
     _status = Status.Unauthenticated;
     notifyListeners();
   }
-
 }

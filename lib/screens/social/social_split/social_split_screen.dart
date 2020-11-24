@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:petcode_app/providers/pet_perks_provider.dart';
 import 'package:petcode_app/screens/social/discover_parks/discover_parks_screen.dart';
 import 'package:petcode_app/screens/social/pet_perks/pet_perks_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:provider/provider.dart';
 
 class SocialSplitScreen extends StatelessWidget {
   @override
@@ -14,19 +16,17 @@ class SocialSplitScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topRight,
-              //end: Alignment(0.01, 0.01),
-              end: Alignment.bottomLeft,
-              stops: [0.01, 0.4, 0.6],
-              colors: [
-                const Color(0xffABDEED),
-                const Color(0xff51BFDA),
-                StyleConstants.blue
-              ], // whitish to gray
-              //tileMode: TileMode.repeated,
-            )
-        ),
-        height: height,
+          begin: Alignment.topRight,
+          //end: Alignment(0.01, 0.01),
+          end: Alignment.bottomLeft,
+          stops: [0.01, 0.4, 0.6],
+          colors: [
+            const Color(0xffABDEED),
+            const Color(0xff51BFDA),
+            StyleConstants.blue
+          ], // whitish to gray
+          //tileMode: TileMode.repeated,
+        )),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -130,7 +130,9 @@ class SocialSplitScreen extends StatelessWidget {
                                         Text(
                                           'Pet Parks',
                                           style: StyleConstants
-                                              .blackThinTitleTextMedium.copyWith(fontWeight: FontWeight.bold),
+                                              .blackThinTitleTextMedium
+                                              .copyWith(
+                                                  fontWeight: FontWeight.bold),
                                         ),
                                         SizedBox(
                                           height: height * 0.01,
@@ -138,7 +140,9 @@ class SocialSplitScreen extends StatelessWidget {
                                         Text(
                                           'Find pet parks and events\nnear you',
                                           style: StyleConstants
-                                              .greyThinDescriptionTextSmall.copyWith(fontWeight: FontWeight.w600),
+                                              .greyThinDescriptionTextSmall
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w600),
                                         )
                                       ],
                                     )
@@ -154,7 +158,9 @@ class SocialSplitScreen extends StatelessWidget {
                         onTap: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => PetPerksScreen())),
+                                builder: (_) => PetPerksScreen())).then(
+                            (value) => Provider.of<PetPerksProvider>(context)
+                                .setFilter('none')),
                         child: Container(
                             height: height * 0.17,
                             width: width * 0.9,
@@ -204,7 +210,9 @@ class SocialSplitScreen extends StatelessWidget {
                                         Text(
                                           'Pet Perks',
                                           style: StyleConstants
-                                              .blackThinTitleTextMedium.copyWith(fontWeight: FontWeight.bold),
+                                              .blackThinTitleTextMedium
+                                              .copyWith(
+                                                  fontWeight: FontWeight.bold),
                                         ),
                                         SizedBox(
                                           height: height * 0.01,
@@ -212,7 +220,9 @@ class SocialSplitScreen extends StatelessWidget {
                                         Text(
                                           'Exclusive discounts at your,\nfavorite pet boutiques',
                                           style: StyleConstants
-                                              .greyThinDescriptionTextSmall.copyWith(fontWeight: FontWeight.w600),
+                                              .greyThinDescriptionTextSmall
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w600),
                                         )
                                       ],
                                     )
@@ -298,9 +308,10 @@ class SocialSplitScreen extends StatelessWidget {
                                         Text(
                                           'Coming Soon',
                                           style: StyleConstants
-                                              .blackThinTitleTextMedium.copyWith(fontWeight: FontWeight.w700),
+                                              .blackThinTitleTextMedium
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w700),
                                         ),
-
                                       ],
                                     )
                                   ],
