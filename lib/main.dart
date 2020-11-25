@@ -12,6 +12,7 @@ import 'package:petcode_app/providers/scans_map_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/screens/auth/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
+import 'package:petcode_app/screens/start_splash_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
@@ -22,6 +23,7 @@ import 'package:petcode_app/set_up_keys.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/no_glow_behavior.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -201,8 +203,10 @@ class HomeScreen extends StatelessWidget {
       );
     } else if (auth.status == Status.Authenticating ||
         auth.status == Status.Unauthenticated) {
-      return EntryScreen();
-    } else {
+      //return EntryScreen();
+          return SplashScreen2();
+    }
+    else {
       return RootScreen();
     }
   }
