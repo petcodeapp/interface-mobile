@@ -4,9 +4,6 @@ import 'package:petcode_app/screens/dashboard/medical_info/share_records/share_r
 import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/vaccination_history_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
-import 'package:petcode_app/screens/splash_screen.dart';
-import 'package:petcode_app/screens/start_splash_screen.dart';
-import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/change_pet_dropdown.dart';
 import 'package:provider/provider.dart';
@@ -303,13 +300,8 @@ class MedicalInfoScreen extends StatelessWidget {
                           GestureDetector(
                             onTap: () => Navigator.push(
                                 context,
-
                                 MaterialPageRoute(
-                                    builder: (_) => SplashScreen2())
-                                /*MaterialPageRoute(
-                                    builder: (_) => ShareRecordsScreen())
-                                */
-                            ),
+                                    builder: (_) => ShareRecordsScreen())),
                             child: Container(
                                 height: height * 0.17,
                                 width: width * 0.9,

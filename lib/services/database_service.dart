@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fAuth;
+import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/models/User.dart';
@@ -99,5 +103,46 @@ class DatabaseService {
     await _firestore.collection('pets').doc(pet.pid).update({
       'reminders': updatedList.map((reminder) => reminder.toJson()).toList()
     });
+  }
+
+  Future<void> handleToken(String fcmToken) async {
+    if (fcmToken != null) {
+      await _firestore
+          .collection('users')
+          .doc(fAuth.FirebaseAuth.instance.currentUser.uid)
+          .collection('tokens')
+          .doc(fcmToken)
+          .set({
+        'token': fcmToken,
+        'platform': Platform.operatingSystem,
+      });
+    }
+  }
+
+  Future<void> updateOwnerVisiblity(
+      String parameter, bool value, int ownerNumber, Pet pet) async {
+    Owner owner = pet.contact_1;
+
+    if (ownerNumber == 2) {
+      owner = pet.contact_2;
+    }
+
+    if (parameter == 'name') {
+      owner.name.visible = value;
+    } else if (parameter == 'email') {
+      owner.email.visible = value;
+    } else if (parameter == 'phone number') {
+      owner.phoneNumber.visible = value;
+    } else if (parameter == 'address') {
+      owner.address.visible = value;
+    }
+
+    if (ownerNumber == 1) {
+      pet.contact_1 = owner;
+    } else {
+      pet.contact_2 = owner;
+    }
+
+    await _firestore.collection('pets').doc(pet.pid).update(pet.toJson());
   }
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Pet.dart';
-import 'package:petcode_app/screens/dashboard/owner_info/owner_info_editing_screen.dart';
 import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/circular_check_box.dart';
@@ -9,14 +7,12 @@ import 'package:petcode_app/widgets/circular_check_box.dart';
 import 'owner_info_single_editing_screen.dart';
 
 class EmptyOwnerWidget extends StatelessWidget {
-
-
   final double height;
   final double width;
   final Pet currentPet;
 
-
-  EmptyOwnerWidget({Key key,  this.height, this.width, this.currentPet}) : super(key: key);
+  EmptyOwnerWidget({Key key, this.height, this.width, this.currentPet})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +28,7 @@ class EmptyOwnerWidget extends StatelessWidget {
               color: Colors.black.withOpacity(0.2),
               blurRadius: 6.0,
             ),
-          ]
-      ),
+          ]),
       child: Padding(
         padding: EdgeInsets.all(width * 0.05),
         child: Column(
@@ -47,13 +42,19 @@ class EmptyOwnerWidget extends StatelessWidget {
                   padding: EdgeInsets.only(left: width * 0.04),
                   child: Text(
                     'Owner 2 (Not Set)',
-                    style: StyleConstants.blackThinTitleTextSmall.copyWith(fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.7)),
+                    style: StyleConstants.blackThinTitleTextSmall.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black.withOpacity(0.7)),
                   ),
                 ),
                 IconButton(
                   icon: Icon(HeroIcons2.edit_2),
                   iconSize: width * 0.06,
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => OwnerInfoSingleEditingScreen(currentPet: currentPet, ownerNumber: 2))),
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => OwnerInfoSingleEditingScreen(
+                              currentPet: currentPet, ownerNumber: 2))),
                 )
               ],
             ),
@@ -65,15 +66,16 @@ class EmptyOwnerWidget extends StatelessWidget {
               ),
               title: Row(
                 children: [
-                   Text(
+                  Text(
                     'Name',
                     style: StyleConstants.greyedOutText,
                   ),
                 ],
               ),
-              trailing: Text(
-                'Visibility',
-                style: TextStyle(fontSize: width * 0.03, fontWeight: FontWeight.w400, color: Colors.black.withOpacity(0.8)),
+              trailing: CircularCheckBox(
+                value: true,
+                onChanged: (bool value) {},
+                activeColor: StyleConstants.yellow,
               ),
             ),
             Padding(
@@ -88,15 +90,13 @@ class EmptyOwnerWidget extends StatelessWidget {
                 size: width * 0.07,
                 color: StyleConstants.blue,
               ),
-              title:
-                   Text(
+              title: Text(
                 'Email',
                 style: StyleConstants.greyedOutText,
               ),
               trailing: CircularCheckBox(
                 value: true,
-                onChanged: (bool value) {
-                },
+                onChanged: (bool value) {},
                 activeColor: StyleConstants.yellow,
               ),
             ),
@@ -112,14 +112,13 @@ class EmptyOwnerWidget extends StatelessWidget {
                 size: width * 0.07,
                 color: StyleConstants.blue,
               ),
-              title:  Text(
+              title: Text(
                 'Phone Number',
                 style: StyleConstants.greyedOutText,
               ),
               trailing: CircularCheckBox(
                 value: true,
-                onChanged: (bool value) {
-                },
+                onChanged: (bool value) {},
                 activeColor: StyleConstants.yellow,
               ),
             ),
@@ -135,14 +134,13 @@ class EmptyOwnerWidget extends StatelessWidget {
                 size: width * 0.07,
                 color: StyleConstants.blue,
               ),
-              title:  Text(
+              title: Text(
                 'Address',
                 style: StyleConstants.greyedOutText,
               ),
               trailing: CircularCheckBox(
                 value: true,
-                onChanged: (bool value) {
-                },
+                onChanged: (bool value) {},
                 activeColor: StyleConstants.yellow,
               ),
             ),

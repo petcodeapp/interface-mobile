@@ -5,7 +5,7 @@ class CurrentLocationService {
     Position currentLocation;
     try {
       currentLocation =
-          await getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+          await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
       return currentLocation;
     } catch (error) {
       print(error);

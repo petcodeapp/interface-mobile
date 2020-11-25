@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/PetPerk.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -8,8 +9,11 @@ class PetPerkDescriptionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = StyleConstants.height;
+    double width = StyleConstants.width;
+
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: StyleConstants.width * 0.05),
+      padding: EdgeInsets.symmetric(horizontal: width * 0.05),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,7 +25,8 @@ class PetPerkDescriptionWidget extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   'Pet Perks',
-                  style: StyleConstants.lightBlackThinTitleText.copyWith(fontWeight: FontWeight.bold),
+                  style: StyleConstants.lightBlackThinTitleText
+                      .copyWith(fontWeight: FontWeight.bold),
                 )),
             currentPetPerk.discountAmount != null
                 ? Row(
@@ -38,8 +43,14 @@ class PetPerkDescriptionWidget extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: Container(
-                            child:
-                                Image.asset('assets/images/petsmartlogo.jpg')),
+                          height: height * 0.2,
+                          child: currentPetPerk.storePhotoUrl != null
+                              ? CachedNetworkImage(
+                                  imageUrl: currentPetPerk.storePhotoUrl,
+                            fit: BoxFit.cover,
+                                )
+                              : Container(),
+                        ),
                       ),
                     ],
                   )
@@ -58,12 +69,17 @@ class PetPerkDescriptionWidget extends StatelessWidget {
                     currentPetPerk.description.isNotEmpty
                 ? Text(
                     'Details:',
-                    style: StyleConstants.lightBlackThinTitleText.copyWith(fontSize: 20.0),
+                    style: StyleConstants.lightBlackThinTitleText
+                        .copyWith(fontSize: 20.0),
                   )
                 : SizedBox.shrink(),
             currentPetPerk.description != null &&
                     currentPetPerk.description.isNotEmpty
-                ? Text(currentPetPerk.description, style: StyleConstants.greyThinDescriptionTextSmall.copyWith(fontSize: 15.0, fontWeight: FontWeight.w600),)
+                ? Text(
+                    currentPetPerk.description,
+                    style: StyleConstants.greyThinDescriptionTextSmall
+                        .copyWith(fontSize: 15.0, fontWeight: FontWeight.w600),
+                  )
                 : SizedBox.shrink(),
             SizedBox(
               height: 20.0,
@@ -105,7 +121,8 @@ class PetPerkDescriptionWidget extends StatelessWidget {
                 child: Center(
                   child: Text(
                     'Shop Now',
-                    style: StyleConstants.whiteThinTitleTextSmall.copyWith(fontWeight: FontWeight.w600),
+                    style: StyleConstants.whiteThinTitleTextSmall
+                        .copyWith(fontWeight: FontWeight.w600),
                   ),
                 ),
               ),

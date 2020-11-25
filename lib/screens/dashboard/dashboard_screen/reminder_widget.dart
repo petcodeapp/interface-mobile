@@ -2,7 +2,6 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/widgets/circular_check_box.dart';
 
 class ReminderWidget extends StatefulWidget {
   ReminderWidget({Key key, this.completed, this.name, this.date})

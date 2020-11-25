@@ -3,7 +3,6 @@ import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/screens/dashboard/reminders/add_reminder_widget.dart';
 import 'package:petcode_app/screens/dashboard/reminders/reminder_widget.dart';
-import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/change_pet_dropdown.dart';
 import 'package:provider/provider.dart';

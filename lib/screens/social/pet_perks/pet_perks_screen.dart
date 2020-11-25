@@ -1,38 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/PetPerk.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
+import 'package:petcode_app/providers/pet_perks_provider.dart';
 import 'package:petcode_app/screens/social/pet_perks/pet_perks_categories_selector.dart';
-import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/screens/social/pet_perks/glowing_pet_perk_widget.dart';
 import 'package:petcode_app/screens/social/pet_perks/pet_perk_widget.dart';
-import 'package:petcode_app/widgets/change_pet_dropdown.dart';
-import 'package:petcode_app/widgets/custom_app_bars/text_only_curved_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class PetPerksScreen extends StatelessWidget {
-  final List<PetPerk> petPerks = [
-    PetPerk(
-        storeName: 'Pet Store',
-        description: 'Pet Supplies, Accessories, and Products',
-        discountAmount: 50),
-    PetPerk(
-        storeName: 'Dog Treats Store',
-        description: 'Pet Food',
-        discountAmount: 10),
-    PetPerk(
-        storeName: 'Another Pet Store',
-        description:
-            'Pet Supplies, Accessories, and Products, and more and more and more and more',
-        discountAmount: 33),
-    PetPerk(
-        storeName: 'PetCode',
-        description: 'Pet Supplies, Accessories, and Products',
-        discountAmount: 40,
-        promoCode: 'PETCODE123'
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     double height = StyleConstants.height;
@@ -45,6 +21,12 @@ class PetPerksScreen extends StatelessWidget {
       petPerkIndex = notificationsProvider.index;
     }
 
+    PetPerksProvider petPerksProvider = Provider.of<PetPerksProvider>(context);
+    List<PetPerk> petPerks = petPerksProvider.allPetPerks.where(
+        (PetPerk perk) =>
+            petPerksProvider.currentFilter == 'none' ||
+            perk.categories.contains(petPerksProvider.currentFilter)).toList();
+
     return Scaffold(
       backgroundColor: StyleConstants.pageBackgroundColor,
       body: Container(
@@ -52,19 +34,17 @@ class PetPerksScreen extends StatelessWidget {
         height: height,
         decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topRight,
-              //end: Alignment(0.01, 0.01),
-              end: Alignment.bottomLeft,
-              stops: [0.01, 0.4, 0.6],
-              colors: [
-                const Color(0xffABDEED),
-                const Color(0xff51BFDA),
-                StyleConstants.blue
-              ], // whitish to gray
-              //tileMode: TileMode.repeated,
-            )
-        ),
-
+          begin: Alignment.topRight,
+          //end: Alignment(0.01, 0.01),
+          end: Alignment.bottomLeft,
+          stops: [0.01, 0.4, 0.6],
+          colors: [
+            const Color(0xffABDEED),
+            const Color(0xff51BFDA),
+            StyleConstants.blue
+          ], // whitish to gray
+          //tileMode: TileMode.repeated,
+        )),
         child: Column(
           children: [
             Container(
@@ -82,10 +62,8 @@ class PetPerksScreen extends StatelessWidget {
                         child: Container(
                           height: height * 0.055,
                           child: Center(
-                            child: Text(
-                              'Pet Perks',
-                              style: StyleConstants.pageTitleText
-                            ),
+                            child: Text('Pet Perks',
+                                style: StyleConstants.pageTitleText),
                           ),
                         ),
                       ),
