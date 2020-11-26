@@ -113,7 +113,7 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
                       children: [
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: ChangePetDropdown(),
+                          child: Container(height: _height * 0.065,child: ChangePetDropdown(title: "Vaccinations",)),
                         ),
                         Align(
                           alignment: Alignment.bottomLeft,

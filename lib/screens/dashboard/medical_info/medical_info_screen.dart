@@ -62,7 +62,7 @@ class MedicalInfoScreen extends StatelessWidget {
                         children: [
                           Align(
                             alignment: Alignment.bottomCenter,
-                            child: ChangePetDropdown(),
+                            child: Container(height: height *0.065,child: ChangePetDropdown(title: 'Medical Info',)),
                           ),
                           Align(
                             alignment: Alignment.bottomLeft,
