@@ -87,7 +87,7 @@ class RemindersScreen extends StatelessWidget {
                     children: [
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: ChangePetDropdown(),
+                        child: Container(height: height * 0.065,child: ChangePetDropdown(title: 'Reminders',)),
                       ),
                       Align(
                         alignment: Alignment.bottomLeft,
