@@ -53,7 +53,7 @@ class OwnerInfoScreen extends StatelessWidget {
                       children: [
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: ChangePetDropdown(),
+                          child: Container(height: height * 0.065,child: ChangePetDropdown(title: 'Owner Info',)),
                         ),
                         Align(
                           alignment: Alignment.bottomLeft,
