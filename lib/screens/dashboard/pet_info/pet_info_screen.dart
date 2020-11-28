@@ -71,14 +71,13 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Container(
-                            height: height * 0.06,
+                            height: height * 0.065,
                               //color: Colors.blue,
-                              child: ChangePetDropdown()),
+                              child: ChangePetDropdown(title: "Pet Info")),
                         ),
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: Container(
-                            //color: Colors.blue,
                             height: height * 0.06,
                             child: IconButton(
                               icon: Icon(
