@@ -68,9 +68,11 @@ class _StpAddPhotoScreenState extends State<StpAddPhotoScreen> {
                             context,
                             listen: false)
                         .pickImage(returnedSource);
-                    setState(() {
-                      chosenImage = returnedFile;
-                    });
+                    if (returnedFile != null) {
+                      setState(() {
+                        chosenImage = returnedFile;
+                      });
+                    }
                   }
                 },
                 child: ClipRRect(

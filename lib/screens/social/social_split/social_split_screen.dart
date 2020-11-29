@@ -159,7 +159,7 @@ class SocialSplitScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (_) => PetPerksScreen())).then(
-                            (value) => Provider.of<PetPerksProvider>(context)
+                            (value) => Provider.of<PetPerksProvider>(context, listen: false)
                                 .setFilter('none')),
                         child: Container(
                             height: height * 0.17,
