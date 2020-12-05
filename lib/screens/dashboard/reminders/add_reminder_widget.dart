@@ -245,10 +245,7 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                             child: Center(
                                 child: Text(
                               'Schedule Reminder',
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white),
+                              style: StyleConstants.whiteBoldButtonTextSmall
                             )),
                           ),
                         ),

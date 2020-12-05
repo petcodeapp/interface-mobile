@@ -307,6 +307,13 @@ class StyleConstants {
     fontFamily: 'OpenSans',
   );
 
+  static TextStyle whiteBoldButtonTextSmall = TextStyle(
+    color: Colors.white,
+    fontSize: width * 0.042,
+    fontWeight: FontWeight.w600,
+    fontFamily: 'OpenSans',
+  );
+
   static TextStyle greyedOutText =
       new TextStyle(fontWeight: FontWeight.w400, color: Colors.grey);
 
@@ -319,8 +326,8 @@ class StyleConstants {
 
   static TextStyle greyThinDescriptionTextSmall = new TextStyle(
     fontFamily: 'OpenSans',
-    color: darkPurpleGrey,
-    fontSize: width * 0.035,
+    color: darkGrey,
+    fontSize: width * 0.031,
     fontWeight: FontWeight.w400,
   );
 

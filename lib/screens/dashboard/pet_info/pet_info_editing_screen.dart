@@ -218,7 +218,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                   width: width,
                   height: height * 0.88,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+                    padding: EdgeInsets.symmetric(horizontal: width * 0.08),
                     child: ListView(
                       shrinkWrap: true,
                       //crossAxisAlignment: CrossAxisAlignment.center,

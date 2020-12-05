@@ -242,7 +242,7 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                             child: Center(
                                 child: Text(
                               'Schedule Reminder',
-                              style: StyleConstants.whiteThinTitleTextSmall,
+                              style: StyleConstants.whiteBoldButtonTextSmall,
                             )),
                           ),
                         ),
@@ -269,7 +269,7 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                             child: Center(
                                 child: Text(
                               'Delete Reminder',
-                              style: StyleConstants.whiteThinTitleTextSmall,
+                              style: StyleConstants.whiteBoldButtonTextSmall,
                             )),
                           ),
                         ),

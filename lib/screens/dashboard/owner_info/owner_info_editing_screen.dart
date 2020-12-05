@@ -191,7 +191,7 @@ class _OwnerInfoEditingScreenState extends State<OwnerInfoEditingScreen> {
                       Form(
                         key: _owner1FormKey,
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+                          padding: EdgeInsets.symmetric(horizontal: width * 0.08),
                           child: Column(
                             children: [
                               Align(

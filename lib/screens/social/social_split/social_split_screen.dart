@@ -65,7 +65,7 @@ class SocialSplitScreen extends StatelessWidget {
                         topLeft: Radius.circular(20.0),
                         topRight: Radius.circular(20.0))),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.08),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -92,7 +92,7 @@ class SocialSplitScreen extends StatelessWidget {
                                 ]),
                             child: Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: width * 0.04,
+                                  horizontal: width * 0.045,
                                   vertical: height * 0.01),
                               child: Center(
                                 child: Row(
