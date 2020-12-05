@@ -108,13 +108,18 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                               ],
                             ),
                             Spacer(),
-                            IconButton(
-                                icon: Icon(
-                                  HeroIcons.icon_globe,
-                                  size: height * 0.05,
-                                  color: Colors.black,
-                                ),
-                                onPressed: () {}),
+                            Container(
+                              color: Color(0xffF6C68A),
+                              height: height * 0.05,
+                              width: width * 0.1,
+                              child: IconButton(
+                                  icon: Icon(
+                                    HeroIcons.icon_globe,
+                                    size: height * 0.05,
+                                    color: Colors.black,
+                                  ),
+                                  onPressed: () {}),
+                            ),
                           ],
                         ),
                       ),

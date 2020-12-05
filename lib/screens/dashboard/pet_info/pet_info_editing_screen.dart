@@ -192,7 +192,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: Text(
-                                'Done',
+                                'Save',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w400,
@@ -225,7 +225,6 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                             height: height * 0.02,
                           ),
                           Container(
-
                             child: CircleAvatar(
                               backgroundImage: updatedImage,
                               radius: width * 0.13,
@@ -606,9 +605,11 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                     style: StyleConstants.editTextFieldDescription,),
 
                                   TextFormField(
+                                    /*
                                       validator: (value) =>
                                         ValidatorHelper.petColorValidator(
                                             value),
+                                    */
                                     style: StyleConstants.editTextFieldText,
                                     controller: _colorInputController,
                                     decoration: InputDecoration(
@@ -635,9 +636,11 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                   Text('Temperament',
                                     style: StyleConstants.editTextFieldDescription,),
                                   TextFormField(
+                                    /*
                                     validator: (value) =>
                                         ValidatorHelper.petBreedValidator(
                                             value),
+                                    */
                                     style: StyleConstants.editTextFieldText,
                                     controller: _temperamentInputController,
                                     decoration: InputDecoration(
@@ -716,9 +719,11 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                     Text('Additional Info',
                                       style: StyleConstants.editTextFieldDescription,),
                                     TextFormField(
+                                      /*
                                       validator: (value) =>
                                           ValidatorHelper.petAddInfoValidator(
                                               value),
+                                      */
                                       style: StyleConstants.editTextFieldText,
                                       controller:
                                           _additionalInfoInputController,
