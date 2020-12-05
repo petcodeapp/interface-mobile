@@ -315,6 +315,8 @@ class _OwnerInfoSingleEditingScreenState extends State<OwnerInfoSingleEditingScr
                                         TextFormField(
                                           validator: (value) =>
                                               ValidatorHelper.addressValidator(value),
+                                          keyboardType: TextInputType.multiline,
+                                          maxLines: null,
                                           style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontFamily: 'Open Sans',
