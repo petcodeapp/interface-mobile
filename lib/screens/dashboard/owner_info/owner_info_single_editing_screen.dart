@@ -151,7 +151,7 @@ class _OwnerInfoSingleEditingScreenState extends State<OwnerInfoSingleEditingScr
                                 Navigator.pop(context);
                             },
                             child: Text(
-                              'Done',
+                              'Save',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
