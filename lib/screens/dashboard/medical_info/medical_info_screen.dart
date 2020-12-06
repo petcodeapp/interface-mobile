@@ -108,9 +108,9 @@ class MedicalInfoScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(25.0),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
+                                        color: Colors.black.withOpacity(0.1),
                                         offset: Offset(0, 3),
-                                        blurRadius: 6.0,
+                                        blurRadius: 30.0,
                                       ),
                                     ]),
                                 child: Padding(
@@ -209,9 +209,9 @@ class MedicalInfoScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(25.0),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
+                                        color: Colors.black.withOpacity(0.1),
                                         offset: Offset(0, 3),
-                                        blurRadius: 6.0,
+                                        blurRadius: 30.0,
                                       ),
                                     ]),
                                 child: Padding(
@@ -310,9 +310,9 @@ class MedicalInfoScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(25.0),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
+                                        color: Colors.black.withOpacity(0.1),
                                         offset: Offset(0, 3),
-                                        blurRadius: 6.0,
+                                        blurRadius: 30.0,
                                       ),
                                     ]),
                                 child: Padding(

@@ -25,8 +25,8 @@ class _ReminderWidgetState extends State<ReminderWidget> {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 5,
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 15,
               offset: Offset(0, 3),
             ),
           ],
