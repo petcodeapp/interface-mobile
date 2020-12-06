@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:circular_check_box/circular_check_box.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,7 +15,6 @@ import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/utils/validator_helper.dart';
 import 'package:petcode_app/widgets/breed_search_bar.dart';
 import 'package:petcode_app/widgets/choose_image_source_dialog.dart';
-import 'package:petcode_app/widgets/circular_check_box.dart';
 import 'package:provider/provider.dart';
 
 class PetInfoEditingScreen extends StatefulWidget {
