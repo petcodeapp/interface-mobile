@@ -46,6 +46,7 @@ dependencies:
   slimy_card: ^1.0.4
   url_launcher: ^5.7.2
   uuid: ^2.2.0
+  flutter_datetime_picker: ^1.4.0
 
 
 flutter_native_splash:

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
@@ -112,6 +113,46 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                             suffixIcon: Icon(Icons.calendar_today, ),
                           ),
                           onTap: () {
+                            DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime(2015),
+                              maxTime: DateTime(2022),
+                              onChanged: (date){
+                                print('change $date');
+                            },
+                            onConfirm: (date){
+                              if(date != null){
+                                setState(() {
+                                  _reminderStartDateController =
+                                  new TextEditingController(
+                                      text:
+                                      StringHelper.getDateStringNoYear(
+                                          date));
+                                  _reminderStartDate = date;
+                                });
+                              }
+                              DatePicker.showTime12hPicker(context, showTitleActions: true, onChanged: (date) {
+                                print('change $date in time zone ' + date.timeZoneOffset.inHours.toString());
+                              }, onConfirm: (date) {
+                                if(date != null){
+                                  setState(() {
+                                    _reminderStartDateController =
+                                    new TextEditingController(
+                                        text:
+                                        _reminderStartDateController.text + ', ' +
+                                            StringHelper.getTimeString(
+                                                date));
+                                    _reminderStartDate = date;
+                                  });
+                                }
+                              }, currentTime: DateTime.now());
+                            },
+                            currentTime: DateTime.now(),
+                            //locale: LocaleType.zh,
+                            );
+                          },
+
+                            /*
                             showDatePicker(
                                     context: context,
                                     initialDate: DateTime.now(),
@@ -130,7 +171,9 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                               }
                             });
                           },
-                          readOnly: true,
+
+                          readOnly: true,*/
+
                         ),
                       ),
                       SizedBox(
