@@ -142,7 +142,7 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                                         _reminderStartDateController.text + ', ' +
                                             StringHelper.getTimeString(
                                                 date));
-                                    _reminderStartDate = date;
+                                    _reminderStartDate = _reminderStartDate.add(Duration(hours: date.hour, minutes: date.minute));
                                   });
                                 }
                               }, currentTime: DateTime.now());
@@ -185,7 +185,7 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                               fontSize: 16.0,
                               color: Colors.black.withOpacity(0.8))),
                       DropdownButton<String>(
-                          value: _repeatValue ?? 'Never',
+                          value: _repeatValue ?? 'Monthly',
                           //underline: SizedBox.shrink(),
                           underline: Container(
                             color: Colors.grey,
@@ -214,8 +214,8 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                       SizedBox(
                         height: height * 0.04,
                       ),
-                      Text('End Date', style: StyleConstants.blackThinTitleTextXS),
-                      SizedBox(
+                      _repeatValue == 'Never' ? SizedBox.shrink() : Text('End Date', style: StyleConstants.blackThinTitleTextXS),
+                      _repeatValue == 'Never' ? SizedBox.shrink() : SizedBox(
                         height: height * 0.07,
                         child: TextField(
                           controller: _reminderEndDateController,
@@ -228,6 +228,44 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                             suffixIcon: Icon(Icons.calendar_today),
                           ),
                           onTap: () {
+                            DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime(2019),
+                              maxTime: DateTime(2022),
+                              onChanged: (date){
+                                print('change $date');
+                              },
+                              onConfirm: (date){
+                                if(date != null){
+                                  setState(() {
+                                    _reminderEndDateController =
+                                    new TextEditingController(
+                                        text:
+                                        StringHelper.getDateStringNoYear(
+                                            date));
+                                    _reminderEndDate = date;
+                                  });
+                                }
+                                DatePicker.showTime12hPicker(context, showTitleActions: true, onChanged: (date) {
+                                  print('change $date in time zone ' + date.timeZoneOffset.inHours.toString());
+                                }, onConfirm: (date) {
+                                  if(date != null){
+                                    setState(() {
+                                      _reminderEndDateController =
+                                      new TextEditingController(
+                                          text:
+                                          _reminderEndDateController.text + ', ' +
+                                              StringHelper.getTimeString(
+                                                  date));
+                                      _reminderEndDate = _reminderEndDate.add(Duration(hours: date.hour, minutes: date.minute));
+                                    });
+                                  }
+                                }, currentTime: DateTime.now());
+                              },
+                              currentTime: DateTime.now(),
+                              //locale: LocaleType.zh,
+                            );
+                            /*
                             showDatePicker(
                                     context: context,
                                     initialDate: DateTime.now(),
@@ -245,6 +283,7 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                                 });
                               }
                             });
+                            */
                           },
                           readOnly: true,
                         ),

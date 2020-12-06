@@ -39,13 +39,13 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
     if (widget.currentReminder.startDate != null) {
       _reminderStartDateController
         ..text = StringHelper.getDateStringNoYear(
-            widget.currentReminder.startDate.toDate());
+            widget.currentReminder.startDate.toDate()) + ', ' + StringHelper.getTimeString(widget.currentReminder.endDate.toDate());
       _reminderStartDate = widget.currentReminder.startDate.toDate();
     }
     if (widget.currentReminder.endDate != null) {
       _reminderEndDateController
         ..text = StringHelper.getDateStringNoYear(
-            widget.currentReminder.endDate.toDate());
+            widget.currentReminder.endDate.toDate()) + ', ' + StringHelper.getTimeString(widget.currentReminder.endDate.toDate());
       _reminderEndDate = widget.currentReminder.endDate.toDate();
     }
     _repeatValue = widget.currentReminder.frequency;
@@ -132,7 +132,6 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                             suffixIcon: Icon(Icons.calendar_today),
                           ),
                           onTap: () {
-
                             DatePicker.showDatePicker(context,
                               showTitleActions: true,
                               minTime: DateTime(2015),
@@ -163,7 +162,7 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                                           _reminderStartDateController.text + ', ' +
                                               StringHelper.getTimeString(
                                                   date));
-                                      _reminderStartDate = date;
+                                      _reminderStartDate = _reminderStartDate.add(Duration(hours: date.hour, minutes: date.minute));
                                     });
                                   }
                                 }, currentTime: DateTime.now());
@@ -249,7 +248,7 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                           onTap: () {
                             DatePicker.showDatePicker(context,
                               showTitleActions: true,
-                              minTime: DateTime(2015),
+                              minTime: DateTime(2019),
                               maxTime: DateTime(2022),
                               onChanged: (date){
                                 print('change $date');
@@ -276,7 +275,7 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                                           _reminderEndDateController.text + ', ' +
                                               StringHelper.getTimeString(
                                                   date));
-                                      _reminderEndDate = date;
+                                      _reminderEndDate = _reminderEndDate.add(Duration(hours: date.hour, minutes: date.minute));
                                     });
                                   }
                                 }, currentTime: DateTime.now());
