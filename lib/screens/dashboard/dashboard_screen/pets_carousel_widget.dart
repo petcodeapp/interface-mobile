@@ -88,7 +88,9 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                         ),
                       ),
                     ),
-                    SizedBox(height: height * 0.01,),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: width * 0.03),
                       child: Container(
@@ -99,22 +101,51 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                               children: [
                                 Text(
                                   allPetsProvider.allPets[index].name,
-                                  style: StyleConstants.blackThinTitleTextMedium.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w700, fontSize: height * 0.033, fontFamily: 'OpenSans'),
+                                  style: StyleConstants.blackThinTitleTextMedium
+                                      .copyWith(
+                                          color: StyleConstants.lightBlack,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: height * 0.033,
+                                          fontFamily: 'OpenSans'),
                                 ),
                                 Text(
                                   allPetsProvider.allPets[index].breed,
-                                  style: StyleConstants.blackThinTitleTextXS.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w600, fontFamily: 'OpenSans', fontSize: height * 0.023),
+                                  style: StyleConstants.blackThinTitleTextXS
+                                      .copyWith(
+                                          color: StyleConstants.lightBlack,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'OpenSans',
+                                          fontSize: height * 0.023),
                                 ),
                               ],
                             ),
                             Spacer(),
-                            IconButton(
-                                icon: Icon(
-                                  HeroIcons.icon_globe,
+                            Container(
+                              height: height * 0.055,
+                              width: width * 0.14,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  //end: Alignment(0.01, 0.01),
+                                  end: Alignment.centerRight,
+
+                                  colors: [
+                                    const Color(0xffFAE1C0),
+                                    const Color(0xffF6C68A),
+                                  ], // whitish to gray
+                                  //tileMode: TileMode.repeated,
+                                ),
+                                color: Color(0xffF6C68A),
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.language,
                                   size: height * 0.05,
                                   color: Colors.black,
                                 ),
-                                onPressed: () {}),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -126,14 +157,12 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
             itemCount: allPetsProvider.allPets.length,
           ),
         ),
-
         DotsIndicator(
           dotsCount: allPetsProvider.allPets.length > 0
               ? allPetsProvider.allPets.length
               : 1,
           position: 0.0 + pageIndex,
         ),
-
       ],
     );
   }

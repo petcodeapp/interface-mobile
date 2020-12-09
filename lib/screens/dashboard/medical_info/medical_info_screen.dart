@@ -108,9 +108,9 @@ class MedicalInfoScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(25.0),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
+                                        color: Colors.black.withOpacity(0.1),
                                         offset: Offset(0, 3),
-                                        blurRadius: 6.0,
+                                        blurRadius: 30.0,
                                       ),
                                     ]),
                                 child: Padding(
@@ -179,10 +179,10 @@ class MedicalInfoScreen extends StatelessWidget {
                                                   .blackThinTitleTextMedium,
                                             ),
                                             SizedBox(
-                                              height: height * 0.01,
+                                              height: height * 0.005,
                                             ),
                                             Text(
-                                              'Filler Content, Filler Content,\nFiller Content, Filler Content',
+                                              'Specify your pet\'s medical\nhistory to be displayed when\ntheir QR Tag is scanned',
                                               style: StyleConstants
                                                   .greyThinDescriptionTextSmall,
                                             )
@@ -209,9 +209,9 @@ class MedicalInfoScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(25.0),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
+                                        color: Colors.black.withOpacity(0.1),
                                         offset: Offset(0, 3),
-                                        blurRadius: 6.0,
+                                        blurRadius: 30.0,
                                       ),
                                     ]),
                                 child: Padding(
@@ -280,10 +280,10 @@ class MedicalInfoScreen extends StatelessWidget {
                                                   .blackThinTitleTextMedium,
                                             ),
                                             SizedBox(
-                                              height: height * 0.01,
+                                              height: height * 0.005,
                                             ),
                                             Text(
-                                              'Filler Content, Filler Content,\nFiller Content, Filler Content',
+                                              'Store vaccinations in the\nPetCode app for easy access\nanytime, anywhere',
                                               style: StyleConstants
                                                   .greyThinDescriptionTextSmall,
                                             )
@@ -310,9 +310,9 @@ class MedicalInfoScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(25.0),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
+                                        color: Colors.black.withOpacity(0.1),
                                         offset: Offset(0, 3),
-                                        blurRadius: 6.0,
+                                        blurRadius: 30.0,
                                       ),
                                     ]),
                                 child: Padding(
@@ -381,10 +381,10 @@ class MedicalInfoScreen extends StatelessWidget {
                                                   .blackThinTitleTextMedium,
                                             ),
                                             SizedBox(
-                                              height: height * 0.01,
+                                              height: height * 0.005,
                                             ),
                                             Text(
-                                              'Filler Content, Filler Content,\nFiller Content, Filler Content',
+                                              'Export and share all records\nwith the tap of a button',
                                               style: StyleConstants
                                                   .greyThinDescriptionTextSmall,
                                             )

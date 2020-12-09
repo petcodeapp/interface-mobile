@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
@@ -38,13 +39,13 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
     if (widget.currentReminder.startDate != null) {
       _reminderStartDateController
         ..text = StringHelper.getDateStringNoYear(
-            widget.currentReminder.startDate.toDate());
+            widget.currentReminder.startDate.toDate()) + ', ' + StringHelper.getTimeString(widget.currentReminder.endDate.toDate());
       _reminderStartDate = widget.currentReminder.startDate.toDate();
     }
     if (widget.currentReminder.endDate != null) {
       _reminderEndDateController
         ..text = StringHelper.getDateStringNoYear(
-            widget.currentReminder.endDate.toDate());
+            widget.currentReminder.endDate.toDate()) + ', ' + StringHelper.getTimeString(widget.currentReminder.endDate.toDate());
       _reminderEndDate = widget.currentReminder.endDate.toDate();
     }
     _repeatValue = widget.currentReminder.frequency;
@@ -52,12 +53,22 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
     super.initState();
   }
 
+  List frequencySelection = <String>[
+    'Never',
+    'Daily',
+    'Weekly',
+    'Monthly',
+    'Yearly'
+  ];
+
   @override
   Widget build(BuildContext context) {
     double height = StyleConstants.height;
     double width = StyleConstants.width;
 
     Pet currentPet = Provider.of<CurrentPetProvider>(context).currentPet;
+
+    bool showEndDate = false;
 
     return Padding(
       padding: EdgeInsets.only(
@@ -121,7 +132,47 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                             suffixIcon: Icon(Icons.calendar_today),
                           ),
                           onTap: () {
-                            showDatePicker(
+                            DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime(2015),
+                              maxTime: DateTime(2022),
+
+                              onChanged: (date){
+                                print('change $date');
+                              },
+                              onConfirm: (date){
+                                if(date != null){
+                                  setState(() {
+                                    _reminderStartDateController =
+                                    new TextEditingController(
+                                        text:
+                                        StringHelper.getDateStringNoYear(
+                                            date));
+                                    _reminderStartDate = date;
+                                  });
+                                }
+                                DatePicker.showTime12hPicker(context, showTitleActions: true, onChanged: (date) {
+                                  print('change $date in time zone ' + date.timeZoneOffset.inHours.toString());
+                                }, onConfirm: (date) {
+                                  if(date != null){
+                                    setState(() {
+                                      _reminderStartDateController =
+                                      new TextEditingController(
+                                          text:
+                                          _reminderStartDateController.text + ', ' +
+                                              StringHelper.getTimeString(
+                                                  date));
+                                      _reminderStartDate = _reminderStartDate.add(Duration(hours: date.hour, minutes: date.minute));
+                                    });
+                                  }
+                                }, currentTime: DateTime.now());
+                              },
+                              currentTime: DateTime.now(),
+                              //locale: LocaleType.zh,
+                            );
+
+
+                            /*showDatePicker(
                                     context: context,
                                     initialDate: DateTime.now(),
                                     firstDate: DateTime(2019),
@@ -136,6 +187,7 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                                 });
                               }
                             });
+                            */
                           },
                           readOnly: true,
                         ),
@@ -168,14 +220,20 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                           }).toList(),
                           onChanged: (String value) {
                             setState(() {
+                              if(value == 'Never'){
+                                showEndDate = false;
+                              }
+                              else{
+                                showEndDate = true;
+                              }
                               _repeatValue = value;
                             });
                           }),
                       SizedBox(
                         height: height * 0.04,
                       ),
-                      Text('End Date/Time', style: StyleConstants.blackThinTitleTextXS),
-                      SizedBox(
+                      _repeatValue == 'Never' ? SizedBox.shrink()  : Text('End Date/Time', style: StyleConstants.blackThinTitleTextXS),
+                      _repeatValue == 'Never' ? SizedBox.shrink() : SizedBox(
                         height: height * 0.07,
                         child: TextField(
                           controller: _reminderEndDateController,
@@ -184,16 +242,53 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                           ),
                           decoration: InputDecoration(
                             hintText: 'End Date',
-
                             hintStyle: TextStyle(fontSize: 14.0, ),
                             suffixIcon: Icon(Icons.calendar_today),
                           ),
                           onTap: () {
+                            DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime(2019),
+                              maxTime: DateTime(2022),
+                              onChanged: (date){
+                                print('change $date');
+                              },
+                              onConfirm: (date){
+                                if(date != null){
+                                  setState(() {
+                                    _reminderEndDateController =
+                                    new TextEditingController(
+                                        text:
+                                        StringHelper.getDateStringNoYear(
+                                            date));
+                                    _reminderEndDate = date;
+                                  });
+                                }
+                                DatePicker.showTime12hPicker(context, showTitleActions: true, onChanged: (date) {
+                                  print('change $date in time zone ' + date.timeZoneOffset.inHours.toString());
+                                }, onConfirm: (date) {
+                                  if(date != null){
+                                    setState(() {
+                                      _reminderEndDateController =
+                                      new TextEditingController(
+                                          text:
+                                          _reminderEndDateController.text + ', ' +
+                                              StringHelper.getTimeString(
+                                                  date));
+                                      _reminderEndDate = _reminderEndDate.add(Duration(hours: date.hour, minutes: date.minute));
+                                    });
+                                  }
+                                }, currentTime: DateTime.now());
+                              },
+                              currentTime: DateTime.now(),
+                              //locale: LocaleType.zh,
+                            );
+                            /*
                             showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2019),
-                                    lastDate: DateTime(2050))
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2019),
+                                lastDate: DateTime(2050))
                                 .then((DateTime selectedDate) {
                               if (selectedDate != null) {
                                 setState(() {
@@ -204,7 +299,11 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                                 });
                               }
                             });
+
+                            */
                           },
+
+
                           readOnly: true,
                         ),
                       ),
@@ -242,7 +341,7 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                             child: Center(
                                 child: Text(
                               'Schedule Reminder',
-                              style: StyleConstants.whiteThinTitleTextSmall,
+                              style: StyleConstants.whiteBoldButtonTextSmall,
                             )),
                           ),
                         ),
@@ -269,7 +368,7 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                             child: Center(
                                 child: Text(
                               'Delete Reminder',
-                              style: StyleConstants.whiteThinTitleTextSmall,
+                              style: StyleConstants.whiteBoldButtonTextSmall,
                             )),
                           ),
                         ),
