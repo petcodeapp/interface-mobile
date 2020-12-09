@@ -93,8 +93,9 @@ class _EditVaccinationWidgetState extends State<EditVaccinationWidget> {
                     SizedBox(
                       height: height * 0.06,
                     ),
-                    Text('Name',
-                        style: StyleConstants.editTextFieldDescription,
+                    Text(
+                      'Name',
+                      style: StyleConstants.editTextFieldDescription,
                     ),
                     SizedBox(
                       height: height * 0.07,
@@ -108,8 +109,10 @@ class _EditVaccinationWidgetState extends State<EditVaccinationWidget> {
                     SizedBox(
                       height: 8.0,
                     ),
-                    Text('Expiration Date',
-                      style: StyleConstants.editTextFieldDescription,),
+                    Text(
+                      'Expiration Date',
+                      style: StyleConstants.editTextFieldDescription,
+                    ),
                     SizedBox(
                       height: height * 0.07,
                       child: TextField(
@@ -171,11 +174,9 @@ class _EditVaccinationWidgetState extends State<EditVaccinationWidget> {
                         ),
                       ),
                     ),
-
                     SizedBox(
                       height: height * 0.06,
                     ),
-
                     GestureDetector(
                       onTap: () async {
                         if (_formKey.currentState.validate()) {
