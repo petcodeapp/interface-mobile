@@ -3,6 +3,7 @@ import 'package:petcode_app/models/Vaccination.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/edit_vaccination_widget.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/preview_vaccination_widget.dart';
+import 'package:petcode_app/services/download_service.dart';
 import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -10,16 +11,12 @@ import 'package:provider/provider.dart';
 
 class VaccinationWidget extends StatefulWidget {
   VaccinationWidget(
-      {Key key,
-      this.updateProvider,
-      this.vaccination,
-      this.vaccinationIndex})
+      {Key key, this.updateProvider, this.vaccination, this.vaccinationIndex})
       : super(key: key);
 
   final bool updateProvider;
   final Vaccination vaccination;
   final int vaccinationIndex;
-
 
   @override
   _VaccinationWidgetState createState() => _VaccinationWidgetState();
@@ -124,7 +121,7 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
                 ),
               ),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Row(
                   children: [
                     Spacer(),
@@ -136,14 +133,24 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => PreviewVaccinationWidget(vaccinationImageUrl: widget.vaccination.imageUrl,)),
+                          MaterialPageRoute(
+                              builder: (context) => PreviewVaccinationWidget(
+                                    vaccinationImageUrl:
+                                        widget.vaccination.imageUrl,
+                                  )),
                         );
                       },
                     ),
                     Spacer(),
-                    Icon(
-                      HeroIcons2.download_1,
-                      //size: 22.0,
+                    IconButton(
+                      icon: Icon(
+                        HeroIcons2.download_1,
+                        //size: 22.0,
+                      ),
+                      onPressed: () async {
+                        DownloadService()
+                            .downloadVaccination(widget.vaccination);
+                      },
                     ),
                   ],
                 ),

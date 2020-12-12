@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
@@ -11,7 +12,6 @@ import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/providers/pet_perks_provider.dart';
 import 'package:petcode_app/providers/scans_map_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
-import 'package:petcode_app/screens/auth/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
 import 'package:petcode_app/screens/start_splash_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
@@ -24,13 +24,13 @@ import 'package:petcode_app/set_up_keys.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/no_glow_behavior.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SetUpKeys().createKeys();
 
   await Firebase.initializeApp();
+  await FlutterDownloader.initialize(debug: true);
 
   runApp(MyApp());
 }
