@@ -7,17 +7,16 @@ import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
 class SelectPetWidget extends StatelessWidget {
-  Widget petWidget(BuildContext context, Pet pet, double height, double width,
+  Widget petWidget(Pet pet, double height, double width,
       CurrentPetProvider currentPetProvider) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: height * 0.02),
-      child: GestureDetector(
-        onTap: () {
-          currentPetProvider.setCurrentPet(pet);
-          //Navigator.pop(context);
-        },
+    return GestureDetector(
+      onTap: () {
+        currentPetProvider.setCurrentPet(pet);
+      },
+      behavior: HitTestBehavior.translucent,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: height * 0.02),
         child: Row(
-          mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
               flex: 1,
@@ -112,11 +111,10 @@ class SelectPetWidget extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
-                      petWidget(context,
-                          allPetsProvider.allPets[index], height, width, currentPetProvider),
-                      index == allPetsProvider.allPets.length ?  SizedBox.shrink() : Padding(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: width * 0.1),
+                      petWidget(allPetsProvider.allPets[index], height,
+                          width, currentPetProvider),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: width * 0.1),
                         child: Divider(
                           thickness: 1.0,
                         ),
