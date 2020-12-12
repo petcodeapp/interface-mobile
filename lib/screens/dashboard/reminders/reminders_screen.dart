@@ -37,7 +37,11 @@ class RemindersScreen extends StatelessWidget {
 
     CurrentPetProvider currentPetProvider =
         Provider.of<CurrentPetProvider>(context);
-    List<Reminder> allReminders = currentPetProvider.currentPet.reminders;
+    List<Reminder> allReminders = [...currentPetProvider.currentPet.reminders];
+
+    for (int i = 0; i < allReminders.length; i++) {
+      print(allReminders[i].name + ' ' + allReminders[i].index.toString());
+    }
 
     allReminders.sort((Reminder reminderA, Reminder reminderB) {
       if (reminderA.startDate == null) {
