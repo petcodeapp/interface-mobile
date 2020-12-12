@@ -1,7 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:petcode_app/models/Vaccination.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/edit_vaccination_widget.dart';
+import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/preview_vaccination_widget.dart';
+import 'package:petcode_app/services/download_service.dart';
 import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
@@ -9,17 +11,12 @@ import 'package:provider/provider.dart';
 
 class VaccinationWidget extends StatefulWidget {
   VaccinationWidget(
-      {Key key,
-      this.updateProvider,
-      this.vaccineName,
-      this.vaccineDate,
-      this.vaccineIndex})
+      {Key key, this.updateProvider, this.vaccination, this.vaccinationIndex})
       : super(key: key);
 
   final bool updateProvider;
-  final String vaccineName;
-  final Timestamp vaccineDate;
-  final int vaccineIndex;
+  final Vaccination vaccination;
+  final int vaccinationIndex;
 
   @override
   _VaccinationWidgetState createState() => _VaccinationWidgetState();
@@ -47,7 +44,7 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
     _height = StyleConstants.height;
     _width = StyleConstants.width;
 
-    bool hasDate = widget.vaccineDate != null;
+    bool hasDate = widget.vaccination.date != null;
 
     return GestureDetector(
       onTap: () {
@@ -82,7 +79,7 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.vaccineName,
+                      widget.vaccination.name,
                       style: TextStyle(
                         color: StyleConstants.lightBlack,
                         fontSize: 22.0,
@@ -97,9 +94,9 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
                       children: [
                         Text(
                           hasDate
-                              ? 'Expiriation Date: ' +
+                              ? 'Expiration Date: ' +
                                   StringHelper.getDateString(
-                                      widget.vaccineDate.toDate())
+                                      widget.vaccination.date.toDate())
                               : 'No Date Given',
                           style: TextStyle(
                             color: StyleConstants.lightBlack,
@@ -124,20 +121,36 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
                 ),
               ),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Row(
                   children: [
                     Spacer(),
-                    Icon(
-                      Icons.remove_red_eye,
-                      size: 30.0,
+                    IconButton(
+                      icon: Icon(
+                        Icons.remove_red_eye,
+                        //size: 30.0,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PreviewVaccinationWidget(
+                                    vaccinationImageUrl:
+                                        widget.vaccination.imageUrl,
+                                  )),
+                        );
+                      },
                     ),
-                    SizedBox(
-                      width: _width * 0.05,
-                    ),
-                    Icon(
-                      HeroIcons2.download_1,
-                      size: 22.0,
+                    Spacer(),
+                    IconButton(
+                      icon: Icon(
+                        HeroIcons2.download_1,
+                        //size: 22.0,
+                      ),
+                      onPressed: () async {
+                        DownloadService()
+                            .downloadVaccination(widget.vaccination);
+                      },
                     ),
                   ],
                 ),
@@ -167,9 +180,9 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
               color: Colors.white,
             ),
             child: EditVaccinationWidget(
-              vaccinationName: widget.vaccineName,
-              vaccinationDate: widget.vaccineDate.toDate(),
-              vaccinationIndex: widget.vaccineIndex,
+              vaccinationName: widget.vaccination.name,
+              vaccinationDate: widget.vaccination.date.toDate(),
+              vaccinationIndex: widget.vaccinationIndex,
             ),
           );
         });

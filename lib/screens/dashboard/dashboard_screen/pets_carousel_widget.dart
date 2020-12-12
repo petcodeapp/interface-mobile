@@ -1,10 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
-import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
@@ -82,10 +82,14 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
-                        child: Image(
-                          image: allPetsProvider.allPets[index].petImage,
-                          fit: BoxFit.cover,
-                        ),
+                        child: allPetsProvider.allPets[index].profileUrl !=
+                                    null &&
+                                allPetsProvider
+                                    .allPets[index].profileUrl.isNotEmpty
+                            ? CachedNetworkImage(
+                                imageUrl:
+                                    allPetsProvider.allPets[index].profileUrl, fit: BoxFit.cover,)
+                            : AssetImage('assets/images/puppyphoto.jpg'),
                       ),
                     ),
                     SizedBox(

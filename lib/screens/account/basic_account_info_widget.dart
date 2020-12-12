@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/User.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
@@ -47,8 +48,11 @@ class BasicAccountInfoWidget extends StatelessWidget {
               backgroundColor: Colors.transparent,
               radius: 40.0,
               backgroundImage: allPetsProvider.allPets != null &&
-                      allPetsProvider.allPets.length > 0
-                  ? allPetsProvider.allPets[0].petImage
+                      allPetsProvider.allPets.length > 0 &&
+                      allPetsProvider.allPets[0].profileUrl != null &&
+                      allPetsProvider.allPets[0].profileUrl.isNotEmpty
+                  ? CachedNetworkImageProvider(
+                      allPetsProvider.allPets[0].profileUrl)
                   : AssetImage('assets/images/puppyphoto.jpg'),
             ),
             SizedBox(

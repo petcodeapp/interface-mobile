@@ -1,13 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:petcode_app/models/Vaccination.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/vaccination_widget.dart';
 
 class GlowingVaccinationWidget extends StatefulWidget {
-  GlowingVaccinationWidget({Key key, this.vaccineName, this.vaccineDate}) : super(key: key);
+  GlowingVaccinationWidget({Key key, this.vaccination}) : super(key: key);
 
-  final String vaccineName;
-  final Timestamp vaccineDate;
+  final Vaccination vaccination;
 
   @override
   _GlowingVaccinationWidgetState createState() => _GlowingVaccinationWidgetState();
@@ -33,8 +32,7 @@ class _GlowingVaccinationWidgetState extends State<GlowingVaccinationWidget> wit
   Widget build(BuildContext context) {
     return Container(
       child: VaccinationWidget(
-        vaccineName: widget.vaccineName,
-        vaccineDate: widget.vaccineDate,
+        vaccination: widget.vaccination,
         updateProvider: true,
       ),
       decoration: BoxDecoration(boxShadow: [

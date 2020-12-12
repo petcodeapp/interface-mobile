@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/screens/dashboard/pet_info/pet_info_editing_screen.dart';
@@ -31,18 +32,17 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
         child: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topRight,
-                //end: Alignment(0.01, 0.01),
-                end: Alignment.bottomLeft,
-                stops: [0.01, 0.4, 0.6],
-                colors: [
-                  const Color(0xffABDEED),
-                  const Color(0xff51BFDA),
-                  StyleConstants.blue
-                ], // whitish to gray
-                //tileMode: TileMode.repeated,
-              )
-          ),
+            begin: Alignment.topRight,
+            //end: Alignment(0.01, 0.01),
+            end: Alignment.bottomLeft,
+            stops: [0.01, 0.4, 0.6],
+            colors: [
+              const Color(0xffABDEED),
+              const Color(0xff51BFDA),
+              StyleConstants.blue
+            ], // whitish to gray
+            //tileMode: TileMode.repeated,
+          )),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,24 +71,23 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Container(
-                            height: height * 0.065,
+                              height: height * 0.065,
                               //color: Colors.blue,
                               child: ChangePetDropdown(title: "Pet Info")),
                         ),
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: Container(
-                            height: height * 0.06,
-                            child: IconButton(
-                              icon: Icon(
-                                //HeroIcons2.left_arrow_1,
-                                Icons.arrow_back_ios,
-                                size: 25.0,
-                                color: Colors.white,
-                              ),
-                              onPressed: () => Navigator.pop(context),
-                            )
-                          ),
+                              height: height * 0.06,
+                              child: IconButton(
+                                icon: Icon(
+                                  //HeroIcons2.left_arrow_1,
+                                  Icons.arrow_back_ios,
+                                  size: 25.0,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () => Navigator.pop(context),
+                              )),
                         )
                       ],
                     )),
@@ -99,8 +98,8 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                   decoration: BoxDecoration(
                       color: StyleConstants.white,
                       borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20.0),
-                    topRight: Radius.circular(20.0))),
+                          topLeft: Radius.circular(20.0),
+                          topRight: Radius.circular(20.0))),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -140,16 +139,18 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                       flex: 1,
                                       child: Container(
                                         decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(30.0),
+                                          borderRadius:
+                                              BorderRadius.circular(30.0),
                                         ),
                                         child: CircleAvatar(
                                           backgroundColor: StyleConstants.blue,
                                           radius: 40.0,
                                           backgroundImage: currentPet
-                                                      .petImage !=
-                                                  null
-                                              ? currentPet.petImage
+                                                          .profileUrl !=
+                                                      null &&
+                                                  currentPet
+                                                      .profileUrl.isNotEmpty
+                                              ? CachedNetworkImageProvider(currentPet.profileUrl,)
                                               : AssetImage(
                                                   'assets/images/puppyphoto.jpg'),
                                         ),
@@ -169,15 +170,21 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                           Text(
                                             currentPetProvider.currentPet.name,
                                             style: StyleConstants
-                                                .whiteThinTitleText.copyWith(fontSize: height * 0.031),
+                                                .whiteThinTitleText
+                                                .copyWith(
+                                                    fontSize: height * 0.031),
                                             maxLines: 3,
                                             overflow: TextOverflow.ellipsis,
                                           ),
-                                          SizedBox(height: height * 0.002,),
+                                          SizedBox(
+                                            height: height * 0.002,
+                                          ),
                                           Text(
                                             currentPetProvider.currentPet.breed,
                                             style: StyleConstants
-                                                .whiteThinTitleTextSmall.copyWith(fontSize: height * 0.023),
+                                                .whiteThinTitleTextSmall
+                                                .copyWith(
+                                                    fontSize: height * 0.023),
                                             maxLines: 3,
                                             overflow: TextOverflow.ellipsis,
                                           )
@@ -223,11 +230,13 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                             ],
                             borderRadius: BorderRadius.circular(20.0)),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: width * 0.03),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: width * 0.03),
                           child: Column(
-
                             children: [
-                              SizedBox(height: height * 0.015,),
+                              SizedBox(
+                                height: height * 0.015,
+                              ),
                               ListTile(
                                 leading: Icon(
                                   HeroIcons2.pawprint_1,
@@ -237,13 +246,15 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 //need to add species field
                                 title: currentPet.species != null &&
                                         currentPet.species.isNotEmpty
-                                    ? Text(currentPet.species, style: StyleConstants.lightBlackListText)
+                                    ? Text(currentPet.species,
+                                        style:
+                                            StyleConstants.lightBlackListText)
                                     : Text('Species',
                                         style: StyleConstants.greyedOutText),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
                                 child: Divider(
                                   thickness: 1,
                                 ),
@@ -256,15 +267,17 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 ),
                                 title: currentPet.breed != null &&
                                         currentPet.breed.isNotEmpty
-                                    ? Text(currentPet.breed, style: StyleConstants.lightBlackListText)
+                                    ? Text(currentPet.breed,
+                                        style:
+                                            StyleConstants.lightBlackListText)
                                     : Text(
                                         'Breed',
                                         style: StyleConstants.greyedOutText,
                                       ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
                                 child: Divider(
                                   thickness: 1,
                                 ),
@@ -278,12 +291,15 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 title: currentPet.birthday == null
                                     ? Text('Birthday',
                                         style: StyleConstants.greyedOutText)
-                                    : Text(StringHelper.getDateString(
-                                        currentPet.birthday.toDate()), style: StyleConstants.lightBlackListText),
+                                    : Text(
+                                        StringHelper.getDateString(
+                                            currentPet.birthday.toDate()),
+                                        style:
+                                            StyleConstants.lightBlackListText),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
                                 child: Divider(
                                   thickness: 1,
                                 ),
@@ -296,13 +312,15 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 ),
                                 title: currentPet.color != null &&
                                         currentPet.color.isNotEmpty
-                                    ? Text(currentPet.color, style: StyleConstants.lightBlackListText)
+                                    ? Text(currentPet.color,
+                                        style:
+                                            StyleConstants.lightBlackListText)
                                     : Text('Color',
                                         style: StyleConstants.greyedOutText),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
                                 child: Divider(
                                   thickness: 1,
                                 ),
@@ -315,13 +333,15 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 ),
                                 title: currentPet.temperament != null &&
                                         currentPet.temperament.isNotEmpty
-                                    ? Text(currentPet.temperament, style: StyleConstants.lightBlackListText)
+                                    ? Text(currentPet.temperament,
+                                        style:
+                                            StyleConstants.lightBlackListText)
                                     : Text('Temperament',
                                         style: StyleConstants.greyedOutText),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
                                 child: Divider(
                                   thickness: 1,
                                 ),
@@ -363,17 +383,23 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 ),
                                 title: Row(
                                   children: [
-                                    Text('Service Animal: ', style: StyleConstants.lightBlackListText),
+                                    Text('Service Animal: ',
+                                        style:
+                                            StyleConstants.lightBlackListText),
                                     (currentPet.isServiceAnimal
-                                            ? Text('Yes', style: StyleConstants.lightBlackListText)
-                                            : Text('No', style: StyleConstants.lightBlackListText)) ??
+                                            ? Text('Yes',
+                                                style: StyleConstants
+                                                    .lightBlackListText)
+                                            : Text('No',
+                                                style: StyleConstants
+                                                    .lightBlackListText)) ??
                                         Text('N/A'),
                                   ],
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
                                 child: Divider(
                                   thickness: 1,
                                 ),
@@ -386,13 +412,17 @@ class _PetInfoScreenState extends State<PetInfoScreen> {
                                 ),
                                 title: currentPet.additionalInfo != null &&
                                         currentPet.additionalInfo.isNotEmpty
-                                    ? Text(currentPet.additionalInfo, style: StyleConstants.lightBlackListText)
+                                    ? Text(currentPet.additionalInfo,
+                                        style:
+                                            StyleConstants.lightBlackListText)
                                     : Text(
                                         'Additional Notes',
                                         style: StyleConstants.greyedOutText,
                                       ),
                               ),
-                              SizedBox(height: height * 0.015,),
+                              SizedBox(
+                                height: height * 0.015,
+                              ),
                             ],
                           ),
                         ),

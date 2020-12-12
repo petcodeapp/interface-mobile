@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
@@ -66,7 +65,8 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                         alignment: Alignment.center,
                         child: Text(
                           'New Reminder',
-                          style: StyleConstants.blackThinTitleTextMedium.copyWith(fontSize: 22.0),
+                          style: StyleConstants.blackThinTitleTextMedium
+                              .copyWith(fontSize: 22.0),
                         ),
                       ),
                       SizedBox(
@@ -84,8 +84,9 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                           child: TextFormField(
                             controller: _reminderNameController,
                             style: TextStyle(
-                                fontWeight: FontWeight.w600, color: StyleConstants.lightBlack, fontSize: 20.0
-                            ),
+                                fontWeight: FontWeight.w600,
+                                color: StyleConstants.lightBlack,
+                                fontSize: 20.0),
                             decoration: InputDecoration(
                               //border: OutlineInputBorder(),
                               //hintText: 'Name',
@@ -102,79 +103,54 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                       SizedBox(
                         height: height * 0.07,
                         child: TextField(
-                          controller: _reminderStartDateController,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, color: StyleConstants.lightBlack, fontSize: 20.0
-                          ),
-                          decoration: InputDecoration(
-                            //border: OutlineInputBorder(),
-                            hintText: 'Start Date',
-                            hintStyle: TextStyle(fontSize: 14.0),
-                            suffixIcon: Icon(Icons.calendar_today, ),
-                          ),
-                          onTap: () {
-                            DatePicker.showDatePicker(context,
-                              showTitleActions: true,
-                              minTime: DateTime(2015),
-                              maxTime: DateTime(2022),
-                              onChanged: (date){
-                                print('change $date');
-                            },
-                            onConfirm: (date){
-                              if(date != null){
-                                setState(() {
-                                  _reminderStartDateController =
-                                  new TextEditingController(
-                                      text:
-                                      StringHelper.getDateStringNoYear(
-                                          date));
-                                  _reminderStartDate = date;
-                                });
-                              }
-                              DatePicker.showTime12hPicker(context, showTitleActions: true, onChanged: (date) {
-                                print('change $date in time zone ' + date.timeZoneOffset.inHours.toString());
-                              }, onConfirm: (date) {
-                                if(date != null){
+                            controller: _reminderStartDateController,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: StyleConstants.lightBlack,
+                                fontSize: 20.0),
+                            decoration: InputDecoration(
+                              //border: OutlineInputBorder(),
+                              hintText: 'Start Date',
+                              hintStyle: TextStyle(fontSize: 14.0),
+                              suffixIcon: Icon(
+                                Icons.calendar_today,
+                              ),
+                            ),
+                            onTap: () {
+                              showDatePicker(
+                                context: context,
+                                firstDate: DateTime(2010),
+                                lastDate: DateTime(2050),
+                                initialDate: DateTime.now(),
+                              ).then((DateTime selectedDate) {
+                                if (selectedDate != null) {
                                   setState(() {
                                     _reminderStartDateController =
-                                    new TextEditingController(
-                                        text:
-                                        _reminderStartDateController.text + ', ' +
-                                            StringHelper.getTimeString(
-                                                date));
-                                    _reminderStartDate = _reminderStartDate.add(Duration(hours: date.hour, minutes: date.minute));
+                                        new TextEditingController(
+                                            text: StringHelper
+                                                .getDateStringNoYear(
+                                                    selectedDate));
+                                    _reminderStartDate = selectedDate;
+                                  });
+                                  showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.now())
+                                      .then((TimeOfDay selectedTime) {
+                                    setState(() {
+                                      _reminderStartDateController =
+                                          new TextEditingController(
+                                              text: _reminderStartDateController
+                                                      .text +
+                                                  ', ' + selectedTime.format(context));
+                                      _reminderStartDate =
+                                          _reminderStartDate.add(Duration(
+                                              hours: selectedTime.hour,
+                                              minutes: selectedTime.minute));
+                                    });
                                   });
                                 }
-                              }, currentTime: DateTime.now());
-                            },
-                            currentTime: DateTime.now(),
-                            //locale: LocaleType.zh,
-                            );
-                          },
-
-                            /*
-                            showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2019),
-                                    lastDate: DateTime(2050))
-                                .then((DateTime selectedDate) {
-                              if (selectedDate != null) {
-                                setState(() {
-                                  _reminderStartDateController =
-                                      new TextEditingController(
-                                          text:
-                                              StringHelper.getDateStringNoYear(
-                                                  selectedDate));
-                                  _reminderStartDate = selectedDate;
-                                });
-                              }
-                            });
-                          },
-
-                          readOnly: true,*/
-
-                        ),
+                              });
+                            }),
                       ),
                       SizedBox(
                         height: height * 0.04,
@@ -201,9 +177,13 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                           ].map((String value) {
                             return new DropdownMenuItem<String>(
                               value: value,
-                              child: new Text(value, style: TextStyle(
-                                  fontWeight: FontWeight.w600, color: StyleConstants.lightBlack, fontSize: 20.0
-                              ),),
+                              child: new Text(
+                                value,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: StyleConstants.lightBlack,
+                                    fontSize: 20.0),
+                              ),
                             );
                           }).toList(),
                           onChanged: (String value) {
@@ -214,80 +194,67 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                       SizedBox(
                         height: height * 0.04,
                       ),
-                      _repeatValue == 'Never' ? SizedBox.shrink() : Text('End Date', style: StyleConstants.blackThinTitleTextXS),
-                      _repeatValue == 'Never' ? SizedBox.shrink() : SizedBox(
-                        height: height * 0.07,
-                        child: TextField(
-                          controller: _reminderEndDateController,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, color: StyleConstants.lightBlack, fontSize: 20.0
-                          ),
-                          decoration: InputDecoration(
-                            hintText: 'End Date',
-                            hintStyle: TextStyle(fontSize: 14.0),
-                            suffixIcon: Icon(Icons.calendar_today),
-                          ),
-                          onTap: () {
-                            DatePicker.showDatePicker(context,
-                              showTitleActions: true,
-                              minTime: DateTime(2019),
-                              maxTime: DateTime(2022),
-                              onChanged: (date){
-                                print('change $date');
-                              },
-                              onConfirm: (date){
-                                if(date != null){
-                                  setState(() {
-                                    _reminderEndDateController =
-                                    new TextEditingController(
-                                        text:
-                                        StringHelper.getDateStringNoYear(
-                                            date));
-                                    _reminderEndDate = date;
-                                  });
-                                }
-                                DatePicker.showTime12hPicker(context, showTitleActions: true, onChanged: (date) {
-                                  print('change $date in time zone ' + date.timeZoneOffset.inHours.toString());
-                                }, onConfirm: (date) {
-                                  if(date != null){
-                                    setState(() {
-                                      _reminderEndDateController =
-                                      new TextEditingController(
-                                          text:
-                                          _reminderEndDateController.text + ', ' +
-                                              StringHelper.getTimeString(
-                                                  date));
-                                      _reminderEndDate = _reminderEndDate.add(Duration(hours: date.hour, minutes: date.minute));
-                                    });
-                                  }
-                                }, currentTime: DateTime.now());
-                              },
-                              currentTime: DateTime.now(),
-                              //locale: LocaleType.zh,
-                            );
-                            /*
-                            showDatePicker(
+                      _repeatValue == 'Never'
+                          ? SizedBox.shrink()
+                          : Text('End Date',
+                              style: StyleConstants.blackThinTitleTextXS),
+                      _repeatValue == 'Never'
+                          ? SizedBox.shrink()
+                          : SizedBox(
+                              height: height * 0.07,
+                              child: TextField(
+                                controller: _reminderEndDateController,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: StyleConstants.lightBlack,
+                                    fontSize: 20.0),
+                                decoration: InputDecoration(
+                                  hintText: 'End Date',
+                                  hintStyle: TextStyle(fontSize: 14.0),
+                                  suffixIcon: Icon(Icons.calendar_today),
+                                ),
+                                onTap: () {
+                                  showDatePicker(
                                     context: context,
+                                    firstDate: DateTime(2010),
+                                    lastDate: DateTime(2050),
                                     initialDate: DateTime.now(),
-                                    firstDate: DateTime(2019),
-                                    lastDate: DateTime(2021))
-                                .then((DateTime selectedDate) {
-                              if (selectedDate != null) {
-                                setState(() {
-                                  _reminderEndDateController =
-                                      new TextEditingController(
-                                          text:
-                                              StringHelper.getDateStringNoYear(
-                                                  selectedDate));
-                                  _reminderEndDate = selectedDate;
-                                });
-                              }
-                            });
-                            */
-                          },
-                          readOnly: true,
-                        ),
-                      ),
+                                  ).then((DateTime selectedDate) {
+                                    if (selectedDate != null) {
+                                      setState(() {
+                                        _reminderEndDateController =
+                                            new TextEditingController(
+                                                text: StringHelper
+                                                    .getDateStringNoYear(
+                                                        selectedDate));
+                                        _reminderEndDate = selectedDate;
+                                      });
+                                    }
+                                    showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay.now(),
+                                    ).then((TimeOfDay selectedTime) {
+                                      if (selectedTime != null) {
+                                        setState(() {
+                                          _reminderEndDateController =
+                                              new TextEditingController(
+                                                  text:
+                                                      _reminderEndDateController
+                                                              .text +
+                                                          ', ' + selectedTime.format(context));
+                                          _reminderEndDate =
+                                              _reminderEndDate.add(Duration(
+                                                  hours: selectedDate.hour,
+                                                  minutes:
+                                                      selectedTime.minute));
+                                        });
+                                      }
+                                    });
+                                  });
+                                },
+                                readOnly: true,
+                              ),
+                            ),
                       SizedBox(
                         height: height * 0.04,
                       ),
@@ -325,10 +292,9 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                             height: height * 0.06,
                             width: width * 0.8,
                             child: Center(
-                                child: Text(
-                              'Schedule Reminder',
-                              style: StyleConstants.whiteBoldButtonTextSmall
-                            )),
+                                child: Text('Schedule Reminder',
+                                    style: StyleConstants
+                                        .whiteBoldButtonTextSmall)),
                           ),
                         ),
                       )

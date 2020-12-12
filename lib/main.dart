@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
+import 'package:petcode_app/providers/check_splash_provider.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
 import 'package:petcode_app/providers/image_marker_provider.dart';
@@ -13,7 +16,7 @@ import 'package:petcode_app/providers/scans_map_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/screens/auth/entry_screen.dart';
 import 'package:petcode_app/screens/root_screen.dart';
-import 'package:petcode_app/screens/start_splash_screen.dart';
+import 'package:petcode_app/screens/splash_screen.dart';
 import 'package:petcode_app/services/check_registration_service.dart';
 import 'package:petcode_app/services/database_service.dart';
 import 'package:petcode_app/services/firebase_auth_service.dart';
@@ -24,13 +27,13 @@ import 'package:petcode_app/set_up_keys.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/no_glow_behavior.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SetUpKeys().createKeys();
 
   await Firebase.initializeApp();
+  await FlutterDownloader.initialize(debug: true);
 
   runApp(MyApp());
 }
@@ -186,7 +189,9 @@ class MyApp extends StatelessWidget {
               } else {
                 return petPerksProvider..listenToPetPerks();
               }
-            })
+            }),
+        ChangeNotifierProvider<CheckSplashProvider>(
+            create: (_) => CheckSplashProvider()),
       ],
       child: MaterialApp(
         builder: (context, child) {
@@ -206,18 +211,32 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     StyleConstants().init(context);
     FirebaseAuthService auth = Provider.of<FirebaseAuthService>(context);
-    if (auth.status == Status.Uninitialized) {
+    CheckSplashProvider checkSplashProvider =
+        Provider.of<CheckSplashProvider>(context);
+    if (!checkSplashProvider.initialized) {
       return Scaffold(
         body: Center(
-          child: Text('loading'),
+          child: SpinKitDualRing(
+            size: 30.0,
+            color: StyleConstants.yellow,
+          ),
+        ),
+      );
+    } else if (checkSplashProvider.showSplash) {
+      return SplashScreen();
+    } else if (auth.status == Status.Uninitialized) {
+      return Scaffold(
+        body: Center(
+          child: SpinKitDualRing(
+            size: 30.0,
+            color: StyleConstants.yellow,
+          ),
         ),
       );
     } else if (auth.status == Status.Authenticating ||
         auth.status == Status.Unauthenticated) {
-      //return EntryScreen();
-          return SplashScreen2();
-    }
-    else {
+      return EntryScreen();
+    } else {
       return RootScreen();
     }
   }

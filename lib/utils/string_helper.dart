@@ -29,4 +29,5 @@ class StringHelper {
     }
     return hour + ':' + minute + ' ' + ending;
   }
+
 }
