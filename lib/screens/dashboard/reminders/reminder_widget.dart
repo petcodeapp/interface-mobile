@@ -114,19 +114,14 @@ class ReminderWidget extends StatelessWidget {
               topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
         ),
         builder: (BuildContext context) {
-          return StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              return Container(
-                height: height * 0.8,
-                decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.only(topLeft: Radius.circular(30.0)),
-                ),
-                child: EditReminderWidget(
-                  currentReminder: currentReminder,
-                ),
-              );
-            },
+          return Container(
+            height: height * 0.8,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0)),
+            ),
+            child: EditReminderWidget(
+              currentReminder: currentReminder,
+            ),
           );
         });
   }

@@ -152,17 +152,15 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
                                   return Padding(
                                     padding: EdgeInsets.all(10.0),
                                     child: GlowingVaccinationWidget(
-                                      vaccineName: _vaccinations[index].name,
-                                      vaccineDate: _vaccinations[index].date,
+                                      vaccination: _vaccinations[index],
                                     ),
                                   );
                                 }
                                 return Padding(
                                     padding: EdgeInsets.all(10.0),
                                     child: VaccinationWidget(
-                                      vaccineName: _vaccinations[index].name,
-                                      vaccineDate: _vaccinations[index].date,
-                                      vaccineIndex: index,
+                                      vaccination: _vaccinations[index],
+                                      vaccinationIndex: index,
                                       updateProvider: false,
                                     ));
                               },

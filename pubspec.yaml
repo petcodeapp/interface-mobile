@@ -40,6 +40,7 @@ dependencies:
   intl_phone_number_input: ^0.5.2+2
   outline_material_icons: ^0.1.1
   page_view_indicators: ^1.4.0
+  photo_view: ^0.10.3
   provider: ^4.3.2+2
   share: '>=0.6.5+4 <2.0.0'
   shared_preferences: ^0.5.12+4

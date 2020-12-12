@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';

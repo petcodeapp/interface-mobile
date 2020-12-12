@@ -110,7 +110,7 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                           ),
                           decoration: InputDecoration(
                             hintText: 'Name',
-                            hintStyle: TextStyle(fontSize: 14.0),
+                            hintStyle: TextStyle(fontSize: width * 0.04),
                           ),
                           validator: ValidatorHelper.reminderNameValidator,
                         ),
@@ -128,7 +128,7 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                           controller: _reminderStartDateController,
                           decoration: InputDecoration(
                             hintText: 'Start Date',
-                            hintStyle: TextStyle(fontSize: 14.0),
+                            hintStyle: TextStyle(fontSize: width * 0.04),
                             suffixIcon: Icon(Icons.calendar_today),
                           ),
                           onTap: () {
@@ -176,7 +176,7 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                                     context: context,
                                     initialDate: DateTime.now(),
                                     firstDate: DateTime(2019),
-                                    lastDate: DateTime(2021))
+                                    lastDate: DateTime(2025))
                                 .then((DateTime selectedDate) {
                               if (selectedDate != null) {
                                 setState(() {
@@ -213,9 +213,13 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                           ].map((String value) {
                             return new DropdownMenuItem<String>(
                               value: value,
-                              child: new Text(value, style: TextStyle(
-                                  fontWeight: FontWeight.w600, color: StyleConstants.lightBlack, fontSize: 20.0
-                              ),),
+                              child: new Text(
+                                value,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: StyleConstants.lightBlack,
+                                    fontSize: 20.0),
+                              ),
                             );
                           }).toList(),
                           onChanged: (String value) {
@@ -320,9 +324,12 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                                 notificationMethod: 'email',
                                 frequency: _repeatValue,
                                 enabled: true,
-                                startDate:
-                                    Timestamp.fromDate(_reminderStartDate),
-                                endDate: Timestamp.fromDate(_reminderEndDate),
+                                startDate: _reminderStartDate != null
+                                    ? Timestamp.fromDate(_reminderStartDate)
+                                    : null,
+                                endDate: _reminderEndDate != null
+                                    ? Timestamp.fromDate(_reminderEndDate)
+                                    : null,
                                 index: widget.currentReminder.index,
                               );
                               Provider.of<DatabaseService>(context,
