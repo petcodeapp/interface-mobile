@@ -438,7 +438,6 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                         },
                                         child: Container(
                                           width: width * 0.2,
-                                          height: height * 0.12,
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(10.0),
