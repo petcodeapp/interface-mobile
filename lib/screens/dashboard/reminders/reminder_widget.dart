@@ -30,7 +30,7 @@ class ReminderWidget extends StatelessWidget {
                 offset: Offset(0, 3),
               ),
             ]),
-        width: width * 0.8,
+        width: width * 0.9,
         child: Padding(
           padding: EdgeInsets.symmetric(
               horizontal: width * 0.05, vertical: height * 0.02),

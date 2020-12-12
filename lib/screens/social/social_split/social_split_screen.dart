@@ -65,7 +65,7 @@ class SocialSplitScreen extends StatelessWidget {
                         topLeft: Radius.circular(20.0),
                         topRight: Radius.circular(20.0))),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.08),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -85,14 +85,14 @@ class SocialSplitScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(25.0),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
+                                    color: Colors.black.withOpacity(0.1),
                                     offset: Offset(0, 3),
-                                    blurRadius: 6.0,
+                                    blurRadius: 30.0,
                                   ),
                                 ]),
                             child: Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: width * 0.04,
+                                  horizontal: width * 0.045,
                                   vertical: height * 0.01),
                               child: Center(
                                 child: Row(
@@ -169,9 +169,9 @@ class SocialSplitScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(25.0),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
+                                    color: Colors.black.withOpacity(0.1),
                                     offset: Offset(0, 3),
-                                    blurRadius: 6.0,
+                                    blurRadius: 30.0,
                                   ),
                                 ]),
                             child: Padding(
@@ -244,9 +244,9 @@ class SocialSplitScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(25.0),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
+                                    color: Colors.black.withOpacity(0.1),
                                     offset: Offset(0, 3),
-                                    blurRadius: 6.0,
+                                    blurRadius: 30.0,
                                   ),
                                 ]),
                             child: Padding(

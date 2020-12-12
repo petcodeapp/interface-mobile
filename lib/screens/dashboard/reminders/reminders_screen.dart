@@ -113,7 +113,7 @@ class RemindersScreen extends StatelessWidget {
                         topLeft: Radius.circular(20.0),
                         topRight: Radius.circular(20.0))),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.08),
                   child: ListView.builder(
                     physics: ClampingScrollPhysics(),
                     itemCount: allReminders.length,

@@ -151,7 +151,7 @@ class _OwnerInfoSingleEditingScreenState extends State<OwnerInfoSingleEditingScr
                                 Navigator.pop(context);
                             },
                             child: Text(
-                              'Done',
+                              'Save',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400,
@@ -179,7 +179,7 @@ class _OwnerInfoSingleEditingScreenState extends State<OwnerInfoSingleEditingScr
                         Form(
                           key: _ownerFormKey,
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+                            padding: EdgeInsets.symmetric(horizontal: width * 0.08),
                             child: Column(
                               children: [
                                 Align(
@@ -315,6 +315,8 @@ class _OwnerInfoSingleEditingScreenState extends State<OwnerInfoSingleEditingScr
                                         TextFormField(
                                           validator: (value) =>
                                               ValidatorHelper.addressValidator(value),
+                                          keyboardType: TextInputType.multiline,
+                                          maxLines: null,
                                           style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontFamily: 'Open Sans',

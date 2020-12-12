@@ -103,19 +103,20 @@ class SelectPetWidget extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: height * 0.05,
+              height: height * 0.02,
             ),
             Container(
-              height: height * 0.3,
+              height: height * 0.34,
               child: ListView.builder(
                 itemCount: allPetsProvider.allPets.length,
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
-                      petWidget(context, allPetsProvider.allPets[index], height,
-                          width, currentPetProvider),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+                      petWidget(context,
+                          allPetsProvider.allPets[index], height, width, currentPetProvider),
+                      index == allPetsProvider.allPets.length ?  SizedBox.shrink() : Padding(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: width * 0.1),
                         child: Divider(
                           thickness: 1.0,
                         ),
@@ -126,7 +127,7 @@ class SelectPetWidget extends StatelessWidget {
               ),
             ),
             Container(
-              height: height * 0.15,
+              height: height * 0.1,
               child: Center(
                 child: Row(
                   children: [

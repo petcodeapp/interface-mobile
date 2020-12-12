@@ -60,7 +60,7 @@ class GeneralMedicalInfoScreen extends StatelessWidget {
                   width: width,
                   //height: height * 0.85,
                   decoration: BoxDecoration(
-                      color: StyleConstants.pageBackgroundColor,
+                      color: Colors.white,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20.0),
                           topRight: Radius.circular(20.0))),
