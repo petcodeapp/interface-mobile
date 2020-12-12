@@ -13,7 +13,6 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.1+1
-  bottom_navy_bar: ^5.6.0
   cached_network_image: ^2.3.3
   carousel_slider: ^2.3.1
   circular_check_box: ^1.0.4
@@ -21,18 +20,17 @@ dependencies:
   dio: ^3.0.10
   dots_indicator: ^1.2.0
   email_validator: ^1.0.6
-  firebase_auth: ^0.18.4
+  firebase_auth: ^0.18.4+1
   firebase_core: ^0.5.3
   firebase_messaging: ^7.0.3
   firebase_storage: ^5.2.0
   flutter_downloader: ^1.5.2
-  flutter_native_splash: ^0.1.9
   flutter_secure_storage: ^3.3.5
   flutter_spinkit: ^4.1.2+1
   flutter_typeahead: ^1.8.8
-  font_awesome_flutter: ^8.10.0
+  font_awesome_flutter: ^8.10.1
   geocoding: ^1.0.5
-  geolocator: ^6.1.8+1
+  geolocator: ^6.1.13
   google_fonts: ^1.1.1
   google_maps_flutter: ^1.0.6
   google_sign_in: ^4.5.6
