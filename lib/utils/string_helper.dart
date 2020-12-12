@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class StringHelper {
   static String getDateString(DateTime date) {
     DateTime localDate = date.toLocal();
