@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
-import 'package:petcode_app/utils/hero_icons.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:petcode_app/screens/auth/entry_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';

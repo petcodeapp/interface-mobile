@@ -21,7 +21,7 @@ class CurrentPetProvider extends ChangeNotifier {
     if (allPets.length == 0) {
       _currentPet = null;
     } else {
-      allPets.firstWhere((Pet pet) => pet == _currentPet, orElse: () {
+      _currentPet = allPets.firstWhere((Pet pet) => pet == _currentPet, orElse: () {
         return allPets[0];
       });
     }
