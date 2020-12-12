@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -82,13 +83,19 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
-                        child: Image(
-                          image: allPetsProvider.allPets[index].petImage,
-                          fit: BoxFit.cover,
-                        ),
+                        child: allPetsProvider.allPets[index].profileUrl !=
+                                    null &&
+                                allPetsProvider
+                                    .allPets[index].profileUrl.isNotEmpty
+                            ? CachedNetworkImage(
+                                imageUrl:
+                                    allPetsProvider.allPets[index].profileUrl, fit: BoxFit.cover,)
+                            : AssetImage('assets/images/puppyphoto.jpg'),
                       ),
                     ),
-                    SizedBox(height: height * 0.01,),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: width * 0.03),
                       child: Container(
@@ -99,11 +106,21 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                               children: [
                                 Text(
                                   allPetsProvider.allPets[index].name,
-                                  style: StyleConstants.blackThinTitleTextMedium.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w700, fontSize: height * 0.033, fontFamily: 'OpenSans'),
+                                  style: StyleConstants.blackThinTitleTextMedium
+                                      .copyWith(
+                                          color: StyleConstants.lightBlack,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: height * 0.033,
+                                          fontFamily: 'OpenSans'),
                                 ),
                                 Text(
                                   allPetsProvider.allPets[index].breed,
-                                  style: StyleConstants.blackThinTitleTextXS.copyWith(color: StyleConstants.lightBlack, fontWeight: FontWeight.w600, fontFamily: 'OpenSans', fontSize: height * 0.023),
+                                  style: StyleConstants.blackThinTitleTextXS
+                                      .copyWith(
+                                          color: StyleConstants.lightBlack,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'OpenSans',
+                                          fontSize: height * 0.023),
                                 ),
                               ],
                             ),
@@ -126,14 +143,12 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
             itemCount: allPetsProvider.allPets.length,
           ),
         ),
-
         DotsIndicator(
           dotsCount: allPetsProvider.allPets.length > 0
               ? allPetsProvider.allPets.length
               : 1,
           position: 0.0 + pageIndex,
         ),
-
       ],
     );
   }

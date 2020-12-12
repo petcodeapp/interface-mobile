@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/all_pets_provider.dart';
@@ -17,10 +18,10 @@ class PetInfoAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _PetInfoAppBarState extends State<PetInfoAppBar> {
-
   @override
   Widget build(BuildContext context) {
-    CurrentPetProvider currentPetProvider = Provider.of<CurrentPetProvider>(context);
+    CurrentPetProvider currentPetProvider =
+        Provider.of<CurrentPetProvider>(context);
     AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
     List<DropdownMenuItem<Pet>> dropdownMenuItems =
         new List<DropdownMenuItem<Pet>>();
@@ -79,8 +80,11 @@ class _PetInfoAppBarState extends State<PetInfoAppBar> {
                     child: CircleAvatar(
                       backgroundColor: Colors.transparent,
                       backgroundImage:
-                          currentPetProvider.currentPet.profileUrl != null
-                              ? currentPetProvider.currentPet.petImage
+                          currentPetProvider.currentPet.profileUrl != null &&
+                                  currentPetProvider
+                                      .currentPet.profileUrl.isNotEmpty
+                              ? CachedNetworkImageProvider(
+                                  currentPetProvider.currentPet.profileUrl)
                               : AssetImage('assets/images/puppyphoto.jpg'),
                       radius: 60.0,
                     ),

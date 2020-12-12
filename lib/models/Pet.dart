@@ -31,8 +31,6 @@ class Pet {
   Owner contact_1;
   Owner contact_2;
 
-  ImageProvider petImage;
-
   DocumentReference reference;
 
   Pet(
@@ -58,17 +56,10 @@ class Pet {
       this.scans,
       this.contact_1,
       this.contact_2,
-      this.petImage,
       this.reference});
 
   factory Pet.fromSnapshot(DocumentSnapshot snapshot) {
     Pet newPet = Pet.fromJson(snapshot.data());
-
-    if (newPet.profileUrl == null || newPet.profileUrl.trim().isEmpty) {
-      newPet.petImage = AssetImage('assets/images/puppyphoto.jpg');
-    } else {
-      newPet.petImage = CachedNetworkImageProvider(newPet.profileUrl);
-    }
 
     newPet.reference = snapshot.reference;
     return newPet;

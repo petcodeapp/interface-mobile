@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -67,7 +68,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
     super.initState();
     _isServiceAnimal = widget.currentPet.isServiceAnimal ?? false;
     _isAdopted = widget.currentPet.isAdopted ?? false;
-    updatedImage = widget.currentPet.petImage;
+    updatedImage = CachedNetworkImageProvider(widget.currentPet.profileUrl);
     _birthdayDateController = new TextEditingController();
     if (widget.currentPet.birthday != null) {
       _birthDate = widget.currentPet.birthday.toDate();
