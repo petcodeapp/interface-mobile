@@ -7,7 +7,6 @@ import 'package:petcode_app/widgets/select_pet_widget.dart';
 import 'package:provider/provider.dart';
 
 class ChangePetDropdown extends StatelessWidget {
-
   final String title;
 
   const ChangePetDropdown({Key key, this.title}) : super(key: key);
@@ -28,8 +27,6 @@ class ChangePetDropdown extends StatelessWidget {
         });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     double height = StyleConstants.height;
@@ -39,9 +36,7 @@ class ChangePetDropdown extends StatelessWidget {
     CurrentPetProvider currentPetProvider =
         Provider.of<CurrentPetProvider>(context);
 
-    List<DropdownMenuItem<Pet>> dropdownMenuItems =
-        new List<DropdownMenuItem<Pet>>();
-
+    List<DropdownMenuItem<Pet>> dropdownMenuItems = <DropdownMenuItem<Pet>>[];
 
     for (int i = 0; i < allPetsProvider.allPets.length; i++) {
       print(allPetsProvider.allPets[i].pid);
@@ -57,18 +52,24 @@ class ChangePetDropdown extends StatelessWidget {
     }
 
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         _selectPet(context, height, width, currentPetProvider, allPetsProvider);
       },
       child: Container(
-  //      color: Colors.red,
+        //      color: Colors.red,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(title, style: StyleConstants.whiteDescriptionText.copyWith(
-                fontWeight: FontWeight.bold, fontSize: height * 0.027),),
-            Icon(Icons.arrow_drop_down, color: Colors.white,),
+            Text(
+              title,
+              style: StyleConstants.whiteDescriptionText.copyWith(
+                  fontWeight: FontWeight.bold, fontSize: height * 0.027),
+            ),
+            Icon(
+              Icons.arrow_drop_down,
+              color: Colors.white,
+            ),
           ],
         ),
       ),

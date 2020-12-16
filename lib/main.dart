@@ -111,7 +111,7 @@ class MyApp extends StatelessWidget {
                   allPetsProvider.allPets.length == 0) {
                 return imageMarkerProvider..clear();
               } else {
-                List<String> urls = new List<String>();
+                List<String> urls = <String>[];
                 for (int i = 0; i < allPetsProvider.allPets.length; i++) {
                   urls.add(allPetsProvider.allPets[i].profileUrl);
                 }

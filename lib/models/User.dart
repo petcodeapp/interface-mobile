@@ -25,7 +25,7 @@ class User {
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
-    List<String> convertPetIds = new List<String>();
+    List<String> convertPetIds = <String>[];
     if (json != null) {
       List petIds = json['petIds'] as List;
       if (petIds != null) {
@@ -50,7 +50,7 @@ class User {
         lastName: '',
         phoneNumber: '',
         email: '',
-        petIds: new List<String>(),
+        petIds: <String>[],
       );
     }
   }

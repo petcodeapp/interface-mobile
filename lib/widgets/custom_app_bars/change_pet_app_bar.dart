@@ -6,8 +6,7 @@ import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
 class ChangePetAppBar extends StatefulWidget implements PreferredSizeWidget {
-  ChangePetAppBar({Key key, this.shape, this.actions})
-      : super(key: key);
+  ChangePetAppBar({Key key, this.shape, this.actions}) : super(key: key);
   final ShapeBorder shape;
   final List<Widget> actions;
 
@@ -19,14 +18,13 @@ class ChangePetAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _ChangePetAppBarState extends State<ChangePetAppBar> {
-
   @override
   Widget build(BuildContext context) {
     AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
-    CurrentPetProvider currentPetProvider = Provider.of<CurrentPetProvider>(context);
+    CurrentPetProvider currentPetProvider =
+        Provider.of<CurrentPetProvider>(context);
 
-    List<DropdownMenuItem<Pet>> dropdownMenuItems =
-        new List<DropdownMenuItem<Pet>>();
+    List<DropdownMenuItem<Pet>> dropdownMenuItems = <DropdownMenuItem<Pet>>[];
 
     for (int i = 0; i < allPetsProvider.allPets.length; i++) {
       print(allPetsProvider.allPets[i].pid);
@@ -39,7 +37,6 @@ class _ChangePetAppBarState extends State<ChangePetAppBar> {
             value: allPetsProvider.allPets[i]),
       );
     }
-
 
     return AppBar(
       backgroundColor: StyleConstants.blue,

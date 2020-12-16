@@ -23,8 +23,7 @@ class _PetInfoAppBarState extends State<PetInfoAppBar> {
     CurrentPetProvider currentPetProvider =
         Provider.of<CurrentPetProvider>(context);
     AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
-    List<DropdownMenuItem<Pet>> dropdownMenuItems =
-        new List<DropdownMenuItem<Pet>>();
+    List<DropdownMenuItem<Pet>> dropdownMenuItems = <DropdownMenuItem<Pet>>[];
     for (int i = 0; i < allPetsProvider.allPets.length; i++) {
       print(allPetsProvider.allPets[i].pid);
       dropdownMenuItems.add(

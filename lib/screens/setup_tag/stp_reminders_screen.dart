@@ -31,12 +31,11 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
 
   @override
   void initState() {
-    _reminderNameInputControllers = new List<TextEditingController>();
+    _reminderNameInputControllers = <TextEditingController>[];
     _reminderNameInputControllers.add(new TextEditingController());
     _reminderNameInputControllers.add(new TextEditingController());
 
-    _dates = new List<DateTime>(2);
-
+    _dates = <DateTime>[];
     super.initState();
   }
 
@@ -106,7 +105,7 @@ class _StpRemindersScreenState extends State<StpRemindersScreen> {
               GestureDetector(
                 onTap: () {
                   Pet updatedPet = widget.pet;
-                  updatedPet.reminders = new List<Reminder>();
+                  updatedPet.reminders = <Reminder>[];
                   for (int i = 0;
                       i < _reminderNameInputControllers.length;
                       i++) {

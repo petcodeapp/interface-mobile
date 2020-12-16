@@ -40,10 +40,10 @@ class NearbyParksService {
 
     final results = response.data['results'];
 
-    List<NearbyPark> nearbyParks = new List<NearbyPark>();
+    List<NearbyPark> nearbyParks = <NearbyPark>[];
 
     List<Future<List<PlacePhoto>>> placePhotoFutures =
-        new List<Future<List<PlacePhoto>>>();
+        <Future<List<PlacePhoto>>>[];
 
     for (int i = 0; i < results.length; i++) {
       placePhotoFutures.add(getPhotos(results[i]['place_id']));
@@ -73,15 +73,15 @@ class NearbyParksService {
 
     Response response = await Dio().get(request);
 
-    List<PlacePhoto> photos = new List<PlacePhoto>();
+    List<PlacePhoto> photos = <PlacePhoto>[];
 
     final data = response.data['result']['photos'];
 
     if (data != null) {
       for (int i = 0; i < min(2, data.length); i++) {
         final photo = data[i];
-        List<String> photoAttributionNames = new List<String>();
-        List<String> photoAttributionLinks = new List<String>();
+        List<String> photoAttributionNames = <String>[];
+        List<String> photoAttributionLinks = <String>[];
 
         final attributions = photo['html_attributions'];
         for (int j = 0; j < attributions.length; j++) {

@@ -31,14 +31,14 @@ class DatabaseService {
       lastName: lastName,
       phoneNumber: phoneNumber,
       uid: uid,
-      petIds: new List<String>(),
+      petIds: <String>[],
     );
     await _firestore.collection('users').doc(uid).set(newUser.toJson());
     return newUser;
   }
 
   Future<void> createUserPetList(String pid, String uid) async {
-    List<String> petIds = new List<String>();
+    List<String> petIds = <String>[];
     petIds.add(pid);
     await _firestore.collection('users').doc(uid).update({'petIds': petIds});
   }

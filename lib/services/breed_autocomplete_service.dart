@@ -26,7 +26,7 @@ class BreedAutocompleteService {
 
   Future<List<String>> searchBreeds(String input, Species species) async {
     if (species == null || species == Species.Other) {
-      return List<String>();
+      return <String>[];
     }
     String baseUrl;
     if (species == Species.Dog) {
@@ -47,7 +47,7 @@ class BreedAutocompleteService {
 
     final results = response.data;
 
-    List<String> breedResults = new List<String>();
+    List<String> breedResults = <String>[];
 
     for (int i = 0; i < min(5, results.length); i++) {
       breedResults.add(results[i]['name']);

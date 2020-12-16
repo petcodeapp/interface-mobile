@@ -32,7 +32,7 @@ class AllPetsProvider extends ChangeNotifier {
       });
     }
     else {
-      _allPets = new List<Pet>();
+      _allPets = <Pet>[];
     }
   }
 

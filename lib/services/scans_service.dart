@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class MapService extends ChangeNotifier {
   Future<List<Scan>> getScansFromAllPets(List<Pet> allPets) async {
-    List<Scan> allScans = new List<Scan>();
+    List<Scan> allScans = <Scan>[];
     for (int i = 0; i < allPets.length; i++) {
       if (allPets[i].scans != null) {
         for (int j = 0; j < allPets[i].scans.length; j++) {
@@ -27,7 +27,7 @@ class MapService extends ChangeNotifier {
 
   Set<Marker> createMarkers(List<Scan> allScans,
       List<BitmapDescriptor> bitmapDescriptors, BuildContext context) {
-    List<Marker> allMarkers = new List<Marker>();
+    List<Marker> allMarkers = <Marker>[];
     if (allScans != null) {
       for (int i = 0; i < allScans.length; i++) {
         Scan currentScan = allScans[i];
