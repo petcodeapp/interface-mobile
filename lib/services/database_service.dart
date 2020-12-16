@@ -31,7 +31,7 @@ class DatabaseService {
       lastName: lastName,
       phoneNumber: phoneNumber,
       uid: uid,
-      petIds: <String>[],
+      pets: <String>[],
     );
     await _firestore.collection('users').doc(uid).set(newUser.toJson());
     return newUser;
@@ -40,7 +40,7 @@ class DatabaseService {
   Future<void> createUserPetList(String pid, String uid) async {
     List<String> petIds = <String>[];
     petIds.add(pid);
-    await _firestore.collection('users').doc(uid).update({'petIds': petIds});
+    await _firestore.collection('users').doc(uid).update({'pets': petIds});
   }
 
   Future<void> addToUserPetList(
@@ -49,7 +49,7 @@ class DatabaseService {
     await _firestore
         .collection('users')
         .doc(uid)
-        .update({'petIds': previousPets});
+        .update({'pets': previousPets});
   }
 
   //TODO: Use something better than index to update?
