@@ -13,4 +13,9 @@ class RootScreenIndexProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void clear() {
+    _index = 0;
+    notifyListeners();
+  }
 }

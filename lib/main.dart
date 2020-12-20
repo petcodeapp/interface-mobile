@@ -193,14 +193,19 @@ class MyApp extends StatelessWidget {
             }),
         ChangeNotifierProvider<CheckSplashProvider>(
             create: (_) => CheckSplashProvider()),
-        ChangeNotifierProxyProvider<NotificationsProvider,
+        ChangeNotifierProxyProvider2<FirebaseAuthService, NotificationsProvider,
                 RootScreenIndexProvider>(
             create: (_) => RootScreenIndexProvider(),
             update: (BuildContext context,
+                FirebaseAuthService authService,
                 NotificationsProvider notificationsProvider,
                 RootScreenIndexProvider rootScreenIndexProvider) {
-              return rootScreenIndexProvider
-                ..setIndex(notificationsProvider.rootPage);
+              if (authService.user != null) {
+                return rootScreenIndexProvider..setIndex(notificationsProvider.rootPage);
+              }
+              else {
+                return rootScreenIndexProvider..clear();
+              }
             })
       ],
       child: MaterialApp(

@@ -97,6 +97,7 @@ class NotificationsProvider extends ChangeNotifier {
   void clearNoUpdate() {
     currentAction = null;
     params = null;
+    rootPage = -1;
   }
 
   void clearIndex() {
