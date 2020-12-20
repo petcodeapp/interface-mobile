@@ -72,8 +72,8 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
       int vaccinationIndex = -1;
       NotificationsProvider notificationsProvider =
           Provider.of<NotificationsProvider>(context);
-      if (notificationsProvider.currentPayload == 'vaccination expired') {
-        vaccinationIndex = notificationsProvider.index;
+      if (notificationsProvider.currentAction == 'vaccination expired') {
+        vaccinationIndex = int.tryParse(notificationsProvider.params);
       }
 
       return Scaffold(
@@ -89,18 +89,17 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
         body: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topRight,
-                //end: Alignment(0.01, 0.01),
-                end: Alignment.bottomLeft,
-                stops: [0.01, 0.4, 0.6],
-                colors: [
-                  const Color(0xffABDEED),
-                  const Color(0xff51BFDA),
-                  StyleConstants.blue
-                ], // whitish to gray
-                //tileMode: TileMode.repeated,
-              )
-          ),
+            begin: Alignment.topRight,
+            //end: Alignment(0.01, 0.01),
+            end: Alignment.bottomLeft,
+            stops: [0.01, 0.4, 0.6],
+            colors: [
+              const Color(0xffABDEED),
+              const Color(0xff51BFDA),
+              StyleConstants.blue
+            ], // whitish to gray
+            //tileMode: TileMode.repeated,
+          )),
           child: Column(
             children: [
               Container(
@@ -113,7 +112,11 @@ class _VaccineHistoryScreenState extends State<VaccineHistoryScreen> {
                       children: [
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: Container(height: _height * 0.065,child: ChangePetDropdown(title: "Vaccinations",)),
+                          child: Container(
+                              height: _height * 0.065,
+                              child: ChangePetDropdown(
+                                title: "Vaccinations",
+                              )),
                         ),
                         Align(
                           alignment: Alignment.bottomLeft,

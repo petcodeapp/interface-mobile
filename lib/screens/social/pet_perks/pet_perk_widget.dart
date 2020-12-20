@@ -23,7 +23,7 @@ class PetPerkWidget extends StatelessWidget {
         if (updateProvider != null && updateProvider) {
           print('update');
           Provider.of<NotificationsProvider>(context, listen: false)
-              .clearIndex();
+              .clear();
         }
       },
       behavior: HitTestBehavior.translucent,

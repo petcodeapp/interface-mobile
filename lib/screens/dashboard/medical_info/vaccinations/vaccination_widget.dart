@@ -50,7 +50,7 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
       onTap: () {
         if (_tapped) {
           Provider.of<NotificationsProvider>(context, listen: false)
-              .clearIndex();
+              .clear();
         } else {
           _editVaccine();
         }

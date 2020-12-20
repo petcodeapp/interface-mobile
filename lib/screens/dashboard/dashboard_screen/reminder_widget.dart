@@ -36,6 +36,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               width: width * 0.1,
