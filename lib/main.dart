@@ -12,6 +12,7 @@ import 'package:petcode_app/providers/nearby_parks_map_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/providers/pet_perks_provider.dart';
+import 'package:petcode_app/providers/root_screen_index_provider.dart';
 import 'package:petcode_app/providers/scans_map_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/screens/auth/entry_screen.dart';
@@ -192,6 +193,15 @@ class MyApp extends StatelessWidget {
             }),
         ChangeNotifierProvider<CheckSplashProvider>(
             create: (_) => CheckSplashProvider()),
+        ChangeNotifierProxyProvider<NotificationsProvider,
+                RootScreenIndexProvider>(
+            create: (_) => RootScreenIndexProvider(),
+            update: (BuildContext context,
+                NotificationsProvider notificationsProvider,
+                RootScreenIndexProvider rootScreenIndexProvider) {
+              return rootScreenIndexProvider
+                ..setIndex(notificationsProvider.rootPage);
+            })
       ],
       child: MaterialApp(
         builder: (context, child) {
@@ -235,7 +245,8 @@ class HomeScreen extends StatelessWidget {
       );
     } else if (auth.status == Status.Authenticating ||
         auth.status == Status.Unauthenticated) {
-      Provider.of<NotificationsProvider>(context).currentAction = 'reminder expired';
+      Provider.of<NotificationsProvider>(context).currentAction =
+          'reminder expired';
       Provider.of<NotificationsProvider>(context).params = '3';
       return EntryScreen();
     } else {

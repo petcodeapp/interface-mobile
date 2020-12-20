@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:petcode_app/main.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/vaccination_history_screen.dart';
+import 'package:petcode_app/screens/scans/scans_screen.dart';
 import 'package:petcode_app/screens/social/discover_parks/discover_parks_screen.dart';
 import 'package:petcode_app/screens/social/pet_perks/pet_perks_screen.dart';
 
@@ -11,9 +12,13 @@ class NotificationsProvider extends ChangeNotifier {
   String currentAction;
   String params;
   bool loggedIn;
+
+  int rootPage;
+
   final FirebaseMessaging _fcm = FirebaseMessaging();
 
   NotificationsProvider() {
+    rootPage = -1;
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) {
         print('onMessage: $message');
@@ -61,13 +66,26 @@ class NotificationsProvider extends ChangeNotifier {
       MyApp.navigatorKey.currentState.push(
         MaterialPageRoute(builder: (context) => VaccineHistoryScreen()),
       );
+    } else if (currentAction == 'scanned pet') {
+      setRootPage(1);
     }
+  }
+
+  void setRootPage(int newIndex) {
+    rootPage = newIndex;
+    notifyListeners();
   }
 
   void clear() {
     currentAction = null;
     params = null;
+    rootPage = -1;
     notifyListeners();
+  }
+
+  void clearNoUpdate() {
+    currentAction = null;
+    params = null;
   }
 
   void clearIndex() {

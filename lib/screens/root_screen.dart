@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:petcode_app/providers/root_screen_index_provider.dart';
 import 'package:petcode_app/screens/account/account_screen.dart';
 import 'package:petcode_app/screens/dashboard/dashboard_screen/dashboard_screen.dart';
 import 'package:petcode_app/screens/scans/scans_screen.dart';
 import 'package:petcode_app/screens/social/social_split/social_split_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:provider/provider.dart';
 
 import 'account/account_screen.dart';
 
-class RootScreen extends StatefulWidget {
-  @override
-  _RootScreenState createState() => _RootScreenState();
-}
-
-class _RootScreenState extends State<RootScreen> {
-  int _currentIndex = 0;
-  //PageController _pageController = PageController(initialPage: 0);
-  var _pageOptions = [
+class RootScreen extends StatelessWidget {
+  final List<Widget> _pageOptions = [
     DashboardScreen(),
     ScansScreen(),
     SocialSplitScreen(),
@@ -23,35 +18,23 @@ class _RootScreenState extends State<RootScreen> {
   ];
 
   @override
-  void initState() {
-    super.initState();
-    //_pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    //_pageController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    RootScreenIndexProvider rootScreenIndexProvider = Provider.of<RootScreenIndexProvider>(context);
+    int currentIndex = rootScreenIndexProvider.index;
+
     double height = StyleConstants.height;
 
     return Scaffold(
       body: IndexedStack(
-        index: _currentIndex,
+        index: currentIndex,
         children: _pageOptions,
       ),
       bottomNavigationBar: SizedBox(
         //height: height * 0.12,
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          currentIndex: _currentIndex,
-          onTap: (index) => setState(() {
-            _currentIndex = index;
-            //_pageController.jumpToPage(index);
-          }),
+          currentIndex: currentIndex,
+          onTap: (index) => rootScreenIndexProvider.setIndex(index),
           selectedItemColor: StyleConstants.blue,
           backgroundColor: Colors.white,
           unselectedItemColor: Colors.black.withOpacity(0.2),
