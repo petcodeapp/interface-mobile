@@ -245,9 +245,6 @@ class HomeScreen extends StatelessWidget {
       );
     } else if (auth.status == Status.Authenticating ||
         auth.status == Status.Unauthenticated) {
-      Provider.of<NotificationsProvider>(context).currentAction =
-          'reminder expired';
-      Provider.of<NotificationsProvider>(context).params = '3';
       return EntryScreen();
     } else {
       return RootScreen();
