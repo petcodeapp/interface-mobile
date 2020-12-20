@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:petcode_app/main.dart';
 import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/vaccination_history_screen.dart';
-import 'package:petcode_app/screens/scans/scans_screen.dart';
 import 'package:petcode_app/screens/social/discover_parks/discover_parks_screen.dart';
 import 'package:petcode_app/screens/social/pet_perks/pet_perks_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NotificationsProvider extends ChangeNotifier {
   String currentAction;
@@ -68,12 +68,23 @@ class NotificationsProvider extends ChangeNotifier {
       );
     } else if (currentAction == 'scanned pet') {
       setRootPage(1);
+    } else if (currentAction == 'lost pet') {
+      openPetProfilePage();
     }
   }
 
   void setRootPage(int newIndex) {
     rootPage = newIndex;
     notifyListeners();
+  }
+
+  Future<void> openPetProfilePage() async {
+    String url = 'petcodeusa.com/' + params;
+    if (await canLaunch(url)) {
+      launch(url);
+    } else {
+      print('Could not launch');
+    }
   }
 
   void clear() {
