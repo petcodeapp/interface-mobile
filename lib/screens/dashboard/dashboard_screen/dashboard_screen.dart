@@ -94,21 +94,18 @@ class DashboardScreen extends StatelessWidget {
                         child: NavigationRow(),
                       ),
                       Flexible(
-                        child: SingleChildScrollView(
-                          physics: ClampingScrollPhysics(),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.bottomRight,
-                                end: Alignment.topLeft,
-                                colors: [ const Color(0xffB3E1EE),  Colors.white],
-                                stops: [0.05, 0.95],
-                              ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.bottomRight,
+                              end: Alignment.topLeft,
+                              colors: [ const Color(0xffB3E1EE),  Colors.white],
+                              stops: [0.05, 0.95],
                             ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: width * 0.035),
-                              child: UpcomingEventsWidget(),
-                            ),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: width * 0.035),
+                            child: UpcomingEventsWidget(),
                           ),
                         ),
                       ),

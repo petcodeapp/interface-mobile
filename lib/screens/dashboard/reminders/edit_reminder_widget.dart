@@ -40,7 +40,8 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
         ..text = StringHelper.getDateStringNoYear(
                 widget.currentReminder.startDate.toDate()) +
             ', ' +
-            StringHelper.getTimeString(widget.currentReminder.endDate.toDate());
+            StringHelper.getTimeString(
+                widget.currentReminder.startDate.toDate());
       _reminderStartDate = widget.currentReminder.startDate.toDate();
     }
     if (widget.currentReminder.endDate != null) {
@@ -271,7 +272,9 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                                                   text:
                                                       _reminderEndDateController
                                                               .text +
-                                                          ', ' + selectedTime.format(context));
+                                                          ', ' +
+                                                          selectedTime
+                                                              .format(context));
                                           _reminderEndDate =
                                               _reminderEndDate.add(Duration(
                                                   hours: selectedTime.hour,
