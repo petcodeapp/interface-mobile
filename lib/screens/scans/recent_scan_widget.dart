@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Scan.dart';
 import 'package:petcode_app/utils/string_helper.dart';
 import 'package:petcode_app/utils/style_constants.dart';
+import 'package:provider/provider.dart';
+import 'package:petcode_app/providers/all_pets_provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
+
 
 class RecentScanWidget extends StatelessWidget {
+
   RecentScanWidget({Key key, this.currentScan}) : super(key: key);
 
   final Scan currentScan;
@@ -12,6 +18,9 @@ class RecentScanWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = StyleConstants.height;
     double width = StyleConstants.width;
+
+    AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
+
     return Container(
       height: height * 0.17,
       width: width,
@@ -35,7 +44,9 @@ class RecentScanWidget extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: width * 0.05,
-                  backgroundImage: AssetImage('assets/images/stockdog1.jpg'),
+                  backgroundImage: CachedNetworkImageProvider(
+                      allPetsProvider.allPets[currentScan.petIndex].profileUrl
+                  ),
                 ),
                 SizedBox(width: width * 0.05,),
                 Container(
