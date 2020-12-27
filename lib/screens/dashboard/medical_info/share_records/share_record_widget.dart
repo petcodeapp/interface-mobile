@@ -24,9 +24,24 @@ class ShareRecordWidget extends StatelessWidget {
     bool hasImage = petVaccinations[vaccinationIndex].imageUrl != null;
     bool hasDate = petVaccinations[vaccinationIndex].date != null;
 
-    return Column(
-      children: [
-        InkWell(
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30.0),
+        boxShadow: [
+          BoxShadow(
+            color: StyleConstants.lightBlack.withOpacity(0.16),
+            offset: Offset(
+              0,
+              4,
+            ),
+            blurRadius: 40,
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(30.0),
+        child: InkWell(
           onTap: () {
             if (hasImage) {
               Share.share(petVaccinations[vaccinationIndex].imageUrl,
@@ -62,7 +77,12 @@ class ShareRecordWidget extends StatelessWidget {
                       color: StyleConstants.lightGrey,
                       child: Center(child: Text('N/A'))),
                 ),
+                SizedBox(
+                  width: width * 0.1,
+                ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       petVaccinations[vaccinationIndex].name,
@@ -78,13 +98,13 @@ class ShareRecordWidget extends StatelessWidget {
                       style: StyleConstants.blackDescriptionText,
                     ),
                   ],
-                )
+                ),
+
               ],
             ),
           ),
         ),
-        Divider(),
-      ],
+      ),
     );
   }
 }

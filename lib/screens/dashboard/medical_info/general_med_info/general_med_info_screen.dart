@@ -24,7 +24,6 @@ class GeneralMedicalInfoScreen extends StatelessWidget {
                 //tileMode: TileMode.repeated,
               )
           ),
-
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
