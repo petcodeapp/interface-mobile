@@ -6,7 +6,7 @@ import 'package:petcode_app/services/firebase_auth_service.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/painters/bottom_right_circles_painter.dart';
 import 'package:petcode_app/widgets/painters/top_left_circles_painter.dart';
-import 'package:petcode_app/widgets/sliding_scontainer.dart';
+import 'package:petcode_app/widgets/sliding_container.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
