@@ -8,6 +8,8 @@ import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/screens/scans/recent_scan_widget.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
+import 'package:petcode_app/providers/all_pets_provider.dart';
+
 
 class ScansListWidget extends StatelessWidget {
   ScansListWidget({Key key, this.mapController}) : super(key: key);
@@ -18,6 +20,8 @@ class ScansListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = StyleConstants.height;
     double width = StyleConstants.width;
+
+    AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
 
     ScansProvider scansProvider = Provider.of<ScansProvider>(context);
     List<Scan> petScans = scansProvider.allScans;
