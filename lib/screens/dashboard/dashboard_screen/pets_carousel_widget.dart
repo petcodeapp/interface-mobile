@@ -7,6 +7,7 @@ import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PetsCarouselWidget extends StatefulWidget {
   @override
@@ -88,7 +89,9 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                                     .allPets[index].profileUrl.isNotEmpty
                             ? CachedNetworkImage(
                                 imageUrl:
-                                    allPetsProvider.allPets[index].profileUrl, fit: BoxFit.cover,)
+                                    allPetsProvider.allPets[index].profileUrl,
+                                fit: BoxFit.cover,
+                              )
                             : AssetImage('assets/images/puppyphoto.jpg'),
                       ),
                     ),
@@ -143,10 +146,21 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
                               child: Center(
-                                child: Icon(
-                                  Icons.language,
-                                  size: height * 0.05,
-                                  color: Colors.black,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.language,
+                                    size: height * 0.05,
+                                    color: Colors.black,
+                                  ),
+                                  onPressed: () async {
+                                    String url = 'https://petcodeusa.com/' +
+                                        currentPetProvider.currentPet.pid;
+                                    if (await canLaunch(url)) {
+                                      launch(url);
+                                    } else {
+                                      print('cannot launch');
+                                    }
+                                  },
                                 ),
                               ),
                             ),

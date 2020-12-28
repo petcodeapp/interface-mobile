@@ -79,7 +79,7 @@ class NotificationsProvider extends ChangeNotifier {
   }
 
   Future<void> openPetProfilePage() async {
-    String url = 'petcodeusa.com/' + params;
+    String url = 'https://petcodeusa.com/' + params;
     if (await canLaunch(url)) {
       launch(url);
     } else {
