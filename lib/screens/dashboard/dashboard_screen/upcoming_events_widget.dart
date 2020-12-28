@@ -7,7 +7,6 @@ import 'package:petcode_app/screens/dashboard/dashboard_screen/reminder_widget.d
 import 'package:petcode_app/screens/dashboard/reminders/reminders_screen.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
 
 class UpcomingEventsWidget extends StatefulWidget {
   @override
@@ -15,14 +14,6 @@ class UpcomingEventsWidget extends StatefulWidget {
 }
 
 class _UpcomingEventsWidgetState extends State<UpcomingEventsWidget> {
-  AutoScrollController _scrollController;
-
-  @override
-  void initState() {
-    _scrollController = new AutoScrollController();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     double height = StyleConstants.height;
@@ -41,7 +32,6 @@ class _UpcomingEventsWidgetState extends State<UpcomingEventsWidget> {
     }
 
     return SingleChildScrollView(
-      controller: _scrollController,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -154,11 +144,8 @@ class _UpcomingEventsWidgetState extends State<UpcomingEventsWidget> {
     List<Widget> reminderWidgets = <Widget>[];
     for (int i = 0; i < allPetUpcomingEvents.length; i++) {
       if (i == reminderIndex) {
-        reminderWidgets.add(AutoScrollTag(
-          index: i,
-          key: ValueKey(i),
-          controller: _scrollController,
-          child: Padding(
+        reminderWidgets.add(
+          Padding(
             padding: EdgeInsets.fromLTRB(
                 width * 0.012, 0, width * 0.012, height * 0.024),
             child: GlowingReminderWidget(
@@ -169,13 +156,10 @@ class _UpcomingEventsWidgetState extends State<UpcomingEventsWidget> {
                   : null,
             ),
           ),
-        ));
+        );
       } else {
-        reminderWidgets.add(AutoScrollTag(
-          index: i,
-          key: ValueKey(i),
-          controller: _scrollController,
-          child: Padding(
+        reminderWidgets.add(
+          Padding(
             padding: EdgeInsets.fromLTRB(
                 width * 0.012, 0, width * 0.012, height * 0.024),
             child: ReminderWidget(
@@ -186,7 +170,7 @@ class _UpcomingEventsWidgetState extends State<UpcomingEventsWidget> {
                   : null,
             ),
           ),
-        ));
+        );
       }
     }
     return Container(
