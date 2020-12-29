@@ -17,8 +17,8 @@ class PetPerksScreen extends StatelessWidget {
     NotificationsProvider notificationsProvider =
         Provider.of<NotificationsProvider>(context);
     int petPerkIndex = -1;
-    if (notificationsProvider.currentPayload == 'new pet perk') {
-      petPerkIndex = notificationsProvider.index;
+    if (notificationsProvider.currentAction == 'new pet perk') {
+      petPerkIndex = int.tryParse(notificationsProvider.params);
     }
 
     PetPerksProvider petPerksProvider = Provider.of<PetPerksProvider>(context);

@@ -21,18 +21,18 @@ class AllPetsProvider extends ChangeNotifier {
     _petService = new PetService();
   }
 
-  void setPetIds(List<String> petIds) {
-    if (petIds != null && petIds.length > 0) {
+  void setPetIds(List<String> pets) {
+    if (pets != null && pets.length > 0) {
       _providerState = ProviderState.Busy;
       notifyListeners();
-      _petsSubscription = _petService.createPetStream(petIds).listen((List<Pet> allPets) {
+      _petsSubscription = _petService.createPetStream(pets).listen((List<Pet> allPets) {
         _allPets = allPets;
         _providerState = ProviderState.Idle;
         notifyListeners();
       });
     }
     else {
-      _allPets = new List<Pet>();
+      _allPets = <Pet>[];
     }
   }
 

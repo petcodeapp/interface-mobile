@@ -87,8 +87,6 @@ class FirebaseAuthService extends ChangeNotifier {
       print(firebaseUser);
       _firebaseUser = firebaseUser;
       _status = Status.Authenticated;
-
-      NotificationsService().handleLogin();
     }
     notifyListeners();
   }

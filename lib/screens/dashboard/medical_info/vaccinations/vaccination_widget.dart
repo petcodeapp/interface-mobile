@@ -50,7 +50,7 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
       onTap: () {
         if (_tapped) {
           Provider.of<NotificationsProvider>(context, listen: false)
-              .clearIndex();
+              .clear();
         } else {
           _editVaccine();
         }
@@ -131,14 +131,23 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
                         //size: 30.0,
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PreviewVaccinationWidget(
-                                    vaccinationImageUrl:
-                                        widget.vaccination.imageUrl,
-                                  )),
-                        );
+                        if (widget.vaccination.imageUrl != null &&
+                            widget.vaccination.imageUrl.isNotEmpty) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PreviewVaccinationWidget(
+                                      vaccinationImageUrl:
+                                          widget.vaccination.imageUrl,
+                                    )),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('No image saved!'),
+                            ),
+                          );
+                        }
                       },
                     ),
                     Spacer(),
@@ -148,8 +157,17 @@ class _VaccinationWidgetState extends State<VaccinationWidget> {
                         //size: 22.0,
                       ),
                       onPressed: () async {
-                        DownloadService()
-                            .downloadVaccination(widget.vaccination);
+                        if (widget.vaccination.imageUrl != null &&
+                            widget.vaccination.imageUrl.isNotEmpty) {
+                          DownloadService()
+                              .downloadVaccination(widget.vaccination);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('No image saved!'),
+                            ),
+                          );
+                        }
                       },
                     ),
                   ],

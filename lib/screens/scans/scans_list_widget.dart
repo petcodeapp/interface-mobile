@@ -32,7 +32,7 @@ class ScansListWidget extends StatelessWidget {
       });
     }
 
-    List<Widget> scans = new List<Widget>();
+    List<Widget> scans = <Widget>[];
     if (petScans != null) {
       for (int i = 0; i < petScans.length; i++) {
         scans.add(listItemWidget(petScans[i], context));

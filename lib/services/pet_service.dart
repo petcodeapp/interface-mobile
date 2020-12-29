@@ -10,7 +10,7 @@ class PetService extends ChangeNotifier {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   List<Pet> petListFromQuery(QuerySnapshot querySnapshot) {
-    List<Pet> returnedList = new List<Pet>();
+    List<Pet> returnedList = <Pet>[];
     List<DocumentSnapshot> petSnapshots = querySnapshot.docs;
     for (int i = 0; i < petSnapshots.length; i++) {
       returnedList.add(Pet.fromSnapshot(petSnapshots[i]));
@@ -27,8 +27,8 @@ class PetService extends ChangeNotifier {
   }
 
   List<UpcomingEvent> getAllPetMedication(List<Pet> allPets) {
-    List<UpcomingEvent> allUpcomingEvents = new List<UpcomingEvent>();
-    List<UpcomingEvent> allUpcomingEventsNoDate = new List<UpcomingEvent>();
+    List<UpcomingEvent> allUpcomingEvents = <UpcomingEvent>[];
+    List<UpcomingEvent> allUpcomingEventsNoDate = <UpcomingEvent>[];
     for (int i = 0; i < allPets.length; i++) {
       if (allPets[i].reminders != null) {
         for (int j = 0; j < allPets[i].reminders.length; j++) {

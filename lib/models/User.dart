@@ -6,7 +6,7 @@ class User {
   String lastName;
   String phoneNumber;
   String email;
-  List<String> petIds;
+  List<String> pets;
 
   DocumentReference reference;
 
@@ -16,7 +16,7 @@ class User {
       this.lastName,
       this.phoneNumber,
       this.email,
-      this.petIds});
+      this.pets});
 
   factory User.fromSnapshot(DocumentSnapshot snapshot) {
     User newUser = User.fromJson(snapshot.data());
@@ -25,9 +25,9 @@ class User {
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
-    List<String> convertPetIds = new List<String>();
+    List<String> convertPetIds = <String>[];
     if (json != null) {
-      List petIds = json['petIds'] as List;
+      List petIds = json['pets'] as List;
       if (petIds != null) {
         petIds.forEach((petId) {
           convertPetIds.add(petId.toString());
@@ -40,7 +40,7 @@ class User {
         lastName: json['lastName'] as String,
         phoneNumber: json['phoneNumber'] as String,
         email: json['email'] as String,
-        petIds: convertPetIds,
+        pets: convertPetIds,
       );
     }
     else {
@@ -50,7 +50,7 @@ class User {
         lastName: '',
         phoneNumber: '',
         email: '',
-        petIds: new List<String>(),
+        pets: <String>[],
       );
     }
   }
@@ -63,6 +63,6 @@ class User {
         'lastName': instance.lastName,
         'phoneNumber': instance.phoneNumber,
         'email': instance.email,
-        'petIds': instance.petIds,
+        'pets': instance.pets,
   };
 }

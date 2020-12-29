@@ -24,7 +24,7 @@ class ScansMapProvider extends ChangeNotifier {
   ScansMapProvider() {
     _panelController = new PanelController();
     _mapService = new MapService();
-    _allScans = new List<Scan>();
+    _allScans = <Scan>[];
 
     _height = StyleConstants.height;
     _mapBottomPadding = _height * 0.11;

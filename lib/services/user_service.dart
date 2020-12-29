@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:petcode_app/models/User.dart';
+import 'package:petcode_app/services/notifications_service.dart';
 
 class UserService extends ChangeNotifier {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -17,6 +18,7 @@ class UserService extends ChangeNotifier {
 
   setUid(String uid) {
     _uid = uid;
+    NotificationsService().handleLogin();
     startUserStream();
   }
 

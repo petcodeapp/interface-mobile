@@ -31,6 +31,7 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
     _reminderNameController = new TextEditingController();
     _reminderStartDateController = new TextEditingController();
     _reminderEndDateController = new TextEditingController();
+    _repeatValue = 'Monthly';
     super.initState();
   }
 
@@ -141,7 +142,8 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                                           new TextEditingController(
                                               text: _reminderStartDateController
                                                       .text +
-                                                  ', ' + selectedTime.format(context));
+                                                  ', ' +
+                                                  selectedTime.format(context));
                                       _reminderStartDate =
                                           _reminderStartDate.add(Duration(
                                               hours: selectedTime.hour,
@@ -161,7 +163,7 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                               fontSize: 16.0,
                               color: Colors.black.withOpacity(0.8))),
                       DropdownButton<String>(
-                          value: _repeatValue ?? 'Monthly',
+                          value: _repeatValue,
                           //underline: SizedBox.shrink(),
                           underline: Container(
                             color: Colors.grey,
@@ -241,7 +243,9 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                                                   text:
                                                       _reminderEndDateController
                                                               .text +
-                                                          ', ' + selectedTime.format(context));
+                                                          ', ' +
+                                                          selectedTime
+                                                              .format(context));
                                           _reminderEndDate =
                                               _reminderEndDate.add(Duration(
                                                   hours: selectedDate.hour,
@@ -268,10 +272,12 @@ class _AddReminderWidgetState extends State<AddReminderWidget> {
                                   notificationMethod: 'email',
                                   frequency: _repeatValue,
                                   enabled: true,
-                                  startDate:
-                                      Timestamp.fromDate(_reminderStartDate),
-                                  endDate:
-                                      Timestamp.fromDate(_reminderEndDate));
+                                  startDate: _reminderStartDate != null
+                                      ? Timestamp.fromDate(_reminderStartDate)
+                                      : null,
+                                  endDate: _reminderEndDate != null
+                                      ? Timestamp.fromDate(_reminderEndDate)
+                                      : null);
                               Provider.of<DatabaseService>(context,
                                       listen: false)
                                   .addReminder(newReminder, currentPet);

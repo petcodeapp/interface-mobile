@@ -18,7 +18,7 @@ class ImageMarkerProvider extends ChangeNotifier {
 
   void setImages(List<String> urls) async {
     List<Future<BitmapDescriptor>> descriptors =
-        new List<Future<BitmapDescriptor>>();
+        <Future<BitmapDescriptor>>[];
     for (int i = 0; i < urls.length; i++) {
       descriptors.add(_imageMarkerService.getMarkerIcon(
           urls[i],

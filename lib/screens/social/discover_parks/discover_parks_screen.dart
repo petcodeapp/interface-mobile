@@ -38,7 +38,6 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
   //BitmapDescriptor customPin = BitmapDescriptor.defaultMarkerWithHue(MapConstants.bitmapDescriptorHues[1]);
   BitmapDescriptor customPin;
 
-
   @override
   void initState() {
     _mapBottomPadding = StyleConstants.height * 0.11;
@@ -53,20 +52,19 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
   void setCustomMapPin() async {
     customPin = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 2.5),
-        'assets/icons/custombluemarker.png'
-    );
+        'assets/icons/custombluemarker.png');
   }
 
   BitmapDescriptor createMarker(context) {
-      ImageConfiguration configuration = createLocalImageConfiguration(context);
-      BitmapDescriptor.fromAssetImage(configuration, 'assets/icons/custombluemarker.png')
-          .then((icon) {
-            return icon;
-        /*1setState(() {
+    ImageConfiguration configuration = createLocalImageConfiguration(context);
+    BitmapDescriptor.fromAssetImage(
+            configuration, 'assets/icons/custombluemarker.png')
+        .then((icon) {
+      return icon;
+      /*1setState(() {
           customPin = icon;
         });*/
-      });
-
+    });
   }
 
   @override
@@ -118,11 +116,10 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
             ),
             width: _width,
             child: GestureDetector(
-              onTap: (){
-                if(_panelController.isPanelOpen){
+              onTap: () {
+                if (_panelController.isPanelOpen) {
                   _panelController.close();
-                }
-                else{
+                } else {
                   _panelController.open();
                 }
               },
@@ -172,7 +169,7 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: _width * 0.1,vertical: _height * 0.02 ),
+                      horizontal: _width * 0.1, vertical: _height * 0.02),
                   child: Stack(
                     children: [
                       Align(
@@ -180,10 +177,8 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                         child: Container(
                           height: _height * 0.055,
                           child: Center(
-                            child: Text(
-                              'Pet Parks',
-                                style: StyleConstants.pageTitleText
-                            ),
+                            child: Text('Pet Parks',
+                                style: StyleConstants.pageTitleText),
                           ),
                         ),
                       ),
@@ -192,7 +187,6 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
                         child: Container(
                           height: _height * 0.06,
                           child: IconButton(
-
                             icon: Icon(
                               Icons.arrow_back_ios,
                               size: 25.0,
@@ -376,12 +370,12 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
     if (nearbyParks == null) {
       return null;
     } else {
-      List<Marker> allMarkers = new List<Marker>();
+      List<Marker> allMarkers = <Marker>[];
       for (int i = 0; i < nearbyParks.length; i++) {
         allMarkers.add(
           new Marker(
             icon: customPin,
-              markerId: MarkerId(nearbyParks[i].name + i.toString() + 'ID'),
+            markerId: MarkerId(nearbyParks[i].name + i.toString() + 'ID'),
             position: nearbyParks[i].location,
             /*
             icon: BitmapDescriptor.defaultMarkerWithHue(
@@ -402,7 +396,4 @@ class _DiscoverParksScreenState extends State<DiscoverParksScreen> {
       return allMarkers.toSet();
     }
   }
-
-
 }
-

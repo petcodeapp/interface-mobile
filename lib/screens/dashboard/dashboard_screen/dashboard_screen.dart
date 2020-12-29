@@ -34,7 +34,6 @@ class DashboardScreen extends StatelessWidget {
       return Scaffold(
         backgroundColor: StyleConstants.blue,
         body: Container(
-          width: width,
           height: height,
           decoration: BoxDecoration(
             //gradient: StyleConstants.bgGradient,
@@ -45,7 +44,6 @@ class DashboardScreen extends StatelessWidget {
             children: [
               Container(
                 height: height * 0.14,
-                width: width,
                 child: Align(
                   alignment: Alignment.center,
                   child: Stack(
@@ -82,7 +80,7 @@ class DashboardScreen extends StatelessWidget {
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0))
                   ),
                   child: Column(
-                    //mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(
                         height: height * 0.02,
@@ -95,26 +93,22 @@ class DashboardScreen extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: NavigationRow(),
                       ),
-                      Expanded(
-                        child: SingleChildScrollView(
-                          physics: ClampingScrollPhysics(),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.bottomRight,
-                                end: Alignment.topLeft,
-                                colors: [ const Color(0xffB3E1EE),  Colors.white],
-                                stops: [0.05, 0.95],
-                              ),
+                      Flexible(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.bottomRight,
+                              end: Alignment.topLeft,
+                              colors: [ const Color(0xffB3E1EE),  Colors.white],
+                              stops: [0.05, 0.95],
                             ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: width * 0.035),
-                              child: UpcomingEventsWidget(),
-                            ),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: width * 0.035),
+                            child: UpcomingEventsWidget(),
                           ),
                         ),
                       ),
-
                     ],
                   ),
                 ),

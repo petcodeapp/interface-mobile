@@ -15,7 +15,7 @@ class PetPerksProvider extends ChangeNotifier {
   String get currentFilter => _currentFilter;
 
   PetPerksProvider() {
-    _allPetPerks = new List<PetPerk>();
+    _allPetPerks = <PetPerk>[];
     _petPerksService = new PetPerksService();
     _currentFilter = 'none';
   }
