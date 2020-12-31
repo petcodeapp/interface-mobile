@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
   String uid;
-  String firstName;
-  String lastName;
+  //String firstName;
+  //String lastName;
+  String fullName;
+
   String phoneNumber;
   String email;
   List<String> pets;
@@ -12,8 +14,9 @@ class User {
 
   User(
       {this.uid,
-      this.firstName,
-      this.lastName,
+      //this.firstName,
+      //this.lastName,
+        this.fullName,
       this.phoneNumber,
       this.email,
       this.pets});
@@ -36,8 +39,9 @@ class User {
 
       return User(
         uid: json['uid'] as String,
-        firstName: json['firstName'] as String,
-        lastName: json['lastName'] as String,
+        //firstName: json['firstName'] as String,
+        //lastName: json['lastName'] as String,
+        fullName: json['fullName'] as String,
         phoneNumber: json['phoneNumber'] as String,
         email: json['email'] as String,
         pets: convertPetIds,
@@ -46,8 +50,9 @@ class User {
     else {
       return User(
         uid: '',
-        firstName: '',
-        lastName: '',
+        //firstName: '',
+        //lastName: '',
+        fullName: '',
         phoneNumber: '',
         email: '',
         pets: <String>[],
@@ -59,8 +64,9 @@ class User {
 
   Map<String, dynamic> _UserToJson(User instance) => <String, dynamic>{
         'uid': instance.uid,
-        'firstName': instance.firstName,
-        'lastName': instance.lastName,
+        //'firstName': instance.firstName,
+        //'lastName': instance.lastName,
+        'fullName': instance.fullName,
         'phoneNumber': instance.phoneNumber,
         'email': instance.email,
         'pets': instance.pets,

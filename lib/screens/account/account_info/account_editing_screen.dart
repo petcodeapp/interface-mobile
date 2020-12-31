@@ -15,8 +15,7 @@ class AccountInfoEditingScreen extends StatefulWidget {
 }
 
 class _AccountInfoEditingScreenState extends State<AccountInfoEditingScreen> {
-  TextEditingController _firstNameInputController;
-  TextEditingController _lastNameInputController;
+  TextEditingController _fullNameInputController;
   TextEditingController _emailInputController;
   TextEditingController _phoneNumberInputController;
 
@@ -29,10 +28,8 @@ class _AccountInfoEditingScreenState extends State<AccountInfoEditingScreen> {
 
     _userService = Provider.of<UserService>(context, listen: false);
 
-    _firstNameInputController =
-        new TextEditingController(text: _userService.currentUser.firstName ?? '');
-    _lastNameInputController =
-        new TextEditingController(text: _userService.currentUser.lastName ?? '');
+    _fullNameInputController =
+    new TextEditingController(text: _userService.currentUser.fullName ?? '');
     _emailInputController =
         new TextEditingController(text: _userService.currentUser.email ?? '');
     _phoneNumberInputController =
@@ -153,7 +150,7 @@ class _AccountInfoEditingScreenState extends State<AccountInfoEditingScreen> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text('First Name',
+                                      Text('Full Name',
                                         style: StyleConstants.editTextFieldDescription,
                                       ),
                                       Container(
@@ -161,29 +158,7 @@ class _AccountInfoEditingScreenState extends State<AccountInfoEditingScreen> {
                                         child: SizedBox(
                                           height: height * 0.07,
                                           child: TextFormField(
-                                            controller: _firstNameInputController,
-                                            validator: (value) => ValidatorHelper.firstNameValidator(value),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: height * 0.05,),
-                                Container(
-                                  width: width * 0.9,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text('Last Name',
-                                        style: StyleConstants.editTextFieldDescription,
-                                      ),
-                                      Container(
-                                        //color: Colors.blue,
-                                        child: SizedBox(
-                                          height: height * 0.07,
-                                          child: TextFormField(
-                                            controller: _lastNameInputController,
+                                            controller: _fullNameInputController,
                                             validator: (value) => ValidatorHelper.firstNameValidator(value),
                                           ),
                                         ),
@@ -259,8 +234,9 @@ class _AccountInfoEditingScreenState extends State<AccountInfoEditingScreen> {
   User updateUser() {
     User updatedUser = _userService.currentUser;
 
-    updatedUser.firstName = _firstNameInputController.text;
-    updatedUser.lastName = _lastNameInputController.text;
+    //updatedUser.firstName = _firstNameInputController.text;
+    //updatedUser.lastName = _lastNameInputController.text;
+    updatedUser.fullName = _fullNameInputController.text;
     updatedUser.email = _emailInputController.text;
     updatedUser.phoneNumber = _phoneNumberInputController.text;
 

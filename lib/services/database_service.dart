@@ -27,8 +27,9 @@ class DatabaseService {
       String phoneNumber, String uid) async {
     User newUser = User(
       email: email,
-      firstName: firstName,
-      lastName: lastName,
+      //firstName: firstName,
+      //lastName: lastName,
+      fullName: firstName + ' ' + lastName,
       phoneNumber: phoneNumber,
       uid: uid,
       pets: <String>[],
