@@ -12,7 +12,6 @@ class ReminderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(currentReminder.frequency);
 
     double height = StyleConstants.height;
     double width = StyleConstants.width;

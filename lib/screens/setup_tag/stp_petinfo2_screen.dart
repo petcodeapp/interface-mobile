@@ -214,7 +214,7 @@ class _StpPetInfo2ScreenState extends State<StpPetInfo2Screen> {
                     updatedPet.birthday = Timestamp.fromDate(_petBirthday);
 
                     updatedPet.isServiceAnimal = _isServiceAnimal;
-                    updatedPet.isAdopted = _isAdopted;
+
 
                     Navigator.push(
                       context,

@@ -34,11 +34,11 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
 
   @override
   void initState() {
-    _vaccineNameInputControllers = new List<TextEditingController>();
+    _vaccineNameInputControllers = <TextEditingController>[];
     _vaccineNameInputControllers.add(new TextEditingController());
     _vaccineNameInputControllers.add(new TextEditingController());
-    _vaccineImages = new List<File>(2);
-    _expireDates = new List<DateTime>(2);
+    _vaccineImages = <File>[];
+    _expireDates = <DateTime>[];
     super.initState();
   }
 
@@ -99,7 +99,7 @@ class _StpVaccineScreenState extends State<StpVaccineScreen> {
               GestureDetector(
                 onTap: () {
                   Pet updatedPet = widget.pet;
-                  updatedPet.vaccinations = new List<Vaccination>();
+                  updatedPet.vaccinations = <Vaccination>[];
                   for (int i = 0;
                       i < _vaccineNameInputControllers.length;
                       i++) {

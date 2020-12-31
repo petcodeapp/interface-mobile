@@ -37,7 +37,7 @@ class _GlowingReminderWidgetState extends State<GlowingReminderWidget>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Provider.of<NotificationsProvider>(context, listen: false).clearIndex();
+        Provider.of<NotificationsProvider>(context, listen: false).clear();
       },
       child: Container(
         child: ReminderWidget(

@@ -11,7 +11,7 @@ class PetPerksService {
   }
 
   List<PetPerk> petPerkListFromSnapshot(QuerySnapshot snapshot) {
-    List<PetPerk> petPerks = new List<PetPerk>();
+    List<PetPerk> petPerks = <PetPerk>[];
     for (int i = 0; i < snapshot.docs.length; i++) {
       petPerks.add(PetPerk.fromSnapshot(snapshot.docs[i]));
     }

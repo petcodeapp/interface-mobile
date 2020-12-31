@@ -28,7 +28,7 @@ class AddressAutocompleteService {
 
       final predictions = response.data['predictions'];
 
-      List<Address> addresses = new List<Address>();
+      List<Address> addresses = <Address>[];
 
       for (int i = 0; i < predictions.length; i++) {
         final structuredFormatting = predictions[i]['structured_formatting'];
@@ -40,6 +40,6 @@ class AddressAutocompleteService {
       addresses.add(new Address(fullName: 'Powered By Google'));
       return addresses;
     }
-    return new List<Address>();
+    return <Address>[];
   }
 }

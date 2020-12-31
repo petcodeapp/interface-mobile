@@ -67,7 +67,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
   void initState() {
     super.initState();
     _isServiceAnimal = widget.currentPet.isServiceAnimal ?? false;
-    _isAdopted = widget.currentPet.isAdopted ?? false;
+    //_isAdopted = widget.currentPet.isAdopted ?? false;
     updatedImage = CachedNetworkImageProvider(widget.currentPet.profileUrl);
     _birthdayDateController = new TextEditingController();
     if (widget.currentPet.birthday != null) {
@@ -167,7 +167,7 @@ class _PetInfoEditingScreenState extends State<PetInfoEditingScreen> {
                                 _colorInputController.text.trim();
                             updatedPet.temperament =
                                 _temperamentInputController.text.trim();
-                            updatedPet.isAdopted = _isAdopted;
+                            //updatedPet.isAdopted = _isAdopted;
                             updatedPet.isServiceAnimal = _isServiceAnimal;
                             updatedPet.additionalInfo =
                                 _additionalInfoInputController.text.trim();

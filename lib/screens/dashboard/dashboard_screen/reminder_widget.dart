@@ -32,10 +32,12 @@ class _ReminderWidgetState extends State<ReminderWidget> {
           ],
           borderRadius: BorderRadius.circular(10.0)),
       height: height * 0.1,
+      width: width * 0.9,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               width: width * 0.1,

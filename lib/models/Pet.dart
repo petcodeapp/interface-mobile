@@ -20,7 +20,7 @@ class Pet {
   VisibleValue<String> allergies;
   bool isServiceAnimal;
   bool isLost;
-  bool isAdopted;
+  //bool isAdopted;
   int age;
   Timestamp birthday;
   List<Vaccination> vaccinations;
@@ -46,7 +46,7 @@ class Pet {
       this.vetPhoneNumber,
       this.isServiceAnimal,
       this.isLost,
-      this.isAdopted,
+      //this.isAdopted,
       this.age,
       this.birthday,
       this.vaccinations,
@@ -67,7 +67,7 @@ class Pet {
     List<dynamic> vaccinationMaps = json['vaccinations'] as List;
     List<Vaccination> convertedList;
     if (vaccinationMaps != null) {
-      convertedList = new List<Vaccination>();
+      convertedList = <Vaccination>[];
       vaccinationMaps.forEach((vaccination) {
         convertedList.add(Vaccination.fromJson(vaccination));
       });
@@ -76,7 +76,7 @@ class Pet {
     List<dynamic> reminderMaps = json['reminders'] as List;
     List<Reminder> convertedReminders;
     if (reminderMaps != null) {
-      convertedReminders = new List<Reminder>();
+      convertedReminders = <Reminder>[];
       reminderMaps.forEach((reminder) {
         convertedReminders.add(Reminder.fromJson(reminder));
       });
@@ -88,7 +88,7 @@ class Pet {
     List<dynamic> scanMaps = json['scans'] as List;
     List<Scan> scanConverted;
     if (scanMaps != null) {
-      scanConverted = new List<Scan>();
+      scanConverted = <Scan>[];
       scanMaps.forEach((scan) {
         scanConverted.add(Scan.fromJson(scan));
       });
@@ -125,7 +125,7 @@ class Pet {
       allergies: VisibleValue.fromJson(json['allergies']),
       isServiceAnimal: json['isServiceAnimal'] as bool,
       isLost: json['isLost'] as bool,
-      isAdopted: json['isAdopted'] as bool,
+      //isAdopted: json['isAdopted'] as bool,
       age: json['age'] as int,
       birthday: json['birthday'] as Timestamp,
       vaccinations: convertedList,
@@ -153,7 +153,7 @@ class Pet {
         'allergies': instance.allergies.toJson(),
         'isServiceAnimal': instance.isServiceAnimal,
         'isLost': instance.isLost,
-        'isAdopted': instance.isAdopted,
+        //'isAdopted': instance.isAdopted,
         'age': instance.age,
         'birthday': instance.birthday,
         'vaccinations': _vaccinationMaps(instance.vaccinations),
@@ -168,7 +168,7 @@ class Pet {
     if (allVaccinations == null) {
       return null;
     } else {
-      List<Map<String, dynamic>> convertedMaps = List<Map<String, dynamic>>();
+      List<Map<String, dynamic>> convertedMaps = <Map<String, dynamic>>[];
       allVaccinations.forEach((vaccination) {
         convertedMaps.add(vaccination.toJson());
       });
@@ -181,7 +181,7 @@ class Pet {
       return null;
     } else {
       List<Map<String, dynamic>> reminderMaps =
-          new List<Map<String, dynamic>>();
+          <Map<String, dynamic>>[];
       reminders.forEach((reminder) {
         reminderMaps.add(reminder.toJson());
       });
@@ -201,7 +201,7 @@ class Pet {
     if (allScans == null) {
       return null;
     }
-    List<Map<String, dynamic>> convertedMaps = new List<Map<String, dynamic>>();
+    List<Map<String, dynamic>> convertedMaps = <Map<String, dynamic>>[];
     allScans.forEach((scan) {
       convertedMaps.add(scan.toJson());
     });

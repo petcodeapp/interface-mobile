@@ -41,7 +41,7 @@ class _GlowingVaccinationWidgetState extends State<GlowingVaccinationWidget> wit
           blurRadius: _animation.value,
           spreadRadius: _animation.value,
         ),
-      ], borderRadius: BorderRadius.circular(15.0)),
+      ], borderRadius: BorderRadius.circular(30.0)),
     );
   }
 

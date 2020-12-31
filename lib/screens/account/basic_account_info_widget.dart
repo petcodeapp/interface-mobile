@@ -93,7 +93,7 @@ class BasicAccountInfoWidget extends StatelessWidget {
                         ),
                         Text(
                           user != null
-                              ? user.petIds.length.toString() + ' Pets'
+                              ? user.pets.length.toString() + ' Pets'
                               : '',
                           style: TextStyle(
                               color: StyleConstants.darkPurpleGrey,

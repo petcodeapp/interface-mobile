@@ -3,7 +3,11 @@ import 'package:petcode_app/widgets/sliding_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:petcode_app/models/Pet.dart';
+import 'package:petcode_app/models/Scan.dart';
+import 'package:petcode_app/providers/all_pets_provider.dart';
 import 'package:petcode_app/providers/current_location_provider.dart';
+import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/providers/scans_map_provider.dart';
 import 'package:petcode_app/screens/scans/recent_scan_widget.dart';
 import 'package:petcode_app/screens/scans/scans_list_widget.dart';
@@ -29,9 +33,21 @@ class _ScansScreenState extends State<ScansScreen> {
 
     ScansMapProvider scansMapProvider = Provider.of<ScansMapProvider>(context);
 
-    print(scansMapProvider.panelController != null &&
-        scansMapProvider.panelController.isAttached &&
-        !scansMapProvider.panelController.isPanelShown);
+    NotificationsProvider notificationsProvider =
+        Provider.of<NotificationsProvider>(context);
+    if (notificationsProvider.currentAction == 'scanned pet') {
+      AllPetsProvider allPetsProvider = Provider.of<AllPetsProvider>(context);
+      String petId = notificationsProvider.params;
+      try {
+        Pet updatedPet =
+            allPetsProvider.allPets.firstWhere((Pet pet) => pet.pid == petId);
+        scansMapProvider.setNewScan(updatedPet.scans.last);
+        moveCameraToScan(updatedPet.scans.last);
+        notificationsProvider.clearNoUpdate();
+      } catch (error) {
+        print(error);
+      }
+    }
 
     return Scaffold(
       backgroundColor: StyleConstants.blue,
@@ -46,11 +62,10 @@ class _ScansScreenState extends State<ScansScreen> {
             child: Container(
               width: width,
               child: GestureDetector(
-                onTap: (){
-                  if(scansMapProvider.panelController.isPanelOpen){
+                onTap: () {
+                  if (scansMapProvider.panelController.isPanelOpen) {
                     scansMapProvider.panelController.close();
-                  }
-                  else{
+                  } else {
                     scansMapProvider.panelController.open();
                   }
                 },
@@ -71,8 +86,10 @@ class _ScansScreenState extends State<ScansScreen> {
                       ),
                       Text(
                         'View Scan Locations',
-                        style: StyleConstants.blackTitleText.copyWith(fontFamily: 'Open Sans',
-                            fontSize: 20.0, fontWeight: FontWeight.w400),
+                        style: StyleConstants.blackTitleText.copyWith(
+                            fontFamily: 'Open Sans',
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w400),
                       ),
                     ],
                   ),
@@ -83,18 +100,17 @@ class _ScansScreenState extends State<ScansScreen> {
           body: Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  //end: Alignment(0.01, 0.01),
-                  end: Alignment.bottomLeft,
-                  stops: [0.01, 0.4, 0.6],
-                  colors: [
-                    const Color(0xffABDEED),
-                    const Color(0xff51BFDA),
-                    StyleConstants.blue
-                  ], // whitish to gray
-                  //tileMode: TileMode.repeated,
-                )
-            ),
+              begin: Alignment.topRight,
+              //end: Alignment(0.01, 0.01),
+              end: Alignment.bottomLeft,
+              stops: [0.01, 0.4, 0.6],
+              colors: [
+                const Color(0xffABDEED),
+                const Color(0xff51BFDA),
+                StyleConstants.blue
+              ], // whitish to gray
+              //tileMode: TileMode.repeated,
+            )),
             height: height,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -112,18 +128,15 @@ class _ScansScreenState extends State<ScansScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              'Scan Locations',
-                              /*style: StyleConstants.whiteThinTitleText
+                            Text('Scan Locations',
+                                /*style: StyleConstants.whiteThinTitleText
                                   .copyWith(fontSize: 25.0, fontWeight: FontWeight.bold),*/
 
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Open Sans',
-                                fontSize: width * 0.055,
-                                fontWeight: FontWeight.bold
-                              )
-                            ),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Open Sans',
+                                    fontSize: width * 0.055,
+                                    fontWeight: FontWeight.bold)),
                           ],
                         ),
                         SizedBox(
@@ -151,7 +164,8 @@ class _ScansScreenState extends State<ScansScreen> {
                                       GoogleMap(
                                         padding: EdgeInsets.only(
                                             bottom: scansMapProvider
-                                                    .mapBottomPadding + height * 0.08),
+                                                    .mapBottomPadding +
+                                                height * 0.08),
                                         mapType: MapType.normal,
                                         initialCameraPosition: CameraPosition(
                                           target: LatLng(
@@ -235,5 +249,13 @@ class _ScansScreenState extends State<ScansScreen> {
             ),
           )),
     );
+  }
+
+  Future<void> moveCameraToScan(Scan scan) async {
+    if (scan.location != null) {
+      GoogleMapController googleMapController = await _controller.future;
+      googleMapController.moveCamera(CameraUpdate.newLatLng(
+          LatLng(scan.location.latitude, scan.location.longitude)));
+    }
   }
 }

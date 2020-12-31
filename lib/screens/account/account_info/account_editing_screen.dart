@@ -254,53 +254,6 @@ class _AccountInfoEditingScreenState extends State<AccountInfoEditingScreen> {
           ),
         ));
 
-
-
-
-
-    return Scaffold(
-      backgroundColor: StyleConstants.blue,
-      appBar: AppBar(
-        actions: [
-          FlatButton(
-            child: Text('Done', style: StyleConstants.whiteDescriptionText,),
-            onPressed: () async {
-              if (_formKey.currentState.validate()) {
-                User updatedUser = updateUser();
-
-                DatabaseService databaseService = Provider.of<DatabaseService>(context, listen: false);
-                await databaseService.updateUser(updatedUser);
-
-                Navigator.pop(context);
-              }
-            },
-          )
-        ],
-      ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            TextFormField(
-              controller: _firstNameInputController,
-              validator: (value) => ValidatorHelper.firstNameValidator(value),
-            ),
-            TextFormField(
-              controller: _lastNameInputController,
-              validator: (value) => ValidatorHelper.lastNameValidator(value),
-            ),
-            TextFormField(
-              controller: _emailInputController,
-              validator: (value) => ValidatorHelper.emailValidator(value),
-            ),
-            TextFormField(
-              controller: _phoneNumberInputController,
-              validator: (value) => ValidatorHelper.phoneNumberValidator(value),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   User updateUser() {

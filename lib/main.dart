@@ -12,6 +12,7 @@ import 'package:petcode_app/providers/nearby_parks_map_provider.dart';
 import 'package:petcode_app/providers/nearby_parks_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
 import 'package:petcode_app/providers/pet_perks_provider.dart';
+import 'package:petcode_app/providers/root_screen_index_provider.dart';
 import 'package:petcode_app/providers/scans_map_provider.dart';
 import 'package:petcode_app/providers/scans_provider.dart';
 import 'package:petcode_app/screens/auth/entry_screen.dart';
@@ -85,7 +86,7 @@ class MyApp extends StatelessWidget {
               return allPetsProvider..clear();
             } else {
               print(userService.currentUser.firstName);
-              return allPetsProvider..setPetIds(userService.currentUser.petIds);
+              return allPetsProvider..setPetIds(userService.currentUser.pets);
             }
           },
         ),
@@ -111,7 +112,7 @@ class MyApp extends StatelessWidget {
                   allPetsProvider.allPets.length == 0) {
                 return imageMarkerProvider..clear();
               } else {
-                List<String> urls = new List<String>();
+                List<String> urls = <String>[];
                 for (int i = 0; i < allPetsProvider.allPets.length; i++) {
                   urls.add(allPetsProvider.allPets[i].profileUrl);
                 }
@@ -192,6 +193,20 @@ class MyApp extends StatelessWidget {
             }),
         ChangeNotifierProvider<CheckSplashProvider>(
             create: (_) => CheckSplashProvider()),
+        ChangeNotifierProxyProvider2<FirebaseAuthService, NotificationsProvider,
+                RootScreenIndexProvider>(
+            create: (_) => RootScreenIndexProvider(),
+            update: (BuildContext context,
+                FirebaseAuthService authService,
+                NotificationsProvider notificationsProvider,
+                RootScreenIndexProvider rootScreenIndexProvider) {
+              if (authService.user != null) {
+                return rootScreenIndexProvider..setIndex(notificationsProvider.rootPage);
+              }
+              else {
+                return rootScreenIndexProvider..clear();
+              }
+            })
       ],
       child: MaterialApp(
         builder: (context, child) {
