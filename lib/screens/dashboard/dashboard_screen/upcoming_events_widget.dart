@@ -48,6 +48,9 @@ class _UpcomingEventsWidgetState extends State<UpcomingEventsWidget> {
                   fontWeight: FontWeight.bold, fontSize: width * 0.055),
             ),
           ),
+          SizedBox(
+            height: height * 0.02,
+          ),
           allPetUpcomingEvents.length == 0
               ? Column(
                   mainAxisSize: MainAxisSize.min,

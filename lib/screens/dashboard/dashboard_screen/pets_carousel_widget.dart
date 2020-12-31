@@ -146,13 +146,13 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
                               child: Center(
-                                child: IconButton(
-                                  icon: Icon(
+                                child: GestureDetector(
+                                  child: Icon(
                                     Icons.language,
                                     size: height * 0.05,
                                     color: Colors.black,
                                   ),
-                                  onPressed: () async {
+                                  onTap: () async {
                                     String url = 'https://petcodeusa.com/' +
                                         currentPetProvider.currentPet.pid;
                                     if (await canLaunch(url)) {
