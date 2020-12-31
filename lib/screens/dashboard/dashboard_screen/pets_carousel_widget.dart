@@ -143,10 +143,15 @@ class _PetsCarouselWidgetState extends State<PetsCarouselWidget> {
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
                               child: Center(
-                                child: Icon(
-                                  Icons.language,
-                                  size: height * 0.05,
-                                  color: Colors.black,
+                                child: GestureDetector(
+                                  onTap: () {
+                              print("Globe button pressed");
+              },
+                                  child: Icon(
+                                    Icons.language,
+                                    size: height * 0.05,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
                             ),
