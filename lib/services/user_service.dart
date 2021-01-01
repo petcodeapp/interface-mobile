@@ -39,7 +39,6 @@ class UserService extends ChangeNotifier {
         .listen((DocumentSnapshot snapshot) {
       if (snapshot.data != null) {
         _currentUser = User.fromSnapshot(snapshot);
-        print(_currentUser.firstName);
         notifyListeners();
       }
     });

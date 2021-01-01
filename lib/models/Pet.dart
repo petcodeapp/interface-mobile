@@ -20,7 +20,7 @@ class Pet {
   VisibleValue<String> allergies;
   bool isServiceAnimal;
   bool isLost;
-  bool isAdopted;
+  //bool isAdopted;
   int age;
   Timestamp birthday;
   List<Vaccination> vaccinations;
@@ -46,7 +46,7 @@ class Pet {
       this.vetPhoneNumber,
       this.isServiceAnimal,
       this.isLost,
-      this.isAdopted,
+      //this.isAdopted,
       this.age,
       this.birthday,
       this.vaccinations,
@@ -125,7 +125,7 @@ class Pet {
       allergies: VisibleValue.fromJson(json['allergies']),
       isServiceAnimal: json['isServiceAnimal'] as bool,
       isLost: json['isLost'] as bool,
-      isAdopted: json['isAdopted'] as bool,
+      //isAdopted: json['isAdopted'] as bool,
       age: json['age'] as int,
       birthday: json['birthday'] as Timestamp,
       vaccinations: convertedList,
@@ -153,7 +153,7 @@ class Pet {
         'allergies': instance.allergies.toJson(),
         'isServiceAnimal': instance.isServiceAnimal,
         'isLost': instance.isLost,
-        'isAdopted': instance.isAdopted,
+        //'isAdopted': instance.isAdopted,
         'age': instance.age,
         'birthday': instance.birthday,
         'vaccinations': _vaccinationMaps(instance.vaccinations),

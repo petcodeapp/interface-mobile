@@ -85,7 +85,6 @@ class MyApp extends StatelessWidget {
             if (userService.currentUser == null) {
               return allPetsProvider..clear();
             } else {
-              print(userService.currentUser.firstName);
               return allPetsProvider..setPetIds(userService.currentUser.pets);
             }
           },

@@ -25,6 +25,8 @@ class BasicAccountInfoWidget extends StatelessWidget {
       }
     }
 
+    List name = user.fullName.split(" ");
+
     return Container(
       width: width * 0.9,
       //height: height * 0.175,
@@ -66,9 +68,8 @@ class BasicAccountInfoWidget extends StatelessWidget {
                   children: [
                     Text(
                       user != null &&
-                              user.firstName != null &&
-                              user.lastName != null
-                          ? user.firstName + ' ' + user.lastName
+                              user.fullName != null
+                          ? user.fullName
                           : '',
                       style: StyleConstants.blackThinTitleText
                           .copyWith(fontSize: 25.0),
