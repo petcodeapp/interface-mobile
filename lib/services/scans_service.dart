@@ -5,7 +5,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Scan.dart';
 import 'package:petcode_app/providers/scans_map_provider.dart';
-import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
 class MapService extends ChangeNotifier {
@@ -39,7 +38,6 @@ class MapService extends ChangeNotifier {
               icon: bitmapDescriptors[allScans[i].petIndex],
               infoWindow: InfoWindow(),
               onTap: () {
-                double height = StyleConstants.height;
                 ScansMapProvider scansMapProvider =
                     Provider.of<ScansMapProvider>(context, listen: false);
                 scansMapProvider.setNewScan(currentScan);
