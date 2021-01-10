@@ -26,11 +26,7 @@ class DatabaseService {
   Future<User> createUser(String email, String firstName, String lastName,
       String phoneNumber, String uid) async {
     User newUser = User(
-      email: email,
-      //firstName: firstName,
-      //lastName: lastName,
       fullName: firstName + ' ' + lastName,
-      phoneNumber: phoneNumber,
       uid: uid,
       pets: <String>[],
     );

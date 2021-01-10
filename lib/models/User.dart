@@ -2,24 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
   String uid;
-  //String firstName;
-  //String lastName;
   String fullName;
-
-  String phoneNumber;
-  String email;
   List<String> pets;
 
   DocumentReference reference;
 
-  User(
-      {this.uid,
-      //this.firstName,
-      //this.lastName,
-      this.fullName,
-      this.phoneNumber,
-      this.email,
-      this.pets});
+  User({this.uid, this.fullName, this.pets});
 
   factory User.fromSnapshot(DocumentSnapshot snapshot) {
     User newUser = User.fromJson(snapshot.data());
@@ -42,8 +30,6 @@ class User {
         //firstName: json['firstName'] as String,
         //lastName: json['lastName'] as String,
         fullName: json['fullName'] as String,
-        phoneNumber: json['phoneNumber'] as String,
-        email: json['email'] as String,
         pets: convertPetIds,
       );
     } else {
@@ -52,8 +38,6 @@ class User {
         //firstName: '',
         //lastName: '',
         fullName: '',
-        phoneNumber: '',
-        email: '',
         pets: <String>[],
       );
     }
@@ -66,8 +50,6 @@ class User {
         //'firstName': instance.firstName,
         //'lastName': instance.lastName,
         'fullName': instance.fullName,
-        'phoneNumber': instance.phoneNumber,
-        'email': instance.email,
         'pets': instance.pets,
       };
 }
