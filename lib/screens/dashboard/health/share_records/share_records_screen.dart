@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Vaccination.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/share_records/share_record_widget.dart';
+import 'package:petcode_app/screens/dashboard/health/share_records/share_record_widget.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 import 'package:petcode_app/widgets/change_pet_dropdown.dart';

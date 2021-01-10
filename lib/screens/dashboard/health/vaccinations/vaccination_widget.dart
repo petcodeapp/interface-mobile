@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Vaccination.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/edit_vaccination_widget.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/preview_vaccination_widget.dart';
+import 'package:petcode_app/screens/dashboard/health/vaccinations/edit_vaccination_widget.dart';
+import 'package:petcode_app/screens/dashboard/health/vaccinations/preview_vaccination_widget.dart';
 import 'package:petcode_app/services/download_service.dart';
 import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/string_helper.dart';

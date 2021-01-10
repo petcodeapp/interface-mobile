@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:petcode_app/main.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/vaccination_history_screen.dart';
+import 'package:petcode_app/screens/dashboard/health/vaccinations/vaccination_history_screen.dart';
 import 'package:petcode_app/screens/social/discover_parks/discover_parks_screen.dart';
 import 'package:petcode_app/screens/social/pet_perks/pet_perks_screen.dart';
 import 'package:url_launcher/url_launcher.dart';

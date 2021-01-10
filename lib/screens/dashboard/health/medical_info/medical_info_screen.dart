@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/general_med_info/general_med_info_widget.dart';
+import 'package:petcode_app/screens/dashboard/health/medical_info/medical_info_widget.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/change_pet_dropdown.dart';
 
-class GeneralMedicalInfoScreen extends StatelessWidget {
+class MedicalInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = StyleConstants.height;
     double width = StyleConstants.width;
@@ -72,7 +72,7 @@ class GeneralMedicalInfoScreen extends StatelessWidget {
                       ),
                       Container(
                         width: width * 0.9,
-                        child: GeneralMedInfoWidget(),
+                        child: MedicalInfoWidget(),
                       ),
                     ],
                   ),

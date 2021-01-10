@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/medical_info_screen.dart';
+import 'package:petcode_app/screens/dashboard/health/health_screen.dart';
 import 'package:petcode_app/screens/dashboard/pet_info/pet_info_screen.dart';
 import 'package:petcode_app/screens/dashboard/owner_info/owner_info_screen.dart';
 import 'package:petcode_app/screens/dashboard/reminders/reminders_screen.dart';
@@ -128,9 +128,7 @@ class NavigationRow extends StatelessWidget {
                       GestureDetector(
                         onTap: () => Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (_) => MedicalInfoScreen(),
-                          ),
+                          MaterialPageRoute(builder: (context) => HealthScreen()),
                         ),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -145,7 +143,7 @@ class NavigationRow extends StatelessWidget {
                               height: height * 0.005,
                             ),
                             Text(
-                              'Med Info',
+                              'Health',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w400),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Vaccination.dart';
 import 'package:petcode_app/utils/style_constants.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/vaccination_widget.dart';
+import 'package:petcode_app/screens/dashboard/health/vaccinations/vaccination_widget.dart';
 
 class GlowingVaccinationWidget extends StatefulWidget {
   GlowingVaccinationWidget({Key key, this.vaccination}) : super(key: key);
