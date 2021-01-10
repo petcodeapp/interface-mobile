@@ -9,65 +9,63 @@ import 'package:provider/provider.dart';
 class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    bool starOn = false;
-
     double height = StyleConstants.height;
     double width = StyleConstants.width;
 
     return Scaffold(
       backgroundColor: StyleConstants.white,
-      body: SingleChildScrollView(
-        physics: ClampingScrollPhysics(),
-        child: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topRight,
-              //end: Alignment(0.01, 0.01),
-              end: Alignment.bottomLeft,
-              stops: [0.01, 0.4, 0.6],
-              colors: [
-                const Color(0xffABDEED),
-                const Color(0xff51BFDA),
-                StyleConstants.blue
-              ], // whitish to gray
-              //tileMode: TileMode.repeated,
-            )),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  height: height * 0.15,
-                  decoration: BoxDecoration(
-                    gradient: StyleConstants.bgGradient,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.1),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Account',
-                              style: StyleConstants.pageTitleText,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: height * 0.03,
-                        ),
-                      ],
-                    ),
+      body: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topRight,
+            //end: Alignment(0.01, 0.01),
+            end: Alignment.bottomLeft,
+            stops: [0.01, 0.4, 0.6],
+            colors: [
+              const Color(0xffABDEED),
+              const Color(0xff51BFDA),
+              StyleConstants.blue
+            ], // whitish to gray
+            //tileMode: TileMode.repeated,
+          )),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: height * 0.15,
+                decoration: BoxDecoration(
+                  gradient: StyleConstants.bgGradient,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Account',
+                            style: StyleConstants.pageTitleText,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: height * 0.03,
+                      ),
+                    ],
                   ),
                 ),
-                Flexible(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20.0),
-                            topRight: Radius.circular(20.0))),
+              ),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.0),
+                          topRight: Radius.circular(20.0))),
+                  child: SingleChildScrollView(
+                    physics: ClampingScrollPhysics(),
                     child: Column(
                       children: [
                         SizedBox(
@@ -165,9 +163,9 @@ class AccountScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              ],
-            )),
-      ),
+              ),
+            ],
+          )),
     );
   }
 }
