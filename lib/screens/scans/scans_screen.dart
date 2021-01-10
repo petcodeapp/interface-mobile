@@ -195,7 +195,7 @@ class _ScansScreenState extends State<ScansScreen> {
                                               !scansMapProvider
                                                   .panelController.isPanelShown
                                           ? Positioned(
-                                              bottom: height * 0.13,
+                                              bottom: height * 0.085,
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
