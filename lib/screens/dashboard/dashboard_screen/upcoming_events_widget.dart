@@ -130,13 +130,6 @@ class _UpcomingEventsWidgetState extends State<UpcomingEventsWidget> {
                 )
               : remindersList(
                   allPetUpcomingEvents, reminderIndex, width, height),
-          allPetUpcomingEvents.length < 2 && allPetUpcomingEvents.length > 0
-              ? SizedBox(
-                  height: height * 0.16,
-                )
-              : SizedBox(
-                  height: height * 0.05,
-                ),
         ],
       ),
     );

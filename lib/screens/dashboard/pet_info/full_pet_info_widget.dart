@@ -87,12 +87,12 @@ class FullPetInfoWidget extends StatelessWidget {
                 size: 30.0,
                 color: StyleConstants.blue,
               ),
-              title: currentPet.birthday == null
+              title: currentPet.birthdate == null
                   ? Text('Birthday',
                   style: StyleConstants.greyedOutText)
                   : Text(
                   StringHelper.getDateString(
-                      currentPet.birthday.toDate()),
+                      currentPet.birthdate.toDate()),
                   style:
                   StyleConstants.lightBlackListText),
             ),

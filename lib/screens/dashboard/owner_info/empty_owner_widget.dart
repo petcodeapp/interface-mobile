@@ -7,11 +7,12 @@ import 'package:petcode_app/utils/style_constants.dart';
 import 'owner_info_single_editing_screen.dart';
 
 class EmptyOwnerWidget extends StatelessWidget {
+  final int ownerNumber;
   final double height;
   final double width;
   final Pet currentPet;
 
-  EmptyOwnerWidget({Key key, this.height, this.width, this.currentPet})
+  EmptyOwnerWidget({Key key, this.ownerNumber, this.height, this.width, this.currentPet})
       : super(key: key);
 
   @override
@@ -41,7 +42,7 @@ class EmptyOwnerWidget extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: width * 0.04),
                   child: Text(
-                    'Owner 2 (Not Set)',
+                    'Owner ' + ownerNumber.toString() + ' (Not Set)',
                     style: StyleConstants.blackThinTitleTextSmall.copyWith(
                         fontWeight: FontWeight.w600,
                         color: Colors.black.withOpacity(0.7)),

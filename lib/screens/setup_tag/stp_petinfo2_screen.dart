@@ -205,13 +205,13 @@ class _StpPetInfo2ScreenState extends State<StpPetInfo2Screen> {
                   if (_formKey.currentState.validate()) {
                     Pet updatedPet = widget.pet;
                     if (_petBirthday != null) {
-                      updatedPet.birthday = Timestamp.fromDate(_petBirthday);
+                      updatedPet.birthdate = Timestamp.fromDate(_petBirthday);
                       updatedPet.age =
                           DateTime.now().difference(_petBirthday).inDays ~/ 365;
                     }
 
                     updatedPet.temperament = _temperamentController.text.trim();
-                    updatedPet.birthday = Timestamp.fromDate(_petBirthday);
+                    updatedPet.birthdate = Timestamp.fromDate(_petBirthday);
 
                     updatedPet.isServiceAnimal = _isServiceAnimal;
 

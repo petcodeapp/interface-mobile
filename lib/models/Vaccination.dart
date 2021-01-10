@@ -6,7 +6,6 @@ class Vaccination {
   Timestamp date;
   Timestamp expirationDate;
 
-
   Vaccination({this.name, this.imageUrl, this.date, this.expirationDate});
 
   factory Vaccination.fromJson(Map<String, dynamic> json) {
@@ -20,9 +19,11 @@ class Vaccination {
 
   Map<String, dynamic> toJson() => _VaccinationToJson(this);
 
-  Map<String, dynamic> _VaccinationToJson(Vaccination instance) => <String, dynamic> {
-    'name': instance.name,
-    'imageUrl': instance.imageUrl,
-    'date': instance.date,
-  };
+  Map<String, dynamic> _VaccinationToJson(Vaccination instance) =>
+      <String, dynamic>{
+        'name': instance.name,
+        'imageUrl': instance.imageUrl,
+        'date': instance.date,
+        'expirationDate': instance.expirationDate,
+      };
 }

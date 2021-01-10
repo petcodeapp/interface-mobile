@@ -227,10 +227,10 @@ class _StpMedicalInfoScreenState extends State<StpMedicalInfoScreen> {
                   updatedPet.specialNeeds = VisibleValue<String>(
                       value: _specialNeedsInputController.text.trim(),
                       visible: true);
-                  updatedPet.vetName = VisibleValue<String>(
+                  updatedPet.vet.name = VisibleValue<String>(
                       value: _vetNameInputController.text.trim(),
                       visible: true);
-                  updatedPet.vetPhoneNumber = VisibleValue<String>(
+                  updatedPet.vet.phoneNumber = VisibleValue<String>(
                       value: _vetFormattedPhoneNumber, visible: true);
 
                   Navigator.push(

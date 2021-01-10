@@ -109,7 +109,6 @@ class RemindersScreen extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                height: height * 0.5,
                 width: width,
                 decoration: BoxDecoration(
                     color: Colors.white,

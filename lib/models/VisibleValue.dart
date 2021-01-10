@@ -5,10 +5,14 @@ class VisibleValue<T> {
   VisibleValue({this.value, this.visible});
 
   factory VisibleValue.fromJson(Map<dynamic, dynamic> json) {
-    return VisibleValue(
-      value: json['value'] as T,
-      visible: json['visible'] as bool,
-    );
+    if (json != null) {
+      return VisibleValue(
+        value: json['value'] as T,
+        visible: json['visible'] as bool,
+      );
+    } else {
+      return null;
+    }
   }
 
   Map<String, dynamic> toJson() => _VisibleValueToJson(this);

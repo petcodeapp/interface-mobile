@@ -3,6 +3,7 @@ import 'package:petcode_app/models/Owner.dart';
 import 'package:petcode_app/models/Reminder.dart';
 import 'package:petcode_app/models/Scan.dart';
 import 'package:petcode_app/models/Vaccination.dart';
+import 'package:petcode_app/models/Vet.dart';
 import 'package:petcode_app/models/VisibleValue.dart';
 
 class Pet {
@@ -15,19 +16,17 @@ class Pet {
   String color;
   String additionalInfo;
   VisibleValue<String> specialNeeds;
-  VisibleValue<String> vetName;
-  VisibleValue<String> vetPhoneNumber;
   VisibleValue<String> allergies;
   bool isServiceAnimal;
   bool isLost;
   //bool isAdopted;
   int age;
-  Timestamp birthday;
+  Timestamp birthdate;
   List<Vaccination> vaccinations;
   List<Reminder> reminders;
   List<Scan> scans;
-  Owner contact_1;
-  Owner contact_2;
+  List<Owner> contacts;
+  Vet vet;
 
   DocumentReference reference;
 
@@ -42,18 +41,16 @@ class Pet {
       this.color,
       this.additionalInfo,
       this.specialNeeds,
-      this.vetName,
-      this.vetPhoneNumber,
       this.isServiceAnimal,
       this.isLost,
       //this.isAdopted,
       this.age,
-      this.birthday,
+      this.birthdate,
       this.vaccinations,
       this.reminders,
       this.scans,
-      this.contact_1,
-      this.contact_2,
+      this.contacts,
+      this.vet,
       this.reference});
 
   factory Pet.fromSnapshot(DocumentSnapshot snapshot) {
@@ -94,20 +91,13 @@ class Pet {
       });
     }
 
-    Map owner1Map = json['contact_1'] as Map;
-    Owner owner1;
-    if (owner1Map == null) {
-      owner1 = null;
-    } else {
-      owner1 = Owner.fromJson(owner1Map);
-    }
-
-    Map owner2Map = json['contact_2'] as Map;
-    Owner owner2;
-    if (owner2Map == null) {
-      owner2 = null;
-    } else {
-      owner2 = Owner.fromJson(owner2Map);
+    List<dynamic> ownerMaps = json['contacts'] as List;
+    List<Owner> ownerConverted;
+    if (ownerMaps != null) {
+      ownerConverted = <Owner>[];
+      ownerMaps.forEach((owner) {
+        ownerConverted.add(Owner.fromJson(owner));
+      });
     }
 
     return Pet(
@@ -120,19 +110,17 @@ class Pet {
       color: json['color'] as String,
       additionalInfo: json['additionalInfo'] as String,
       specialNeeds: VisibleValue.fromJson(json['specialNeeds']),
-      vetName: VisibleValue.fromJson(json['vetName']),
-      vetPhoneNumber: VisibleValue.fromJson(json['vetPhoneNumber']),
       allergies: VisibleValue.fromJson(json['allergies']),
       isServiceAnimal: json['isServiceAnimal'] as bool,
       isLost: json['isLost'] as bool,
       //isAdopted: json['isAdopted'] as bool,
       age: json['age'] as int,
-      birthday: json['birthday'] as Timestamp,
+      birthdate: json['birthday'] as Timestamp,
       vaccinations: convertedList,
       reminders: convertedReminders,
       scans: scanConverted,
-      contact_1: owner1,
-      contact_2: owner2,
+      contacts: ownerConverted,
+      vet: Vet.fromJson(json['vet']),
     );
   }
 
@@ -147,20 +135,22 @@ class Pet {
         'species': instance.species,
         'color': instance.color,
         'additionalInfo': instance.additionalInfo,
-        'specialNeeds': instance.specialNeeds.toJson(),
-        'vetName': instance.vetName.toJson(),
-        'vetPhoneNumber': instance.vetPhoneNumber.toJson(),
-        'allergies': instance.allergies.toJson(),
+        'specialNeeds': instance.specialNeeds != null
+            ? instance.specialNeeds.toJson()
+            : VisibleValue<String>().toJson(),
+        'allergies': instance.allergies != null
+            ? instance.allergies.toJson()
+            : VisibleValue<String>().toJson(),
         'isServiceAnimal': instance.isServiceAnimal,
         'isLost': instance.isLost,
         //'isAdopted': instance.isAdopted,
         'age': instance.age,
-        'birthday': instance.birthday,
+        'birthdate': instance.birthdate,
         'vaccinations': _vaccinationMaps(instance.vaccinations),
         'reminders': _reminderMaps(instance.reminders),
         'scans': _scanMaps(instance.scans),
-        'contact_1': _ownerMap(instance.contact_1),
-        'contact_2': _ownerMap(instance.contact_2),
+        'contacts': _ownerMaps(instance.contacts),
+        'vet': instance.vet != null ? instance.vet.toJson() : Vet().toJson(),
       };
 
   List<Map<String, dynamic>> _vaccinationMaps(
@@ -180,20 +170,11 @@ class Pet {
     if (reminders == null) {
       return null;
     } else {
-      List<Map<String, dynamic>> reminderMaps =
-          <Map<String, dynamic>>[];
+      List<Map<String, dynamic>> reminderMaps = <Map<String, dynamic>>[];
       reminders.forEach((reminder) {
         reminderMaps.add(reminder.toJson());
       });
       return reminderMaps;
-    }
-  }
-
-  Map<String, dynamic> _ownerMap(Owner owner) {
-    if (owner == null) {
-      return null;
-    } else {
-      return owner.toJson();
     }
   }
 
@@ -204,6 +185,17 @@ class Pet {
     List<Map<String, dynamic>> convertedMaps = <Map<String, dynamic>>[];
     allScans.forEach((scan) {
       convertedMaps.add(scan.toJson());
+    });
+    return convertedMaps;
+  }
+
+  List<Map<String, dynamic>> _ownerMaps(List<Owner> allOwners) {
+    if (allOwners == null) {
+      return null;
+    }
+    List<Map<String, dynamic>> convertedMaps = <Map<String, dynamic>>[];
+    allOwners.forEach((owner) {
+      convertedMaps.add(owner.toJson());
     });
     return convertedMaps;
   }

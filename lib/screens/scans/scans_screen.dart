@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:petcode_app/widgets/sliding_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -195,7 +194,7 @@ class _ScansScreenState extends State<ScansScreen> {
                                               !scansMapProvider
                                                   .panelController.isPanelShown
                                           ? Positioned(
-                                              bottom: height * 0.13,
+                                              bottom: height * 0.085,
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [

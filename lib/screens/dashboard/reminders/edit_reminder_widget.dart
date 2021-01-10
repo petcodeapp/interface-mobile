@@ -29,6 +29,8 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
 
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
+  bool _showEndDate;
+
   @override
   void initState() {
     _reminderNameController =
@@ -54,6 +56,12 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
     }
     _repeatValue = widget.currentReminder.frequency;
 
+    if (_repeatValue == 'Never') {
+      _showEndDate = false;
+    } else {
+      _showEndDate = true;
+    }
+
     super.initState();
   }
 
@@ -71,8 +79,6 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
     double width = StyleConstants.width;
 
     Pet currentPet = Provider.of<CurrentPetProvider>(context).currentPet;
-
-    bool showEndDate = false;
 
     return Padding(
       padding: EdgeInsets.only(
@@ -213,9 +219,9 @@ class _EditReminderWidgetState extends State<EditReminderWidget> {
                           onChanged: (String value) {
                             setState(() {
                               if (value == 'Never') {
-                                showEndDate = false;
+                                _showEndDate = false;
                               } else {
-                                showEndDate = true;
+                                _showEndDate = true;
                               }
                               _repeatValue = value;
                             });
