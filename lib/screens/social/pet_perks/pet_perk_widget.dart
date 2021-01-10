@@ -44,15 +44,10 @@ class PetPerkWidget extends StatelessWidget {
             Positioned(
               right: -6,
               child: Container(
-                // height: height * 0.2,
-                //color: Colors.red,
-                //width: height * 0.2,
                 child: Stack(
                   children: [
                     Container(
                       height: height * 0.08,
-                      //width: height * 0.08,
-                      //color: Colors.blue,
                       child:
                           Image.asset('assets/navigation_images/right_tag.png'),
                     ),

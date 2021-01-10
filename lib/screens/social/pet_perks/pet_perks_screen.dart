@@ -22,13 +22,13 @@ class PetPerksScreen extends StatelessWidget {
     }
 
     PetPerksProvider petPerksProvider = Provider.of<PetPerksProvider>(context);
-    List<PetPerk> petPerks = petPerksProvider.allPetPerks.where(
-        (PetPerk perk) =>
+    List<PetPerk> petPerks = petPerksProvider.allPetPerks
+        .where((PetPerk perk) =>
             petPerksProvider.currentFilter == 'none' ||
-            perk.categories.contains(petPerksProvider.currentFilter)).toList();
+            perk.categories.contains(petPerksProvider.currentFilter))
+        .toList();
 
     return Scaffold(
-      backgroundColor: StyleConstants.pageBackgroundColor,
       body: Container(
         width: width,
         height: height,
@@ -91,7 +91,6 @@ class PetPerksScreen extends StatelessWidget {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20.0),
                         topRight: Radius.circular(20.0))),
-                height: height,
                 width: width,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,23 +127,22 @@ class PetPerksScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: height * 0.01,
-                    ),
                     Expanded(
                       child: ListView.builder(
                         itemCount: petPerks.length,
                         itemBuilder: (context, index) {
                           if (petPerkIndex == index) {
                             return Padding(
-                              padding: const EdgeInsets.all(12.0),
+                              padding: EdgeInsets.fromLTRB(
+                                  width * 0.03, 0, width * 0.03, index != petPerks.length - 1 ? height * 0.03 : 0),
                               child: GlowingPetPerkWidget(
                                 petPerk: petPerks[index],
                               ),
                             );
                           } else {
                             return Padding(
-                              padding: const EdgeInsets.all(12.0),
+                              padding: EdgeInsets.fromLTRB(
+                                  width * 0.03, 0, width * 0.03, index != petPerks.length - 1 ? height * 0.03 : 0),
                               child: PetPerkWidget(
                                 petPerk: petPerks[index],
                               ),
