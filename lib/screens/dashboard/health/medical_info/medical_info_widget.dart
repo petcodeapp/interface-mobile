@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/general_med_info/general_med_info_editing_screen.dart';
+import 'package:petcode_app/screens/dashboard/health/medical_info/medical_info_editing_screen.dart';
 import 'package:petcode_app/utils/hero_icons2.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:provider/provider.dart';
 
-class GeneralMedInfoWidget extends StatelessWidget {
+class MedicalInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = StyleConstants.height;

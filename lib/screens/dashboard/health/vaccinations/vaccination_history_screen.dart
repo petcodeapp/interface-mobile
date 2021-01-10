@@ -3,11 +3,11 @@ import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/models/Vaccination.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/providers/notifications_provider.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/add_vaccination_widget.dart';
+import 'package:petcode_app/screens/dashboard/health/vaccinations/add_vaccination_widget.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/change_pet_dropdown.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/glowing_vaccination_widget.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/vaccination_widget.dart';
+import 'package:petcode_app/screens/dashboard/health/vaccinations/glowing_vaccination_widget.dart';
+import 'package:petcode_app/screens/dashboard/health/vaccinations/vaccination_widget.dart';
 import 'package:provider/provider.dart';
 
 class VaccineHistoryScreen extends StatefulWidget {

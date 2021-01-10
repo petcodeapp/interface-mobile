@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/general_med_info/general_med_info_screen.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/share_records/share_records_screen.dart';
-import 'package:petcode_app/screens/dashboard/medical_info/vaccinations/vaccination_history_screen.dart';
+import 'package:petcode_app/screens/dashboard/health/medical_info/medical_info_screen.dart';
+import 'package:petcode_app/screens/dashboard/health/share_records/share_records_screen.dart';
+import 'package:petcode_app/screens/dashboard/health/vaccinations/vaccination_history_screen.dart';
 import 'package:petcode_app/models/Pet.dart';
 import 'package:petcode_app/providers/current_pet_provider.dart';
 import 'package:petcode_app/utils/style_constants.dart';
 import 'package:petcode_app/widgets/change_pet_dropdown.dart';
 import 'package:provider/provider.dart';
 
-class MedicalInfoScreen extends StatelessWidget {
+class HealthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = StyleConstants.height;
@@ -35,19 +35,17 @@ class MedicalInfoScreen extends StatelessWidget {
         body: Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  //end: Alignment(0.01, 0.01),
-                  end: Alignment.bottomLeft,
-                  stops: [0.01, 0.4, 0.6],
-                  colors: [
-                    const Color(0xffABDEED),
-                    const Color(0xff51BFDA),
-                    StyleConstants.blue
-                  ], // whitish to gray
-                  //tileMode: TileMode.repeated,
-                )
-            ),
-
+              begin: Alignment.topRight,
+              //end: Alignment(0.01, 0.01),
+              end: Alignment.bottomLeft,
+              stops: [0.01, 0.4, 0.6],
+              colors: [
+                const Color(0xffABDEED),
+                const Color(0xff51BFDA),
+                StyleConstants.blue
+              ], // whitish to gray
+              //tileMode: TileMode.repeated,
+            )),
             child: Column(
               children: [
                 Container(
@@ -62,7 +60,11 @@ class MedicalInfoScreen extends StatelessWidget {
                         children: [
                           Align(
                             alignment: Alignment.bottomCenter,
-                            child: Container(height: height *0.065,child: ChangePetDropdown(title: 'Medical Info',)),
+                            child: Container(
+                                height: height * 0.065,
+                                child: ChangePetDropdown(
+                                  title: 'Medical Info',
+                                )),
                           ),
                           Align(
                             alignment: Alignment.bottomLeft,
@@ -98,10 +100,10 @@ class MedicalInfoScreen extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) =>
-                                          GeneralMedicalInfoScreen())),
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MedicalInfoScreen()),
+                              ),
                               child: Container(
                                   height: height * 0.17,
                                   width: width * 0.9,
@@ -159,7 +161,8 @@ class MedicalInfoScreen extends StatelessWidget {
                                                         )),
                                                   ),
                                                   Align(
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       child: Image.asset(
                                                           'assets/navigation_images/info.png')),
                                                 ],
@@ -260,7 +263,8 @@ class MedicalInfoScreen extends StatelessWidget {
                                                         )),
                                                   ),
                                                   Align(
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       child: Image.asset(
                                                           'assets/navigation_images/syringe.png')),
                                                 ],
@@ -361,7 +365,8 @@ class MedicalInfoScreen extends StatelessWidget {
                                                         )),
                                                   ),
                                                   Align(
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       child: Image.asset(
                                                           'assets/navigation_images/share.png')),
                                                 ],
