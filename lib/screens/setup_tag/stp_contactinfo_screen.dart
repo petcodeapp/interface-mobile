@@ -126,7 +126,8 @@ class _StpContactScreenState extends State<StpContactScreen> {
                       address: VisibleValue<String>(
                           value: _owner1Address.text.trim(), visible: true),
                     );
-                    updatedPet.contact_1 = owner1;
+                    updatedPet.contacts = <Owner>[];
+                    updatedPet.contacts.add(owner1);
 
                     if (!owner2IsEmpty()) {
                       Owner owner2 = new Owner(
@@ -139,9 +140,15 @@ class _StpContactScreenState extends State<StpContactScreen> {
                         address: VisibleValue<String>(
                             value: _owner2Address.text.trim(), visible: true),
                       );
-                      updatedPet.contact_2 = owner2;
+                      if (updatedPet.contacts.length > 1) {
+                        updatedPet.contacts[1] = owner2;
+                      } else {
+                        updatedPet.contacts.add(owner2);
+                      }
                     } else {
-                      updatedPet.contact_2 = null;
+                      if (updatedPet.contacts.length > 1) {
+                        updatedPet.contacts.removeAt(1);
+                      }
                     }
                     Navigator.push(
                         context,

@@ -16,7 +16,7 @@ class User {
       {this.uid,
       //this.firstName,
       //this.lastName,
-        this.fullName,
+      this.fullName,
       this.phoneNumber,
       this.email,
       this.pets});
@@ -46,8 +46,7 @@ class User {
         email: json['email'] as String,
         pets: convertPetIds,
       );
-    }
-    else {
+    } else {
       return User(
         uid: '',
         //firstName: '',
@@ -70,5 +69,5 @@ class User {
         'phoneNumber': instance.phoneNumber,
         'email': instance.email,
         'pets': instance.pets,
-  };
+      };
 }

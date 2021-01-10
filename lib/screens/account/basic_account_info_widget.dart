@@ -25,8 +25,6 @@ class BasicAccountInfoWidget extends StatelessWidget {
       }
     }
 
-    List name = user.fullName.split(" ");
-
     return Container(
       width: width * 0.9,
       //height: height * 0.175,

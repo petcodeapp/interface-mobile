@@ -50,7 +50,12 @@ class GeneralMedInfoWidget extends StatelessWidget {
                   IconButton(
                     icon: Icon(HeroIcons2.edit_2),
                     iconSize: width * 0.07,
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => MedInfoEditingScreen(currentPet: currentPet,))),
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => MedInfoEditingScreen(
+                                  currentPet: currentPet,
+                                ))),
                   )
                 ],
               ),
@@ -114,9 +119,11 @@ class GeneralMedInfoWidget extends StatelessWidget {
                   size: width * 0.08,
                   color: StyleConstants.blue,
                 ),
-                title: currentPet.vetName.value != null &&
-                        currentPet.vetName.value.isNotEmpty
-                    ? Text(currentPet.vetName.value,
+                title: currentPet.vet != null &&
+                        currentPet.vet.name != null &&
+                        currentPet.vet.name.value != null &&
+                        currentPet.vet.name.value.isNotEmpty
+                    ? Text(currentPet.vet.name.value,
                         style: TextStyle(
                             fontSize: width * 0.045,
                             fontWeight: FontWeight.w600,
@@ -141,9 +148,11 @@ class GeneralMedInfoWidget extends StatelessWidget {
                   size: width * 0.08,
                   color: StyleConstants.blue,
                 ),
-                title: currentPet.vetPhoneNumber.value != null &&
-                        currentPet.vetPhoneNumber.value.isNotEmpty
-                    ? Text(currentPet.vetPhoneNumber.value,
+                title: currentPet.vet != null &&
+                        currentPet.vet.name != null &&
+                        currentPet.vet.phoneNumber.value != null &&
+                        currentPet.vet.phoneNumber.value.isNotEmpty
+                    ? Text(currentPet.vet.phoneNumber.value,
                         style: TextStyle(
                             fontSize: width * 0.045,
                             fontWeight: FontWeight.w600,

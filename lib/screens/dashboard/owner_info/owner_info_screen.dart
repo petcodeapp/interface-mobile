@@ -53,7 +53,11 @@ class OwnerInfoScreen extends StatelessWidget {
                       children: [
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: Container(height: height * 0.065,child: ChangePetDropdown(title: 'Owner Info',)),
+                          child: Container(
+                              height: height * 0.065,
+                              child: ChangePetDropdown(
+                                title: 'Owner Info',
+                              )),
                         ),
                         Align(
                           alignment: Alignment.bottomLeft,
@@ -79,25 +83,29 @@ class OwnerInfoScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: height * 0.03),
-                      currentPet.contact_1 != null
+                      currentPet.contacts != null &&
+                              currentPet.contacts.length > 0
                           ? OwnerWidget(
                               key: Key(currentPet.pid + '1'),
-                              owner: currentPet.contact_1,
+                              owner: currentPet.contacts[0],
                               ownerNumber: 1,
                             )
                           : EmptyOwnerWidget(
+                              ownerNumber: 1,
                               height: height,
                               width: width,
                               currentPet: currentPet,
                             ),
                       SizedBox(height: height * 0.05),
-                      currentPet.contact_2 != null
+                      currentPet.contacts != null &&
+                              currentPet.contacts.length > 1
                           ? OwnerWidget(
                               key: Key(currentPet.pid + '2'),
-                              owner: currentPet.contact_2,
+                              owner: currentPet.contacts[1],
                               ownerNumber: 2,
                             )
                           : EmptyOwnerWidget(
+                              ownerNumber: 2,
                               height: height,
                               width: width,
                               currentPet: currentPet,

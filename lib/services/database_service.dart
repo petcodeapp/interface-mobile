@@ -122,10 +122,10 @@ class DatabaseService {
 
   Future<void> updateOwnerVisiblity(
       String parameter, bool value, int ownerNumber, Pet pet) async {
-    Owner owner = pet.contact_1;
+    Owner owner = pet.contacts[0];
 
     if (ownerNumber == 2) {
-      owner = pet.contact_2;
+      owner = pet.contacts[1];
     }
 
     if (parameter == 'name') {
@@ -139,9 +139,9 @@ class DatabaseService {
     }
 
     if (ownerNumber == 1) {
-      pet.contact_1 = owner;
+      pet.contacts[0] = owner;
     } else {
-      pet.contact_2 = owner;
+      pet.contacts[1] = owner;
     }
 
     await _firestore.collection('pets').doc(pet.pid).update(pet.toJson());
