@@ -93,7 +93,7 @@ class DashboardScreen extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: NavigationRow(),
                       ),
-                      Flexible(
+                      Expanded(
                         child: Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
